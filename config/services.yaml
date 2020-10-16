@@ -1,0 +1,86 @@
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: 'fr'
+    app_locales: en|fr
+    safety.MailService.class: App\Service\MailService
+    redis.host:          "%env(REDIS_HOST)%"
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{Entity,Migrations,Tests,Kernel.php,Traits,Model}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    twig.extension.text:
+            class: Twig_Extensions_Extension_Text
+            tags:
+                - { name: twig.extension }
+        
+    App\Controller\UserManagement\GroupController:
+        arguments:
+            $formFactory: '@fos_user.group.form.factory'  
+
+    App\Controller\UserManagement\ProfileController:
+        arguments:
+            $formFactory: '@fos_user.profile.form.factory' 	
+            
+    App\Controller\UserManagement\ResettingController:
+        arguments:
+            $formFactory: '@fos_user.resetting.form.factory' 
+            $retryTtl: '%fos_user.resetting.retry_ttl%'
+
+    App\EventListener\UserManagement\RegistrationUserListener:
+        tags:
+            - { name: kernel.event_listener, event: registration.user.event, method: onRegistrationUserEvent }
+
+    App\EventListener\UserManagement\ResettingListener:
+        arguments:  ['@router', '%fos_user.resetting.token_ttl%']
+        tags:
+            - { name: kernel.event_listener, event: resetting.user.event, method: onResettingUserEvent }
+
+    App\EventListener\UserManagement\LoginListener:
+        arguments:  ['@router', '@event_dispatcher', '@service_container']
+        tags:
+            - { name: kernel.event_subscriber }
+
+    App\EventListener\PlanningManagement\SessionListener:
+        tags:
+            - { name: kernel.event_listener, event: session.event, method: onSessionEvent }
+
+    App\EventListener\UserFrontManagement\PageListener:
+        tags:
+            - { name: kernel.event_listener, event: page.event, method: onPageEvent }
+
+    App\EventListener\UserFrontManagement\UserTestListener:
+        tags:
+            - { name: kernel.event_listener, event: user.test, method: onUserTestEvent }
+
+    App\EventListener\ServiceManagement\AuditTrailListener:
+        tags:
+            - { name: kernel.event_listener, event: audit.event, method: onAuditTrailEvent }
+
+    App\EventListener\UserFrontManagement\VirtualClassRoomListener:
+        arguments: ['@event_dispatcher',  '@service_container', "@logger" ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    App\EventListener\TrailRequestListener:
+        arguments: [ '@service_container', "@logger" ]  
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController } 

@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <!-- navigator -->
+    <div class="lms-breadcrumb">
+        <span> <a href="{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }} {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }} {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }} {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }} {% else %} {{ path('home_dashboard') }} {% endif %}">{{lms_name}} </a> </span> > <span> <a href="{{path('admin_testManagement_list')}}">{{'test.list.ariane_gestion'|trans}}</a> </span> > <span class="bold">{{test.title}}</span>
+    </div>
+
+    <!-- title of page -->
+    <div class="d-flex align-items-center lms-title">
+        <h1 class="text-uppercase lms-h1">{{'test.edit'|trans}}
+            {% if test.isTestPresentiel == true %}(test présentiel)
+            {% endif %}
+        </h1>
+        <hr>
+    </div>
+
+    <!-- body of page -->
+    <div class="row">
+        <div class="col-lg-4 mb-5">
+            <h2 class="text-uppercase lms-h2">
+                {{ 'actions' | trans }}
+            </h2><hr>
+            {% include "TestManagement/Question/actions.html.twig" %}
+        </div>
+        <div class="col-lg-8">
+            <div class="d-flex flex-column">
+                <div>
+                    <h2 class="text-uppercase lms-h2">{{'test.edit'|trans}}</h2>
+                    <hr>
+                </div>
+                <form action="{{ path('admin_testManagement_edit', {'test' : test.id, 'slug' : module.slug, 'testConditional' : conditional}) }}" method="post" class="form-horizontal" enctype="multipart/form-data" {% if module.isValid == true %}onkeypress="if(event.keyCode == 13) return false;"{% endif %}>
+                    {% include "TestManagement/Test/form.html.twig" %}
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+
+    <script>
+        $(function (){
+            {% if moduleTest.chronoQuestion == false %}
+                $('#module_test_chronoQuestionTime').hide();{% endif %}
+
+            {% if moduleTest.chronoTest == false %}
+                $('#module_test_chronoTestTime').hide();{% endif %}
+
+            $('body').on('change', '#module_test_chronoQuestion', function (event) {
+                if (this.checked) {
+                    $('#module_test_chronoQuestionTime').fadeIn();
+                } else {
+                    $('#module_test_chronoQuestionTime').fadeOut();
+                }
+            });
+
+            document.getElementById("module_test_typeTest").value = {{test.typeTest.id}}
+
+            $('body').on('change', '#module_test_chronoTest', function (event) {
+                if (this.checked) {
+                    $('#module_test_chronoTestTime').fadeIn();
+                } else {
+                    $('#module_test_chronoTestTime').fadeOut();
+                }
+            });
+            // module_test_chronoTest
+        });
+    </script>
+{% endblock %}

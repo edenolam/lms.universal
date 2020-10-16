@@ -1,0 +1,50 @@
+.lms {
+    &-audio {
+        line-height: 1;
+        &-controls {
+            align-items: center;
+            background-color: $gallery-gray;
+            border-radius: 1em;
+            display: flex;
+            justify-content: center;
+            padding: .5em;
+            width: 15em;
+            button {
+                background: transparent;
+                background-repeat: repeat;
+                background-image: none;
+                background-size: auto;
+                background-size: contain;
+                background-repeat: no-repeat;
+                border: none;
+                cursor: pointer;
+                margin: 0;
+                text-indent: -99999px;
+                &[data-state="play"] {
+                    background: url(../images/outline-play_arrow-24px.svg) center no-repeat;
+                }
+                &[data-state="pause"] {
+                    background: url(../images/outline-pause-24px.svg) center no-repeat;
+                }
+                &[data-state="mute"] {
+                    background: url(../images/outline-volume_off-24px.svg) center no-repeat;
+                }
+                &[data-state="unmute"] {
+                    background: url(../images/outline-volume_mute-24px.svg) center no-repeat;
+                }
+                &:hover,
+                &:active,
+                &:focus {
+                    filter: invert(35%);
+                    outline: none;
+                }
+            }
+        }
+        &-progress {
+            margin: 0 .5em;
+            progress {
+                vertical-align: bottom;
+            }
+        }
+    }
+}

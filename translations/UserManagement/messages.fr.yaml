@@ -1,0 +1,174 @@
+userManagement:
+    info: "Le fichier <strong>ne doit pas dépasser 5 Mo</strong> et avoir une largeur et une hauteur de <strong>150 pixels</strong> maximum. Les téléchargements ultérieurs écraseront le logo existant."
+
+group:
+    menu: Gestion groupes
+    name: Nom du groupe
+    description: Description
+    roles: Rôles
+    action:
+        create: Ajouter un groupe
+        edit: Modifier le groupe
+        list: Liste de groupes
+user:
+    tutor: Apprenants suivis
+    identity: Identité
+    hierarchyLevel: Niveau hiérarchique
+    profile: Profil
+    sign_out: Déconnexion
+    menu: Gestion utilisateurs
+    avatar: Avatar
+    donnees_personnelles: Données personnelles
+    donnees_professionnelles: Données professionnelles
+    civility: Civilité
+    nom: Nom
+    prenom: Prénom
+    address: Adresse
+    addressBis: Adresse bis
+    city: Ville
+    zipCode: Code postale
+    country: Pays
+    phone: Tél 
+    function: Fonction 
+    info1: Information 1    
+    info2: Information 2
+    info3: Information 3
+    groups: Groupe(s)
+    roles: Rôles
+    email: Email
+    ldap_user: Ldap utilisateur
+    username: Identifiant
+    login: Identifiant
+    password: 
+        title: Réinitialisation de Mot de passe
+        info_reset: Un e-mail a été envoyé. Il contient un lien sur lequel il vous faudra cliquer pour réinitialiser votre mot de passe. Ce lien est actif 24h. Si vous ne recevez pas un email, vérifiez votre dossier spam ou essayez à nouveau.
+        first: Mot de passe
+        second: Confirmer le mot de passe
+        forgot: Mot de passe oublié ?
+    supervisor: Supervisor
+    create_date: Date creation
+    statut: Statut
+    action:
+        add: Ajouter un(e) utilisateur  
+        edit: Modifier le utilisateur  
+        list: Liste des utilisateurs
+        view: Voir un utilisateur           
+    message:
+        error:
+            user_exist: Identifiant déjà utilisé
+    flash:
+        updated_error: "L'utilisateur n'a pas été mis à jour."
+        updated: "L'utilisateur a été mis à jour."          
+        delete_image_error: "L'ancienne image n'a pas été supprimé!"
+        create_error: "Cet identifiant est déjà utilisé"
+        
+laboratory:
+    menu: Gestion des entreprises
+    logo: Logo
+    title: Entreprises
+    all: Toutes les entreprises
+    selectImage: Sélectionner une image
+    removeImage: Supprimer
+    changeImage: Modifier
+    address: Adresse
+    addressBis: Adresse bis
+    city: Ville
+    zipCode: Code postale
+    country: Pays
+    phone: Tél
+    email: Email
+    url: Site web
+    sort: Ordre
+    description: Description
+    divisions: Divisions
+    division: Division 
+    action:
+        create: Ajouter une entreprise 
+        edit: Modifier l'entreprise
+        list: Liste des entreprises
+        view: Voir une entreprise     
+    flash:
+        created: L'entreprise a été créée.
+        created_error: "L'entreprise n'a pas été créée."
+        updated: L'entreprise a été mise à jour.
+        updated_error: "L'entreprise n'a pas été mise à jour."
+        delete_image_error: "L'ancienne image n'a pas été supprimée!"
+
+division:
+    all: Toutes les divisions
+    menu: Gestion des divisions
+    laboratory: Entreprise
+    title: Division
+    sort: Ordre
+    description: Description    
+    teams: Equipe  
+    create_date: Date creation       
+    action:
+        create: Ajouter une division 
+        edit: Modifier le division  
+        list: Liste de divisions
+        view: Voir une division       
+    flash:
+        created: 'Le division a été créée.'
+        updated: 'Le division a été mise à jour.'
+
+team:
+    all: Toutes les équipes
+    literal: Équipe
+    menu: "Gestion des équipes"
+    laboratory: Entreprise  
+    division: Division 
+    title: "L'équipe"
+    sort: Ordre
+    description: Description         
+    action:
+        create: Ajouter une équipe 
+        edit: Modifier l'équipe  
+        list: Liste d'équipes
+        view: Voir l'équipe      
+    flash:
+        created: "L'équipe a été créée."
+        updated: "L'équipe a été mise à jour."   
+
+tracking:
+    menu: "Tracking"        
+    created: Date
+    path_info: Url
+    lang: Lang
+    ip_request: IP client 
+    duration: Durée
+    user: Utilisateur      
+    action:
+        list: Liste des trackings 
+        download: Téléchargements 
+
+mailLog:
+    action:
+        list: Liste des mails envoyés automatiquement
+    date: Date de l'envoi
+    from: From
+    to: To
+    cc: cc
+    subject: Sujet
+
+mail:
+    bonjour: Bonjour %nom%
+    bienvenu: Bienvenu sur la plateforme Euro-Academy !
+    rdv: Rendez-vous sur votre espace en suivant le lien suivant :
+    acces: Vous allez recevoir un second mail contenant vos informations d’accès.
+    connexion: Voici les informations de connexion sur la plateforme Euro-Academy
+    identifiant: Identifiant :
+    password: Mot de passe:
+
+
+resetting:
+    email:
+        cordialement: Cordialement
+        subject: 'Réinitialisation de votre mot de passe'
+        bonjour: Bonjour %username%,
+        youre_ldap: 'Vous étes un utilisateur LDAP. Pour récuperer votre mot de passe, vous devez vous adresser à votre équipe IT.'
+        message: 'Pour réinitialiser votre mot de passe, merci de vous rendre sur %confirmationUrl%'
+
+        equipe: |
+            Bonne navigation !
+            L’équipe e-learning

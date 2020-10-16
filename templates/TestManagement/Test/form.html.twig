@@ -1,0 +1,99 @@
+{{ form_errors(formModuleTest) }}
+    <div class="my-3">
+        <div>
+            {{ form_label(formModuleTest.title, 'test.title'|trans) }}
+        </div>        
+        <div>
+            {{ form_widget(formModuleTest.title, { 'attr': {'class': 'form-control'} }) }}
+            {{ form_errors(formModuleTest.title) }}
+        </div> 
+    </div>  
+        <div class="my-3">      
+        <div>
+            {{ form_label(formModuleTest.module, 'test.module'|trans) }}
+        </div>        
+        <div>
+            {{ form_widget(formModuleTest.module, { 'attr': {'class': 'form-control', 'disabled': 'disabled' } }) }}
+            {{ form_errors(formModuleTest.module) }}
+        </div>
+    </div>
+    <div class="my-3">      
+        <div>
+            {{ form_label(formModuleTest.typeTest, 'lov.type_test'|trans) }}
+        </div>        
+        <div>
+            {{ form_widget(formModuleTest.typeTest, { 'attr': {'class': 'form-control ', 'disabled': 'disabled'} }) }}
+            {{ form_errors(formModuleTest.typeTest) }}
+        </div>
+    </div>
+    <div class="my-3">      
+        <div>
+            {{ form_label(formModuleTest.theoricalDuration, 'test.theorical_duration'|trans) }} 
+        </div>        
+        <div>
+            {{ form_widget(formModuleTest.theoricalDuration, { 'attr': {'class': 'form-control col-6', 'placeholder': 'HH:mm', 'pattern':'^[0-5][0-9]\:[0-5][0-9]\.[0-9]{1,3}$' } }) }}
+            {{ form_errors(formModuleTest.theoricalDuration) }}
+        </div>
+    </div>
+    <div class="my-3">      
+        <div>              
+            {{ form_label(formModuleTest.score, 'test.score'|trans) }}
+        </div>        
+        <div>
+            {{ form_widget(formModuleTest.score, { 'attr': {'class': 'form-control col-4'} }) }} % 
+            {{ form_errors(formModuleTest.score) }} <small><em>{{"test.validation_score"|trans}}</em></small>
+        </div>  
+    </div>
+    <div class="d-flex my-3">      
+        <div class="mr-3">
+            {{ form_label(formModuleTest.chronoQuestion, 'test.chronoQuestion'|trans) }}
+        </div>        
+        <div>
+            {{ form_widget(formModuleTest.chronoQuestion, { 'attr': {'class': ''} }) }}           
+            {{ form_widget(formModuleTest.chronoQuestionTime, { 'attr': {'class': 'form-control col-6', 'placeholder': 'hh:mm', 'pattern':'^[0-5][0-9]\:[0-5][0-9]\.[0-9]{1,3}$'} }) }}
+            {{ form_errors(formModuleTest.chronoQuestionTime) }} 
+        </div> 
+    </div>
+    <div class="d-flex my-3">      
+        <div class="mr-3">
+            {{ form_label(formModuleTest.chronoTest, 'test.chronoTest'|trans) }}
+        </div>        
+        <div>
+            {{ form_widget(formModuleTest.chronoTest, { 'attr': {'class': ''} }) }}    
+            {{ form_widget(formModuleTest.chronoTestTime, { 'attr': {'class': 'form-control col-6', 'placeholder': 'hh:mm', 'pattern':'^[0-5][0-9]\:[0-5][0-9]\.[0-9]{1,3}$'} }) }}
+            {{ form_errors(formModuleTest.chronoTestTime) }}
+        </div>  
+    </div>
+    <div class="my-3">      
+        <div>
+            {{ form_label(formModuleTest.numberTry, 'test.numberTry'|trans) }}
+        </div>        
+        <div>
+            {{ form_widget(formModuleTest.numberTry, { 'attr': {'class': 'form-control col-4'} }) }}
+            {{ form_errors(formModuleTest.numberTry) }} 
+        </div>
+    </div> 
+    <div class="my-3 {% if test.typeTest.conditional != 'eval' or module.modulePreTest == null or module.modulePreTest.pools|length < 1 or test.questions|length > 0 or test.pools | length > 0 %}d-none{% endif %}">      
+        <div>
+            {{ form_label(formModuleTest.isTestCommune, 'test.is_test_commune'|trans) }}
+        </div>        
+        <div>
+            {{ form_widget(formModuleTest.isTestCommune, { 'attr': {'class': ''} }) }}
+            {{ form_errors(formModuleTest.isTestCommune) }} 
+        </div>
+    </div> 
+    <div class="my-3 {% if test.questions | length > 0 or (test.isTestCommune == true and test.testCommune.questions | length > 0 ) %}d-none{% endif %}">      
+        <div class="form-group col-4 ">
+            {{ form_label(formModuleTest.isTestPresentiel, 'test.is_test_presentiel'|trans) }}
+        </div>        
+        <div>          
+            {{ form_widget(formModuleTest.isTestPresentiel, { 'attr': {'class': ''} }) }}
+            {{ form_errors(formModuleTest.isTestPresentiel) }} 
+        </div>
+    </div>                 
+{{ form_rest(formModuleTest) }}     
+<div class="form-group text-center">
+    <button type="submit" class="lms-button lms-button-blue" {% if module.activeSession == true or module.isArchived == true or module.isValid == true or is_granted('ROLE_GESTION_TEST') == false %}hidden{% endif %}>
+        <i class="material-icons lms-material-icons">save</i> <span>{{ 'global.submit'|trans }}</span>
+    </button>  
+</div>             

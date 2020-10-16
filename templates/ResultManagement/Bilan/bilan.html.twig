@@ -1,0 +1,432 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}  
+<link rel="stylesheet" href="{{ asset("css/bootstrap-multiselect.css")}}" />     
+<link rel="stylesheet" href="{{ asset("assets/bootstrap-editable/css/bootstrap-editable.css")}}" />
+{% endblock %}
+
+{% block body %}
+    <div class="lms-breadcrumb">
+        <a href="{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }} {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }} {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }} {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }} {% else %}{{ path('home_dashboard') }}{% endif %}">{{lms_name}}</a> > <span>{{'menu.results.list'|trans}}</span>
+    </div>
+
+    <div class="d-flex align-items-center lms-title">
+        <h1 class="text-uppercase lms-h1">{{ 'menu.results.list'|trans }}</h1>
+        <hr>
+    </div>
+    {% include "ResultManagement/Bilan/form_bilan.html.twig" %}
+
+    {# {% include "ResultManagement/Bilan/banner_bilan.html.twig" %} #}
+
+    <div class="row">
+        <div class="col">
+            {% include "ResultManagement/Bilan/tableau_bilan.html.twig" %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+<script type='text/javascript' src="{{asset('js/bootstrap-multiselect.js')}}"></script>
+<script src="{{ asset('assets/bootstrap-editable/js/bootstrap-editable.js') }}"></script>
+<script src="{{ asset('assets/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
+    <script>
+    $(document).ready(function () {
+
+         $('select[multiple="multiple"]').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            enableCaseInsensitiveFiltering: true,
+            templates: {
+                filterClearBtn: '<span class="input-group-btn"><button class="btn btn-danger multiselect-clear-filter" type="button"><i class="material-icons lms-material-icons">close</i></button></span>'
+            }
+        }); 
+
+        // ======================================================================================
+        //=======================================table===========================================
+        // ======================================================================================
+        $('#filtreForm th').each( function () {
+            var title = $(this).text();
+            $(this).html( '<input type="text" class="form-control" placeholder="{{"global.table.search"|trans}} '+title+'" />' );
+        } );
+
+        var table = $('#tablefiltre').DataTable({
+            colReorder: true,
+            responsive: false, 
+            ordering:  true, 
+            searching: true,
+            paging: true,
+            language: {
+                decimal:        "",
+                emptyTable:     "-",
+                info: "[_START_/_END_]  <b>{{"global.table.total"|trans}} : </b>_TOTAL_",
+                infoEmpty:      "0/0   [0]",
+                infoFiltered:   "({{"global.table.filteredForm"|trans}} _MAX_ {{"global.table.entries"|trans}})",
+                infoPostFix:    "",
+                thousands:      " ",
+                lengthMenu:     "<b>{{"global.table.Entries"|trans}}</b> _MENU_",
+                loadingRecords: "{{"global.table.loadingRecords"|trans}}...",
+                processing:     "{{"global.table.processing"|trans}}...",
+                search:         "<b>{{"global.table.search"|trans}}</b>:",
+                zeroRecords:    "{{"global.table.zeroRecords"|trans}}",
+                paginate: {next:       ">>", previous:   "<<"},
+                
+            },
+        });
+            
+        table.columns().eq( 0 ).each( function ( colIdx ) {
+            $( 'input', $('#filtreForm th')[colIdx] ).on( 'keyup change', function () {
+                table
+                    .column( colIdx )
+                    .search( this.value )
+                    .draw();
+            } );
+        } );
+
+            // ======================================================================================
+        //=======================================table end=========================================
+        // ======================================================================================
+
+        
+
+        $('#exportpdf').on('click', function (event) {
+            event.preventDefault();
+            $('.spinner').fadeIn();
+            if ($('#bilan_session').val() != '') {
+                sessions = JSON.stringify($('#bilan_session').val())
+            } else {
+                sessions = null
+            };
+            if ($('#bilan_formation').val() != '') {
+                formation = $('#bilan_formation').val()
+            } else {
+                formation = null
+            };
+            if ($('#bilan_module').val() != '') {
+                modulem = $('#bilan_module').val()
+            } else {
+                modulem = null
+            };
+            if ($('#bilan_division').val() != '') {
+                division = $('#bilan_division').val()
+            } else {
+                division = null
+            };
+            if ($('#bilan_team').val() != '') {
+                team = $('#bilan_team').val()
+            } else {
+                team = null
+            };
+            if ($('#bilan_user').val() != '') {
+                user = $('#bilan_user').val()
+            } else {
+                user = null
+            };
+            if ($('#bilan_user').val() != '') {
+                user = $('#bilan_user').val()
+            } else {
+                user = null
+            };
+            if ($('#bilan_datestart').val() != '') {
+                openingDate = $('#bilan_datestart').val()
+            } else {
+                openingDate = null
+            };
+            if ($('#bilan_dateend').val() != '') {
+                closingDate = $('#bilan_dateend').val()
+            } else {
+                closingDate = null
+            };
+    
+            url = $('#exportpdf').attr('data-path') + "/_user/_division/_team/_sessions/_formation/_modulem/_openingDate/_closingDate";
+            $('.spinner').fadeOut();
+
+            url = url.replace('_sessions', sessions);
+            url = url.replace('_formation', formation);
+            url = url.replace('_user', user);
+            url = url.replace('_modulem', modulem);
+            url = url.replace("_division", division);
+            url = url.replace('_team', team);
+            url = url.replace('_openingDate', openingDate);
+            url = url.replace('_closingDate', closingDate);
+
+            location.href = url;
+        });
+        $('#exportcsvP').on('click', function (event) {
+            event.preventDefault();
+            $('.spinner').fadeIn();
+            if ($('#bilan_session').val() != '') {
+                sessions = JSON.stringify($('#bilan_session').val())
+            } else {
+                sessions = null
+            };
+            if ($('#bilan_formation').val() != '') {
+                formation = $('#bilan_formation').val()
+            } else {
+                formation = null
+            };
+            if ($('#bilan_module').val() != '') {
+                modulem = $('#bilan_module').val()
+            } else {
+                modulem = null
+            };
+            if ($('#bilan_division').val() != '') {
+                division = $('#bilan_division').val()
+            } else {
+                division = null
+            };
+            if ($('#bilan_team').val() != '') {
+                team = $('#bilan_team').val()
+            } else {
+                team = null
+            };
+            if ($('#bilan_user').val() != '') {
+                user = $('#bilan_user').val()
+            } else {
+                user = null
+            };
+             if ($('#bilan_datestart').val() != '') {
+                openingDate = $('#bilan_datestart').val()
+            } else {
+                openingDate = null
+            };
+            if ($('#bilan_dateend').val() != '') {
+                closingDate = $('#bilan_dateend').val()
+            } else {
+                closingDate = null
+            };
+
+            url = $('#exportcsvP').attr('data-path') + "/_user/_division/_team/_sessions/_formation/_modulem/_openingDate/_closingDate";
+            $('.spinner').fadeOut();
+
+            url = url.replace('_sessions', sessions);
+            url = url.replace('_formation', formation);
+            url = url.replace('_user', user);
+            url = url.replace('_modulem', modulem);
+            url = url.replace("_division", division);
+            url = url.replace('_team', team);
+            url = url.replace('_openingDate', openingDate);
+            url = url.replace('_closingDate', closingDate);
+
+            location.href = url;
+        });
+
+        $('.del').prop('disabled', true);
+        $('#bilan_name').on('change', function (event) {
+            $('.del').prop('disabled', false);
+        });
+
+        $('#save').on('click', function (event) {
+            event.preventDefault();
+            $('.spinner').fadeIn();
+            if ($('#bilan_session').val() != '') {
+                sessions = JSON.stringify($('#bilan_session').val())
+            } else {
+                sessions = null
+            };
+            if ($('#bilan_formation').val() != '') {
+                formation = $('#bilan_formation').val()
+            } else {
+                formation = null
+            };
+            if ($('#bilan_module').val() != '') {
+                modulem = $('#bilan_module').val()
+            } else {
+                modulem = null
+            };
+            if ($('#bilan_division').val() != '') {
+                division = $('#bilan_division').val()
+            } else {
+                division = null
+            };
+            if ($('#bilan_team').val() != '') {
+                team = $('#bilan_team').val()
+            } else {
+                team = null
+            };
+            if ($('#bilan_user').val() != '') {
+                user = $('#bilan_user').val()
+            } else {
+                user = null
+            };
+            if ($('#nom').val() != '') {
+                nom = $('#nom').val()
+            } else {
+                nom = null
+            };
+
+            lien = $('#save').attr('data-path') + "/_user/_division/_team/_sessions/_formation/_modulem/_nom";
+            $('.spinner').fadeOut();
+
+            lien = lien.replace('_sessions', sessions);
+            lien = lien.replace('_formation', formation);
+            lien = lien.replace('_user', user);
+            lien = lien.replace('_modulem', modulem);
+            lien = lien.replace("_division", division);
+            lien = lien.replace('_team', team);
+            lien = lien.replace('_nom', nom);
+            location.href = lien;
+        });
+
+        {# $('body').on('change', '#bilan_division, #bilan_team,  #bilan_user,  #bilan_formation,  #bilan_module', function (event) {
+            $(this).parents('form').submit();
+        }); #}
+
+        $('#formSave').on('click', function (event) {
+            event.preventDefault();
+            $('.spinner').fadeIn();
+            if ($('#bilan_name').val() != '') {
+                requete = $('#bilan_name').val()
+            } else {
+                requete = null
+            };
+
+            lien = $('#formSave').attr('data-path') + "/_requete";
+            $('.spinner').fadeOut();
+
+            lien = lien.replace('_requete', requete);
+            location.href = lien;
+        });
+
+        $('#formDel').on('click', function (event) {
+            event.preventDefault();
+            $('.spinner').fadeIn();
+            if ($('#bilan_name').val() != '') {
+                requete = $('#bilan_name').val()
+            } else {
+                requete = null
+            };
+
+            lien = $('#formDel').attr('data-path') + "/_requete";
+            $('.spinner').fadeOut();
+
+            lien = lien.replace('_requete', requete);
+            location.href = lien;
+        });
+
+        $('.openingDate').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            clearBtn: true,
+            title: 'Date ouverture',
+           // startDate: '+0d',
+            todayHighlight: true
+        }).on('changeDate', function (selected) {
+            var minDate = new Date(selected.date.valueOf());
+            $('.closingDate').datepicker('setStartDate', minDate);
+        });
+
+        $('.closingDate').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true
+        }).on('changeDate', function (selected) {
+            var maxDate = new Date(selected.date.valueOf());
+            $('.openingDate').datepicker('setEndDate', maxDate);
+        });
+        
+        document.getElementById("bilan_name").addEventListener("change",function(){
+            if(document.getElementById("bilan_name").value != ""){
+                document.getElementById("formSave").hidden = false;
+                document.getElementById("buttondel").hidden = false;
+            }else{
+                document.getElementById("formSave").hidden = true;
+                document.getElementById("buttondel").hidden = true;
+            }
+        });
+    });
+
+    
+
+    $(".formNumberTry").on('click', function(e) {
+        $('.spinner').fadeIn();
+        e.preventDefault();
+        var refId = $(this).data('id');
+        var line = $(this).data('line');
+        //console.log( $(this).data('url'));                                                            
+        //console.log( {'numberTry': $('#nbTry'+refId).val(), 'numberTryDescription': $('#descritpion'+refId).val()});
+        $.ajax({  
+            method: 'post',
+            url: $(this).data('url'),  
+            contentType: 'application/json; charset=utf-8', 
+            data: JSON.stringify({'numberTry': $('#nbTry'+refId).val(), 'numberTryDescription': $('#descritpion'+refId).val()}),
+            cache: false,
+            dataType: "json" 
+        }).done(function (response) {
+            //console.log(response);
+            //$('#modalclose'+refId).click(function(){console.log($('#modalclose'+refId));});
+            $('.spinner').fadeOut();
+            if (response.success == 1 ) {
+                //console.log(line);
+                $('#oldNbTry'+refId).text( $('#nbTry'+refId).val());
+                $('#lastNbTry'+line+refId).text( $('#nbTry'+refId).val());
+                $('#lastComm'+line+refId).text( $('#descritpion'+refId).val());
+                
+                toastr.success("{{  'results.nbTry.success'|trans }}", "Success"); 
+            }else{
+                if (response.success == 0 ) {
+                    toastr.success("{{  'results.nbTry.error'|trans }}", "Error"); 
+                }else{
+                    toastr.success("{{  'results.nbTry.error_nb'|trans }}", "Error"); 
+                }
+            }
+        }).fail(function (jxh, textmsg, errorThrown) {
+            $('.spinner').fadeOut();
+            
+        });
+    });  
+
+
+    
+     
+
+    
+
+    {# function(e){
+      $('.spinner').fadeIn();
+      e.preventDefault();
+      checkData = {'numberTry': $('#nbTry').val(), 'numberTryDescription': $('#descritpion').val()};
+      $.ajax({  
+        method: 'post', url: $('#changeNbTry').attr('data-url'), contentType: 'application/json; charset=utf-8', data: JSON.stringify(checkData)
+      }).done(function (response) {
+          location.reload(response['flash']);  
+      }).fail(function (jxh, textmsg, errorThrown) {
+        $('.spinner').fadeOut();
+        $('#popUpNbTry').fadeOut();
+      });
+    } #}
+
+
+window.onload = (event) => {
+    $('body').on('click', function(){
+         setTimeout(function() {
+            $.fn.editableform.buttons =
+                  '<button type="submit" class="btn btn-success editable-submit btn-sm waves-effect waves-light"><i class="material-icons lms-material-icons">done_outline</i></button>' +
+                  '<button type="button" class="btn btn-danger editable-cancel btn-sm waves-effect waves-light"><i class="material-icons lms-material-icons">clear</i></button>';
+
+            $('.ed_numberTry').editable({
+                    type: 'text',
+                    name: 'numberTry',
+                    title: "Nb d'essais",        
+                    mode: 'inline',
+                    inputclass: 'form-control-sm',
+                    error: function(response, newValue) {
+                        if (response.status == 'error') return response.message; 
+                    }
+            });
+            $('.ed_numberTryDescription').editable({
+                    type: 'textarea',
+                    name: 'numberTryDescription',
+                    title: "Description",        
+                    mode: 'inline',
+                    inputclass: 'form-control-sm',
+                    error: function(response, newValue) {
+                        if (response.status == 'error') return response.message; 
+                    }
+            }); 
+         },10);
+    });
+
+};
+
+</script>{% endblock %}

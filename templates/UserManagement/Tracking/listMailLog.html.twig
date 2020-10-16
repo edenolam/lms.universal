@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/css/bootstrap4-toggle.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<!-- navigator -->
+
+<div class="lms-breadcrumb">
+      <span><a href="
+      {% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}{% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+      {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+      {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+      {% else %} {{ path('home_dashboard') }}
+      {% endif %}">{{ lms_name }}</a></span> > <span class="bold">{{ 'tracking.menu' | trans }}</span>
+</div>
+
+    <div id="myTab" class="d-flex flex-wrap justify-content-center align-items-center text-center lms-progress-formation">
+        <div class="col-6 px-0 text-uppercase lms-tab"><a href="{{ path('admin_tracking_list') }}">{{'global.traking'|trans}}</a></div>
+        <div class="col-6 px-0 text-uppercase show lms-tab"><span>{{'global.mailLog'|trans}}</span></div>
+    </div>
+
+
+<!-- title of page -->
+<div class="d-flex align-items-center lms-title">
+	<h1 class="text-uppercase lms-h1">{{ 'mailLog.action.list' | trans }}
+  {# <input type="checkbox" id="viewArchivedToggle" checked data-toggle="toggle" data-off="{{'global.traking'|trans}}" data-on="{{'global.mailLog'|trans}}" data-offstyle="success" data-onstyle="success" data-url="{{ path('admin_tracking_list') }}"></h1>      #}
+    <hr/>
+</div>
+
+<!-- add button -->
+{#<div class="row mb-5">
+    <div class="col-12 text-right">
+        <a class="lms-button lms-button-blue" href="{{ path('admin_tracking_download') }}" style=" margin-left: 30px;" ><i class="material-icons lms-material-icons">cloud_download</i> {{ "tracking.action.download" | trans }}</a>
+    </div>
+</div>#}
+
+<div class="card border-0">
+    <div class="card-body">
+        <div class="table-responsive" id="users_list">
+            <table class="table table-bordered table-striped lms-table">
+            <thead class="thead-dark">
+              <tr>
+                    <th>{{ "mailLog.date" | trans  }}</th>
+                  <th>{{ "mailLog.from" | trans  }}</th>
+                  <th>{{ "mailLog.to" | trans  }}</th>
+                  <th>{{ "mailLog.cc" | trans  }}</th>
+                  <th>{{ "mailLog.subject" | trans  }}</th>
+              </tr>
+           </thead>
+           <tbody> 
+             {% for loggedMessage in loggedMessages %}
+                <tr>                                              
+                    <td>{{ loggedMessage.date|date('d/m/Y H:i:s')}}</td>
+                    <td>{% for key,data in loggedMessage.from %}{{key}}; {% endfor %}</td>
+                    <td>{% for key,data in loggedMessage.to %}{{key}}; {% endfor %}</td>
+                    <td>{% for key,data in loggedMessage.cc %}{{key}}; {% endfor %}</td>
+                    <td> 
+                        <a role="button" class="lms-button col-12" data-target="#loggedMessage-{{ loggedMessage.id }}" data-toggle="modal" >{{ loggedMessage.subject|truncate(40)|raw }}</a>
+                    </td>
+                </tr>
+             {% endfor %}
+           </tbody>
+          </table>
+      </div>
+  </div>
+  <div class="card-footer">
+      <div class="d-flex">
+            <ul class="pagination ml-auto">
+                {% if pagination.page > 1 %}
+                    <li class="page-item page-prev"><a class="page-link showSpinner" aria-label="Previous" href="{{ path(pagination.route,pagination.route_params|merge({'page': 1})) }}">&laquo;</a></li>
+                {% endif %}
+                        {% for p in range(max(pagination.page-4, 1), min(pagination.page+4, pagination.pages_count)) %}
+                          {% if p == pagination.page %} 
+                             <li  class="page-item active"><a class="page-link showSpinner" href="{{ path(pagination.route, pagination.route_params|merge({'page': p} )) }}">{{ p }}</a></li>
+                            {% else %}
+                             <li  class="page-item "><a class="page-link showSpinner" href="{{ path(pagination.route, pagination.route_params|merge({'page': p} )) }}">{{ p }}</a></li>
+                          {% endif %}
+                            
+
+                        {% endfor %}
+                {% if pagination.page < pagination.pages_count %}
+                    
+                    <li class="page-item page-next"><a class="page-link showSpinner" aria-label="Next" href="{{ path(pagination.route, pagination.route_params|merge({ 'page': pagination.pages_count})) }}">&raquo;</a></li>
+                {% endif %}
+            </ul>  
+      </div>      
+  </div>  
+</div>
+
+ {% for loggedMessage in loggedMessages %}
+    <div class="modal fade" id="loggedMessage-{{ loggedMessage.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{loggedMessage.subject}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body " >
+                    {{loggedMessage.body|raw }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'global.literal.close'|trans}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %} 
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/js/bootstrap4-toggle.min.js"></script>
+    <script>
+    $(function() {  
+        $('#viewArchivedToggle').change(function() {
+           {# var url = $(this).attr('data-url'); #}
+            window.location = $(this).attr('data-url');;  
+        })
+    });
+        
+    </script>
+{% endblock %}    

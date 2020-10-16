@@ -1,0 +1,32 @@
+<div class="row">
+  {{ form_errors(form) }}
+  <div class="col-lg-12">
+    <div class="form-group">
+        {{ form_label(form.title, 'formation.formation_path.title'|trans) }}
+        {{ form_widget(form.title, { 'attr': {'class': 'form-control'} }) }} 
+        {{ form_errors(form.title) }}
+      </div>
+      <div class="form-group">
+        {{ form_label(form.description, 'formation.formation_path.description'|trans) }}
+        {{ form_widget(form.description, { 'attr': {'class': 'form-control summernote'} }) }} 
+        {{ form_errors(form.description) }}
+      </div>
+      
+      <div class="form-group">
+        {{ form_label(form.file, 'formation.course.pdf'|trans) }}
+        {{ form_widget(form.file, { 'attr': {'class': 'form-control'} }) }} 
+        {{ form_errors(form.file) }}
+      </div>
+  </div>    
+</div>
+{% if module.activeSession == false and module.isValid == false and module.isArchived == false and  is_granted('ROLE_GESTION_MODULES') %}
+  <div class="row">
+    <div class="col-lg-12">
+          <div class="form-group" >
+              <button type="submit" class="lms-button lms-button-blue">
+                <i class="material-icons lms-material-icons">save</i> {{ 'global.submit'|trans }}
+          </div>          
+    </div>
+{% endif %}    
+    {{ form_widget(form) }}
+</div>

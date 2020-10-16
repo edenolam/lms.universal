@@ -1,0 +1,160 @@
+versioning:
+    goOnline:
+        title: To go online you must have the rights to publish online.
+        success: Uploading accepted 
+        error: Uploading failed
+    goOffLine:
+        title: To go to design mode you must explain the objective of the modifications.
+        description: Change planned/justifications/actions
+        success: Design mode accepted
+        error: Design mode failed
+formation:
+    linked: training(s) linked
+    noPage: Module conception is not finished
+    pbTest: At least 1 test is poorly designed
+    modulemodule_presentiel: Live module passed
+    reference:
+        support_indication: Support indications
+        edition: Edition
+        location: Place
+        editor: Editor
+        date: Date
+        publication_title: Publication title
+        numerotation: Numbering
+        normalise_number: Standard number
+        disponibility: Availability
+        informations: Information
+        url: Url
+ 
+    knowledge:
+        create:
+            title: Create a contact
+        list:
+            title: "List of contacts: "
+    download:
+        create:
+            title: Create an attached file
+        list:
+            title: "List of attached files: "            
+    page:
+        file_audio: Audio file
+        edit_file_audio: Modify la fichier audiothe audio file
+        literal: Page
+        sous_titre: Subtitle
+        content_code: Code HTML
+        textual_content: Text content
+        js_code: Code javascript
+        in_summary: In the summary
+        edit: Modify the page
+        edit_video: Modify the video
+        edit_pdf: Modify the PDF
+        video: Video
+        pdf: PDF        
+        previsualsation: Previsualisation
+        list:
+            create: Create a new page
+            list: Pages list
+        reference: Bibliographical references
+        ref_notice: Add a reference to the list
+        connaissances: Contacts
+        download: Attached files
+        type: Type of page
+    module_test:
+        chrono_question: Timed questions
+        chrono_session: Timed test
+    formation_path:
+        selectall: -- All tranings--
+        aleatoire: Random programme
+        non_aleatoire: Guided programme
+        select_module: Select the training modules my dragging them to the right column
+        catalogue: List of Trainings
+        opening: Opening
+        closing: Closing
+        literal: Training programme
+        realisation: Time of completion
+        description: Description
+        title: Title
+        module: Modules
+        file: The visual
+        list:
+            add_module: Add the modules
+            view: Visualisation
+            create: Create a new training programme
+        create:
+            title: Create a training
+    module:
+        selectall: --All modules --
+        eval_ligne: Eval. online
+        training_ligne: Train. online
+        presentiel: Presential
+        online: Online
+        pageNB: Number of pages
+        title: "Module : "
+        unPublish: Go to design mode
+        publish: Go online
+        unPublished: Design mode
+        published: Online
+        notAvialable: Test(s) missing
+        infos: Module information
+        regulatory_ref: "Regulatory reference : "
+        success: Module validated
+        literal: Modules
+        file: File
+        type: Type
+        lieu_formation: Training site
+        nom_animateur: Host name
+        code_client: Client code
+        conseils: Tips
+        mode_de_validation: Validation mode
+        duree: Planned duration (H:m)
+        number_try: Number of attempts
+        score: Score
+        scorm: Scorm 
+        scorm_zip: The file scorm in .zip #Elément à importer dans ce module
+        action: 
+            validationModeFalse: Validation mode not viable
+            copy: Copy a module
+            select: Select a module
+            create: Create a module
+            created: A module has been created
+            edit: Modify the module
+            updated: The module is up to date
+            description: Create a module description
+        list:
+            ariane_gestion: Management of modules
+            title: List of modules
+            prerequisites: "Prerequirements: "
+    module_file:
+        downloadable: Dowloadable during training
+    course:
+        title: Chapter
+        actif: Active
+        pdf: Chapter in Pdf
+        create:
+            literal: Create a new chapter
+        description: "Description: "
+        edit: Modify the chapter
+    list: 
+        title: TRAINING MANAGEMENT
+        reference: Reference
+        actions: Actions
+        ariane_gestion: List of trainings
+        action:
+             edit: Modify
+reference: 
+    author: Publication author
+    title: Publication title
+    date: Publication date
+
+form:
+    valider: Validate
+    reponse_fausse:  Oups!  The correct answer is :
+    reponse_correcte: You passed the test
+    type_exercice: Choose exercise type
+    glisser_deposer: Dragg & Drop
+    autres: Other
+    add_question: Add question
+    add_reponse: Add the answer
+    recommencer: Restart
+    title_tuto:  How to create a drag and drop
+    content_tuto: - here the short description

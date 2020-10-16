@@ -1,0 +1,35 @@
+<form   action="{{ path('app_login') }}"  {#"{{path("fos_user_security_check")}}" #} method="post">
+    <img class="" src="{{asset('images/core/logo.png')}}" alt="">
+    <p class="lms-login-welcome">{{"global.welcom.sentence"|trans}}</p>
+    <div class="">
+        {# if csrf_token #}
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+        {# endif #}
+                
+        <div class="lms-login-form-group lms-login-form-field">
+            <i class="material-icons lms-material-icons"> person </i>
+            <input class="form-control" placeholder="{{ 'security.login.username'|trans({}, 'FOSUserBundle')  }}"  id="username" name="_username" value="{{ last_username }}" required="required" autofocus/>
+        </div>
+        <div class="lms-login-form-group lms-login-form-field">
+            <i class="material-icons lms-material-icons"> lock </i>
+            <input class="form-control" placeholder="{{ 'security.login.password'|trans({}, 'FOSUserBundle')  }}" type="password"  id="password" name="_password" required="required" />
+        </div>
+        <div class="lms-login-form-group lms-login-form-check">
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="remember_me" name="_remember_me" value="on" />
+                <span class="custom-control-label lms-custom-control-label">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle')  }}</span>
+            </label>
+            <a href="{{ path('fos_user_resetting_request') }}" class="">{{ 'user.password.forgot'|trans  }}</a>
+        </div>
+        <div class="lms-login-form-footer">
+            {% if error %}
+                <div class="alert alert-icon lms-alert-danger alert-dismissible" role="alert">
+                    <button data-dismiss="alert" class="close"></button>
+                    <i class="material-icons lms-material-icons">lock</i> {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
+            <button type="submit" name="_submit" class="lms-button lms-button-blue">{{ 'security.login.submit'|trans({}, 'FOSUserBundle')  }}</button>
+        </div>
+    </div>                                     
+</form>
+

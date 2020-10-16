@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="page-header">
+  <div class="page-title">
+    <h1>{{'formation.editor.title'|trans}}</h1>
+    <div class="page-subtitle">1 - 12 of 1713 photos</div>
+    <div class="page-options d-flex">
+      <select class="form-control custom-select w-auto">
+        <option value="asc">Newest</option>
+        <option value="desc">Oldest</option>
+      </select>
+      <div class="input-icon ml-2">
+        <span class="input-icon-addon">
+          
+        </span>
+        <input type="text" class="form-control w-10" placeholder="Search photo">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row row-cards">
+  {% for editorFile in editorFiles %}
+    <div class="col-sm-6 col-lg-4 select-img" data-id="{{editorFile.id}}">
+      <div class="card p-3">
+        <a href="javascript:void(0)" class="mb-3">
+          <img class="rounded" src="{{ asset("uploads/files/"~editorFile.uri) }}" alt="editorFile.slug">
+        </a>
+        <div class="d-flex align-items-center px-2">
+          <div class="avatar avatar-md mr-3" style="background-image: url(/tabler/images/faces/female/25.jpg)"></div>
+          <div>
+            <div>Nathan Guerrero</div>
+            <small class="d-block text-muted">12 days ago</small>
+          </div>
+          <div class="ml-auto text-muted">
+            <a href="javascript:void(0)" class="icon"> 112</a>
+            <a href="javascript:void(0)" class="icon d-none d-md-inline-block ml-3"> 42</a>
+          </div>
+        </div>
+        <input style="margin-top:10px;" class="form-control" type="text" id="img-{{editorFile.id}}" value="{{ asset("uploads/files/"~editorFile.uri) }}">
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+<script>
+  $(document).ready(function () {
+    $('.select-img').on('click', function(){
+      var id = $(this).attr('data-id');
+      console.log(id);
+      var copyText = document.getElementById('img-' + id);
+      copyText.select();
+      document.execCommand("copy");
+      window.close();
+    });
+  });
+</script>
+
+{% endblock %}

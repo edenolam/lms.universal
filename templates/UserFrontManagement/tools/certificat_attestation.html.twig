@@ -1,0 +1,89 @@
+{% extends "base.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="lms-breadcrumb">
+        <a href="
+        {% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+        {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+        {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+        {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+        {% else %} {{ path('home_dashboard') }}
+        {% endif %}">{{lms_name}}</a> > <span>{{'dashboard.certificats'|trans}} & {{'dashboard.attestations'|trans}}</span>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="d-flex align-items-center lms-title">
+                <h1 class="text-uppercase lms-h1">{{'dashboard.attestations'|trans}}</h1>
+                <hr>
+            </div>
+            <div class="d-flex flex-column flex-sm-row align-items-center">
+                {% for attestation in attestations %}
+                    <div class="lms-card-reward lms-card-attestation">
+                        <div class="card lms-card">
+                            <div class="lms-card-front">
+                                <div class="card-header lms-card-header">
+                                    <span>{{'dashboard.attestation'|trans}}</span>
+                                </div>
+                                <div class="card-body text-center lms-card-body">
+                                    <p class="card-title text-uppercase lms-card-title {% if attestation.ownDownload > 0 %} lms-text-secondary {% else %}text-info {% endif %}">
+                                        {% if app.request.locale == "fr" %}{{ attestation.createDate|date("d/m/y") }} {% else %} {{ attestation.createDate|date("y/m/d") }} {% endif %}
+                                    </p>
+                                </div>
+                                <div class="card-footer text-center lms-card-footer">
+                                    <a href="{{ path('user_formation_download', {'userFormationId' : attestation.userSessionFollow.id}) }}" target="_blank">
+                                        <i class="material-icons lms-material-icons {% if attestation.ownDownload > 0 %} lms-text-secondary {% else %}text-info {% endif %}">cloud_download</i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="d-flex align-items-center lms-title">
+                <h1 class="text-uppercase lms-h1">{{'dashboard.certificats'|trans}}</h1>
+                <hr>
+            </div>
+            <div class="d-flex flex-column flex-sm-row align-items-center">
+            {% for certificat in certificats %}
+                <div class="lms-card-reward lms-card-certificat">
+                    <div class="card lms-card">
+                        <div class="lms-card-front">
+                            <div class="card-header lms-card-header">
+                                <span>{{'dashboard.certificat'|trans}}</span>
+                            </div>
+                            <div class="card-body text-center lms-card-body">
+                                <p class="card-title text-uppercase lms-card-title">
+                                    <span class="{% if certificat.ownDownload > 0 %} lms-text-secondary {% else %}text-info {% endif %}"> {{certificat.userModuleFollow.session.formationPath.title}}</span><br>
+                                    <span class="{% if certificat.ownDownload > 0 %} lms-text-secondary {% else %}text-info {% endif %}">{{certificat.userModuleFollow.module.title}}</span>
+                                    </br></br>
+                                    {% if app.request.locale == "fr" %}{{ certificat.createDate|date("d/m/y") }} {% else %} {{ certificat.createDate|date("y/m/d") }} {% endif %}
+                                </p>
+                            </div>
+                            <div class="card-footer text-center lms-card-footer">
+                                <a href="{{ path('user_certificat_download', {'userModuleId' : certificat.userModuleFollow.id})}} " target="_blank">
+                                    <i class="material-icons lms-material-icons {% if certificat.ownDownload > 0 %} lms-text-secondary {% else %}text-info {% endif %}">cloud_download</i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+
+    <script></script>
+{% endblock %}

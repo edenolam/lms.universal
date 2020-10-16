@@ -1,0 +1,131 @@
+results:
+  user_finish: Apprenant(s) ayant fini
+  global_result: Moyenne de résultat
+  remaining_days: Jour(s) restant
+  page:
+    title: Bilans des sessions
+  export:
+    copy: Exporter la copie
+    result: Exporter le bilan
+    exportPresentiel: Export présentiel
+  formation_ref: Référence de la formation
+  module_ref: Référence du module
+  reading_rate: Taux de lecture complète
+  time_rate: Temps moyen
+  lecturePercent: Pourcentage de lecture
+  validation_percentage: Pourcentage de validation
+  participant_number: Nombre de participants
+  score_rate: Score moyen
+  module_title: Titre du module
+  module:
+    success_literral: module validé 
+    faillur_literral: module non validé 
+    with: =>
+    lecture_done: Lecture complète du module
+    presence: Présentiel
+  form:
+    classepresentiel: MODULES PRESENTIELS PAR CSV 
+    classe_presentiel_info: (100 lignes max)
+    filtre_session: FILTRE SESSION
+    filtre_labo: FILTRE ENTREPRISE
+    filtre_test: SONDAGE
+    valid: VALIDER
+    sauvegarde: Ajouter aux favories
+    sauvegarde_title: MES FAVORIES
+    sauvegarde_name: Nommez cette sauvegarde
+    sauvegarde_annuler: Annuler
+    sauvegarde_bouton: Enregistrer
+    sauvegarde_executer: EXECUTER
+    placeholder: Choisissez la sauvegarde à exécuter
+    confirm_delete_title: Êtes-vous sûr de vouloir supprimer cette sauvegarde
+    confirm_delete: Supprimer
+  tableau:
+    title:
+      kpi: Résumé du tableau selon filtrage
+      moySuccess: Moyenne de lignes de modules réussis
+      moyInProcess: Moyenne de lignes de modules en cours
+      moyFailed: Moyenne de lignes de modules échoués
+      success: Nombre de modules validés
+      inProcess: Nombre de modules en cours
+      failed: Nombre de lignes de modules échoués
+      test: TEST
+      division: DIVISION
+      equipe: EQUIPE
+      prenom: PRENOM
+      nom: NOM
+      session: SESSION
+      formation: FORMATION
+      module: MODULE
+      progression: PROGRES.
+      date: DATE
+      temps_passe: TEMPS PASSE
+      nb_essais: NB D'ESSAIS
+      score: SCORE
+      date_validation: DATE VALID.
+      actions: ACTIONS
+  bilan:
+    team: "Sélectionnez l'équipe"   
+    division: "Sélectionnez le division"   
+    user: "Sélectionnez l'utilisateur"   
+    formation: "Sélectionnez la formation"    
+    module: "Sélectionnez le module"
+    datestart: "Sessions ouvertes entre"
+    dateend: "et"
+  user_module_follow:
+    edit: Editer un module présentiel  
+    bilan: "Bilan de l'utilisateur"
+    feuille_presence: "Feuille de présence"
+  nbTry:
+    error: La modification ne peut être faite si un champ est manquant.
+    success: Modication effectuée.
+    error_nb: Merci de renseigner un chiffre plus grand que le nombre d'essais.
+
+sondage:
+  test: Sélectionnez le test
+  statistique: Statistiques
+  totalUser: Nombre total de participants
+
+presentiel:
+  csv:
+    import: Importer le fichier
+    info:
+      info: Rapport d'importation de modules présentiels
+      evalrequired: Evaluations planifiées en import
+      evalAdd: Evaluations ajoutées
+      evalfailedAdd: Evaluations non ajoutées
+      moduleFollow: Modules planifiés en import
+      moduleFollowAdd: Modules ajoutés
+      moduleFollowfailedAdd: Modules non ajoutés
+      data:
+        ligne: ligne
+        module: Erreurs dans le csv au niveau du module
+        apprenant: Erreurs dans le csv au niveau l'apprenant
+        session: Erreurs dans le csv au niveau de la session
+        umf: Erreurs dans le csv au niveau de la réalisation du module
+  module:
+    start_date: Date de début du module
+    end_date: Date de fin du module
+    duration_total: Temps de présence
+    seconde: Secondes
+    success: Le module est réussi ?
+    id: Référence EuroAcadamy
+    username: Identifiant
+    prenom: Prénom
+    nom: Nom
+    sessionslug: Référence session
+    formationslug: Référence formation
+    moduleslug: Référence module
+    session: Session
+    formation: Formation
+    moduleregulatoryRef: Référence réglementaire du module
+    module: Module
+
+  evalPres:
+    date_pass: Date de réussite (si le test est réussi)
+    date_down: Date de réalisation du test
+    duration: Durée du test (en secondes)
+    tentative: Numéro de la tentative
+    score: Score en pourcentage
+    id: Référence EuroAcadamy (bis)
+
+  

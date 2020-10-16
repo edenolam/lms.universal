@@ -1,0 +1,39 @@
+Titre;question;type de réponse;réponse;statut de la réponse
+;Le tarif forfaitaire de responsabilité est un tarif de remboursement qui s'applique à :;2;Certains médicaments au sein d'un même groupe générique;0
+;Le tarif forfaitaire de responsabilité est un tarif de remboursement qui s'applique à :;2;Tous les médicaments au sein d'un même groupe générique;1
+;Le tarif forfaitaire de responsabilité est un tarif de remboursement qui s'applique à :;2;Tous les médicaments génériques;0
+;Sur les RCP, la date notée dans la rubrique numéro 10 est celle de la dernière révision du RCP.;2;VRAI;1
+;Sur les RCP, la date notée dans la rubrique numéro 10 est celle de la dernière révision du RCP.;2;FAUX;0
+;Combien de temps les RTU émises par l’ANSM sont-elles valables ?;2;1 an renouvelable;0
+;Combien de temps les RTU émises par l’ANSM sont-elles valables ?;2;3 ans maximum;0
+;Combien de temps les RTU émises par l’ANSM sont-elles valables ?;2;3 ans renouvelables;1
+;Combien de temps les RTU émises par l’ANSM sont-elles valables ?;2;Sans durée de validité;0
+;Une autorisation temporaire d’utilisation ou ATU permet d’utiliser un médicament sans AMM ou dans des conditions non conformes à l’AMM.;2;VRAI;1
+;Une autorisation temporaire d’utilisation ou ATU permet d’utiliser un médicament sans AMM ou dans des conditions non conformes à l’AMM.;2;FAUX;0
+;Les ATU de cohorte doivent être délivrées avec le RCP, la notice et l’étiquetage.;2;VRAI;1
+;Les ATU de cohorte doivent être délivrées avec le RCP, la notice et l’étiquetage.;2;FAUX;0
+;Quelles caractéristiques correspondent aux ATU de cohorte ?;1;Pour un groupe de patients;1
+;Quelles caractéristiques correspondent aux ATU de cohorte ?;1;Pour un patient nommément désigné;0
+;Quelles caractéristiques correspondent aux ATU de cohorte ?;1;Engagement du laboratoire à déposer le dossier d’AMM;1
+;Quelles caractéristiques correspondent aux ATU de cohorte ?;1;Suivi des patients et collecte des données;1
+;Quelles caractéristiques correspondent aux ATU nominatives ?;1;Pour un groupe de patients;0
+;Quelles caractéristiques correspondent aux ATU nominatives ?;1;Pour un patient nommément désigné;1
+;Quelles caractéristiques correspondent aux ATU nominatives ?;1;A la demande et sous la responsabilité d’un médecin hospitalier;1
+;Quelles caractéristiques correspondent aux ATU nominatives ?;1;Suivi des patients et collecte des données;0
+;Pour prolonger la durée de protection d’une molécule, il est possible d’obtenir un Certificat Complémentaire de Protection (CCP).;2;VRAI;1
+;Pour prolonger la durée de protection d’une molécule, il est possible d’obtenir un Certificat Complémentaire de Protection (CCP).;2;FAUX;0
+;Quelles affirmations sont correctes concernant les génériques ?;1;Les procédures administratives du générique sont allégées;1
+;Quelles affirmations sont correctes concernant les génériques ?;1;Le service médical rendu est supposé être identique à celui du princeps;1
+;Quelles affirmations sont correctes concernant les génériques ?;1;Le Prix Fabricant Hors Taxe (PFHT) est fixé à -80% du PFHT du médicament princeps;0
+;Quelles affirmations sont correctes concernant les génériques ?;1;La bioéquivalence est démontrée par une étude de biodisponibilité;1
+;Le montant de prise en charge par l’assurance maladie d’un princeps et de ses génériques est identique quel que soit le prix de vente de chaque spécialité.;2;VRAI;1
+;Le montant de prise en charge par l’assurance maladie d’un princeps et de ses génériques est identique quel que soit le prix de vente de chaque spécialité.;2;FAUX;0
+;Quelles affirmations sont correctes concernant le tarif forfaitaire de responsabilité ou TFR ?;2;Le TFR est identique pour toutes les spécialités d’un groupe générique;1
+;Quelles affirmations sont correctes concernant le tarif forfaitaire de responsabilité ou TFR ?;2;Le TFR d'un générique est inférieur au TFR du produit de référence;0
+;Quelles affirmations sont correctes concernant le tarif forfaitaire de responsabilité ou TFR ?;2;Le TFR d'un générique est supérieur au TFR du produit de référence;0
+;La traçabilité des médicaments (entrée / sorties) par leur numéro de lot inclus dans un code Datamatrix est obligatoire depuis 2011 :;2;VRAI;1
+;La traçabilité des médicaments (entrée / sorties) par leur numéro de lot inclus dans un code Datamatrix est obligatoire depuis 2011 :;2;FAUX;0
+;Que signifie « rétrocession » ?;2;Acte de délivrer un médicament par une officine à des patients hospitalisés;0
+;Que signifie « rétrocession » ?;2;Acte de délivrer un médicament par une officine à des patients non hospitalisés;0
+;Que signifie « rétrocession » ?;2;Acte de délivrer un médicament par une pharmacie à usage intérieur (PUI) à des patients hospitalisés;0
+;Que signifie « rétrocession » ?;2;Acte de délivrer un médicament par une pharmacie à usage intérieur (PUI) à des patients non hospitalisés;1

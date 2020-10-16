@@ -1,0 +1,19 @@
+<div class="card">
+	<div class="card-header">
+		{% for moduleTest in currentModule.moduleTests %}
+			
+			{% if moduleTest.test.typeTest.conditional == 'eval' and userModule.lectureDone and not userModule.success %}
+				{% if date(moduleTest.openingDate) > date() %}
+					<a href="{{path('test_front_begin', {'testSlug' : moduleTest.test.slug, 'moduleSlug' : currentModule.slug, 'sessionSlug' : currentSession.slug})}}" id="eval" style="margin-right: 15px;" class="btn disabled btn-primary">{{ 'userFrontManagement.page.eval_not_opened' | trans }}</a>
+				{% elseif date(moduleTest.closingDate) < date() %}
+					<a href="{{path('test_front_begin', {'testSlug' : moduleTest.test.slug, 'moduleSlug' : currentModule.slug, 'sessionSlug' : currentSession.slug})}}" id="eval" style="margin-right: 15px;" class="btn disabled btn-primary">{{ 'userFrontManagement.page.eval_closed' | trans }}</a>
+				{% elseif date(moduleTest.openingDate) < date() and date(moduleTest.closingDate) > date() %}
+					<a href="{{path('test_front_begin', {'testSlug' : moduleTest.test.slug, 'moduleSlug' : currentModule.slug, 'sessionSlug' : currentSession.slug})}}" id="eval" style="margin-right: 15px;" class="lms-button lms-button-blue">{{ 'userFrontManagement.page.eval' | trans }}</a>
+				{% endif %}
+			{% elseif moduleTest.test.typeTest.conditional == 'training' %}
+				<a href="{{path('test_front_begin', {'testSlug' : moduleTest.test.slug, 'moduleSlug' : currentModule.slug, 'sessionSlug' : currentSession.slug})}}" id="training" style="margin-right: 15px;" class="lms-button lms-button-blue">{{ 'userFrontManagement.page.training' | trans }}</a>&nbsp;		
+			{% endif %}
+		{% endfor %}
+		<a href="#" id="course" class="lms-button lms-button-blue">{{ 'userFrontManagement.page.course' | trans }}</a>&nbsp;
+	</div>
+</div>

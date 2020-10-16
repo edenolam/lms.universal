@@ -1,0 +1,106 @@
+<form action="{{ path('sondage_view') }}" class="needs-validation row" method="post" enctype="multipart/form-data">
+    <div class="col-12 row">
+        <div class="col-xl-9 row">
+            <div class="col-md-4" >
+                <p>{{ 'results.form.filtre_test'|trans }}</p>
+                {% if tests is not null %}
+                    <select class="custom-select" id="sondage_test" name="sondage[test]">
+                        <option value="">{{ 'sondage.test' | trans }}</option>
+                        {% for t in tests %}
+                            <option value="{{ t.id }}" {% if test | length > 0 and t.id == test.id %} selected {% endif %}>{{ t.title }}</option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    {{ form_widget(sondageForm.test, { 'attr': {'class': 'custom-select'} }) }}
+                {% endif %}
+                {{ form_errors(sondageForm.test) }}
+            </div>
+            
+            <div class="col-md-4"  {% if testLook == null %}hidden{% endif %}>
+                <p>{{ 'results.form.filtre_labo'|trans }}</p>
+                <div class="col-md-12 mb-2">
+                    {% if divisions is not null %}
+                        <select class="custom-select" id="sondage_division" name="sondage[division]">
+                            <option value="">{{ 'results.bilan.division' | trans }}</option>
+                            {% for d in divisions %}
+                                <option value="{{ d.id }}" {% if division | length > 0 and d.id == division.id %} selected {% endif %}>{{ d.title }}</option>
+                            {% endfor %}
+                        </select>
+                    {% else %}
+                        {{ form_widget(sondageForm.division, { 'attr': {'class': 'custom-select'} }) }}
+                    {% endif %}
+                    {{ form_errors(sondageForm.division) }}
+                </div>
+                <div class="col-md-12 mb-2">
+                    {% if teams is not null %}
+                        <select class="custom-select" id="sondage_team" name="sondage[team]">
+                            <option value="">{{ 'results.bilan.team' | trans }}</option>
+                            {% for t in teams %}
+                                <option value="{{ t.id }}" {% if equipe | length > 0 and t.id == equipe.id %} selected {% endif %}>{{ t.title }}</option>
+                            {% endfor %}
+                        </select>
+                    {% else %}
+                        {{ form_widget(sondageForm.team, { 'attr': {'class': 'custom-select'} }) }}
+                    {% endif %}
+                    {{ form_errors(sondageForm.team) }}
+                </div>
+                <div class="col-md-12 mb-4">
+                    {% if users is not null %}
+                        <select class="custom-select" id="sondage_user" name="sondage[user]">
+                            <option value="">{{ 'results.bilan.user' | trans }}</option>
+                            {% for u in users %}
+                                <option value="{{ u.id }}" {% if user | length > 0 and u.id == user.id %} selected {% endif %}>{{ u.firstname }}
+                                    {{ u.lastname }}</option>
+                            {% endfor %}
+                        </select>
+                    {% else %}
+                        {{ form_widget(sondageForm.user, { 'attr': {'class': 'custom-select'} }) }}
+                    {% endif %}
+                    {{ form_errors(sondageForm.user) }}
+                </div>
+            </div>
+
+            <div class="col-md-4" {% if testLook == null %}hidden{% endif %}>
+                <p>{{ 'results.form.filtre_session'|trans }}</p>
+                <div class="col-md-12 mb-2">
+                    {% if formations is not null %}
+                        <select class="custom-select" id="sondage_formation" name="sondage[formation]">
+                            <option value="">{{ 'results.bilan.formation' | trans }}</option>
+                            {% for f in formations %}
+                                <option value="{{ f.id }}" {% if formation | length > 0 and f.id == formation.id %} selected {% endif %}>{{ f.title }}</option>
+                            {% endfor %}
+                        </select>
+                    {% else %}
+                        {{ form_widget(sondageForm.formation, { 'attr': {'class': 'custom-select'} }) }}
+                    {% endif %}
+                    {{ form_errors(sondageForm.formation) }}
+                </div>
+                <div class="col-md-12 mb-2">
+                    {{ form_widget(sondageForm.session, { 'attr': {'class': 'custom-select'} }) }}
+                    {{ form_errors(sondageForm.session) }}
+                </div>
+                
+            </div>
+        </div>
+        <div class="col-3 d-flex flex-wrap justify-content-around align-items-center mb-5">
+            <div class="my-3">
+                <button class="lms-button lms-button-blue" type="submit" id="eeeeeee">
+                    {{ 'results.form.valid'|trans }}
+                </button>
+            </div>
+            {% if test != null %}
+                <div class="my-3">
+                    <span class="lms-button lms-button-gray" id="exportpdf" data-path="{{path('sondage_export')}}">
+                        {{ 'audit.export'|trans }}
+                    </span>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    
+    {{ form_widget(sondageForm._token) }}
+    
+
+   
+</form>

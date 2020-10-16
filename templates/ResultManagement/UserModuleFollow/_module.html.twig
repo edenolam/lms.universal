@@ -1,0 +1,144 @@
+<div class="m-auto w-auto lms-card-module">
+    <div class="card lms-card">
+        <div class="card text-center lms-card-front">
+            <div class="card-header d-flex justify-content-between lms-card-header">
+                {# <h3 class="card-title">
+                      <span class="lms-text-primary text-capitalize font-weight-bold">
+                    {{ 'session.module' | trans }} 
+                    {% if user_module_follow.module.type is not null %}
+                        <small>({{ user_module_follow.module.type.title }})</small>
+                    {% endif %}
+                    </span>
+                </h3> #}
+                <div>
+                    {% if user_module_follow.module.moduleEvaluationId %}    
+                        <a href="{{ path('results_user_test_edit', {'user': user_module_follow.user.id, 'session': user_module_follow.session.id, 'test': user_module_follow.module.moduleEvaluationId, 'userModuleFollow': user_module_follow.id }) }}" data-toggle="tooltip" data-original-title="Bilan Evaluation">
+                            <img src="{{ asset('images/core/evaluation-top.svg') }}"
+                                alt="{{ 'global.literal.certificat'|trans }}" class="pr-1">
+                        </a>     
+                    {% endif %}
+                </div> 
+                <div>
+                    {% if user_module_follow.percentage %}
+                        <div class="progress lms-progress-circle"
+                                data-percentage="{{ user_module_follow.percentage }}">
+                            <span class="progress-left"> <span class="progress-bar"></span></span>
+                            <span class="progress-right"><span class="progress-bar"></span></span>
+                            <div class="progress-value lms-progress-value">
+                                <div>{{ user_module_follow.percentage }}%</div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="progress lms-progress-circle" data-percentage="0">
+                            <span class="progress-left"><span class="progress-bar"></span></span>
+                            <span class="progress-right"><span class="progress-bar"></span></span>
+                            <div class="progress-value lms-progress-value">
+                                <div>0%</div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="lms-card-img-round">
+                {% if user_module_follow.session.formationPath.uri %}
+                    <img src="{{ asset('uploads/files/' ~ user_module_follow.session.formationPath.uri) }}"
+                            alt="Visuel du module">
+                {% else %}
+                    <img src="/images/core/logo.png" alt="Visuel du module">
+                {% endif %}
+            </div>
+            <div class="card-body lms-card-body">
+                {# set moduleSart = null %}
+                {% set moduleEnd = null %}
+                {% for session_module in session_modules %}
+                    {% if session_module.module == user_module_follow.module %}
+                        {% set moduleSart = session_module.openingDate %}
+                        {% set moduleEnd = session_module.closingDate %}
+                    {% endif %}
+                {% endfor #}
+                {# set pretest = false %}
+                {% set pre-test-valid = false %}
+                {% set pretest_id = false %}
+                {% set eval = false %}
+                {% set eval_id = false %}
+                {% set training = false %}
+                {% set training_id = false #}
+                {# for validationMode in user_module_follow.module.validationModes %}
+                    {% if validationMode.conditional == 'pre-test-non-valid' %}
+                        {% set pretest = true %} 
+                    {% elseif validationMode.conditional == 'pre-test-valid' %}
+                        {% set pretest = true %}                                   
+                    {% elseif validationMode.conditional == 'eval' %}
+                        {% set eval = true %}
+                    {% endif %}
+                {% endfor #}
+                {# for moduleTest in user_module_follow.module.moduleTests %}
+                    {% if moduleTest.test.typeTest.conditional == 'training' %}
+                        {% set training = true %}
+                        {% set training_id = moduleTest.test.id %}
+                    {% endif %}
+                    {% if moduleTest.test.typeTest.conditional == 'pretest' %}
+                        {% set pretest_id = moduleTest.test.id %}
+                    {% endif %}
+                    {% if moduleTest.test.typeTest.conditional == 'eval' %}
+                        {% set eval_id = moduleTest.test.id %}
+                    {% endif %}
+                {% endfor #}
+
+                {# {% if user_module_follow.module.modulePreTestId %} 
+                    <span data-toggle="tooltip" data-original-title="Bilan Pre-test">
+                        <a href="{{ path('results_user_test_edit', {'user': user_module_follow.user.id, 'session': user_module_follow.session.id, 'test': user_module_follow.module.modulePreTestId, 'userModuleFollow': user_module_follow.id }) }}">
+                            <img src="{{ asset('images/core/badge-jaune.svg') }}"
+                                alt="{{ 'global.literal.certificat'|trans }}" class="pr-1">
+                        </a>     
+                    </span>
+                {% endif %}     #}
+                {# {% if user_module_follow.module.moduleTrainingId %}
+                    <span data-toggle="tooltip" data-original-title="Bilan Traning">
+                        <a href="{{ path('results_user_test_edit', {'user': user_module_follow.user.id, 'session': user_module_follow.session.id, 'test': user_module_follow.module.moduleTrainingId, 'userModuleFollow': user_module_follow.id }) }}">
+                            <img src="{{ asset('images/core/badge-vert.svg') }}"
+                                alt="{{ 'global.literal.certificat'|trans }}" class="pr-1">
+                        </a>     
+                    </span>
+                {% endif %} #}
+                <p class="card-title lms-card-title">{{ user_module_follow.module.title }}
+                    <br>
+                    <small><i>({{ user_module_follow.module.regulatoryRef }})</i></small>
+                </p>
+
+                {# {% for validationMode in user_module_follow.module.validationModes %} #}
+                    {# <p>{% if validationMode.conditional == 'pre-test-valid' and user_module_follow.module.modulePreTestId %}
+                            <a href="{{ path('results_user_test_edit', {'user': user_module_follow.user.id, 'session': user_module_follow.session.id, 'test': user_module_follow.module.modulePreTestId, 'userModuleFollow': user_module_follow.id }) }}">{{ validationMode.title }} 
+                            </a>
+                        {% elseif validationMode.conditional == 'pre-test-non-valid' and user_module_follow.module.modulePreTestId %}
+                            <a href="{{ path('results_user_test_edit', {'user': user_module_follow.user.id, 'session': user_module_follow.session.id, 'test': user_module_follow.module.modulePreTestId, 'userModuleFollow': user_module_follow.id }) }}">{{ validationMode.title }} 
+                            </a> #}
+                        {# {% if validationMode.conditional == 'eval'  and user_module_follow.module.moduleEvaluation.isTestPresentiel  %}
+                            <p>
+                                <a class="lms-button lms-button-gray" href="{{ path('results_user_test_edit', {'user': user_module_follow.user.id, 'session': user_module_follow.session.id, 'test': user_module_follow.module.moduleEvaluationId, 'userModuleFollow': user_module_follow.id }) }}">{{ validationMode.title }} <i class="material-icons lms-material-icons ">edit</i>
+                                </a>
+                            </p>
+                        {% else %} 
+                            {{ validationMode.title }} 
+                        {% endif %}                    
+                    </p>
+                {% endfor %} #}
+                {# <p>
+                    <a class="lms-button lms-button-blue" href="{{ path('results_user_module_follow_edit', {'id': user_module_follow.id}) }}"><i class="material-icons lms-material-icons ">edit</i> <span>{{ 'results.user_module_follow.bilan' | trans }}</span> </a>
+                </p>                         #}
+            </div>
+            <div class="card-footer d-flex flex-wrap align-items-center p-0 lms-card-footer">
+                <p class="m-0 lms-card-day">{{ user_module_follow.module.realisationTime|date('H') }}{{ 'global.duration.litle.hours'|trans }}{{ user_module_follow.module.realisationTime|date('i') }}</p>
+                {% if user_module_follow.module.moduleStart is not null and user_module_follow.module.moduleEnd is not null %}
+                    {% if app.request.locale == "fr" %}
+                        <p class="m-0 lms-card-date"> {{ user_module_follow.module.moduleStart|date('d/m/Y') }}
+                            > {{ user_module_follow.module.moduleEnd|date('d/m/Y') }} </p>
+                    {% else %}
+                        <p class="m-0 lms-card-date"> {{ user_module_follow.module.moduleStart|date('Y/m/d') }}
+                            > {{ user_module_follow.module.moduleEnd|date('Y/m/d') }} </p>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

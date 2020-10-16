@@ -1,0 +1,20 @@
+.lms {
+    &-table {
+        th {
+            font-size: .8125em;
+            font-weight: 400;
+        }
+        td {
+            font-size: .9375em;
+        }
+        &-suivi {}
+        &-row {
+            &:not(:first-child):not(:nth-child(2)) {
+                border-top: .0625em solid $gray;
+            }
+        }
+        &-cell {
+            padding: 2.5em 0;
+        }
+    }
+}

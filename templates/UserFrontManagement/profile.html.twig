@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}  
+
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/bootstrap-fileupload/bootstrap-fileupload.css') }}" />
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col col-md-3">
+      <div class="card card-profile">
+          <div class="card-header" style="background-image: url(https://www.placehold.it/280x150/EFEFEF/AAAAAA&amp;text=no+image);"></div>
+          <div class="card-body text-center">
+            {% if user.photo %}
+              <img class="card-profile-img" src="{{ asset('uploads/user/') }}{{ user.photo  }}">
+            {% else %}
+              <img class="card-profile-img" src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image">
+            {% endif %}  
+            <h3 class="mb-3">{{ user.firstName }} {{ user.lastname }}</h3>
+            <p class="mb-4">
+              {{ user.function}} 
+            </p>
+          </div>
+        </div>
+    </div>  
+    <div class="col col-md-9"> 
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ user.username }}</h3>
+        </div>      
+        <div class="card-body">
+            <form action="{{ path('user_profile') }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+              <div class="row">
+                <div class="col col-md-3">
+                    <div class="form-group">
+                            <div class="fileupload fileupload-new" data-provides="fileupload">
+                                <div class="fileupload-new thumbnail">
+                                    {% if user.photo %}
+                                        <img src="{{ asset('uploads/user/') }}{{ user.photo  }}" />
+                                    {% else %}
+                                        <img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" />
+                                    {% endif %}
+                                </div>
+                                <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                <div>
+                                    <span class="btn btn-white btn-file">
+                                        <span class="fileupload-new">{{ 'laboratory.selectImage' | trans }}</span>
+                                        <span class="fileupload-exists">{{ 'laboratory.changeImage' | trans }}</span>
+                                        {{ form_widget( form.image, {'attr': {'class': 'default' } } ) }}
+                                    </span>
+                                    <a href="#" class="lms-button lms-button-red fileupload-exists" data-dismiss="fileupload"><i class="material-icons lms-material-icons ">delete</i> {{ 'laboratory.removeImage' | trans }}</a>
+                               </div>
+                            </div>                           
+                    </div>    
+                    <div class="info">
+                        {{ 'userManagement.info' | trans | raw }}
+                    </div>         
+                </div>
+                <div class="col col-md-9">
+                    <div class="form-group">
+                        {{ form_label(form.civility,  'user.civility'|trans ) }}
+                        {{ form_widget(form.civility, { 'attr': {'class': 'form-control form-group', 'readonly': 'readonly'} }) }}   
+                    </div>      
+                    <div class="form-group">
+                        {{ form_label(form.firstname,  'user.prenom'|trans) }}
+                        {{ form_widget(form.firstname, { 'attr': {'class': 'form-control form-group', 'readonly': 'readonly'} }) }}  
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.lastname,  'user.nom'|trans) }}
+                        {{ form_widget(form.lastname, { 'attr': {'class': 'form-control form-group', 'readonly': 'readonly'} }) }}    
+                    </div>    
+                    <div class="form-group">
+                        {{ form_label(form.address,  'user.address'|trans) }}
+                        {{ form_widget(form.address, { 'attr': {'class': 'form-control form-group', 'readonly': 'readonly'} }) }}  
+                        {{ form_errors(form.address) }}  
+                    </div>       
+                    <div class="form-group">
+                        {{ form_label(form.addressBis,  'user.addressBis'|trans) }}
+                        {{ form_widget(form.addressBis, { 'attr': {'class': 'form-control form-group', 'readonly': 'readonly'} }) }}  
+                        {{ form_errors(form.addressBis) }}  
+                    </div>       
+                    <div class="form-group">
+                        {{ form_label(form.zipCode,  'user.zipCode'|trans) }}
+                        {{ form_widget(form.zipCode, { 'attr': {'class': 'form-control form-group', 'readonly': 'readonly'} }) }}  
+                        {{ form_errors(form.zipCode) }}  
+                    </div>    
+                    <div class="form-group">
+                        {{ form_label(form.phone,  'user.phone'|trans) }}
+                        {{ form_widget(form.phone, { 'attr': {'class': 'form-control form-group', 'readonly': 'readonly'} }) }}  
+                        {{ form_errors(form.phone) }}  
+                    </div>          
+                    <div class="form-group">
+                        {{ form_label(form.country,  'user.country'|trans) }}
+                        {{ form_widget(form.country, { 'attr': {'class': 'form-control form-group', 'readonly': 'readonly'} }) }}  
+                        {{ form_errors(form.country) }}  
+                    </div> 
+                    <div class="form-group">
+                        {{ form_label(form.function,  'user.function'|trans) }}
+                        {{ form_widget(form.function, { 'attr': {'class': 'form-control form-group', 'readonly': 'readonly'} }) }}  
+                        {{ form_errors(form.function) }}  
+                    </div>          
+                    {{ form_widget(form._token) }}
+
+                    <div class="form-actions">  
+                        <button id="button_edit_user" type="submit" class="lms-button lms-button-blue pull-right">
+                            <i class="material-icons lms-material-icons">save</i> {{ 'global.submit'|trans }}
+                        </button>
+                    </div>
+                </div>    
+            </div>  
+           </form>
+        </div>    
+      <div class="card-footer">
+          * {{ 'global.obligatoire' | trans}}
+      </div>             
+    </div>
+    </div>
+</div>    
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }} 
+    
+<script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js" integrity="sha256-SOuLUArmo4YXtXONKz+uxIGSKneCJG4x0nVcA0pFzV0=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-migrate-3.0.1.min.js"  integrity="sha256-F0O1TmEa4I8N24nY0bya59eP6svWcshqX1uzwaWC4F4=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{{ asset('assets/bootstrap-fileupload/bootstrap-fileupload.js') }}"></script>    
+
+{% endblock %}
+
+
+

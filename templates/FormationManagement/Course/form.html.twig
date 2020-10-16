@@ -1,0 +1,38 @@
+{{ form_errors(form) }}
+    <div class="my-3">
+        <div>
+            {{ form_label(form.title, 'formation.formation_path.title'|trans) }}
+        </div>
+        <div>
+            {{ form_widget(form.title, { 'attr': {'class': 'form-control'} }) }}
+            {{ form_errors(form.title) }}
+        </div>
+    </div>
+    <div class="my-3">
+        <div>
+            {{ form_label(form.description, 'formation.formation_path.description'|trans) }}
+        </div>
+        <div>
+            {{ form_widget(form.description, { 'attr': {'class': 'summernote'} }) }}
+            {{ form_errors(form.description) }}
+        </div>
+    </div>
+
+    <div class="my-3">
+        <div>
+            {{ form_label(form.file, 'formation.course.pdf'|trans) }}
+        </div>
+        <div>
+            {{ form_widget(form.file, { 'attr': {'class': ''} }) }}
+            {{ form_errors(form.file) }}
+        </div>
+    </div>
+    <div class="my-3 text-center">
+        {% if module.activeSession == false and module.isValid == false and module.isArchived == false and is_granted('ROLE_GESTION_UNITES_PEDAGOGIQUES')  %}
+            <button type="submit" class="lms-button lms-button-blue">
+                <i class="material-icons lms-material-icons">save</i>
+                <span>{{ 'global.submit'|trans }}</span>
+            </button>
+        {% endif %}
+    </div>
+{{ form_widget(form) }}

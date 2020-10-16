@@ -1,0 +1,141 @@
+// USER & MAIN HEADER
+.header.user {
+    background-color: $prussian-blue;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 2;
+    .resp-search {
+        display: none;
+        @media screen and(max-width: $tablet) {
+            display: block;
+            margin-left: 38px;
+        }
+        .close {
+            fill: $white;
+            display: none;
+        }
+        &.visible {
+            .hidden-search {
+                top: 49px;
+            }
+            .open-search {
+                display: none;
+            }
+            .close {
+                display: block;
+            }
+        }
+        svg {
+            fill: $white;
+            cursor: pointer;
+            display: block;
+            margin-top: 5px;
+        }
+        .hidden-search {
+            display: block;
+            position: absolute;
+            width: 100%;
+            background-color: $prussian-blue;
+            height: 49px;
+            left: 0;
+            z-index: 8;
+            top: -49px;
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+            input {
+                display: inline-block;
+                background-color: transparent;
+                border: none;
+                border-bottom: 1px solid $white;
+                color: $white;
+                &::placeholder {
+                    color: $white;
+                }
+            }
+            svg {
+                display: inline-block;
+                vertical-align: bottom;
+            }
+        }
+    }
+    .text-default {
+        color: $white !important;
+    }
+    .item {
+        margin-left: 15px;
+        &.notification {
+            position: relative;
+            svg {
+                fill: $white;
+            }
+            .number {
+                background-color: $jaffa-orange;
+                color: $white;
+                width: 16px;
+                height: 16px;
+                border-radius: 8px;
+                display: block;
+                position: absolute;
+                bottom: 2px;
+                right: -6px;
+                text-align: center;
+                font-size: 0.7em;
+                line-height: 16px;
+            }
+        }
+        &.search {
+            @media screen and(max-width: $tablet) {
+                display: none;
+            }
+            input {
+                border: 0;
+                border-bottom: 1px solid $white;
+                background-color: transparent;
+                color: $white;
+            }
+            svg {
+                fill: $white;
+                vertical-align: bottom;
+            }
+        }
+        &.lang {
+            a {
+                color: $white;
+                line-height: 32px;
+                text-decoration: underline;
+            }
+        }
+        &.dropdown {
+            .dropdown-menu {
+                background-color: $scooter-blue;
+                text-align: center;
+                svg {
+                    display: block;
+                    width: 24px;
+                    margin: -11px auto 5px;
+                    fill: $white;
+                }
+                a {
+                    color: $white;
+                    &:hover {
+                        background-color: $scooter-blue;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.slider-nav-container {
+    .slider-container {
+        display: none;
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+        &.visible {
+            display: block;
+        }
+    }
+}

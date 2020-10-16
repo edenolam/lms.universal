@@ -1,0 +1,146 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <!-- navigateur -->
+    <div class="lms-breadcrumb">
+        <span> <a href=" {% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }} {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }} {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }} {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }} {% else %} {{ path('home_dashboard') }} {% endif %}">{{lms_name}}</a> </span> > <span> <a href="{{path('admin_formation_path_list')}}">{{'formation.list.ariane_gestion'|trans}}</a> </span> > <span class="bold">{{formationPath.title}}</span>
+    </div>
+
+    <!-- title of page -->
+    <div class="d-flex align-items-center lms-title">
+        <h1 class="text-uppercase lms-h1">{{'formation.list.title'|trans}}</h1>
+        <hr>
+    </div>
+
+    <div class="text-uppercase text-center d-flex flex-column flex-sm-row align-items-center justify-content-sm-start">
+        <a class="px-4 px-lg-5 py-1 lms-session-tab" href="{{ path('admin_formation_path_edit', {'slug' : formationPath.slug}) }}">
+            {{ 'formation.formation_path.description' | trans }}</a>
+        <span class="px-4 px-lg-5 py-1 lms-session-tab lms-session-tab-actif">{{ 'formation.formation_path.list.add_module' | trans }}</span>
+        <a class="px-4 px-lg-5 py-1 lms-session-tab" href="{{ path('admin_formation_path_view', {'slug' : formationPath.slug}) }}">{{ 'formation.formation_path.list.view' | trans }}</a>
+    </div>
+
+    <form action="{{ path('admin_formation_path_edit_module', {'slug': formationPath.slug }) }}" method="post" class="p-5 lms-bg-gray" enctype="multipart/form-data">
+        <p class="lms-text-secondary">{{ 'formation.formation_path.select_module' | trans }}</p>
+        <div class="row">
+            <div class="col-lg-6"></div>
+            <div class="col-lg-6"> {{ form_widget(form.isModulesAleatoires) }} </div>
+        </div>
+        <div class="d-flex justify-content-between dnd">
+            <div class="list bg-white mr-2 w-50 lms-session-dnd-block" hqy-droppable-element="active">
+                {% set ordre = 1 %}
+                {% for module in newModuleListe %}
+                    <div class="dnd-item d-inline-block px-2 py-1 m-1 lms-session-dnd-item" slug="{{module.slug}}" idmodule="{{module.id}}" ordre="{{ordre}}" isdefaultmodule="{{module.isDefaultModule}}" hqy-droppable-element="active">{{module.title }}
+                        <i class="text-uppercase">V.{{ module.version}}</i>
+                        <i>({{ module.regulatoryRef }})</i>
+                    </div>
+                    {% set ordre = ordre + 1 %}
+                {% endfor %}
+            </div>
+            <div class="list bg-white mr-2 w-50 lms-session-dnd-block" hqy-droppable-element="active" id="add_modules">
+                {% set ordre = 1 %}
+                {% for module in oldModuleListe %}
+                    <div class="dnd-item d-inline-block px-2 py-1 m-1 {% if module.isDefaultModule %}list-group-item-warning{% else %} lms-session-dnd-item{% endif %}" slug="{{module.slug}}" idmodule="{{module.id}}" ordre="{{ordre}}" isdefaultmodule="{{module.isDefaultModule}}" hqy-droppable-element="active">{{module.title }}
+                        <i class="text-uppercase">V.{{ module.version}}</i>
+                        <i>({{ module.regulatoryRef }})</i>
+                    </div>
+                    {% set ordre = ordre + 1 %}
+                {% endfor %}
+            </div>
+        </div>
+        {% include "FormationManagement/FormationPath/form_module.html.twig" %}
+    </form>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script src="{{asset('js/hqy.interact.min.js')}}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#submitButton').on('click', submitFormModule);
+
+            // Drag and Drop management
+            var $ph,
+                axisY;
+            var childrenDivDnD = document.getElementById('add_modules').children;
+            $('.dnd-item').hqyDraggable({
+                proxy: 'clone',
+                onStartDrag: function (event, target) {
+
+                    if ($(this).attr('isDefaultModule') != true) {
+                        $(target).width($(this).width());
+
+                        $ph = $(this).clone();
+                        $ph.addClass('op2');
+                        $(this).hide().before($ph);
+                    }
+                },
+                onStopDrag: function () {
+                    if ($(this).attr('isDefaultModule') != true) {
+                        $ph.after(this);
+                        $ph.remove();
+                        $ph = null;
+                        $(this).show();
+                        for (var i = 0; i < childrenDivDnD.length; i++) {
+                            childrenDivDnD[i].setAttribute('ordre', i + 1);
+                        }
+                    }
+                }
+            });
+
+            $('.dnd-item').hqyDroppable({
+                onDragEnter: function () {
+                    axisY = 0;
+                },
+                onDragOver: function (event, target) {
+                    if (event.data.top > axisY) {
+                        $(this).after($ph);
+                    } else {
+                        $(this).before($ph);
+                    } axisY = event.data.top;
+                }
+            });
+
+            $('.dnd .list').hqyDroppable({
+                onDragEnter: function (event, target) {
+                    var $filter = $(this).find('.dnd-item:visible').filter(function () {
+                        return this !== target;
+                    });
+                    if ($filter.length <= 0) {
+                        $(this).append($ph);
+                    }
+                }
+            });
+
+
+        });
+
+        // Select modules
+        function submitFormModule(event) {
+            var childrenDivDnD = document.getElementById('add_modules').children;
+            var collectionHolder = $('#link_list');
+            var prototype = collectionHolder.data('prototype');
+            var listOfId = [];
+
+            collectionHolder.find('li').each(function () {
+                $(this).remove();
+            });
+            for (var i = 0; i < childrenDivDnD.length; i++) {
+                listOfId[childrenDivDnD[i].getAttribute('ordre')] = childrenDivDnD[i].getAttribute('slug');
+                if (i == 0) {
+                    var index = 0;
+                } else {
+                    var index = collectionHolder.data('index') + 1;
+                }
+                var newForm = prototype;
+                newForm = newForm.replace(/__name__/g, index);
+                collectionHolder.data('index', index);
+                var newFormLi = $('<li></li>').append(newForm);
+                collectionHolder.append(newFormLi);
+                document.getElementById('formation_path_formationPathModules_' + index + '_module').value = childrenDivDnD[i].getAttribute('idModule');
+                document.getElementById("formation_path_formationPathModules_" + index + "_sort").value = childrenDivDnD[i].getAttribute('ordre');
+                document.getElementById("formation_path_formationPathModules_" + index + "_formationPath").value = {{ formationPath.id }};
+                document.getElementById("formation_path_formationPathModules_" + index + "_title").value = "{{ formationPath.title }}_" + childrenDivDnD[i].innerText;
+            }
+        }
+    </script>
+{% endblock %}

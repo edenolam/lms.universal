@@ -1,0 +1,40 @@
+Titre;question;type de réponse;réponse;statut de la réponse
+;Un professionnel de santé souhaiterait faire inviter sa femme au symposium organisé dans une semaine par votre entreprise. Quelle doit être votre réponse ? ;2;Oui sans contrainte;0
+;Un professionnel de santé souhaiterait faire inviter sa femme au symposium organisé dans une semaine par votre entreprise. Quelle doit être votre réponse ? ;2;Oui si elle paye son billet d’avion (l’hôtel sera pris en charge par votre entreprise);0
+;Un professionnel de santé souhaiterait faire inviter sa femme au symposium organisé dans une semaine par votre entreprise. Quelle doit être votre réponse ? ;2;Non en aucun cas;1
+;Pour remercier un professionnel de santé de sa venue à un congrès, vous souhaitez lui faire un cadeau. Dans la liste suivante, quel(s) cadeau(x) est (sont) autorisé(s) par la loi anti-cadeaux ?;1;Aucun;1
+;Pour remercier un professionnel de santé de sa venue à un congrès, vous souhaitez lui faire un cadeau. Dans la liste suivante, quel(s) cadeau(x) est (sont) autorisé(s) par la loi anti-cadeaux ?;1;Une bouteille de champagne;0
+;Pour remercier un professionnel de santé de sa venue à un congrès, vous souhaitez lui faire un cadeau. Dans la liste suivante, quel(s) cadeau(x) est (sont) autorisé(s) par la loi anti-cadeaux ?;1;Un écran d’ordinateur;0
+;Pour remercier un professionnel de santé de sa venue à un congrès, vous souhaitez lui faire un cadeau. Dans la liste suivante, quel(s) cadeau(x) est (sont) autorisé(s) par la loi anti-cadeaux ?;1;Un tensiomètre;0
+;Dans le cadre de la loi anti-cadeaux, pouvez-vous choisir librement un restaurant pour organiser une RP ? ;2;Oui sans contrainte. Je choisirai un bon restaurant gastronomique;0
+;Dans le cadre de la loi anti-cadeaux, pouvez-vous choisir librement un restaurant pour organiser une RP ? ;2;Oui à condition que le prix du repas par personne soit raisonnable (hors restaurant étoilé et gastronomique);1
+;Dans le cadre de la loi anti-cadeaux, pouvez-vous choisir librement un restaurant pour organiser une RP ? ;2;Non, c’est le Conseil de l’Ordre qui choisira;0
+;Dans le cadre de la loi anti-cadeaux, pouvez-vous choisir librement un restaurant pour organiser une RP ? ;2;Non, c’est uniquement l’intervenant qui doit le choisir;0
+;L’hospitalité dans le cadre des DMOS…;1;Doit être prévue par convention (excepté pour les opportunités);1
+;L’hospitalité dans le cadre des DMOS…;1;Doit être, obligatoirement, soumise pour avis au Conseil de l’Ordre compétent ;1
+;L’hospitalité dans le cadre des DMOS…;1;Peut être étendue au conjoint;0
+;L’hospitalité dans le cadre des DMOS…;1;Est autorisée pour les manifestations autres que scientifiques;0
+;Les salariés d’un laboratoire pharmaceutique sont-ils concernés par la loi anti-cadeaux ?;2;Oui ;1
+;Les salariés d’un laboratoire pharmaceutique sont-ils concernés par la loi anti-cadeaux ?;2;Non;0
+;Parmi ces professions, quelles sont celles concernées par la loi anti-cadeaux ? ;1;Infirmiers;1
+;Parmi ces professions, quelles sont celles concernées par la loi anti-cadeaux ? ;1;Dentistes;1
+;Parmi ces professions, quelles sont celles concernées par la loi anti-cadeaux ? ;1;Médecins;1
+;Parmi ces professions, quelles sont celles concernées par la loi anti-cadeaux ? ;1;Pharmaciens;1
+;Parmi ces professions, quelles sont celles concernées par la loi anti-cadeaux ? ;1;Secrétaires médicales;0
+;Que risquent les professionnels de santé (personnes physiques) en cas d’infraction aux dispositions de la loi anti-cadeaux ? ;1;Une amende pouvant aller jusqu'à 75 000€;1
+;Que risquent les professionnels de santé (personnes physiques) en cas d’infraction aux dispositions de la loi anti-cadeaux ? ;1;Une peine d’emprisonnement pouvant aller jusqu'à 2 ans;1
+;Que risquent les professionnels de santé (personnes physiques) en cas d’infraction aux dispositions de la loi anti-cadeaux ? ;1;Une interdiction temporaire d’exercice de la profession pouvant aller jusqu'à 10 ans;1
+;Que risquent les professionnels de santé (personnes physiques) en cas d’infraction aux dispositions de la loi anti-cadeaux ? ;1;Une radiation de l’Ordre concerné;0
+;En cas d’infraction aux dispositions de la loi anti-cadeaux, un laboratoire pharmaceutique peut être exclu des marchés publics. ;2;VRAI;1
+;En cas d’infraction aux dispositions de la loi anti-cadeaux, un laboratoire pharmaceutique peut être exclu des marchés publics. ;2;FAUX;0
+;Les laboratoires pharmaceutiques sont-ils concernés par le décret sur la Transparence des liens ?;2;Oui ;1
+;Les laboratoires pharmaceutiques sont-ils concernés par le décret sur la Transparence des liens ?;2;Non;0
+;Quelles sont les personnes concernées par le décret sur la Transparence des liens ? ;1;Professions médicales;1
+;Quelles sont les personnes concernées par le décret sur la Transparence des liens ? ;1;Profession paramédicales;1
+;Quelles sont les personnes concernées par le décret sur la Transparence des liens ? ;1;Etudiants se destinant aux professions de santé;1
+;Quelles sont les personnes concernées par le décret sur la Transparence des liens ? ;1;Associations d'usagers du système de santé;1
+;A partir de quel montant un avantage est-il rendu public ? ;2;Pas de montant minimum;0
+;A partir de quel montant un avantage est-il rendu public ? ;2;Supérieur ou égal à 10€ TTC;1
+;A partir de quel montant un avantage est-il rendu public ? ;2;Supérieur à 50€;0
+;Les rémunérations en salaires ou honoraires d’un professionnel de santé en contrepartie d'un travail réalisés pour le compte d’un laboratoire pharmaceutique sont-elles considérés comme des avantages ? ;2;Oui ;0
+;Les rémunérations en salaires ou honoraires d’un professionnel de santé en contrepartie d'un travail réalisés pour le compte d’un laboratoire pharmaceutique sont-elles considérés comme des avantages ? ;2;Non;1

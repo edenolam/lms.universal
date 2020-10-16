@@ -1,0 +1,87 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="lms-breadcrumb">
+        <a href="
+            {% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+            {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+            {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+            {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+            {% else %} {{ path('home_dashboard') }}
+            {% endif %}">{{lms_name}}</a> ><a href="{{path('user_formation')}}">{{'menu.userFormation.title'|trans}}</a> > <a href="{{path('user_formation_module', {'slugSession' : currentSession.slug})}}">{{currentFormation.title}}</a> > <span>{{currentModule.title}}</span>
+    </div>
+
+	<div class="d-flex align-items-center lms-title">
+		<h1 class="text-uppercase lms-h1">{{ currentFormation.title }} : <span class="capitalize">{{currentModule.title}}</span></h1>
+		<hr>
+	</div>
+
+    <div class="row align-items-center">
+        <div class="d-flex m-auto">
+            <div class="col-sm-9">
+                <h2 class="">{{ 'userFrontManagement.page.congratulation'|trans }}</h2>
+                <h3 class="">{{ 'userFrontManagement.page.info.end_module'|trans }} {{ currentModule.title }}</h3>
+                <p>
+                    <a href="{{ path('user_suivis_formation', {'slugSession' : currentSession.slug, 'slug': currentFormation.slug}) }}" class="lms-button lms-button-gray">{{'menu.suivi.title'|trans}}</a>
+                </p>
+                {% if nextModule != null and nextModule.isScorm == false and (nextModule.type is null or nextModule.type.id == 1 ) %}
+                    <p>
+                        <a href="{{ path('user_formation_module_organisation', {'slugSession' : currentSession.slug, 'formationPath': currentSession.formationPath.id, 'slugModule': nextModule.slug, 'slugChapter': null, 'slugPage': null}) }}" class="lms-button lms-button-blue">{{'global.literal.continue'|trans}}</a>
+                    </p>
+                {% elseif nextModule != null and nextModule.isScorm == true %}
+                    <p>
+                        <a class="lms-button lms-button-blue" href="{{ path('user_formation_module_organisation_scorm', {'slugSession': currentSession.slug, 'slugModule': nextModule.slug,}) }}">{{'global.literal.continue'|trans}}</a>
+                    </p>
+                {% endif %}
+            </div>
+            <div class="col-sm-3 d-none d-sm-block">
+                <img src="{{asset('images/core/illus-module-fini.svg')}}" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center align-items-end text-center mt-5">
+        {% set isEvalRequire = false %}
+        {% set isLectureRequire = false %}
+        {% for modeValidation in currentModule.validationModes %}
+            {% if modeValidation.conditional == 'eval' %}
+                {% set isEvalRequire = true %}
+            {% endif %}
+        {% if modeValidation.conditional == 'lecture' %}
+                {% set isLectureRequire = true %}
+            {% endif %}
+        {% endfor %}
+        <div class="col-12 col-sm-4 pb-3">
+            {% if currentModule.type is null or currentModule.type.id == 1 %}
+                <a  href="{{ path('user_formation_module_organisation', {'slugSession': currentSession.slug, 'formationPath': currentSession.formationPath.id, 'slugModule': currentModule.slug, 'slugChapter': currentChapter.slug,'slugPage': currentPage.slug }) }}">
+                    <img src="{{asset('images/core/retour-module-color.svg')}}" ><br>{{'userFrontManagement.module.back'|trans}}
+                </a>
+            {% endif %}
+        </div>
+        <div class="col-12 col-sm-4 pb-3">
+            <a href="{{ path('user_formation_module', {'slugSession':currentSession.slug}) }}">
+                <img src="{{asset('images/core/retour-formation-color.svg')}}" ><br>{{'userFrontManagement.formation.back'|trans}}
+            </a>
+        </div>
+        <div class="col-12 col-sm-4">
+            {% for moduleTest in currentModule.moduleTests %}
+                {% if isEvalRequire == true and moduleTest.test.typeTest.conditional == 'eval' and not userModule.success %}
+                    {% if userModule.lectureDone or  isLectureRequire == false %}
+                        {% if date(moduleTest.openingDate) <= date() and date() <= date(moduleTest.closingDate)   %}
+                        <a href="{{path('test_front_begin', {'testSlug' : moduleTest.test.slug, 'moduleSlug' : currentModule.slug, 'sessionSlug' : currentSession.slug})}}">
+                            <img src="{{asset('images/core/evaluationColor.svg')}}" ><br>{{'userFrontManagement.test.goto'|trans}}
+                        </a>
+                        {% endif %}	
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+	{{parent()}}
+	<script>		
+	</script>
+{% endblock js %}

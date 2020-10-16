@@ -1,0 +1,99 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<div class="page-header">
+  <div class="page-title">
+    {{'results.page.title'|trans}}
+  </div>
+</div>
+<div class="container">
+  <div class="row row-cards">
+
+    <div class="col col-lg-3 d-md-none d-lg-block">
+      {% include "ResultManagement/menu.html.twig" %}
+    </div>
+
+    <div class="col col-lg-9">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">{{userFormation.formation.title}} - {{userFormation.user.firstname}} {{userFormation.user.lastname}}</h3>
+        </div>
+        <div class="card-body">
+          <p class="card-text"><b>{{'formation.formation_path.opening'|trans}} - {{'formation.formation_path.closing'|trans}} : </b>{{userFormation.session.openingDate|date('d/m/Y')}} - {{userFormation.session.closingDate|date('d/m/Y')}}</p>
+          <p class="card-text"><b>{{'userFrontManagement.module.progress'|trans}}</b></p>
+          <div class="progress" style="margin-bottom: 20px;">
+            <div class="progress-bar" role="progressbar" style="width: {{userFormation.percentage}}%" aria-valuenow="{{userFormation.percentage}}" aria-valuemin="0" aria-valuemax="100"> {{userFormation.percentage}}%</div>
+          </div>
+          <div class="row row-cards">
+
+              {% for module in modules %}
+
+                {% if module.module is not null and module.module is defined %}
+                
+                  <div class="card">
+                    <div class="card-header">
+                      <h4 class="card-title">{{module.module.module.title}} - {{module.module.module.reference}}</h4>
+                    </div>
+                    <div class="card-body">
+                      <p class="card-text"><b>{{'formation.formation_path.opening'|trans}} - {{'formation.formation_path.closing'|trans}} : </b>{{module.moduleOpeningDates|date('d/m/Y')}} - {{module.moduleClosingDates|date('d/m/Y')}}</p>
+                      <p class="card-text"><b>{{'userFrontManagement.formation.work_time'|trans}} : </b>
+                        {% set hoursMeanTime = (module.module.durationTotalSec/3600)|round(0, 'floor') %}
+                        {% set minutesMeanTime =  ((module.module.durationTotalSec-(hoursMeanTime*3600))/60)|round(0, 'floor') %}
+                        {{hoursMeanTime}}h{{minutesMeanTime}}
+                      </p>
+                      <p class="card-text"><b>{{'userFrontManagement.module.progress'|trans}}</b></p>
+                      <div style="margin-bottom: 20px;" class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: {{module.module.percentage}}%" aria-valuenow="{{module.module.percentage}}" aria-valuemin="0" aria-valuemax="100"> {{module.module.percentage}}%</div>
+                      </div>
+                      {% set i = 0 %}
+                      <div class="row row-cards">
+
+                        {% for test in module.tests.userTests %}
+
+                          <div class="card">
+                            <div class="card-header">
+                              <h4 class="card-title">{{test.last.test.title}} / {{test.last.test.typeTest.title}}</h4>
+                            </div>
+                            <div class="card-body">
+                              
+                              <p class="card-text"><b>{{'formation.formation_path.opening'|trans}} - {{'formation.formation_path.closing'|trans}} : </b>{{module.tests.moduleTests[i].openingDate|date('d/m/Y')}} - {{module.tests.moduleTests[i].closingDate|date('d/m/Y')}}</p>
+                              <p class="card-text"><b>{{'test.date_done'|trans}} : </b>{{test.last.datePass|date('d/m/Y')}}</p>
+                              <p class="card-text"><b>{{'formation.module.number_try'|trans}} : </b>{{test.last.tentative}}</p>
+                              <p class="card-text"><b>{{'formation.module.score'|trans}} : </b>{{test.last.score}}</p>
+                              <p class="card-text"><b>{{'global.literal.tentatives'|trans}} : </b></p>
+                              <ul>
+                                {% for tentative in test.all %}
+                                  <li class="card-text"><a href="{{path('results_test_correction', {'id' : tentative.id})}}">{{tentative.test.title}} - {{tentative.tentative}}</a></li>
+                                {% endfor %}
+                              </ul>
+                              {% if test.last.score >= module.tests.moduleTests[i].score %}
+                                <p class="card-text">{{'global.literal.success'|trans}}</p>
+                              {% else %}
+                                <p class="card-text">{{'global.literal.fail'|trans}}</p>
+                              {% endif %}
+                              
+                            </div>
+                          </div>
+                          
+                          {% set i = i + 1 %}
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+
+              {% endfor %}
+          </div>
+        </div>
+        <div class="card-footer">
+            {{ form_start(form, {'method': 'post', 'action': path('results_user_formation_detail', {'id' : userFormation.id})}) }}
+            {{ form_errors(form) }}
+            {{form_row(form.hidden) }}
+          <button type="submit" class="ml-auto lms-button lms-button-blue">{{'results.export.copy'|trans}}</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

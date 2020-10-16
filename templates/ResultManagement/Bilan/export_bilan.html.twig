@@ -1,0 +1,108 @@
+<div class="mt-5">
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark"> <!-- add class="thead-light" for a light header -->
+        <tr>
+            <th>{{ 'results.tableau.title.division'|trans }} </th>
+            <th>{{ 'results.tableau.title.equipe'|trans }} </th>
+            <th>{{ 'results.tableau.title.prenom'|trans }} </th>
+            <th>{{ 'results.tableau.title.nom'|trans }} </th>
+            <th>{{ 'results.tableau.title.session'|trans }} </th>
+            <th>{{ 'results.tableau.title.formation'|trans }} </th>
+            <th>{{ 'results.tableau.title.module'|trans }} </th>
+            <th>{{ 'results.tableau.title.progression'|trans }} </th>
+            <th>{{ 'results.tableau.title.date'|trans }} </th>
+            <th>{{ 'results.tableau.title.temps_passe'|trans }}  </th>
+            {# PRE-TEST  #}
+            <th bgcolor="#F7D414">{{ 'results.tableau.title.nb_essais'|trans }} </th>
+            <th bgcolor="#F7D414">{{ 'results.tableau.title.score'|trans }}  </th>
+            <th bgcolor="#F7D414">{{ 'results.tableau.title.date_validation'|trans }} </th>
+            {# ENTRAINEMENT  #}
+            <th bgcolor="#8DE5EB">{{ 'results.tableau.title.score'|trans }}  </th>
+            {# EVALUATION #}
+            <th bgcolor="#F67864">{{ 'results.tableau.title.nb_essais'|trans }} </th>
+            <th bgcolor="#F67864">{{ 'results.tableau.title.score'|trans }}  </th>
+            <th bgcolor="#F67864">{{ 'results.tableau.title.date_validation'|trans }}  </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if filtre|length > 0 %}
+            {% for modulefiltre in filtre %}
+                <tr>
+                    <td>{{ modulefiltre.user.division | default('-') }}</td>
+                    <td>{{ modulefiltre.user.team | default('-') }}</td>
+                    <td>{{ modulefiltre.user.firstname | default('') }}</td>
+                    <td>{{ modulefiltre.user.lastname | default('')}}</td>
+                    <td>{{ modulefiltre.session.title }}</td>
+                    <td>{{ modulefiltre.session.formationPath.title }}</td>
+                    <td>{{ modulefiltre.module.title }}  <i class="lms-text-secondary text-uppercase">V.{{ modulefiltre.moduleVersion}}</i> <i class="text-dark">({{ modulefiltre.module.regulatoryRef }})</i>
+                            [{{ modulefiltre.module.type.title }}]</td>
+
+                    {% if modulefiltre.module.type.conditional != 'presentiel' %}
+                        <td>{{ modulefiltre.percentage }} % </td>
+                    {% else %}
+                        <td bgcolor="#3C4040"></td>
+                    {% endif %}
+
+                    <td>{% if modulefiltre.startDate is not null %}
+                                {% if app.request.locale == "fr" %}{{ modulefiltre.startDate|date("d/m/y") }} {% else %} {{ modulefiltre.startDate|date("y/m/d") }} {% endif %}
+                            {% else %} ** {% endif %}
+                            -
+                            {% if modulefiltre.endDate is not null %}
+                                {% if app.request.locale == "fr" %}{{ modulefiltre.endDate|date("d/m/y") }} {% else %} {{ modulefiltre.endDate|date("y/m/d") }} {% endif %}
+                            {% else %} ** {% endif %}</td>
+                    <td> 
+                        {% if modulefiltre.durationTotalSec is not null %}
+                            
+                            {% set hoursMeanTime = (modulefiltre.durationTotalSec/3600)|round(0, 'floor') %}
+                            {% set minutesMeanTime =  ((modulefiltre.durationTotalSec-(hoursMeanTime*3600))/60)|round(0, 'floor') %}
+                            {{hoursMeanTime}}h{{minutesMeanTime}}
+                        {% endif %}
+                    </td>
+                    {# --------------------- Pre-test ---------------------- #}
+                    {% if modulefiltre.userPreTest is not null and modulefiltre.userPreTest.score >= 0 %}
+                        <td bgcolor="#F7D414">{{ modulefiltre.userPreTest.tentative | default('-')}}</td>
+                        <td bgcolor="#F7D414">{{ modulefiltre.userPreTest.score | default('-') }}</td>
+                        <td bgcolor="#F7D414">
+                             {% if modulefiltre.userPreTest.datepass != null %}
+                                    {% if app.request.locale == "fr" %}{{ modulefiltre.userPreTest.datepass | date("d/m/y") }} {% else %} {{ modulefiltre.userPreTest.datepass | date("y/m/d") }} {% endif %}
+                                {% else %}-{% endif %}
+                        </td>
+                    {% else %}
+                        <td bgcolor="#3C4040"> </td>
+                        <td bgcolor="#3C4040"> </td>
+                        <td bgcolor="#3C4040"> </td>
+                    {% endif %}
+                    {# --------------------- Entrainement -------------------- #}
+                    {% if modulefiltre.userTraining is not null and modulefiltre.userTraining.score >= 0 %}
+                        <td bgcolor="#8DE5EB">{{ modulefiltre.userTraining.score | default('-') }} %
+                        </td>
+                    {% else %}
+                        <td bgcolor="#3C4040"> </td>
+                    {% endif %}
+                    {# --------------------- Evaluation ---------------------- #}
+                     
+                    
+                    {% if modulefiltre.userEvaluation is not null and modulefiltre.userEvaluation.score >= 0 %}
+                         <td bgcolor="#F67864">
+                            {{ modulefiltre.userEvaluation.tentative | default('-') }}
+                        </td>
+                        <td bgcolor="#F67864">{{ modulefiltre.userEvaluation.score | default('-') }} %
+                        </td>
+                        <td bgcolor="#F67864">
+                            {% if modulefiltre.userEvaluation.datepass != null %} {#  #}
+                                    {% if app.request.locale == "fr" %}{{ modulefiltre.userEvaluation.datepass | date("d/m/y") }} {% else %} {{  modulefiltre.userEvaluation.datepass | date("y/m/d") }} {% endif %}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    {% else %}
+                       <td bgcolor="#3C4040"></td>
+                        <td bgcolor="#3C4040"></td>
+                        <td bgcolor="#3C4040"></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+</div>

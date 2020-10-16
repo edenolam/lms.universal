@@ -1,0 +1,213 @@
+.lms {
+    &-course {
+        &-h2 {
+            font-size: .9375em;
+            font-weight: 500;
+            margin: 0;
+        }
+        &-cross {
+            background-color: $prussian-blue;
+            border-radius: 100%;
+            cursor: pointer;
+            display: block;
+            height: 1.5em;
+            margin: 0 auto;
+            position: relative;
+            width: 1.5em;
+            &.active,
+            &:hover {
+                &:before {
+                    transform: translate(-50%, -50%) rotate(270deg);
+                }
+                &:after {
+                    transform: translate(-50%, -50%) rotate(270deg);
+                }
+            }
+            &::before {
+                content: '';
+                display: block;
+                width: 2px;
+                height: 14px;
+                background-color: $white;
+                transition: all ease-in-out 0.3s;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+            &::after {
+                content: '';
+                display: block;
+                width: 2px;
+                height: 14px;
+                background-color: $white;
+                transition: all ease-in-out 0.3s;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%) rotate(90deg);
+            }
+        }
+    }
+    &-content {
+        iframe {
+            @media screen and (max-width: $lg) {
+                height: 400px;
+            }
+        }
+    }
+    &-nav-button {
+        background-color: $gallery-gray;
+        border-radius: 100%;
+        display: block;
+        height: 2em;
+        position: absolute;
+        top: 2.9em;
+        transition: all ease-in-out 0.3s;
+        width: 2em;
+        &:hover {
+            background-color: darken($gallery-gray, 20%);
+            &#back_button {
+                left: 0;
+            }
+            &#next_button {
+                right: 0;
+            }
+        }
+        &#back_button {
+            left: .5em;
+        }
+        &#next_button {
+            right: .5em;
+        }
+        .lms-material-icons {
+            margin: .25em;
+        }
+    }
+    &-textual-container {
+        border: .0625em solid $scorpion-gray;
+        max-height: 0;
+        margin: -.8em 0 1em;
+        padding: 1em 1em 0;
+        opacity: 0;
+        &.active {
+            max-height: none;
+            opacity: 1;
+            transition: opacity .4s ease-in-out, max-height .3s ease-in-out;
+        }
+    }
+}
+
+// .formation-page-container{
+//     
+//     .formation-page-content{
+//         
+//         iframe{
+//             @media screen and (max-width: $laptop){
+//                 height: 400px;
+//             }
+//         }
+//         .nav-button{
+//             display: block;
+//             width: 32px;
+//             height: 32px;
+//             border-radius: 16px;
+//             background-color: $gallery-grey;
+//             position: absolute;
+//             top: 60px;
+//             // transform: translateY(-50%);
+//             transition: all ease-in-out 0.3s;
+//             &:hover{
+//                 background-color: darken($gallery-grey, 20%);
+//                 &#back_button{
+//                     left: 0;
+//                 }
+//                 &#next_button{
+//                     right: 0;
+//                 }
+//             }
+//             &#back_button{
+//                 left: 5px;
+//             }
+//             &#next_button{
+//                 right: 5px;
+//             }
+//             svg{
+//                 margin-top: 4px;
+//                 margin-left: 5px;
+//             }
+//         }
+//         #course{
+//             text-align: center;
+//             .cross{
+//                 display: block;
+//                 width: 24px;
+//                 height: 24px;
+//                 margin: 0 auto;
+//                 background-color: $prussian-blue;
+//                 border-radius: 12px;
+//                 position: relative;
+//                 cursor: pointer;
+//                 &.active,
+//                 &:hover{
+//                     &:before{
+//                         transform: translate(-50%, -50%) rotate(270deg);
+//                     }
+//                     &:after{
+//                         transform: translate(-50%, -50%) rotate(270deg);
+//                     }
+//                 }
+//                 &::before{
+//                     content: '';
+//                     display: block;
+//                     width: 2px;
+//                     height: 14px;
+//                     background-color: $white;
+//                     transition: all ease-in-out 0.3s;
+//                     position: absolute;
+//                     left: 50%;
+//                     top: 50%;
+//                     transform: translate(-50%, -50%);
+//                 }
+//                 &::after{
+//                     content: '';
+//                     display: block;
+//                     width: 2px;
+//                     height: 14px;
+//                     background-color: $white;
+//                     transition: all ease-in-out 0.3s;
+//                     position: absolute;
+//                     left: 50%;
+//                     top: 50%;
+//                     transform: translate(-50%, -50%) rotate(90deg);
+//                 }
+//             }
+//             svg{
+//                 fill: $prussian-blue;
+//             }
+//         }
+//         .textual-container{
+//             padding: 15px;
+//             border: 1px solid $scorpion-grey;
+//             margin-top: -10px;
+//             opacity: 0;
+//             transition: opacity ease-in-out 0.3s;
+//             line-height: 26px;
+//             &.active{
+//                 opacity: 1;
+//             }
+//         }
+//     }
+//     .formation-page-sidebar{
+//         max-width: 300px;
+//         width: 100%;
+//         .test-button{
+//             &+.test-button{
+//                 margin-top: 20px;
+//             }
+//         }
+//         @media screen and (max-width: $laptop){
+//             max-width: 100%;
+//         }
+//     }
+// }

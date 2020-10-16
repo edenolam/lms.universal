@@ -1,0 +1,215 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+<!-- navigateur -->
+<div class="lms-breadcrumb">
+    <span> <a href=" {% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }} {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }} {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }} {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }} {% else %} {{ path('home_dashboard') }} {% endif %}">{{lms_name}}</a> </span> > <span> <a href="{{path('admin_module_list')}}">{{ 'menu.concepteur.module' | trans }}</a> </span> > <span> <a href="{{ path('admin_module_edit', {'slug': module.slug}) }}">{{ module.title }}</a> </span>> <span> <a href="{{ path('admin_course_edit', {'slug' : course.slug, 'slugm' : module.slug}) }}">{{ course.title }}</a> </span> > <span class="bold">{{ 'formation.page.list.create'|trans}}</span>
+</div>
+
+<!-- title of page -->
+<div class="d-flex align-items-center lms-title">
+	<h1 class="text-uppercase lms-h1">{{ 'menu.concepteur.module' | trans }}</h1>
+  <hr>
+</div>
+
+<!-- body of page -->
+<div class="row">
+    <div class="col-lg-4">
+        <h2 class="text-uppercase lms-h2">
+            {{ 'actions' | trans }}
+        </h2>
+        <hr>
+        {% include "FormationManagement/Module/actions.html.twig" %}
+    </div>
+    <div class="col-lg-8">
+        <h2 class="text-uppercase lms-h2">
+            {{ 'formation.page.list.create' | trans }}
+        </h2>
+        <hr>
+        <form action="{{ path('admin_page_create', {'slugm' : module.slug,'slugc' : course.slug}) }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+            {% include "FormationManagement/Page/form.html.twig" %}
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block js %}
+  {{ parent() }}
+<script src="{{asset('bundles/aceeditor/ace.js')}}" type="text/javascript" charset="utf-8"></script>
+<script src="{{asset('bundles/aceeditor/mode-javascript.js')}}" type="text/javascript" charset="utf-8"></script>
+
+<script>
+  $(document).ready(function(){
+
+    var editor = ace.edit('editor');
+    var JavaScriptMode = ace.require("ace/mode/javascript").Mode;
+    editor.session.setMode(new JavaScriptMode());
+    editor.getSession().setValue($('.editor-area').html());
+
+    //UPDATE TEXTARE WITH EDITOR VALUE
+    editor.getSession().on("change", function () {
+      $('.editor-area').val(editor.getSession().getValue());
+    });
+    
+  //document.getElementById('page_pageType_4').disabled  = true;
+  //$('#page_pageType_3').attr('disabled', true);
+
+  $('input[type="radio"]').on('click', function(e) {
+    console.log(e.target);
+    if(e.target.value == 1){
+      $('.pageType').hide();
+      $('.expert').fadeIn();
+    }else if(e.target.value == 2){
+      $('.pageType').hide();
+      $('.video').fadeIn();
+    }else if(e.target.value == 3){
+      $('.pageType').hide();
+      $('.pedagogique').fadeIn();
+    }
+    else if(e.target.value == 4){
+      $('.pageType').hide();
+      $('.pdf').fadeIn();       
+    }
+  });
+  
+  // page ordre
+  $(".sortable" ).sortable({
+     update: function () {
+      var ids = $(this).children().get().map(function(el) {
+            return el.id
+          }).join(",");
+      var route = $(this).data('url');
+      route = route.replace("ORDER", ids);
+      var request =$.ajax({
+          url: route,
+          type: "POST",
+          cache: false,
+          dataType: "json",
+      });
+      $(".spinner").show();
+
+      request.done(function( data ) {          
+        if (data.success) {
+          toastr.success(data.message, data.messageTitle);
+        } else {
+          toastr.error(data.message, data.messageTitle);
+        }
+        $(".spinner").hide();
+      });
+
+      request.fail(function( jqXHR, textStatus ) {
+        toastr.error("Request failed: " + textStatus, "Error");          
+        $(".spinner").hide();
+      });        
+    }
+  });
+
+  // course ordre
+  $('body').on('click', '.courseOrder', function(){
+    event.preventDefault();
+    $(".spinner").show();
+    var request = $.ajax({
+        url: $(this).data('url'),
+        type: "POST",
+        cache: false,
+        dataType: "json"    
+    });
+
+    request.done(function( data ) {
+      if (data.success) {
+        toastr.success(data.message, "");     
+        location.reload();                
+      } else {
+        toastr.error(data.message, "");
+        $(".spinner").hide();
+      }        
+    });      
+  });
+
+
+// JS DRAG IN DROP
+     // $("#content").hide();
+      var maxQuestion =20; //maximum question
+      var question = $(".question");
+      var q = 1; //Compteur nombre question
+
+      //Cache div
+      $('#successMessage').hide();
+      $('#errorMessage').hide();
+      $('#resultat').hide();
+      $('#refresh').hide();
+
+
+      $(".button_question").click(function(e) { //button ajout question
+          e.preventDefault();
+          if (q < maxQuestion) {
+              q++; //incrementation compteur question
+              $(question).append('<div><input type="text" name="myquestions[]"/><a href="#" class="remove_question"><i class="material-icons lms-material-icons">delete</i></a><i class="material-icons lms-material-icons">drag_handle</i></div>'); //Icon suprression champ question
+          }
+      });
+      $(question).on("click", ".remove_question", function(e) { //Suppression d'un input de question
+          e.preventDefault();
+          $(this).parent('div').remove();
+          q--;
+      });
+
+      //Creation des reponses
+      var maxReponse = 20; //maximum reponse
+      var reponse = $(".reponse");
+      var r = 1; //Compteur nombre reponse
+      $(".button_reponse").click(function(e) {
+          e.preventDefault();
+          if (r < maxReponse) {
+              r++; //incrementation compteur reponse
+              $(reponse).append('<div><i class="material-icons lms-material-icons">drag_handle</i><input type="text" name="myresponse[]"/><a href="#" class="remove_reponse"><i class="material-icons lms-material-icons">delete</i></a></div>'); //Icon suprression champ reponse
+          }
+      });
+      $(reponse).on("click", ".remove_reponse", function(e) { //Suppression d'un input de reponse
+          e.preventDefault();
+          $(this).parent('div').remove();
+          r--;
+      });
+
+      $('.ok').click(function(){
+          var questions = question.find('input').map(function() {
+              return $(this).val();
+          }).get();
+
+          for (var i = 0; i < questions.length ; i++) {
+              $('<div>'+ questions[i] + '</div>').attr({'id': i, 'value': questions[i]}).appendTo("#afficheq");
+          }
+
+          var reponses = reponse.find('input').map(function() {
+              return $(this).val();
+          }).get();
+
+          for (var i = 0; i < reponses.length ; i++) {
+              $('<div>'+ reponses[i] + '</div>').attr({'id': i, 'value': reponses[i]}).appendTo('#afficher');
+          }
+
+          var rec = document.getElementById('content').outerHTML; // recuperation du html
+          $("input[name='js']").val(rec); // envoi du html au controller via un champ
+
+
+          $('#afficheq').hide();
+          $('#afficher').hide();
+
+      });
+
+      $(function () {
+          $('.popover').popover({
+              container: 'body'
+          })
+      })
+
+  });
+
+
+</script>
+{% endblock %}

@@ -1,0 +1,160 @@
+.lms {
+    &-progress {
+        &-formation {
+            border: $borderProgressBar solid;
+            border-radius: $radiusProgressBar;
+            cursor: pointer;
+            font-size: .75em;
+            line-height: 2.5;
+            margin: 0 auto;
+            max-width: 37.5em;
+            // @media(min-width: $sm) {
+            //     font-size: 1em;
+            // }
+            * {
+                display: block;
+                height: 100%;
+                width: 100%;
+            }
+            span {
+                cursor: text;
+            }
+        }
+    }
+    &-tab:first-child {
+        border-right: $borderProgressBar solid $black;
+        &.show {
+            background-color: $scooter-blue;
+            border-radius: $radiusProgressBar 0 0 $radiusProgressBar;
+            color: $white;
+        }
+    }
+    &-tab:last-child {
+        &.show {
+            background-color: $goldenrod-yellow;
+            border-radius: 0 $radiusProgressBar $radiusProgressBar 0;
+        }
+    }
+    &-panel {
+        display: none;
+        &.active {
+            display: flex;
+        }
+    }
+    // Course progress bar
+    &-course {
+        &-progress {
+            background-color: $gallery-gray;
+            height: 1em;
+            position: relative;
+            width: 100%;
+            &:first-of-type {
+                border-top-left-radius: .5em;
+                border-bottom-left-radius: .5em;
+            }
+            &:last-of-type {
+                border-top-right-radius: .5em;
+                border-bottom-right-radius: .5em;
+                margin-left: .125em;
+            }
+            &-current {
+                border-style: solid;
+                border-width: 0 .35em .45em .35em;
+                border-color: transparent transparent $black transparent;
+                bottom: -.6em;
+                position: absolute;
+            }
+            img {
+                display: block;
+                width: .85em;
+                position: absolute;
+                top: -1.25em;
+            }
+            &-success {
+                background-color: $downy-blue;
+                border-top-left-radius: .5em;
+                border-bottom-left-radius: .5em;
+            }
+            &-eval {
+                // max-width: 1em;
+                &-success {
+                    background-color: $eval;
+                }
+            }
+            &-pretest {
+                &.lms-course-progress-success {
+                    background-color: $goldenrod-yellow;
+                    height: 1em;
+                    left: 0;
+                    position: absolute;
+                    top: 0;
+                    width: 1em;
+                }
+            }
+        }
+    }
+}
+
+// .progress-module-container {
+//     display: flex;
+//     justify-content: flex-start;
+//     align-content: flex-start;
+//     margin: 20px auto;
+//     .progress-module {
+//         height: 15px;
+//         background-color: $gallery-grey;
+//         position: relative;
+//         flex: 1 0 auto;
+//         &+.progress-module {
+//             margin-left: 2px;
+//         }
+//         &:first-of-type {
+//             border-bottom-left-radius: 7.5px;
+//             border-top-left-radius: 7.5px;
+//         }
+//         &:last-of-type {
+//             border-bottom-right-radius: 7.5px;
+//             border-top-right-radius: 7.5px;
+//         }
+//         &.success {
+//             background-color: $downy-blue;
+//         }
+//         &.eval {
+//             max-width: 14px;
+//             &.success {
+//                 background-color: $eval;
+//             }
+//             img {
+//                 left: 50%;
+//                 transform: translateX(-50%);
+//             }
+//         }
+//         .pretest {
+//             &.success {
+//                 display: block;
+//                 width: 14px;
+//                 height: 15px;
+//                 background-color: $goldenrod-yellow;
+//                 position: absolute;
+//                 left: 0;
+//                 top: 0;
+//             }
+//         }
+//         img {
+//             display: block;
+//             width: 14px;
+//             position: absolute;
+//             top: -20px;
+//         }
+//         .current {
+//             display: block;
+//             width: 0;
+//             height: 0;
+//             border-style: solid;
+//             border-width: 0 5px 6px 5px;
+//             border-color: transparent transparent $black transparent;
+//             position: absolute;
+//             bottom: -10px;
+//         }
+//     }
+// }

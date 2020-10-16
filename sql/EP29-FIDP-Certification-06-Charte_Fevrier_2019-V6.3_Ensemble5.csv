@@ -1,0 +1,19 @@
+Titre;question;type de réponse;réponse;statut de la réponse
+;Lors d’une visite, vous êtes accompagné de votre responsable hiérarchique. Devez-vous prévenir le professionnel de santé ?;2;Oui;1
+;Lors d’une visite, vous êtes accompagné de votre responsable hiérarchique. Devez-vous prévenir le professionnel de santé ?;2;Non;0
+;Sur quel(s) médicament(s) pouvez-vous faire de la promotion ?;1;Médicament avec AMM;1
+;Sur quel(s) médicament(s) pouvez-vous faire de la promotion ?;1;Médicament avec ATU;0
+;Sur quel(s) médicament(s) pouvez-vous faire de la promotion ?;1;Médicament avec PGR;1
+;Sur quel(s) médicament(s) pouvez-vous faire de la promotion ?;1;Médicament en cours de réévaluation du bénéfice risque;0
+;Le comité paritaire CEPS/LEEM permet un suivi de la qualité des visites.;2;VRAI;1
+;Le comité paritaire CEPS/LEEM permet un suivi de la qualité des visites.;2;FAUX;0
+;La qualité de l'information délivrée par les informateurs promotionnels doit être validée par l’entreprise. ;2;VRAI;1
+;La qualité de l'information délivrée par les informateurs promotionnels doit être validée par l’entreprise. ;2;FAUX;0
+;La fréquence des visites est-elle un critère évalué via l'observatoire national de l'information promotionnelle (ONIP) ?;2;Oui;1
+;La fréquence des visites est-elle un critère évalué via l'observatoire national de l'information promotionnelle (ONIP) ?;2;Non;0
+;Une appréciation sur la qualité scientifique de la visite médicale est faite par les professionnels de santé. Quelles en sont les modalités ?;1;Spontanément ;1
+;Une appréciation sur la qualité scientifique de la visite médicale est faite par les professionnels de santé. Quelles en sont les modalités ?;1;Obligatoirement;0
+;Une appréciation sur la qualité scientifique de la visite médicale est faite par les professionnels de santé. Quelles en sont les modalités ?;1;A leur frais;0
+;Une appréciation sur la qualité scientifique de la visite médicale est faite par les professionnels de santé. Quelles en sont les modalités ?;1;Sans frais;1
+;La charte de l’information promotionnelle signée en 2014 intègre-t-elle les nouvelles dispositions déontologiques professionnelles du LEEM ?;2;Oui;1
+;La charte de l’information promotionnelle signée en 2014 intègre-t-elle les nouvelles dispositions déontologiques professionnelles du LEEM ?;2;Non;0

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="130" height="130" viewBox="0 0 130 130">
+  <defs>
+    <clipPath id="clip-path">
+      <circle id="Ellipse_8" data-name="Ellipse 8" cx="65" cy="65" r="65" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="Groupe_452" data-name="Groupe 452" transform="translate(-1262 -10)">
+    <circle id="Ellipse_9" data-name="Ellipse 9" cx="65" cy="65" r="65" transform="translate(1262 10)" fill="#e0e1de"/>
+    <g id="Groupe_de_masques_1" data-name="Groupe de masques 1" transform="translate(1262 10)" clip-path="url(#clip-path)">
+      <g id="Groupe_450" data-name="Groupe 450" transform="translate(19.671 17.182)">
+        <g id="Groupe_440" data-name="Groupe 440" transform="translate(1.503 65.754)">
+          <path id="Tracé_207" data-name="Tracé 207" d="M402.007,319.277v10.135h-10.03A22.783,22.783,0,0,0,369.2,352.193v16.978h86.147V352.193a22.783,22.783,0,0,0-22.781-22.781H422.533V319.277Z" transform="translate(-369.199 -319.277)" fill="#fff"/>
+        </g>
+        <g id="Groupe_442" data-name="Groupe 442" transform="translate(2.67 74.705)">
+          <g id="Groupe_441" data-name="Groupe 441" transform="translate(0 0)">
+            <path id="Tracé_208" data-name="Tracé 208" d="M430.819,322.254h-2.444l-17.168,26.882L394.04,322.254H391.6c-12.156,0-22.011,10.58-22.011,23.632V363.5h83.234V345.886C452.821,332.834,442.969,322.254,430.819,322.254Z" transform="translate(-369.587 -322.254)" fill="#63c4ca"/>
+          </g>
+        </g>
+        <g id="Groupe_449" data-name="Groupe 449" transform="translate(0)">
+          <g id="Groupe_443" data-name="Groupe 443" transform="translate(14.753 1.503)">
+            <path id="Tracé_209" data-name="Tracé 209" d="M427.821,324.648a5.62,5.62,0,0,0-.749.051V321.53a23.615,23.615,0,1,0-47.231,0v3.184a5.005,5.005,0,0,0-.806-.066,5.427,5.427,0,0,0-5.43,5.427v8.148a5.43,5.43,0,0,0,5.43,5.433,5.565,5.565,0,0,0,.986-.1,23.612,23.612,0,0,0,46.873.012,5.536,5.536,0,0,0,.926.084,5.425,5.425,0,0,0,5.424-5.433v-8.148A5.422,5.422,0,0,0,427.821,324.648Z" transform="translate(-373.606 -297.907)" fill="#fff"/>
+          </g>
+          <g id="Groupe_444" data-name="Groupe 444" transform="translate(13.25)">
+            <path id="Tracé_210" data-name="Tracé 210" d="M404.465,366.808a25.137,25.137,0,0,1-24.72-20.652,6.944,6.944,0,0,1-6.638-6.93v-8.148a6.94,6.94,0,0,1,6.236-6.894v-1.651a25.118,25.118,0,1,1,50.237,0v1.657a6.936,6.936,0,0,1,6.172,6.888v8.148a6.937,6.937,0,0,1-6.569,6.927A25.129,25.129,0,0,1,404.465,366.808Zm-22.141-24.014.193,1.584a22.11,22.11,0,0,0,43.89.012l.189-1.569,1.56.273a4,4,0,0,0,4.588-3.869v-8.148a3.95,3.95,0,0,0-4.459-3.884l-1.714.243v-4.9a22.112,22.112,0,1,0-44.224,0V327.5l-1.756-.3a3.315,3.315,0,0,0-.553-.045,3.931,3.931,0,0,0-3.927,3.923v8.148a3.932,3.932,0,0,0,3.927,3.929,3.989,3.989,0,0,0,.716-.072Z" transform="translate(-373.106 -297.407)" fill="#2e2e2e"/>
+          </g>
+          <g id="Groupe_445" data-name="Groupe 445" transform="translate(0 65.754)">
+            <path id="Tracé_211" data-name="Tracé 211" d="M457.853,370.675H368.7V352.193a24.312,24.312,0,0,1,24.281-24.284h8.526v-8.632h3.007v11.639H392.98a21.3,21.3,0,0,0-21.275,21.277v15.475h83.141V352.193a21.3,21.3,0,0,0-21.278-21.277H422.033V319.277h3.007v8.632h8.53a24.314,24.314,0,0,1,24.284,24.284Z" transform="translate(-368.699 -319.277)" fill="#2e2e2e"/>
+          </g>
+          <g id="Groupe_446" data-name="Groupe 446" transform="translate(21.515 9.459)">
+            <path id="Tracé_212" data-name="Tracé 212" d="M378.152,321.38c-.752,0-1.515-.015-2.3-.057l.153-3c21.3,1.037,30.616-14.729,30.706-14.892l1.651-2.877,1.073,3.139c.048.132,4.636,13.25,12.946,14.513l-.451,2.97c-7.565-1.152-12.276-9.474-14.26-13.854A36.6,36.6,0,0,1,378.152,321.38Z" transform="translate(-375.855 -300.553)" fill="#2e2e2e"/>
+          </g>
+          <g id="Groupe_447" data-name="Groupe 447" transform="translate(37.774 53.259)">
+            <rect id="Rectangle_264" data-name="Rectangle 264" width="12.787" height="3.007" fill="#2e2e2e"/>
+          </g>
+          <g id="Groupe_448" data-name="Groupe 448" transform="translate(41.679 57.249)">
+            <rect id="Rectangle_265" data-name="Rectangle 265" width="4.983" height="3.007" fill="#2e2e2e"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}  
+<link href="{{ asset("assets/summernote/summernote-bs4.css") }}" rel="stylesheet" />    
+{% endblock %}
+
+{% block body %}
+<!-- navigateur -->
+<div class="lms-breadcrumb">
+    <span><a href="
+				{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+        {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+				{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+				{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+				{% else %} {{ path('home_dashboard') }}
+				{% endif %}">{{lms_name}}</a></span> > <span><a href="{{path('admin_module_list')}}">{{ 'menu.concepteur.module' | trans }}</a></span> > <span> <a href="{{ path('admin_module_edit', {'slug': module.slug}) }}">{{ module.title }}</a> </span> > <span class="bold">{{ 'formation.course.create.literal' | trans}}</span>
+</div>
+
+<!-- title of page -->
+<div class="d-flex align-items-center lms-title">
+	<h1 class="text-uppercase lms-h1">{{ 'menu.concepteur.module' | trans }}</h1>
+  <hr/>
+</div>
+
+<!-- body of page -->
+<div class="row">
+  <div class="col-lg-4 mb-5">
+    <h2 class="text-uppercase lms-h2">  {{ 'actions' | trans }}</h2><hr>
+    {% include "FormationManagement/Module/actions.html.twig" %} 
+  </div>
+  <div class="col-lg-8">
+    <h2 class="text-uppercase lms-h2">  {{ 'formation.course.create.literal' | trans }} </h2><hr>
+    <form action="{{ path('admin_course_create', {'slugm': module.slug}) }}" method="post" class="form-horizontal"  enctype="multipart/form-data" >
+      {% include "FormationManagement/Course/form.html.twig" %}     
+    </form>    
+</div>
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }} 
+<script src="{{ asset("assets/summernote/summernote-bs4.js") }}"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+<script>
+$(document).ready(function() {
+  $('.summernote').summernote({
+      height: 150,
+      toolbar: [
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol']]
+      ]
+    });
+    // page ordre
+    $(".sortable" ).sortable({
+       update: function () {
+        var ids = $(this).children().get().map(function(el) {
+              return el.id
+            }).join(",");
+        var route = $(this).data('url');
+        route = route.replace("ORDER", ids);
+        var request =$.ajax({
+            url: route,
+            type: "POST",
+            cache: false,
+            dataType: "json",
+        });
+        $(".spinner").show();
+
+        request.done(function( data ) {          
+          if (data.success) {
+            toastr.success(data.message, data.messageTitle);
+          } else {
+            toastr.error(data.message, data.messageTitle);
+          }
+          $(".spinner").hide();
+        });
+
+        request.fail(function( jqXHR, textStatus ) {
+          toastr.error("Request failed: " + textStatus, "Error");          
+          $(".spinner").hide();
+        });        
+      }
+    });
+
+    // course ordre
+    $('body').on('click', '.courseOrder', function(){
+      event.preventDefault();
+      $(".spinner").show();
+      var request = $.ajax({
+          url: $(this).data('url'),
+          type: "POST",
+          cache: false,
+          dataType: "json"    
+      });
+
+      request.done(function( data ) {
+        if (data.success) {
+          toastr.success(data.message, "");     
+          location.reload();                
+        } else {
+          toastr.error(data.message, "");
+          $(".spinner").hide();
+        }        
+      });      
+    });
+  
+});
+</script>    
+{% endblock %}

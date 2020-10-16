@@ -1,0 +1,290 @@
+{% if modulefiltres|length > 0 %}
+    <div class="d-flex flex-wrap align-items-start lms-banner row">
+        <div class="col-lg-6 text-center lms-banner-bilan-container row">
+            {% if user|length > 0 %}
+                <div class="col-lg-2">
+                    {% if user.photo %}
+                        <div class="lms-banner-avatar-container">
+                            <img class="m-auto lms-banner-avatar-img" src="{{ asset('uploads/user/' ~ user.photo) }}"/>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-lg-7 text-center text-lg-left lms-banner-bilan-container">
+                    <p class="lms-banner-bilan-title">
+                        {{ user.firstname }}
+                        {{ user.lastname }}
+                    </p>
+                    <p class="lms-banner-bilan-text">
+                        {% if user.division %}
+                            {{ user.division.title }}
+                        {% endif %}
+                    </p>
+                    <p class="lms-banner-bilan-text">
+                        {% if user.team != null %}
+                            {{ user.team.title }}
+                        {% endif %}
+                    </p>
+                </div>
+            {% elseif equipe|length > 0 %}
+                <div class="col-lg-2">
+                </div>
+                <div class="col-lg-7 text-center text-lg-left lms-banner-bilan-container">
+                    <p class="lms-banner-bilan-title">{{ equipe.title }}
+                    </p>
+                </div>
+            {% elseif division|length > 0 %}
+                <div class="col-lg-2">
+                </div>
+                <div class="col-lg-7 text-center text-lg-left lms-banner-bilan-container">
+                    <p class="lms-banner-bilan-title">{{ division.title }}</p>
+                </div>
+            {% elseif module|length > 0 %}
+                <div class="col-lg-2">
+                    <div class="lms-banner-avatar-container">
+                        {% if module.uri %}
+                            <img src="{{asset('uploads/files/' ~ module.uri)}}"/>{{"eeee"}}
+                        {% else %}
+                            <img src="/images/core/logo.png"/>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-lg-7 text-center text-lg-left lms-banner-bilan-container">
+                    <p class="lms-banner-bilan-title">{{ module.title }} <i class="text-dark">({{ module.regulatoryRef }})</i></p>
+                      {% for f in module.files %}
+                        {% if f.isValid %}
+                          <a href="{{ asset("uploads/files/"~f.uri) }}" target="_blank">
+                                {% if f.isDownload %}<i class="material-icons lms-material-icons">cloud_download</i>{% endif %}&nbsp;&nbsp;&nbsp;&nbsp;{{ f.name }}
+                          </a><br/>
+                        {% endif %}  
+                      {% endfor %}  
+                </div>    
+
+            {% elseif formation|length > 0 %}
+                <div class="col-lg-2">
+                    <div class="lms-banner-avatar-container">
+                        {% if formation.uri %}
+                            <img src="{{asset('uploads/files/' ~ formation.uri)}}"/>{{"eeee"}}
+                        {% else %}
+                            <img src="/images/core/logo.png"/>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-lg-7 text-center text-lg-left lms-banner-bilan-container">
+                    <p class="lms-banner-bilan-title">{{ formation.title }}</p>
+                </div>
+                    
+            {% endif %}
+        </div>
+        
+        <div class="col-lg-6 text-center lms-banner-bilan-container row">
+            {% if modulefiltres|length > 0 %}
+                {% set pourcentages = 0 %}
+                {% set scoreValidation = 0 %}
+                {% set validated = 0 %}
+                {% set failed= 0 %}
+                {% set inProcess = 0 %}
+                {% set i = 0 %}
+                {% set j = 0 %}
+                {% for modulefiltre in modulefiltres %}
+                    {% set i = i+1 %}
+                    {% set pourcentages = pourcentages + modulefiltre.percentage %}
+                    {% if modulefiltre.module.evaluation %}
+                        {% set j = j+1 %}
+                    {% endif %}
+                    {% if modulefiltre.score != null %}
+                        {% set scoreValidation = scoreValidation + modulefiltre.score %}
+                    {% endif %}
+                    {% if modulefiltre.success == null %}
+                        {% set inProcess = inProcess + 1 %}
+                    {% elseif modulefiltre.success == true %}
+                        {% set validated = validated + 1 %}
+                    {% else %}
+                        {% set failed = failed + 1 %}
+                    {% endif %}
+                {% endfor %}
+                
+                {% if j != 0 %}
+                        {% set moyenneScore = scoreValidation / j %}
+                {% else %}
+                    {% set moyenneScore = 0 %}
+                {% endif %}
+
+                {% if i != 0 %}
+                    {% set moyenne = pourcentages / i %}
+                    {% set moyenneSucces = (validated / i) * 100 %}
+                    {% set moyenneFailed = (failed / i) * 100 %}
+                    {% set moyenneProcess = (inProcess / i) * 100 %}
+                {% else %}
+                    {% set moyenne = 0 %}
+                    {% set moyenneSucces = 0 %}
+                    {% set moyenneFailed = 0 %}
+                    {% set moyenneProcess = 0 %}
+                {% endif %}
+                
+                <div class="col-4">
+                    <p class="lms-banner-bilan-text">
+                        {{ 'results.tableau.title.progression'|trans }} {{ moyenne|round }}%
+                    </p>
+                    <div class="progress-sm">
+                        <div class="border border-dark">
+                            <div class="progress-bar bg-blue" style="width: {{ moyenne }}%;height:1rem;background-color: #2FAEDE !important;">
+                            </div>
+                        </div>
+                    </div>
+                    <p class="lms-banner-bilan-text mt-2">
+                        {{ 'results.tableau.title.score'|trans }} {{ moyenneScore|round }}%
+                    </p>
+                    <div class="progress-sm">
+                        <div class="border border-dark">
+                            <div class="progress-bar bg-blue" style="width: {{ moyenneScore }}%;height:1rem;background-color: #2FAEDE !important;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <table class="table-sm">
+                        <tr>
+                            <td>{{'results.tableau.title.moySuccess'|trans}}</td>
+                            <td>{{moyenneSucces|round}} %</td>
+                            <td>{{'results.tableau.title.success'|trans}}</td>
+                            <td>{{validated}} / {{i}}</td>
+                        <tr>
+                        <tr>
+                            <td>{{'results.tableau.title.moyInProcess'|trans}}</td>
+                            <td>{{moyenneProcess|round}} %</td>
+                            <td>{{'results.tableau.title.inProcess'|trans}}</td>
+                            <td>{{inProcess}} / {{i}}</td>
+                        <tr>
+                        <tr>
+                            <td>{{'results.tableau.title.moyFailed'|trans}}</td>
+                            <td>{{moyenneFailed|round}} %</td>
+                            <td>{{'results.tableau.title.failed'|trans}}</td>
+                            <td>{{failed}} / {{i}}</td>
+                        <tr>
+                    </table>
+                </div>
+                
+            {% endif %}
+        </div>
+    </div>
+  
+    {% if session|length > 0  and module|length == 0 %}
+        {% for sessions in session %}
+            {% set pourcentages = 0 %}
+            {% set scoreValidation = 0 %}
+            {% set validated = 0 %}
+            {% set failed= 0 %}
+            {% set inProcess = 0 %}
+            {% set i = 0 %}
+            {% set moyenne = 0 %}
+            <div class="d-flex flex-wrap align-items-start lms-banner ">
+                <div class="col-lg-6 text-center lms-banner-bilan-container row">
+                    <div class="col-lg-2">
+                        <div class="lms-banner-avatar-container">
+                            {% if sessions.formationPath.uri %}
+                                <img src="{{asset('uploads/files/' ~ sessions.formationPath.uri)}}"/>{{"eeee"}}
+                            {% else %}
+                                <img src="/images/core/logo.png"/>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-lg-7 text-center text-lg-left lms-banner-bilan-container">
+                        <p class="lms-banner-bilan-title">
+                            Session
+                            {% if app.request.locale == "fr" %}{{ sessions.openingDate|date("d/m/y") }} {% else %} {{sessions.openingDate|date("y/m/d") }} {% endif %}
+                            >
+                            {% if app.request.locale == "fr" %}{{ sessions.closingDate|date("d/m/y") }} {% else %} {{sessions.closingDate|date("y/m/d") }} {% endif %}
+                        </p>
+                        <p class="lms-banner-bilan-text">
+                            {{ sessions.title }}
+                        </p>
+                        <p class="lms-banner-bilan-text">Formation en
+                            {{ sessions.formationPath.title }}</p>
+                        <p class="lms-banner-bilan-ref">Référence:
+                            {{ sessions.reference }}</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center lms-banner-bilan-container row">
+                    {% for modulefiltre in modulefiltres %}
+                        {% if sessions.id == modulefiltre.session.id %}
+                            {% set pourcentages = pourcentages + modulefiltre.percentage %}
+                            
+                            {% if modulefiltre.score != null %}
+                                {% set scoreValidation = scoreValidation + modulefiltre.score %}
+                            {% endif %}
+                            {% if modulefiltre.success == null %}
+                                {% set inProcess = inProcess + 1 %}
+                            {% elseif modulefiltre.success == true %}
+                                {% set validated = validated + 1 %}
+                            {% else %}
+                                {% set failed = failed + 1 %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {% set i = 0 %}
+                    {% for moduleI in sessions.formationPath.formationPathModules %}
+                        {% if moduleI.module.type.conditional != 'notFollow'%}
+                            {% set i = i + 1 %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if i != 0 %}
+                        {% set moyenne = pourcentages / i %}
+                        {% set moyenneScore = scoreValidation / i %}
+                        {% set moyenneSucces = (validated / i) * 100 %}
+                        {% set moyenneFailed = (failed / i) * 100 %}
+                        {% set moyenneProcess = (inProcess / i) * 100 %}
+                    {% else %}
+                        {% set moyenne = 0 %}
+                         {% set moyenneScore = 0 %}
+                        {% set moyenneSucces = 0 %}
+                        {% set moyenneFailed = 0 %}
+                        {% set moyenneProcess = 0 %}
+                    {% endif %}
+                    <div class="col-4">
+                        <p class="lms-banner-bilan-text">
+                            {{ 'results.tableau.title.progression'|trans }} {{ moyenne|round }}%
+                        </p>
+                        <div class="progress-sm">
+                            <div class="border border-dark">
+                                <div class="progress-bar bg-blue" style="width: {{ moyenne }}%;height:1rem;background-color: #2FAEDE !important;">
+                                </div>
+                            </div>
+                        </div>
+                        <p class="lms-banner-bilan-text mt-2">
+                            {{ 'results.tableau.title.score'|trans }} {{ moyenneScore|round }}%
+                        </p>
+                        <div class="progress-sm">
+                            <div class="border border-dark">
+                                <div class="progress-bar bg-blue" style="width: {{ moyenneScore }}%;height:1rem;background-color: #2FAEDE !important;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <table class="table-sm">
+                            <tr>
+                                <td>{{'results.tableau.title.moySuccess'|trans}}</td>
+                                <td>{{moyenneSucces|round}} %</td>
+                                <td>{{'results.tableau.title.success'|trans}}</td>
+                                <td>{{validated}} / {{i}}</td>
+                            <tr>
+                            <tr>
+                                <td>{{'results.tableau.title.moyInProcess'|trans}}</td>
+                                <td>{{moyenneProcess|round}} %</td>
+                                <td>{{'results.tableau.title.inProcess'|trans}}</td>
+                                <td>{{inProcess}} / {{i}}</td>
+                            <tr>
+                            <tr>
+                                <td>{{'results.tableau.title.moyFailed'|trans}}</td>
+                                <td>{{moyenneFailed|round}} %</td>
+                                <td>{{'results.tableau.title.failed'|trans}}</td>
+                                <td>{{failed}} / {{i}}</td>
+                            <tr>
+                        </table>
+                    </div>
+                </div>
+            </div>            
+        {% endfor %}
+    {% endif %}
+ 
+{% endif %}

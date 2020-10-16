@@ -1,0 +1,164 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+<link rel="stylesheet" href="{{ asset("css/bootstrap-multiselect.css")}}" />    
+<link rel="stylesheet" href="{{ asset("assets/bootstrap-editable/css/bootstrap-editable.css")}}" />
+{% endblock %}
+
+{% block body %}
+    <div class="lms-breadcrumb">
+        <a href="{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }} {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }} {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }} {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }} {% else %}{{ path('home_dashboard') }}{% endif %}">{{lms_name}}</a> > <span>{{'menu.sondage.title'|trans}}</span>
+    </div>
+
+    <div class="d-flex align-items-center lms-title">
+        <h1 class="text-uppercase lms-h1">{{ 'menu.sondage.title'|trans }}</h1>
+        <hr>
+    </div>
+
+    {% include "ResultManagement/Sondage/form_sondage.html.twig" %}
+
+
+    <div class="row">
+        <div class="col">
+            
+                {% include "ResultManagement/Sondage/tableau.html.twig" %}
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+<script type='text/javascript' src="{{asset('js/bootstrap-multiselect.js')}}"></script>     
+<script src="{{ asset('assets/bootstrap-editable/js/bootstrap-editable.js') }}"></script>
+<script>
+    $(document).ready(function () {
+
+         {# $('select[multiple="multiple"]').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            enableCaseInsensitiveFiltering: true,
+            templates: {
+                filterClearBtn: '<span class="input-group-btn"><button class="btn btn-danger multiselect-clear-filter" type="button"><i class="material-icons lms-material-icons ">close</i></button></span>'
+            }
+        });  #}
+
+        // ======================================================================================
+        //=======================================table===========================================
+        // ======================================================================================
+        $('#filtreForm th').each( function () {
+            var title = $(this).text();
+            $(this).html( '<input type="text" class="form-control" placeholder="{{"global.table.search"|trans}} '+title+'" />' );
+        } );
+
+        var table = $('#tablefiltre').DataTable({
+            colReorder: true,
+            responsive: false, 
+            ordering:  true, 
+            searching: true,
+            paging: true,
+            language: {
+                decimal:        "",
+                emptyTable:     "-",
+                info: "[_START_/_END_]  <b>{{"global.table.total"|trans}} : </b>_TOTAL_",
+                infoEmpty:      "0/0   [0]",
+                infoFiltered:   "({{"global.table.filteredForm"|trans}} _MAX_ {{"global.table.entries"|trans}})",
+                infoPostFix:    "",
+                thousands:      " ",
+                lengthMenu:     "<b>{{"global.table.Entries"|trans}}</b> _MENU_",
+                loadingRecords: "{{"global.table.loadingRecords"|trans}}...",
+                processing:     "{{"global.table.processing"|trans}}...",
+                search:         "<b>{{"global.table.search"|trans}}</b>:",
+                zeroRecords:    "{{"global.table.zeroRecords"|trans}}",
+                paginate: {next:       ">>", previous:   "<<"},
+                
+            },
+        });
+            
+        table.columns().eq( 0 ).each( function ( colIdx ) {
+            $( 'input', $('#filtreForm th')[colIdx] ).on( 'keyup change', function () {
+                table
+                    .column( colIdx )
+                    .search( this.value )
+                    .draw();
+            } );
+        } );
+
+            // ======================================================================================
+        //=======================================table end=========================================
+        // ======================================================================================
+        
+
+        $('.table .thead-dark .tablesorter-filter-row input').addClass('form-control');
+
+        $('body').on('change', '#sondage_division, #sondage_team,  #sondage_user,  #sondage_formation,  #sondage_test', '#sondage_session', function (event) {
+            $(this).parents('form').submit();
+        });
+   
+        $('#sondage_session > option').each(function() {
+            $(this).hide();
+            $(this).prop('selected', false);
+            {% for s in sessions %}
+                var isSession = {{s.id}};
+                if($(this).val() == isSession){
+                    $(this).show();
+                }
+            {% endfor %}
+            {% for se in session %}
+                var isSession = {{se.id}};
+                 if($(this).val() == isSession){
+                    $(this).prop('selected', true);
+                }
+            {% endfor %}
+        });
+
+        $('#exportpdf').on('click', function (event) {
+            event.preventDefault();
+            $('.spinner').fadeIn();
+            if ($('#sondage_session').val() != '') {
+                sessions = JSON.stringify($('#sondage_session').val())
+            } else {
+                sessions = null
+            };
+            if ($('#sondage_formation').val() != '') {
+                formation = $('#sondage_formation').val()
+            } else {
+                formation = null
+            };
+            if ($('#sondage_test').val() != '') {
+                test = $('#sondage_test').val()
+            } else {
+                test = null
+            };
+            if ($('#sondage_division').val() != '') {
+                division = $('#sondage_division').val()
+            } else {
+                division = null
+            };
+            if ($('#sondage_team').val() != '') {
+                team = $('#sondage_team').val()
+            } else {
+                team = null
+            };
+            if ($('#sondage_user').val() != '') {
+                user = $('#sondage_user').val()
+            } else {
+                user = null
+            };
+
+            url = $('#exportpdf').attr('data-path') + "/_user/_division/_team/_sessions/_formation/_test";
+            $('.spinner').fadeOut();
+
+            url = url.replace('_sessions', sessions);
+            url = url.replace('_formation', formation);
+            url = url.replace('_user', user);
+            url = url.replace('_test', test);
+            url = url.replace("_division", division);
+            url = url.replace('_team', team);
+
+            location.href = url;
+        });
+    });
+
+</script>{% endblock %}

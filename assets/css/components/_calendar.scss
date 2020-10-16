@@ -1,0 +1,79 @@
+.lms {
+    &-calendar {
+        .fc-toolbar h2 {
+            font-size: 1em;
+            font-weight: 400;
+            margin-top: .5em;
+        }
+        .fc-prev-button,
+        .fc-next-button,
+        .fc-prevYear-button,
+        .fc-nextYear-button {
+            background-color: $gray;
+            border-color: $gray;
+            border-radius: 100%;
+            font-size: .9375rem;
+            &.active,
+            &.disabled {
+                background-color: $gray;
+                border-color: $gray;
+            }
+        }
+        .fc-today-button,
+        .fc-month-button,
+        .fc-listWeek-button {
+            background-color: $scooter-blue !important;
+            border-color: $scooter-blue !important;
+            border-radius: 1.5em;
+            font-size: .9375rem;
+            line-height: 1;
+            margin: .5em 0;
+            padding: .5rem 1rem;
+            width: max-content;
+            &.active,
+            &.disabled {
+                background-color: $scooter-blue !important;
+                border-color: $scooter-blue !important;
+            }
+        }
+        .fc-toolbar .fc-left,
+        .fc-toolbar .fc-right,
+        .fc-toolbar .fc-center {
+            float: none;
+        }
+        .fc-toolbar.fc-header-toolbar,
+        .fc-toolbar .fc-left,
+        .fc-toolbar .fc-right,
+        .fc-toolbar .fc-center {
+            display: flex;
+        }
+        .fc-toolbar.fc-header-toolbar,
+        .fc-toolbar .fc-right {
+            flex-direction: column;
+            @media(min-width: $sm) {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            @media(min-width: $lg) {
+                flex-wrap: wrap;
+            }
+        }
+        .fc-toolbar .fc-left,
+        .fc-toolbar .fc-right,
+        .fc-toolbar .fc-center {
+            align-items: center;
+            justify-content: center;
+            margin: .5em 0;
+        }
+        .fc-toolbar .fc-right,
+        .fc-toolbar .fc-center {
+            @media(min-width: $sm) {
+                margin-left: .5em;
+            }
+        }
+        .fc-toolbar .fc-center {
+            margin-left: 0;
+            width: 100%;
+        }
+    }
+}

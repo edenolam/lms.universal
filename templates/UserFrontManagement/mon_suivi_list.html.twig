@@ -1,0 +1,156 @@
+{% extends "base.html.twig" %}
+{% block stylesheets %}
+    {# Calendar #}
+    {{ parent() }}
+<style>
+    /* custom toogle */
+    .outerDivFull { margin:50px; }
+    .lm-switchToggle input[type=checkbox]{height: 0; width: 0; visibility: hidden; position: absolute; }
+    .lm-switchToggle label {cursor: pointer; text-indent: -9999px; width: 100px; max-width: 100px; height: 30px; background: #d1d1d1; display: block; border-radius: 100px; position: relative; line-height: 21px; }
+    .lm-switchToggle label:after {content: ''; position: absolute; top: 2px; left: 2px; width: 26px; height: 26px; background: #fff; border-radius: 90px; transition: 0.3s; }
+    .lm-switchToggle input:checked + label, .lm-switchToggle input:checked + input + label  {background: #00354F; }
+    .lm-switchToggle input + label:before, .lm-switchToggle input + input + label:before {content: '{{'global.literal.archive'|trans}}'; text-transform: uppercase; position: absolute; top: 5px; left: 35px; width: 26px; height: 26px; border-radius: 90px; transition: 0.3s; text-indent: 0;font-size:12px; color: #fff; }
+    .lm-switchToggle input:checked + label:before, .lm-switchToggle input:checked + input + label:before {content: '{{'userFrontManagement.formation.number_on_going'|trans}}'; text-transform: uppercase; position: absolute; top: 5px; left: 10px; width: 86px; height: 26px; border-radius: 90px; transition: 0.3s; text-indent: 0; color: #fff; }
+    .lm-switchToggle input:checked + label:after, .lm-switchToggle input:checked + input + label:after {left: calc(100% - 2px); transform: translateX(-100%); }
+    .lm-switchToggle label:active:after {width: 60px; }
+    .toggle-switchArea { margin: 10px 0 10px 0; }
+    /* fin custom toogle */
+</style>
+{% endblock %}
+{% block body %}
+
+    <div class="lms-breadcrumb">
+            <a href=" {% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }} {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }} {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }} {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }} {% else %} {{ path('home_dashboard') }} {% endif %}">{{lms_name}}</a>
+        >
+        <span>{{'menu.suivi.title'|trans}}</span>
+    </div>
+
+    <!-- Switch -->
+    <div id="myTab" class="d-flex flex-wrap justify-content-center align-items-center text-center lms-progress-formation">
+		<div class="col-6 px-0 text-uppercase lms-tab {% if app.request.get('downFormation') is null %}show{% endif %}" data-tab="#tab1">{{'userFrontManagement.formation.number_on_going'|trans}}</div>
+		<div class="col-6 px-0 text-uppercase lms-tab {% if app.request.get('downFormation') is not null %}show{% endif %}" data-tab="#tab2">{{'global.literal.archive'|trans}}</div>
+	</div>
+
+    <div class="d-flex align-items-center lms-title">
+        <h1 class="text-uppercase lms-h1">{{'menu.suivi.title'|trans}}</h1>
+        <hr>
+    </div>
+    
+
+    {# <div class="d-flex flex-wrap align-items-center">
+        <div class="col-lg-2 lms-banner-avatar-container"></div>
+        <div class="col-lg-7 text-center text-lg-left lms-banner-dashboard-container"></div>
+        <div class="col-lg-3 lms-switchToggle1">
+            <div class="d-flex justify-content-end" id="switchToggle1">
+                <input checked id="switch" type="checkbox"/>
+                <label for="switch">Toggle</label>
+            </div>
+        </div>
+    </div> #}
+
+    {# <div class="d-flex align-items-center lms-title">
+        <h2 class="text-uppercase">{{'menu.userFormation.title'|trans}}</h2>
+    </div> #}
+
+    
+
+    <div id="tab1" class="suivi-formation lms-panel active" >
+        <div class="d-flex flex-wrap justify-content-center justify-content-md-start lms-subcontent">
+            {% for userFormation in activeFormations %}
+                {% if userFormation is not null %}
+    
+                    <!-- Rotating card -->
+                    <div class="lms-card-formation">
+                        <div class="card lms-card">
+                            <!-- Card front -->
+                            <div class="card text-center lms-card-front">
+                                <div class="lms-card-img">
+                                    {% if userFormation.formation.uri is defined and userFormation.formation.uri is not empty and userFormation.formation.uri is not null %}
+                                        <img src="{{asset('uploads/files/' ~ userFormation.formation.uri)}}" class="card-img-top" alt="Visuel du module">
+                                    {% else %}
+                                        <img alt="Visuel du module" class="card-img-top" src="/images/core/logo.png">
+                                    {% endif %}
+                                </div>
+                                <div class="card-body lms-card-body">
+                                    <p class="card-title text-uppercase lms-card-title">{{userFormation.formation.title}}</p>
+                                    <a href="{{ path('user_suivis_formation', {'slugSession' : userFormation.session.slug, 'slug': userFormation.formation.slug}) }}" class="lms-button lms-button-blue">{{'menu.suivi.title'|trans}}</a>
+                                </div>
+                                <div class="card-footer d-flex flex-column align-items-center p-0 lms-card-footer">
+                                    {% set diff = date(userFormation.session.closingDate).diff(date()) %}
+                                    {% set leftDays = diff.days %}
+                                    <p class="m-0 lms-card-day">{{leftDays}}
+                                        {{'global.duration.litle.day'|trans}}</p>
+                                    {% if app.request.locale == "fr" %}
+                                        <p class="m-0 lms-card-date">{{userFormation.session.openingDate|date('d/m/Y')}}
+                                            &gt;
+                                            {{userFormation.session.closingDate|date('d/m/Y')}}</p>
+                                    {% else %}
+                                        <p>{{userFormation.session.openingDate|date('Y/m/d')}}
+                                            &gt;
+                                            {{userFormation.session.closingDate|date('Y/m/d')}}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="tab2" class="suivi-formation lms-panel">
+        <div class="d-flex flex-wrap justify-content-center justify-content-md-start lms-subcontent">
+            {% for userFormation in pastFormations %}
+                {% if userFormation is not null %}
+    				<!-- Rotating card -->
+    				<div class="lms-card-formation">
+    					<div class="card lms-card">
+                            <!-- Card front -->
+    						<div class="card text-center lms-card-front">
+                                <div class="lms-card-img">
+                                    {% if userFormation.formation.uri is defined and userFormation.formation.uri is not empty and userFormation.formation.uri is not null %}
+                                    <img src="{{asset('uploads/files/' ~ userFormation.formation.uri)}}" class="card-img-top" alt="Visuel du module">
+                                    {% else %}
+                                    <img src="/images/core/logo.png" class="card-img-top" alt="Visuel du module">
+                                    {% endif %}
+                                </div>
+                                <div class="card-body lms-card-body">
+                                    <p class="card-title text-uppercase lms-card-title">{{userFormation.formation.title}}</p>
+                                    <a href="{{ path('user_suivis_formation', {'slugSession' : userFormation.session.slug, 'slug': userFormation.formation.slug}) }}" class="lms-button lms-button-blue">{{'menu.suivi.title'|trans}}</a>
+                                </div>
+                                <div class="card-footer d-flex flex-column align-items-center p-0 lms-card-footer">
+                                    <p class="m-0 lms-card-day"></p>
+                                    {% if app.request.locale == "fr" %}
+                                    <p class="m-0 lms-card-date">{{userFormation.session.openingDate|date('d/m/Y')}} &gt; {{userFormation.session.closingDate|date('d/m/Y')}}</p>
+                                    {% else %}
+                                    <p class="m-0 lms-card-date">{{userFormation.session.openingDate|date('Y/d/m')}} &gt; {{userFormation.session.closingDate|date('Y/d/m')}}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+    					</div>
+    				</div>
+    
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            $('#switch').on('change', function () {
+                if ($(this).prop('checked')) {
+                    $('.suivi-formation.active').fadeIn();
+                    $('.suivi-formation.past').fadeOut();
+                } else {
+                    $('.suivi-formation.active').fadeOut();
+                    $('.suivi-formation.past').fadeIn();
+                }
+            });
+        });
+    </script>
+{% endblock %}

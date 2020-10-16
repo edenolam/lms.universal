@@ -1,0 +1,51 @@
+{{ form_errors(form) }}
+    <div class="col-lg-8">
+        <div class="form-group">
+          {{ form_label(form.title, 'session.title'|trans) }}
+          {{ form_widget(form.title, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.formationPath, 'session.formationPath'|trans) }}
+            {% if (session is defined and session.users | length == 0 ) or session is not defined %}
+              {{ form_widget(form.formationPath, { 'attr': {'class': 'form-control'} }) }}  
+            {% else %}
+              <select id="session_formationPath" name="session[formationPath]" class="form-control" readonly="readonly">
+                <option value="{{ session.formationPath.id }}">{{ session.formationPath.title }}</option>
+              </select>  
+            {% endif %} 
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                  {{ form_label(form.openingDate, 'session.openingDate'|trans) }}
+                  {{ form_widget(form.openingDate, { 'attr': {'class': 'form-control openingDate'} }) }}   
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                  {{ form_label(form.closingDate, 'session.closingDate'|trans) }}
+                  {{ form_widget(form.closingDate, { 'attr': {'class': 'form-control closingDate'}}) }}   
+                </div>
+            </div>
+        </div>       
+        {# <div class="form-group d-none">
+          {{ form_label(form.divisions, 'session.divisions'|trans) }}
+          {{ form_widget(form.divisions, { 'attr': {'class': 'form-control'} }) }}          
+        </div>
+        <div class="form-group d-none">
+          {{ form_label(form.teams, 'session.teams'|trans) }}
+          {{ form_widget(form.teams, { 'attr': {'class': 'form-control'} }) }}             
+        </div> #}
+        <div class="form-group d-none">
+          {{ form_label(form.users, 'session.users'|trans) }}
+          {{ form_widget(form.users, { 'attr': {'class': 'form-control'} }) }}           
+        </div>
+    </div>    
+    <div class="col-lg-4 text-center text-lg-right">
+          {# if (session is defined and session.users | length == 0 ) or session is not defined #}
+            <button type="submit" class="lms-button lms-button-blue">
+              <i class="material-icons lms-material-icons">save</i> <span>{{ 'global.submit'|trans }}</span>
+            </button> 
+          {# endif #}  
+    </div>
+    {{ form_widget(form._token) }}

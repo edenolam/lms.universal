@@ -1,0 +1,10 @@
+.lms {
+    &-footer {
+        background-color: $gray;
+        color: $white;
+        min-height: 2.9375em;
+        a {
+            color: $white;
+        }
+    }
+}

@@ -1,0 +1,81 @@
+{% if test.isTestPresentiel  %}
+    {{ form_start(form, { 'attr': {'class': 'p-5 lms-bg-gray'} }) }}
+        {# form_widget(form) #}
+        <div class="d-flex flex-column flex-lg-row justify-content-lg-around mb-3">
+            <div class="col-lg-6 d-flex flex-column justify-content-between">
+                {{ form_label(form.datePass,  'presentiel.evalPres.date_pass'|trans ) }}
+                {{ form_widget(form.datePass, { 'attr': {'class': 'form-control', 'placeholder':'yyyy-mm-dd'} }) }}
+                {{ form_errors(form.datePass) }}
+            </div>  
+            <div class="col-lg-6 d-flex flex-column justify-content-between">
+                {{ form_label(form.dateDown,  'presentiel.evalPres.date_down'|trans ) }}
+                {{ form_widget(form.dateDown, { 'attr': {'class': 'form-control', 'placeholder':'yyyy-mm-dd'} }) }}
+                {{ form_errors(form.dateDown) }}
+            </div>
+        </div>  
+        <div class="d-flex flex-column flex-lg-row justify-content-lg-around mb-3">
+            <div class="col-lg-6 d-flex flex-column justify-content-between">
+                {{ form_label(form.score,  'presentiel.evalPres.score'|trans ) }}
+                {{ form_widget(form.score, { 'attr': {'class': 'form-control', 'placeholder':'yyyy-mm-dd'} }) }}
+                {{ form_errors(form.score) }}
+            </div>  
+            <div class="col-lg-6 d-flex flex-column justify-content-between">
+                {{ form_label(form.duration,  'presentiel.evalPres.duration'|trans ) }}
+                {{ form_widget(form.duration, { 'attr': {'class': 'form-control'} }) }}
+                {{ form_errors(form.duration) }}
+            </div>
+        </div>   
+        <div class="d-flex flex-column flex-lg-row justify-content-lg-around align-items-lg-end">
+            <div class="col-lg-6 d-flex flex-column justify-content-between">
+                {{ form_label(form.tentative,  'presentiel.evalPres.tentative'|trans ) }}
+                {{ form_widget(form.tentative, { 'attr': {'class': 'form-control', 'placeholder':'yyyy-mm-dd'} }) }}
+                {{ form_errors(form.tentative) }}
+            </div>
+            {% if test.isTestPresentiel %}             
+                <div class="col-lg-6 text-center">
+                    <button class="lms-button lms-button-blue">{{ button_label|default('Save') }}</button>
+                </div>
+            {% endif %} 	
+        </div>       
+    {{ form_end(form) }}
+{% else %}
+        {{ form_start(form, { 'attr': {'class': 'p-5 lms-bg-gray'} }) }}
+        {# form_widget(form) #}
+        <div class="d-flex flex-column flex-lg-row justify-content-lg-around mb-3">
+            <div class="col-lg-6 d-flex flex-column justify-content-between">
+                {{ form_label(form.datePass,  'presentiel.evalPres.date_pass'|trans ) }}
+                {{ form_widget(form.datePass, { 'attr': {'class': 'form-control', 'placeholder':'yyyy-mm-dd', 'disabled': 'disabled'} }) }}
+                {{ form_errors(form.datePass) }}
+            </div>  
+            <div class="col-lg-6 d-flex flex-column justify-content-between">
+                {{ form_label(form.dateDown,  'presentiel.evalPres.date_down'|trans ) }}
+                {{ form_widget(form.dateDown, { 'attr': {'class': 'form-control', 'placeholder':'yyyy-mm-dd', 'disabled': 'disabled'} }) }}
+                {{ form_errors(form.dateDown) }}
+            </div>
+        </div>  
+        <div class="d-flex flex-column flex-lg-row justify-content-lg-around mb-3">
+            <div class="col-lg-6 d-flex flex-column justify-content-between">
+                {{ form_label(form.score,  'presentiel.evalPres.score'|trans ) }}
+                {{ form_widget(form.score, { 'attr': {'class': 'form-control', 'placeholder':'yyyy-mm-dd', 'disabled': 'disabled'} }) }}
+                {{ form_errors(form.score) }}
+            </div>  
+            <div class="col-lg-6 d-flex flex-column justify-content-between">
+                {{ form_label(form.duration,  'presentiel.evalPres.duration'|trans ) }}
+                {{ form_widget(form.duration, { 'attr': {'class': 'form-control', 'disabled': 'disabled'} }) }}
+                {{ form_errors(form.duration) }}
+            </div>
+        </div>   
+        <div class="d-flex flex-column flex-lg-row justify-content-lg-around align-items-lg-end">
+            <div class="col-lg-6 d-flex flex-column justify-content-between">
+                {{ form_label(form.tentative,  'presentiel.evalPres.tentative'|trans ) }}
+                {{ form_widget(form.tentative, { 'attr': {'class': 'form-control', 'placeholder':'yyyy-mm-dd', 'disabled': 'disabled'} }) }}
+                {{ form_errors(form.tentative) }}
+            </div>
+            {% if test.isTestPresentiel %}             
+                <div class="col-lg-6 text-center">
+                    <button class="lms-button lms-button-blue">{{ button_label|default('Save') }}</button>
+                </div>
+            {% endif %} 	
+        </div>       
+    {{ form_end(form) }}
+{% endif %}

@@ -1,0 +1,117 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    encoders:
+        #Symfony\Component\Security\Core\User\User: 'bcrypt'
+        FOS\UserBundle\Model\UserInterface: bcrypt
+    role_hierarchy:
+        ROLE_FORMATION: ROLE_USER
+        ROLE_DASHBOARD: ROLE_USER
+        ROLE_BOITE_OUTILS: ROLE_USER
+        ROLE_GESTION_UNITES_PEDAGOGIQUES: ROLE_USER
+        ROLE_GESTION_PAGE: ROLE_USER
+        ROLE_GESTION_PAGE_EXPERT: ROLE_USER
+        ROLE_GESTION_MODULES: ROLE_USER
+        ROLE_GESTION_TEST: ROLE_USER
+        ROLE_GESTION_PARCOURS_FORMATION: ROLE_USER
+        ROLE_GESTION_UTILSATEURS: ROLE_USER
+        ROLE_GESTION_BILANS: ROLE_USER
+        ROLE_GESTION_LOV: ROLE_USER
+        ROLE_GESTION_SESSION: ROLE_USER
+        ROLE_AUDIT: ROLE_USER
+        ROLE_PUBLICATION_MODULE: ROLE_USER
+        ROLE_ANALYSE_SONDAGE: ROLE_USER
+        ROLE_APPRENANT: 
+            - ROLE_FORMATION
+            - ROLE_DASHBOARD
+            - ROLE_BOITE_OUTILS
+        ROLE_TUTEUR:
+            - ROLE_GESTION_BILANS
+            - ROLE_DASHBOARD
+            - ROLE_ANALYSE_SONDAGE
+        ROLE_RESPONSABLE_FORMATION:
+            - ROLE_TUTEUR
+            - ROLE_PUBLICATION_MODULE
+            - ROLE_GESTION_SESSION
+        ROLE_CONCEPTEUR:
+            - ROLE_GESTION_PARCOURS_FORMATION
+            - ROLE_GESTION_MODULES
+            - ROLE_GESTION_TEST
+            - ROLE_GESTION_UNITES_PEDAGOGIQUES
+            - ROLE_GESTION_PAGE
+            - ROLE_GESTION_PAGE_EXPERT
+            - ROLE_PUBLICATION_MODULE
+            - ROLE_ANALYSE_SONDAGE
+        ROLE_ADMIN:
+            - ROLE_GESTION_UTILSATEURS
+            - ROLE_GESTION_LOV
+            - ROLE_AUDIT
+        ROLE_SUPER_ADMIN: 
+            - ROLE_ADMIN
+            - ROLE_CONCEPTEUR
+            - ROLE_RESPONSABLE_FORMATION
+            - ROLE_APPRENANT
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username_email
+        # users:
+        #     entity:
+        #         class: App\Entity\UserManagement\User    
+        #in_memory: { memory: ~ }
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        # Firewall pour les pages de connexion, et récupération de mot de passe
+        login:
+            pattern:   ^/%locale%/(login$|resetting|register)  # Les adresses de ces pages sont login, et resetting
+            anonymous: true                          # On autorise bien évidemment les anonymes sur ces pages !
+            #logout_on_user_change: true
+
+        main:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle #users
+                #remember_me: true 
+                login_path: app_login #fos_user_security_login
+                check_path: app_login #fos_user_security_check
+                #use_forward: false
+                default_target_path: /%locale%/
+                csrf_token_generator: security.csrf.token_manager
+                # if you are using Symfony < 2.8, use the following config instead:
+                # csrf_provider: form.csrf_provider
+
+            logout:   
+                path: fos_user_security_logout
+                target: /
+            anonymous: true
+            remember_me:
+                secret:  "%env(APP_SECRET)%" 
+                lifetime: 31536000 # 365 jours en secondes
+                path:   /
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
+
+            # activate different ways to authenticate
+
+            # http_basic: true
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: true
+            # https://symfony.com/doc/current/security/form_login_setup.html
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/%locale%/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/%locale%/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/%locale%/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        #roles administrateur
+        - { path: ^/%locale%/admin, role: ROLE_ADMIN }
+        #roles user
+        - { path: ^/%locale%/user, roles: ROLE_USER }
+        # api
+        - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/token, roles: IS_AUTHENTICATED_ANONYMOUSLY } 

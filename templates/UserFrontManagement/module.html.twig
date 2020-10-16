@@ -1,0 +1,326 @@
+{% extends "base.html.twig" %}
+{% block stylesheets %}
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+	<div class="lms-breadcrumb">
+		<a href="
+			{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+			{% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+			{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+			{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+			{% else %} {{ path('home_dashboard') }}
+			{% endif %}">{{lms_name}}
+		</a> > <a href="{{path('user_formation')}}">{{'menu.userFormation.title'|trans}}</a> > <span>{{currentFormation.title}}</span>
+	</div>
+	
+	<div class="d-flex align-items-center lms-title">
+		<h1 class="text-uppercase lms-h1">{{ currentFormation.title }}</h1>
+		<hr>
+	</div>
+
+	<!-- Bannière module -->
+	<div class="d-flex flex-wrap lms-banner-module">
+		<div class="col-lg-3 col-xl-2 p-0 lms-banner-module-img">
+			{% if currentFormation.uri is not null %}
+				<img src="{{asset('uploads/files/' ~ currentFormation.uri)}}" alt="{{currentFormation.title}}"/>			
+			{% else %}
+				<img src="{{asset('images/core/logo.png')}}" alt="{{'dashboard.eval_to_finish'|trans}}"/>
+			{% endif %}
+		</div>
+		<div class="col-lg-9 col-xl-10 d-flex flex-column flex-xl-row justify-content-between pr-lg-0">
+			<div class="col-xl-7 p-3 py-xl-4 lms-banner-module-description">
+				<p class="lms-banner-module-description-title">{{ currentFormation.title }}</p>
+				<p class="lms-banner-module-description-text"> {{ currentFormation.description|raw}}</p>
+			</div>
+			<div class="col-xl-5 text-center p-xl-0 pb-xl-3 py-3 lms-banner-module-infos">
+				<div class="d-flex  flex-column justify-content-between h-100">
+					<div class="d-table w-100 pb-3">
+						{% if app.request.locale == "fr" %}
+							<span class="d-table-cell py-1 px-2 lms-banner-module-date"> {{ session.openingDate | date('d/m/Y') }} > {{ session.closingDate | date('d/m/Y') }}</span>
+						{% else %}
+							<span class="d-table-cell py-1 px-2 lms-banner-module-date"> {{ session.openingDate | date('Y/m/d') }} > {{ session.closingDate | date('Y/m/d') }}</span>
+						{% endif %}
+						{% set diff = date(session.closingDate).diff(date()) %}
+						{% set leftDays = diff.days %}
+						<span class="d-table-cell py-1 px-2 lms-banner-module-day">{{leftDays}} {{'global.duration.litle.day'|trans}}</span>
+					</div>
+					<div>
+						<a target="_blank" href="{{path('user_formation_syllabus', {'slugSession' : session.slug})}}" class="lms-button lms-button-view"> {{'userFrontManagement.syllabus'|trans}} <i class="material-icons"> cloud_download </i> </a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="d-flex align-items-center lms-title">
+		<h2 class="text-uppercase lms-h1">{{'formation.module.literal'|trans}}</h2>
+		<hr>
+	</div>
+
+	<div class="lms-subcontent">
+		<div class="d-flex flex-wrap justify-content-center justify-content-lg-start">
+			{% if currentFormation is defined and currentFormation is not null and currentFormation is not empty and modules is defined and modules is not null and modules is not empty %}
+				{% set previousModuleSucces = true %}
+				{% for module in modules %}
+					{% set moduleSart = module.sessionModule.openingDate %}
+					{% set moduleEnd = module.sessionModule.closingDate %}
+
+					<!-- Rotating card -->
+					<div class="lms-card-module">
+						<div class="card lms-card">
+							<!-- Card front -->
+							<div class="card text-center lms-card-front">
+								<div class="card-header d-flex justify-content-between lms-card-header">
+									<div>
+										{% for validationMode in module.module.validationModes %}
+											{% if validationMode.conditional == 'pre-test-non-valid' or validationMode.conditional == 'pre-test-valid' %}
+												<span data-toggle="tooltip" data-original-title="Pre-test">
+													<img src="{{asset('images/core/badge-jaune.svg')}}" alt="{{'global.literal.certificat'|trans}}" class="pr-1">
+												</span>
+											{% elseif validationMode.conditional == 'eval' %}
+												<span data-toggle="tooltip" data-original-title="Evaluation">
+													<img src="{{asset('images/core/badge-rouge.svg')}}" alt="{{'global.literal.certificat'|trans}}" class="pr-1">
+												</span>
+											{% endif %}
+										{% endfor %}
+										{% for moduleTest in module.module.moduleTests %}
+											{% if moduleTest.test.typeTest.conditional == 'training' %}
+												<span data-toggle="tooltip" data-original-title="Traning">
+													<img src="{{asset('images/core/badge-vert.svg')}}" alt="{{'global.literal.certificat'|trans}}" class="pr-1">
+												</span>
+											{% endif %}
+										{% endfor %}
+									</div>
+									{% if module.module.type is not null and  module.module.type.id == 3 %}
+										<div><span class="lms-card-module-type">{{"formation.module.presentiel"|trans}}</span></div>
+									{% elseif module.userModule is not null and module.userModule.percentage is not null and module.module.type.conditional != 'notFollow' %}
+										<div class="progress lms-progress-circle" data-percentage="{{module.userModule.percentage}}">
+											<span class="progress-left"> <span class="progress-bar"></span></span>
+											<span class="progress-right"><span class="progress-bar"></span></span>
+											<div class="progress-value lms-progress-value"><div>{{module.userModule.percentage}}%</div></div>
+										</div>
+									{% elseif  module.module.type.conditional != 'notFollow' %}
+										<div class="progress lms-progress-circle" data-percentage="0">
+											<span class="progress-left"><span class="progress-bar"></span></span>
+											<span class="progress-right"><span class="progress-bar"></span></span>
+											<div class="progress-value lms-progress-value"><div>0%</div></div>
+										</div>
+									{% endif %}
+								</div>
+								 <div class="lms-card-img-round">
+									{% if module.module.uri is defined and module.module.uri is not empty and module.module.uri is not null %}
+										<img src="{{asset('uploads/files/' ~ module.module.uri)}}" alt="Visuel du module">
+									{% else %}
+										<img src="/images/core/logo-eye.png" alt="Visuel du module">
+									{% endif %}
+								</div>
+
+									{% if module.userModule is not null and module.userModule.success and module.module.type.conditional != 'notFollow' %}
+										{% if module.module in  module.sessionModule.session.formationPath.listModules and module.module.isValid %}
+											<div class="lms-card-succeed">
+												<img src="{{asset('images/core/bravo.svg')}}" alt="{{'global.literal.certificat'|trans}}">
+												{% if module.module.isScorm %}
+													{# <a class="lms-button lms-button-jaffa" href="{{ path('user_formation_module_organisation_scorm', {'slugSession': session.slug, 'slugModule': module.module.slug,}) }}">
+														{{'global.literal.finished'|trans}}
+													</a> #}
+												{% elseif module.module.type is null or module.module.type.id == 1 %}
+													{# <a class="lms-button lms-button-jaffa" href="{{ path('user_formation_module_organisation', {'slugSession': session.slug, 'formationPath': session.formationPath.id, 'slugModule': module.module.slug,}) }}">{{'global.literal.finished'|trans}}</a> #}
+												{% else %}	
+													<a class="lms-button lms-button-jaffa"	href="#">{{ 'formation.modulemodule_presentiel' | trans }}</a>
+												{% endif %}
+											</div>
+										{% else %}
+											<div class="lms-card-succeed">
+												<img src="{{asset('images/core/bravo.svg')}}" alt="{{'global.literal.certificat'|trans}}">
+												<span class="lms-button lms-button-jaffa">
+													{{'dashboard.i_notvalid_module'|trans}}
+												</span>
+											</div>
+										{% endif %}
+									{% endif %}
+
+								<div class="card-body position-relative lms-card-body">
+									<p class="card-title lms-card-title">
+
+										<span data-toggle="tooltip" data-original-title="{{ module.module.title }}" >{{ module.module.title | truncate(50) }}</span> <small>V.{{ module.module.version}}</small><br/>
+										<i data-toggle="tooltip" data-original-title="{{ module.module.regulatoryRef }}" >(<small><i>{{ module.module.regulatoryRef | truncate(50) }}</i></small>)</i>
+										 {% if module.module.files | length > 0 %}
+			                                <a href="#" data-toggle="modal" data-target="#moduleFiles{{ module.module.id }}"><i class="material-icons lms-material-icons">cloud_download</i></a> 
+	                            		{% endif %}
+										<br>
+										<small>
+											{% for validationMode in module.module.validationModes %}
+												{% if loop.index0 % 2 == 0 %}
+													<span>{{validationMode.title}} &ndash; </span>
+												{% elseif loop.index0 % 2 == 1 or loop.last %}
+													<span>{{validationMode.title}}</span>
+												{% endif %}
+											{% endfor %}
+										</small>
+                            		</p>
+									{% if  module.module in  module.sessionModule.session.formationPath.listModules and module.module.isValid %}
+										{% if moduleSart <= date() %}
+											{% if  currentFormation.isModulesAleatoires == true or (currentFormation.isModulesAleatoires == false and  previousModuleSucces == true)  %}
+												{% if module.module.isScorm %}
+													<a href="{{ path('user_formation_module_organisation_scorm', {'slugSession': session.slug, 'slugModule': module.module.slug,}) }}" class="lms-button lms-button-blue">
+														{% if moduleEnd < date() %}
+															{{'dashboard.i_review'|trans}}
+														{% elseif module.userModule is not null and module.userModule.percentage is not null %}
+															{{'dashboard.i_continue'|trans}}
+														{% else %}
+															{{'dashboard.i_begin'|trans}}
+														{% endif %}
+													</a>
+												{% else %}
+													{% if module.module.type is not null and  module.module.type.id == 3 %}
+														<div class="lms-card-location-block">
+															<button class="lms-card-location-bt-infos"><i class="material-icons lms-material-icons"> info </i><span>{{ "userFrontManagement.module.informations" | trans }}</span></button>
+															<div class="lms-card-location-content">
+																<span class="lms-card-location-bt-infos-close"><i class="material-icons lms-material-icons"> close </i><span>{{ 'global.literal.close' | trans }}</span></span>
+																<p>
+																	{{"lieu :"|trans}} <br>{{module.module.lieuFormation}}
+																</p>
+																<p>
+																	{{"by"|trans}} {{module.module.nomAnimateur}}
+																</p>
+															</div>
+														</div>
+														<div class="row justify-content-around position-relative mt-3">
+															{% if module.module.moduleTraining %}
+																<a href="{{path('test_front_begin', {'testSlug' : module.module.moduleTraining.slug, 'moduleSlug' : module.module.slug, 'sessionSlug' : session.slug})}}" class="lms-card-question-link">
+																	<img src="{{asset('images/core/badge-vert.svg')}}" alt="{{'global.literal.certificat'|trans}}" class="lms-card-question-badge"><span>{{"formation.module.online"|trans}}</span>
+																</a>
+															{% endif %}	
+															{% if module.module.moduleEvaluation and  module.module.moduleEvaluation.isTestPresentiel == false %}
+																<a href="{{path('test_front_begin', {'testSlug' : module.module.moduleEvaluation.slug, 'moduleSlug' : module.module.slug, 'sessionSlug' : session.slug})}}" class="lms-card-question-link">
+																	<img src="{{asset('images/core/badge-rouge.svg')}}" alt="{{'global.literal.certificat'|trans}}" class="lms-card-question-badge"><span>{{"formation.module.online"|trans}}</span>
+																</a>
+															{% endif %}	
+														</div>
+																										
+													{% elseif module.module.type.conditional == 'notFollow' %}
+														{% if module.module.moduleCourses|length > 0 %}
+															<a href="{{ path('user_formation_module_organisation', {'slugSession': session.slug, 'formationPath': session.formationPath.id, 'slugModule': module.module.slug,}) }}" class="lms-button lms-button-blue">
+																{{'dashboard.i_begin'|trans}}
+															</a>
+														{% endif %}
+														{% if module.module.moduleTests|length > 0 %}
+															{% if module.module.moduleSondage %}
+																<a href="{{path('test_front_begin', {'testSlug' : module.module.moduleSondage.slug, 'moduleSlug' : module.module.slug, 'sessionSlug' : session.slug})}}" class="lms-button lms-button-blue">
+																	{{module.module.moduleSondage.title}}
+																</a>
+															{% endif %}
+														{% endif %}
+													{% elseif moduleEnd < date() %}
+														<a href="{{ path('user_formation_module_organisation', {'slugSession' : session.slug, 'formationPath': session.formationPath.id, 'slugModule': module.module.slug}) }}" class="lms-button lms-button-blue">
+															{{'dashboard.i_review'|trans}}
+														</a>
+													{% elseif module.userModule is not null and module.userModule.percentage is not null and module.userModule.userLastPage is not null %}
+														<a href="{{ path('user_formation_module_organisation', {'slugSession' : session.slug, 'formationPath': session.formationPath.id, 'slugModule': module.module.slug, 'slugChapter': module.userModule.userLastPage.course.slug, 'slugPage': module.userModule.userLastPage.page.slug}) }}" class="lms-button lms-button-blue">
+															{{'dashboard.i_continue'|trans}}
+														</a>
+													{% else %}
+														<a href="{{ path('user_formation_module_organisation', {'slugSession': session.slug, 'formationPath':session.formationPath.id, 'slugModule': module.module.slug,}) }}" class="lms-button lms-button-blue">
+															{{'dashboard.i_begin'|trans}}
+														</a>											
+													{% endif %}	
+												{% endif %}
+											{% else %}
+												<button class="lms-button lms-button-blue">{{'dashboard.i_future'|trans}}</button>
+											{% endif %}
+										{% else %}
+											<button class="lms-button lms-button-blue">{{'dashboard.i_future'|trans}}</button>
+										{% endif %}
+									{% else %}
+										<button class="lms-button lms-button-blue">{{'dashboard.i_notvalid_module'|trans}}</button>
+									{% endif %}
+								</div>
+								<div class="card-footer d-flex flex-wrap align-items-center p-0 lms-card-footer">
+									<p class="m-0 lms-card-day">{{module.module.realisationTime|date('H')}}{{'global.duration.litle.hours'|trans}}{{module.module.realisationTime|date('i')}}</p>
+									{% if moduleSart is not null and moduleEnd is not null %}
+										{% if app.request.locale == "fr" %}
+											<p class="m-0 lms-card-date"> {{moduleSart|date('d/m/Y')}} > {{moduleEnd|date('d/m/Y')}} </p>
+										{% else %}
+											<p class="m-0 lms-card-date"> {{moduleSart|date('Y/m/d')}} > {{moduleEnd|date('Y/m/d')}} </p>
+										{% endif %}
+									{% else %}
+										<p class="m-0 lms-card-date"> - </p>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Rotating card -->
+				{% if moduleEnd >= date() %}
+					{% if module.userModule is not null %}
+						{% if module.userModule.endDate != null %}
+							{% set previousModuleSucces =  true %}
+						{% else %}
+							{% set previousModuleSucces =  false %}
+						{% endif %}
+					{% else %}
+						{% set previousModuleSucces =  false %}
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		{% else %}
+		{% endif %}
+
+		</div>
+	</div>
+
+{% for module in modules %}
+<div class="modal fade" id="moduleFiles{{ module.module.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 95%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{ module.module.title }} - ({{ module.module.regulatoryRef }})</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">x</button>
+            </div>
+            <div class="modal-body">
+                    <table class="table">
+                      {% for f in module.module.files %}
+                        {% if f.isValid and f.isDownload %}
+                          <tr>
+                              <td><a href="{{ asset("uploads/files/"~f.uri) }}" target="_blank">
+                                <i class="material-icons lms-material-icons">cloud_download</i>&nbsp;&nbsp;&nbsp;&nbsp;{{ f.name }}
+                              </a></td>
+                          </tr>
+                        {% endif %}  
+                      {% endfor %}   
+                    </table>
+            </div>  
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal">{{ 'global.literal.close'|trans }}</button>
+            </div>  
+        </div> 
+    </div>       
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block js %}
+	{{ parent() }}
+	<script>
+		/*
+		 * Affichage des informations de lieu et d'animateur sur les cartes module de type présentiel
+		*/
+		let btInfo = document.querySelectorAll('.lms-card-location-bt-infos');
+		let btInfoClose = document.querySelectorAll('.lms-card-location-bt-infos-close');
+		btInfo.forEach(function(item) {
+			item.addEventListener('click', function() {
+				this.nextElementSibling.classList.add('show');
+			});
+		});
+		btInfoClose.forEach(function(item) {
+			item.addEventListener('click', function() {
+				this.closest('div').classList.remove('show');
+			});
+		});
+	</script>
+{% endblock %}

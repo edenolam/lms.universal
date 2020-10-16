@@ -1,0 +1,174 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<!-- navigator -->
+<div class="lms-breadcrumb">
+    <span><a href="
+				{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+                {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+				{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+				{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+				{% else %} {{ path('home_dashboard') }}
+				{% endif %}">{{lms_name}}</a></span> > <span><a href="{{path('admin_user_index')}}">{{ 'menu.user.title' | trans }}</a></span> > <span class="bold">{{ 'user.action.view' | trans }} ({{user.username}})</span>
+</div>
+
+<!-- title of page -->
+<div class="d-flex align-items-center lms-title">
+	<h1 class="text-uppercase lms-h1">{{ user.username}} {% if user.ldapUser %}({{ 'user.ldap_user' | trans }}) {% endif %}</h1><hr>
+</div>
+
+<div class="row form-container">
+  <div class="col col-12 col-md-4 col-xl-2">
+      <div class="fileupload-new thumbnail">
+          {% if user.photo %}
+            <img src="{{ asset('uploads/user/') }}{{ user.photo  }}" />
+          {% else %}
+            <img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" />
+          {% endif %}
+      </div>
+  </div>
+<div class="row">
+  <div class="col-12 ">
+    
+    <div class="form-group">
+      <b>{{ 'user.donnees_personnelles' | trans }}</b>
+    </div> 
+    <div class="col-12 row"> 
+      <div class="form-group col-4">
+          <label>{{ 'user.civility'|trans }}</label>      
+          <input type="text" class="form-control" value="{{ user.civility}}" disabled/>
+      </div>         
+      <div class="form-group col-4">   
+          <label>{{ 'user.prenom'|trans }}</label>       
+          <input type="text" class="form-control" value="{{ user.firstName }}" disabled/>
+      </div>
+      <div class="form-group col-4">
+          <label>{{ 'user.nom'|trans }}</label>     
+          <input type="text" class="form-control" value="{{ user.lastname }}" disabled/>
+      </div>
+    </div>
+    <div class="form-group col-6">
+        <label>{{ 'user.email'|trans }}</label>      
+       <input type="text" class="form-control" value="{{ user.email}}" disabled/>
+    </div>         
+  </div>
+
+  <div class="col-12 "> 
+    <div class="form-group">
+      <b>{{ 'user.donnees_professionnelles' | trans }}</b>
+    </div> 
+     <div class="col-12 row"> 
+      <div class="col-4">
+        <div class="form-group">
+              <label>{{ 'user.function'|trans }}</label>        
+              <input type="text" class="form-control" value="{{ user.function }}" disabled/>
+          </div>  
+        <div class="form-group">
+            <label>{{ 'user.login'|trans }}</label>
+            <input type="text" class="form-control" value="{{ user.username}}" disabled/>
+        </div>
+
+        {% if user.ldapUser %}
+          <div class="form-group">
+              <label>{{ 'user_base_dn'|trans }}</label>
+          </div>    
+          <div class="form-group">          
+            <input type="text" class="form-control" value="{{ user.userDn}}" disabled/>
+          </div>
+        {% endif %}  
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+            <label>{{ 'lov.laboratory'|trans }}</label>         
+            <input type="text" class="form-control" value="{{ user.laboratory }}" disabled/>
+        </div> 
+        <div class="form-group">
+            <label>{{ 'lov.division'|trans }}</label>          
+            <input type="text" class="form-control" value="{{ user.division }}" disabled/>
+        </div> 
+        <div class="form-group">
+            <label>{{ 'lov.team'|trans }}</label>
+            <input type="text" class="form-control" value="{{ user.team }}" disabled/>
+            <label>{{ 'user.hierarchyLevel'|trans }}</label>
+            <input type="text" class="form-control" value="{{ user.hierarchyLevel }}" disabled/>
+        </div> 
+      </div>
+      <div class="col-4">
+        <div class="form-group ">
+          <label>{{ 'user.supervisor'|trans }}</label>
+          <ul>
+              {% for supervisor in user.supervisors %}
+                  <li>{{ supervisor.lastName }} {{ supervisor.firstName }} ({{ supervisor.username }})</li>   
+              {% endfor %}
+          </ul>
+        </div>   
+
+        <div class="form-group">
+          <label>{{ 'user.groups'|trans }}</label>
+          {% for group in user.groups %}
+              <div class="form-group m-2">
+                <input type="checkbox" checked="checked" disabled/>
+                <label>{{ group.name }}</label>
+              </div>   
+          {% endfor %}
+        </div>   
+
+        <div class="form-group">
+            <label class="-block">{{ 'user.roles'|trans }}</label>
+            {% for id, role in user.roles %}
+              <div class="form-group m-2">
+                <input type="checkbox" checked="checked" disabled/>
+                  <label>{{ role }}</label>
+              </div>    
+            {% endfor %}
+        </div>  
+      </div>
+    </div>
+
+     <div class="form-group ">
+      <label>{{ 'user.tutor'|trans }}</label>
+      <ul>
+          {% for userFollow in tutorFollow %}
+              <li>{{ userFollow.lastName }} {{ userFollow.firstName }} ({{ userFollow.username }})</li>   
+          {% endfor %}
+      </ul>
+    </div>   
+
+
+      <div class="form-group">
+          <label>{{ 'user.info1'|trans }}</label>
+          <input type="text" class="form-control" value="{{ user.info1}}" disabled/>
+      </div>
+
+
+      <div class="form-group">
+          <label>{{ 'user.info2'|trans }}</label>
+          <input type="text" class="form-control" value="{{ user.info2}}" disabled/>
+      </div> 
+
+
+      <div class="form-group">
+          <label>{{ 'user.info3'|trans }}</label>
+          <input type="text" class="form-control" value="{{ user.info3}}" disabled/>
+      </div>
+
+  </div> 
+   </div>                 
+
+</div> 
+
+<div class="row justify-content-around">
+      <a href="{{ path('admin_user_index') }}" class="lms-button lms-button-gray">
+          {{ 'global.back' | trans }}
+      </a>  
+</div>          
+
+
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+<script>
+$('#dropdown-users .dropdown-menu').addClass('show');
+</script>
+{% endblock %}

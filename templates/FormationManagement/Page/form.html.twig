@@ -1,0 +1,172 @@
+<div class="row lms-bg-light">
+    {{ form_errors(form) }}
+    <div class="col-4 mt-2">
+        <div class="form-group">
+            {{ form_label(form.course, 'formation.course.title'|trans) }}
+        </div>
+    </div>
+    <div class="col-8">
+        <div class="form-group">
+            {{ form_widget(form.course, { 'attr': {'class': 'form-control'} }) }}
+            {{ form_errors(form.course) }}
+        </div>
+    </div>
+</div>
+
+<div class="row lms-bg-light">
+    <div class="col-4">
+        <div class="form-group">
+            {{ form_label(form.inSummary,  'formation.page.in_summary'|trans) }}
+        </div>
+    </div>
+    <div class="col-8">
+        <div class="form-group">
+            {{ form_widget(form.inSummary, { 'attr': {'class': 'form-control'} }) }}
+            {{ form_errors(form.inSummary) }}
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-12 form-group">
+        {{ form_label(form.pageType,  'formation.page.type'|trans) }}
+        {{ form_widget(form.pageType, { 'attr': {'class': 'form-control lms-bg-light'} } ) }}
+    </div>
+</div>
+
+<div class="row lms-bg-light">
+    <div class="col-lg-12  mt-2 row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                {{ form_label(form.title, 'formation.formation_path.title'|trans) }}
+                {{ form_widget(form.title, { 'attr': {'class': 'form-control'} } ) }}
+                {{ form_errors(form.title) }}
+            </div>
+        </div>
+        <div class="col-lg-12 video pdf pageType" style="display:none">
+            <div class="form-group">
+                <label class="video pageType" >{{ 'formation.page.video'|trans }}</label>
+                <label class="pdf pageType" >{{ 'formation.page.pdf'|trans }}</label>
+                {{ form_widget(form.file, { 'attr': {'class': 'form-control'} } ) }}
+                {{ form_errors(form.file) }}
+            </div>
+        </div>
+        <div class="col-lg-12 pedagogique pageType bg-light" style="display:none">
+
+            <div class="alert alert-success text-center text-uppercase font-weight-bold col-lg-6 offset-3" role="alert">{{ 'form.type_exercice'|trans }} </div>
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item"><a class="nav-link active" href="#profile" role="tab" data-toggle="tab">{{ 'form.glisser_deposer'|trans }}</a></li>
+                <li class="disabled"><a class="nav-link" href="#buzz" role="tab" data-toggle="tab">{{ 'form.autres'|trans }}</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane  active" id="profile">
+                    <div class="row">
+                        <div class="col-lg-4 offset-2">
+                            <br/><br/>
+                            <div id="create">
+                                <div class="question">
+                                    <button class="button_question lms-button btn-success mb-2"><i class="material-icons lms-material-icons">add</i>{{ 'form.add_question'|trans }}</button>
+                                    <div><input type="text" name="myquestions[]"><i class="material-icons lms-material-icons">drag_handle</i></div>
+                                </div>
+                            </div>
+                            <br/><br/>
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <br/><br/>
+                            <div class="reponse">
+                                <button class="button_reponse lms-button btn-success mb-2"><i class="material-icons lms-material-icons">add</i>{{ 'form.add_reponse'|trans }}</button>
+                                <div><i class="material-icons lms-material-icons">drag_handle</i><input type="text" name="myresponse[]"></div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary popover" data-toggle="popover" title="{{ 'form.title_tuto'|trans }}" data-content="{{ 'form.content_tuto'|trans }}"><i class="material-icons lms-material-icons">help</i> </button>
+
+                    </div>
+                    <div class="row">
+                            <div id="content">
+                                <div id="cardPile" class="row alert-dark m-2 center"></div>
+                                <div id="cardSlots" class="row alert-dark m-2 center"></div>
+                                <button id="resultat" class="lms-button lms-button-blue">{{ 'form.valider'|trans }}</button>
+                                <button id="refresh" class="lms-button lms-button-gray"> <i class="material-icons lms-material-icons">replay</i>{{ 'form.recommencer'|trans }}</button>
+
+                                <div id="afficheq"> </div>
+                                <div id="afficher"> </div>
+
+                                <div id="successMessage" class="modal modal-content bg-light col-lg-6 offset-3 alert alert-success text-center">
+                                    <h2 class="text-center"><i class="material-icons lms-material-icons">done_all</i> {{ 'form.reponse_correcte'|trans }} </h2>
+                                </div>
+                                <div id="errorMessage" class="modal  modal-content bg-light col-lg-6 offset-3  alert alert-danger text-center">
+                                    <h2 class="text-center"><i class="material-icons lms-material-icons">clear</i> {{ 'form.reponse_fausse'|trans }}</h2>
+                                </div>
+                            </div>
+                                <input type="hidden" name="js" value=''/>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="buzz"></div>
+            </div>
+            <button class="ok lms-button lms-button-blue mt-3  offset-6">{{ 'form.valider'|trans }}</button>
+        </div>
+
+
+        <div class="col-lg-12 expert pdf pageType">
+            <div class="form-group">
+                {{ form_label(form.fileAudio, 'formation.page.file_audio'|trans) }}
+                {{ form_widget(form.fileAudio, { 'attr': {'class': 'form-control'} } ) }}
+                {{ form_errors(form.fileAudio) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="form-group expert pageType">
+            {{ form_label(form.contentCode, 'formation.page.content_code'|trans) }}
+            {{ form_widget(form.contentCode, { 'attr': {'class': 'form-control'} } ) }}
+            {{ form_errors(form.contentCode) }}
+        </div>
+        <div class="form-group expert pageType">
+            {{ form_label(form.jsCode, 'formation.page.js_code'|trans) }}
+            {{ form_widget(form.jsCode, { 'attr': {'class': 'form-control editor-area'} } ) }}
+            {{ form_errors(form.jsCode) }}
+            <div id="editor"></div>
+        </div>
+        <div class="form-group expert pdf video  pageType">
+            {{ form_label(form.textualContent, 'formation.page.textual_content'|trans) }}
+            {{ form_widget(form.textualContent, { 'attr': {'class': 'form-control'} } ) }}
+            {{ form_errors(form.textualContent) }}
+        </div>
+    </div>
+</div>
+
+{# connaissance 
+<div class="col-lg-12 row mt-2 mb-2 border p-2">
+    <div class="col-lg-12">
+        {{ form_label(form.knowledges,  'formation.page.connaissances'|trans) }}
+        {{ form_widget(form.knowledges, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.knowledges) }}
+    </div>
+</div>
+#}
+
+{# ref biblio / connaissance
+<div class="col-lg-12 row mt-2 mb-2 border p-2 d-none">
+    {# ref biblio 
+    <div class="col-lg-12">
+        {{ form_label(form.pageReferences,  'formation.page.reference'|trans) }}
+        {{ form_widget(form.pageReferences, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.pageReferences) }}
+    </div>
+</div>
+#}
+
+<div class="col-12 text-center mt-2">
+
+    {#<div class="form-group col-4">
+        <a href="{{ path('admin_course_edit', {'slug' : course.slug, 'slugm' : module.slug}) }}"
+           class="btn btn-white">{{ 'global.cancel'|trans }}</a>
+    </div>#}
+
+    <button type="submit" class="lms-button lms-button-blue expert pdf video pageType">
+        <i class="material-icons lms-material-icons">save</i> <span>{{ 'global.submit'|trans }}</span>
+    </button>
+</div>
+{{ form_widget(form) }}

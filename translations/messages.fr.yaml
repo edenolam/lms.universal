@@ -1,0 +1,208 @@
+global:
+    welcom:
+        sentence: Votre partenaire pour le management de l'environnement de la santé
+        reseting_subit: Envoyer le mail
+        resseting_titel: Réinitialiser votre mot de passe
+        resseting_field: Mail ou Identifiant 
+        resseting_label: Entrer votre identifiant ou email
+        reset_psw: Réinitialiser son mot de passe
+        reset_psw1: Nouveau mot de passe
+        reset_psw1_label: Entrer votre nouveau mot de passe
+        reset_psw2: Répéreter le mot de passe
+        reset_psw2_label: Confirmer votre nouveau mot de passe
+        reset_psw_send: Enregistrer
+        rest_psw_mail: Réinitialisation de votre mot de passe
+    faq: FAQ
+    doc: Documentation
+    comment: Commentaire
+    nbTry: Nombre d'essais
+    mailLog: Log mails
+    traking: Tracking
+    duration:
+        litle:
+            hours: H
+            day: J
+    title: EuroAcademy
+    cancel: Annuler
+    lcms: EuroAcademy
+    order:
+        literal: Trier par
+        way: Ordre
+        asc: Croissant
+        desc: Décroissant
+    literal:
+        notifModule: modules en attente
+        agenda: Mon agenda
+        sucesss_percentage: réussite
+        attribut: Attribut
+        oldValue: Valeur avant révision
+        newValue: Valeur courante
+        is_session: Session en cours
+        en_cours: En cours
+        oui: Oui
+        non: NON
+        learner: Apprenant
+        tuteur: Tuteur
+        welcome: Bienvenue
+        success: Succès
+        fail: Échec
+        year: Année
+        finished: Terminé
+        tentatives: Tentatives
+        continue: Continuer
+        start: Commencer
+        reprendre: Reprendre
+        formation: Formation
+        date: Date
+        title: Titre
+        user: Utilisateur
+        team: Équipe
+        close: Fermer
+        valid: Active
+        certificat: Certificat(s)
+        attestation: Attestation(s)
+        learn_more: Découvrir
+        archive: Archive
+        expected_duration: "Durée prévue :"
+    id_unicite: "Clé d'authenticité :"
+    page: Page
+    delete: Supprimer
+    activate: Activé
+    acceder: Accéder
+    reference: Réf.
+    action: Action  
+    createdate: Date de création
+    creation: Création
+    updatedate: MAJ
+    maj: MAJ
+    createuser: Créé par 
+    updateuser: Modifié par 
+    revision: Révision
+    back: Retour
+    obligatoire: Champ obligatoire
+    detail: Détail
+    edit: Modifier
+    desactiver: Désactiver
+    inactif: Désactivé
+    activer: Activer 
+    actif: Activé 
+    archiver: Archiver
+    un_archiver: Désarchiver
+    visibled: Rendre visible
+    unvisibled: Masquer
+    archived: Archivé
+    un_archived: Non archivé
+    search: Rechercher
+    result_search: Voici le résultat de votre recherche pour 
+    nb_search_result: Nb résultats
+    search_formation: Résultats  de formations
+    search_module: Résultats de modules
+    search_course: Résultats de chapitres
+    search_page: Résultats de pages
+    search_no_result: Aucun résultat pour cette recherche
+    author: Auteur
+    submit: Valider
+    overview: Aperçu
+    duplicate: Dupliquer
+    table:
+        filteredForm: Filtré parmis
+        entries: lignes
+        entry: ligne
+        total: Total
+        Entries: Lignes
+        search: Rechercher
+        zeroRecords: Pas de résultats
+        processing: En cours
+        loadingRecords: Chargement
+
+menu:
+    sondage:
+        title: Analyse des sondages
+    pool:
+        title: Gestion des ensembles de questions
+    concepteur:
+        session: Gestion session
+        formation: Gestion formation
+        module: Gestion module
+        test: Gestion test
+    dashboard:
+        title: Mon tableau de bord
+        literal: Tableau de bord
+    userFormation:
+        title: Mes formations
+    suivi:
+        title: Mon suivi
+    question:
+        title: Gestion des questions
+    answer:
+        title: Gestion des réponses
+    lov: 
+        title: Gestion des lov
+    ldap: 
+        add: Ajouter
+        list: Gestion du LDAP
+    user:
+        title: Gestion utilisateurs
+        list: Liste des utilisateurs  
+    group:
+        list: Liste des groupes
+    results:
+        list: Bilan de formation
+    formation:
+        session:
+            list: Sessions de formation
+        title: Gestion formations
+        formation_path:
+            list: Parcours de formation 
+        reference:
+            list: Références 
+        page:
+            list: Pages  
+        module:
+            list: Modules
+        course:
+            list: Chapitres
+        knowledge:
+            list: Connaissances
+    lexique:
+        list: Gestion du lexique
+    virtual_class_room:
+        list: Classe virtuelle   
+        title: Gestion classes virtuelles          
+    test: 
+        title: Gestion des tests   
+    audit:
+        title: Audit
+    tuteur:
+        audit: Suivi de formation
+        userModuleFollow: Enregistrements modules présentiels 
+        userTest: Enregistrements tests présentiels / Nb essais évaluation
+
+dashboard:
+    apprenant: apprenant
+    tuteur: tuteur
+    concepteur: concepteur
+    superadmin: super administrateur
+    respo: responsable de formation
+    admin: administrateur
+    user: utilisateur sans profil spécifique
+    i_review: Réviser
+    certificats: Certificats
+    attestations: Attestations
+    certificat: Certificat
+    attestation: Attestation  
+    i_begin: Je commence
+    i_continue: Je continue
+    i_future: A venir
+    i_new: Nouveau module à venir
+    i_notvalid_module: Le module est momentanément indisponible
+    i_closed: Clôturé
+    eval_to_finish: Mes évaluations à finir
+    my_notes: Mes notes
+    lexique: Lexique
+    you_are: Vous êtes
+    in_Lab: dans l'entreprise
+    user_laboratory: Vous êtes apprenant dans l'entreprise
+    notes_empty: Vous n'avez saisi aucune notes
+    title: Mon tableau de bord
+    

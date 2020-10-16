@@ -1,0 +1,57 @@
+<div class="form-group mt-5">
+    <label>{{'question.pool' | trans }}</label>
+</div>
+<div class="form-group">  
+    <input type="text" class="form-control" value="{{ question.pool.title }}"/>
+</div>
+<div class="form-group">
+    <label>{{'global.literal.title' | trans }}</label>
+</div>
+<div class="form-group">  
+    <input type="text" class="form-control" value="{{ question.title }}"/>
+</div>
+
+<div class="form-group">
+    <label>{{'question.question' | trans }}</label>
+</div>
+<div class="form-group">   
+    <textarea class="form-control" >{{ question.question }}</textarea>
+</div>
+
+<div class="col-12 row">
+    <div class="col-6 ">
+        <div class="form-group">
+            <label>{{ 'question.required' | trans }}</label>
+        </div>  
+        <div class="form-group " > 
+            <input type="text" class="form-control col-6" value="{% if question.required %}{{"global.literal.oui"|trans}}{% else %}{{"global.literal.non"|trans}}{% endif %}"/>                
+        </div>
+     </div>
+    <div class="col-6 ">
+        <div class="form-group">
+            <label>{{ 'question.weight' | trans }}</label>
+        </div>  
+        <div class="form-group">  
+            <input type="text" class="form-control col-6" value="{{ question.weight }}" />                      
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ 'lov.answer_type' | trans }}</label>
+</div>  
+<div class="form-group">   
+    <input type="text" class="form-control col-6" value="{{ question.answerType.title }}"/>                  
+</div>
+
+<div class="form-group">
+    <label>{{'question.content' | trans }}</label>
+</div>
+<div class="form-group">    
+    <div class="card">
+        <div class="card-body">
+            {{ question.content | raw }}
+        </div>
+    </div>
+</div>
+
+

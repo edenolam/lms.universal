@@ -1,0 +1,13 @@
+{% if currentPage.uri is defined and currentPage.uri is not null and currentPage.uri is not empty %}
+    <div class="lms-aside-card">
+        <div class="p-3 lms-aside-card-content">
+            <div class="d-flex justify-content-between pb-3 lms-aside-card-title">
+                <span class="text-uppercase">{{ 'userFrontManagement.page.document' | trans | raw }}</span>
+            </div>
+            <div class="lms-aside-card-body pt-2">
+                <a class="lms-button lms-button-download" href="{{asset('uploads/files/'~currentPage.uri)}}" target="_blank">{{ currentPage.uri |truncate(12, false, '...' ) }}<i class="material-icons lms-material-icons">cloud_download</i>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endif %}

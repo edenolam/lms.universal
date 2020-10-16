@@ -1,0 +1,203 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}  
+{#<link rel="stylesheet" type="text/css" href="{{ asset('assets/bootstrap-fileupload/bootstrap-fileupload.css') }}" />#}
+<link href="{{ asset("assets/summernote/summernote-bs4.css") }}" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+<!-- navigateur -->
+<div class="lms-breadcrumb">
+    <span><a href="
+				{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+                {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+				{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+				{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+				{% else %} {{ path('home_dashboard') }}
+				{% endif %}">{{lms_name}}</a></span> > <span><a href="{{path('admin_module_list')}}">{{ 'menu.concepteur.module' | trans }}</a></span> > <span class="bold">{{ 'formation.module.action.create' | trans }}</span>
+</div>
+
+<!-- title of page -->
+<div class="d-flex align-items-center lms-title">
+		<h1 class="text-uppercase lms-h1">{{ 'formation.module.action.create' | trans }}</h1><hr>
+</div>
+
+<!-- body of page -->
+<div class="row ml-2 mr-2">
+  <div class="col-lg-12 lms-bg-light">
+
+    <div class="card-body mt-4">
+      <form action="{{ path('admin_module_create') }}" id="form" method="post" class="form-horizontal" enctype="multipart/form-data" >
+          {% include "FormationManagement/Module/form.html.twig" %}      
+      </form>
+    </div>
+  </div>            
+</div>
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+
+<script src="{{ asset("assets/summernote/summernote-bs4.js") }}"></script>
+
+<script>
+  $(document).ready(function () {
+    //initialisation
+    var idPreVal;
+    var idPre;
+    var idlecture;
+    var idEval;
+    var idEvalPres;
+    var validationData = {
+      "standart":{"view":[],"hideD":[]},
+      "scorm":{"view":[],"hideD":[]},
+      "presence":{"view":[],"hideD":[]},
+      "ignored":{"view":[],"hideD":[]}
+    };
+
+      {% for validationMode in validationModes %}
+      {% if validationMode.conditional == "pre-test-valid" %}
+        idPreVal = {{validationMode.id}};
+        validationData.standart.view[validationData.standart.view.length] = {{validationMode.id}};
+        validationData.scorm.view[validationData.scorm.view.length] = {{validationMode.id}};
+        validationData.presence.hideD[validationData.presence.hideD.length] = {{validationMode.id}};
+        validationData.ignored.hideD[validationData.ignored.hideD.length] = {{validationMode.id}};
+      {% elseif validationMode.conditional == "pre-test-non-valid" %}
+        idPre = {{validationMode.id}};
+        validationData.standart.view[validationData.standart.view.length] = {{validationMode.id}};
+        validationData.scorm.view[validationData.scorm.view.length] = {{validationMode.id}};
+        validationData.presence.hideD[validationData.presence.hideD.length] = {{validationMode.id}};
+        validationData.ignored.hideD[validationData.ignored.hideD.length] = {{validationMode.id}};
+      {% elseif validationMode.conditional == "eval" %}
+        idEval = {{validationMode.id}};
+        validationData.standart.view[validationData.standart.view.length] = {{validationMode.id}};
+        validationData.scorm.view[validationData.scorm.view.length] = {{validationMode.id}};
+        validationData.presence.view[validationData.presence.view.length] = {{validationMode.id}};
+        validationData.ignored.hideD[validationData.ignored.hideD.length] = {{validationMode.id}};
+      {% elseif validationMode.conditional == "noValidation" %}
+        validationData.ignored.view[validationData.ignored.view.length] = {{validationMode.id}};
+        validationData.standart.hideD[validationData.standart.hideD.length] = {{validationMode.id}};
+        validationData.scorm.hideD[validationData.scorm.hideD.length] = {{validationMode.id}};
+        validationData.presence.hideD[validationData.presence.hideD.length] = {{validationMode.id}};
+      {% elseif validationMode.conditional == "lecture" %}
+        idlecture = {{validationMode.id}};
+        validationData.standart.view[validationData.standart.view.length] = {{validationMode.id}};
+        validationData.scorm.view[validationData.scorm.view.length] = {{validationMode.id}};
+        validationData.presence.hideD[validationData.presence.hideD.length] = {{validationMode.id}};
+        validationData.ignored.hideD[validationData.ignored.hideD.length] = {{validationMode.id}};
+      {% elseif validationMode.conditional == "presence" %}
+        validationData.presence.view[validationData.presence.view.length] = {{validationMode.id}};
+        validationData.ignored.hideD[validationData.ignored.hideD.length] = {{validationMode.id}};
+        validationData.standart.hideD[validationData.standart.hideD.length] = {{validationMode.id}};
+        validationData.scorm.hideD[validationData.scorm.hideD.length] = {{validationMode.id}};
+      {% elseif validationMode.conditional == "eval-presentiel" %}
+        idEvalPres = {{validationMode.id}};
+        validationData.presence.view[validationData.presence.view.length] = {{validationMode.id}};
+        validationData.ignored.hideD[validationData.ignored.hideD.length] = {{validationMode.id}};
+        validationData.standart.hideD[validationData.standart.hideD.length] = {{validationMode.id}};
+        validationData.scorm.hideD[validationData.scorm.hideD.length] = {{validationMode.id}};
+      {% endif %}
+    {% endfor %}
+
+      if($("#module_type option[value='2']").select()){
+          $(".module").hide();
+          $(".module-scorm").fadeIn();
+          updateValidationOption('presence')
+      }
+
+    console.log($('#module_type').val());
+    switch ($('#module_type').val()) {
+      case '1': // module standard
+        $(".module").hide();
+        updateValidationOption('standart')
+        break;
+      case '2': // module scorm
+        $(".module").hide();
+        $(".module-scorm").fadeIn();
+        updateValidationOption('scorm')
+        break;        
+      case '3': // module presentiel
+        $(".module").hide();
+        $(".module-presentiel").fadeIn();
+        updateValidationOption('presence')
+        break;
+      case '4': // module non suivi
+        updateValidationOption('ignored')
+        break;
+      default:
+        console.log($(this).val());
+    }
+
+    $(".module").hide();
+    // event
+    $('body').on('click', '#module_type', function() {
+      switch ($(this).val()) {
+        case '1': // module standard
+          $(".module").hide();
+          updateValidationOption('standart')
+          break;
+        case '2': // module scorm
+          $(".module").hide();
+          $(".module-scorm").fadeIn();
+          updateValidationOption('scorm')
+          break;        
+        case '3': // module presentiel
+          $(".module").hide();
+          $(".module-presentiel").fadeIn();
+          updateValidationOption('presence')
+          break;
+        case '4': // module non suivi
+          $(".module").hide();
+          updateValidationOption('ignored')
+          break;
+        default:
+      }      
+    });
+
+
+
+    document.getElementById("module_validationModes_"+idPreVal+"").addEventListener('click',function(){
+      document.getElementById("module_validationModes_"+idPre+"").checked = false;
+    });
+    document.getElementById("module_validationModes_"+idPre+"").addEventListener('click',function(){
+      document.getElementById("module_validationModes_"+idPreVal+"").checked = false;
+    });
+    document.getElementById("module_validationModes_"+idEval+"").addEventListener('click',function(){
+        document.getElementById("module_validationModes_"+idEvalPres+"").checked = false;
+    });
+    document.getElementById("module_validationModes_"+idEvalPres+"").addEventListener('click',function(){
+      document.getElementById("module_validationModes_"+idEval+"").checked = false;
+    });
+
+
+    function updateValidationOption(texte_recu){
+      var i = 0;
+      for(i; i < validationData[texte_recu].hideD.length; i++){
+        $('#module_validationModes_'+validationData[texte_recu].hideD[i]+'').hide();
+        $('#module_validationModes_'+validationData[texte_recu].hideD[i]+'').prop( "checked", false );
+        $('#label_validationModes_'+validationData[texte_recu].hideD[i]+'').hide();
+      }
+      i=0;
+      for(i; i < validationData[texte_recu].view.length; i++){
+        $('#module_validationModes_'+validationData[texte_recu].view[i]+'').fadeIn();
+        $('#label_validationModes_'+validationData[texte_recu].view[i]+'').fadeIn();
+      }
+    }
+
+
+    $('.summernote').summernote({
+        height: 150,
+        toolbar: [
+          ['style', ['bold', 'italic', 'underline', 'clear']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol']]
+        ]
+    });   
+
+    
+  });
+</script>
+
+{% endblock %}

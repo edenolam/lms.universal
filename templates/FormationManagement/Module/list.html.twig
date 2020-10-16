@@ -1,0 +1,212 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {# <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/css/bootstrap4-toggle.min.css" rel="stylesheet"> #}
+{% endblock %}
+
+{% block body %}
+    <!-- bar navigateur -->
+    <div class="lms-breadcrumb">
+        <span> <a href=" {% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }} {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }} {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }} {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }} {% else %} {{ path('home_dashboard') }} {% endif %}">{{lms_name}}</a> </span> > <span class="bold">{{'formation.module.list.ariane_gestion'|trans}}</span>
+    </div>
+
+    <!-- Switch -->
+    <div id="myTab" class="d-flex flex-wrap justify-content-center align-items-center text-center lms-progress-formation">
+		<div class="col-6 px-0 text-uppercase lms-tab {% if app.request.get('downFormation') is null %}show{% endif %}" data-tab="#tab1">{{'global.un_archived'|trans}}</div>
+		<div class="col-6 px-0 text-uppercase lms-tab {% if app.request.get('downFormation') is not null %}show{% endif %}" data-tab="#tab2">{{'global.archived'|trans}}</div>
+	</div>
+
+    <!-- title of page -->
+    <div class="d-flex align-items-center lms-title">
+        <h1 class="text-uppercase lms-h1">{{'formation.module.list.title'|trans}}</h1><hr>
+    </div>
+
+    <!-- add button -->
+    <div class="row mb-5 text-center">
+        {# <div class="col-lg-4 mb-3 lms-switchToggleArchived">
+            <input type="checkbox" id="viewArchivedToggle" checked data-toggle="toggle" data-on="{{'global.un_archived'|trans}}" data-off="{{'global.archived'|trans}}">
+        </div> #}
+        <div>
+            {% if is_granted('ROLE_GESTION_MODULES') %}
+                <a href="{{ path('admin_module_dupliquer') }}" class="lms-button mb-3 lms-button-blue">
+                    <i class="material-icons lms-material-icons">file_copy</i>
+                    <span>{{'formation.module.action.copy'|trans}}</span>
+                </a>
+                <a href="{{ path('admin_module_create') }}" class="lms-button lms-button-blue ml-4">
+                    <i class="material-icons lms-material-icons">add</i>
+                    <span>{{'formation.module.action.create'|trans}}</span>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="lms-subcontent lms-panel active" id="tab1">
+        <div class="d-flex flex-wrap justify-content-center justify-content-lg-start">
+            {% for module in modules %}
+                <!-- Rotating card -->
+                <div class="lms-card-module">
+                    <div class="card lms-card">
+                        <!-- Card front -->
+                        <div class="card text-center lms-card-front">
+                            <p class="lms-card-title-gestion"> {{module.type.title}} </p>
+                            <div class="card-header d-flex justify-content-center align-items-center lms-card-header">
+                                {% if module.moduleSondage %}
+                                    <img src="{{asset('images/core//badge-bleu.svg')}}" alt="{{'global.literal.certificat'|trans}}" class="pr-1" data-toggle="tooltip" data-original-title="Entrainement">
+                                {% endif %}
+                                {% if module.modulePreTest %}
+                                    <img src="{{asset('images/core/badge-jaune.svg')}}" alt="{{'global.literal.certificat'|trans}}" class="pr-1" data-toggle="tooltip" data-original-title="Pré-test">
+                                {% endif %}
+                                {% if module.moduleTraining %}
+                                    <img src="{{asset('images/core/badge-vert.svg')}}" alt="{{'global.literal.certificat'|trans}}" class="pr-1" data-toggle="tooltip" data-original-title="Entrainement">
+                                {% endif %}
+                                {% if module.moduleEvaluation %}
+                                    <div class="position-relative">
+                                        <img src="{{asset('images/core/badge-rouge.svg')}}" alt="{{'global.literal.certificat'|trans}}" class="pr-1" data-toggle="tooltip" data-original-title="Evaluation">
+                                        {% if module.moduleEvaluation.isTestPresentiel %}
+                                            <span class="lms-card-module-info">P</span>
+                                        {% endif %}
+                                        {% if module.moduleEvaluation.isTestCommune %}
+                                            <span class="lms-card-module-info">C</span>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="lms-card-img-round">
+                                {% if module.uri is defined and module.uri is not empty and module.uri is not null %}
+                                    <img src="{{asset('uploads/files/' ~ module.uri)}}" alt="Visuel du module">
+                                {% else %}
+                                    <img src="/images/core/logo-eye.png" alt="Visuel du module">
+                                {% endif %}
+                            </div>
+                            <div class="card-body lms-card-body">
+                                <p class="card-title lms-card-title" data-toggle="tooltip" data-original-title="{{ module.title }}">{{ module.title | truncate(50) }}
+                                    <small>V.{{ module.version}}</small>
+                                    <br>
+                                    <small data-toggle="tooltip" data-original-title="{{ module.regulatoryRef }}">(<i>{{ module.regulatoryRef | truncate(50) }}</i>)</small>
+                                    {# {% if module.isScorm %}
+                                        <br><small><i>{{ 'formation.module.scorm' | trans }}</i></small>
+                                    {% else %} #}
+                                    {% for validationMode in module.validationModes %}
+                                        <br><small>{{validationMode.title}}</small>
+                                    {% endfor %}
+                                    {# {% endif %} #}
+                                </p>
+                                <p>
+                                    <a href="{{ path('admin_module_edit', {'slug':module.slug}) }}" class="lms-button lms-button-blue">
+                                        <i class="material-icons lms-material-icons">remove_red_eye</i>
+                                        <span>{{'global.acceder'|trans}}</span>
+                                    </a>
+                                </p>
+                            </div>
+                            <div class="card-footer d-flex flex-wrap align-items-center p-0 lms-card-footer">
+                                <p class="m-0 lms-card-day">{{module.realisationTime|date('H')}}h{{module.realisationTime|date('i')}}</p>
+                                <p class="m-0 lms-card-date">
+                                    {% if module.activeSession == true %}
+                                        <span class="lms-text-danger"><i>{{'global.literal.is_session'|trans}}</i></span>
+                                    {% elseif module.isValid == true %}
+                                        <span class="lms-text-warning"><i>{{'formation.module.published'|trans}}</i></span>
+                                    {% elseif module.isValid == false %}
+                                        <span class="lms-text-success"><i>{{'formation.module.unPublished'|trans}}</i></span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <!-- /col -->
+    </div>
+    <!-- /row -->
+
+    <!--==============================archived====================================-->
+    <div class="lms-subcontent lms-panel" id="tab2">
+        <div class="d-flex flex-wrap justify-content-center justify-content-lg-start">
+            {% for module in modulesArchived %}
+                <!-- Rotating card -->
+                <div class="lms-card-module m-2">
+                    <div class="card lms-card">
+                        <div class="card text-center lms-card-front p-2">
+                            <div class="card-header d-flex justify-content-between lms-card-header" style="height:70px;">
+                                {% for validationMode in module.validationModes %}
+                                    {% if validationMode.conditional == 'pre-test-non-valid' or validationMode.conditional == 'pre-test-valid' %}
+                                        <span data-toggle="tooltip" data-original-title="{{ validationMode.conditional }}">
+                                            <img src="{{asset('images/core/badge-jaune.svg')}}" alt="{{'global.literal.certificat'|trans}}" class="pr-1"/>
+                                        </span>
+                                    {% elseif validationMode.conditional == 'eval' %}
+                                        <span data-toggle="tooltip" data-original-title="evaluation">
+                                            <img src="{{asset('images/core/evaluation-top.svg')}}" alt="{{'global.literal.certificat'|trans}}" class="pr-1"/>
+                                        </span>
+                                    {% endif %}
+                                {% endfor %}
+                                {% for moduleTest in module.moduleTests %}
+                                    {% if moduleTest.test.typeTest.conditional == 'training' %}
+                                        <span data-toggle="tooltip" data-original-title="Traning">
+                                            <img src="{{asset('images/core/badge-vert.svg')}}" alt="{{'global.literal.certificat'|trans}}" class="pr-1"/>
+                                        </span>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="lms-card-img-round">
+                                {% if module.uri is defined and module.uri is not empty and module.uri is not null %}
+                                    <img src="{{asset('uploads/files/' ~ module.uri)}}" class="" alt="Visuel du module">
+                                {% else %}
+                                    <img src="/images/core/logo-eye.png" class="" alt="Visuel du module">
+                                {% endif %}
+                            </div>
+                            <h3 class="card-title" data-toggle="tooltip" data-original-title="{{ module.title }}">{{ module.title | truncate(10) }}</h3>
+                            <i>({{ module.regulatoryRef }})</i>
+                            <div class="mt-2 mb-2" style="height: 100px;">
+                                {% if module.isScorm %}
+                                    <p>{{ 'formation.module.scorm' | trans }}</p>
+                                {% else %}
+                                    {% for validationMode in module.validationModes %}
+                                        <p>
+                                            {{validationMode.title}}</p>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <p>
+                                <a href="{{ path('admin_module_edit', {'slug':module.slug}) }}" class="lms-button lms-button-blue lms-card-rotate">
+                                    <i class="material-icons lms-material-icons">remove_red_eye</i>
+                                    {{'global.acceder'|trans}}</a>
+                            </p>
+                        </div>
+
+                        <div class="d-flex flex-wrap align-items-center p-0 lms-card-footer">
+                            <p class="m-0 lms-card-day">{{module.realisationTime|date('H')}}h{{module.realisationTime|date('i')}}</p>
+                            <p class="m-0 lms-card-date">
+                                <span class="lms-text-danger">{{'global.archived'|trans}}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Rotating card -->
+            {% endfor %}
+        </div>
+        <!-- /col -->
+    </div>
+    <!-- /row -->
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    {# <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/js/bootstrap4-toggle.min.js"></script> #}
+    {# <script>
+
+        $(function () {
+            $('#archived').hide();
+            $('#unArchived').show();
+            $('#viewArchivedToggle').change(function () {
+                if ($(this).prop('checked')) {
+                    $('#archived').hide();
+                    $('#unArchived').fadeIn("slow");
+                } else {
+                    $('#unArchived').hide();
+                    $('#archived').fadeIn("slow");
+                }
+            })
+        });
+    </script> #}
+{% endblock %}

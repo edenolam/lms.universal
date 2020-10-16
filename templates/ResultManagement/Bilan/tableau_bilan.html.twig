@@ -1,0 +1,458 @@
+<div class="d-flex flex-wrap align-items-start lms-banner row">
+    <div class="col-3 text-center lms-banner-bilan-container">
+         <p class="lms-banner-bilan-title mt-2">{{"results.tableau.title.kpi"|trans}} : </p>
+    </div>
+    <div class="col-3">  
+        <p class="lms-banner-bilan-text">
+                {{ 'results.tableau.title.progression'|trans }} {{ moyenne|round }}%
+        </p>
+        <div class="progress-sm">
+            <div class="border border-dark">
+                <div class="progress-bar bg-blue" style="width: {{ moyenne }}%;height:1rem;background-color: #2FAEDE !important;">
+                </div>
+            </div>
+        </div>
+        <p class="lms-banner-bilan-text mt-2">
+            {{ 'results.tableau.title.score'|trans }} {{ moyenneScore|round }}%
+        </p>
+        <div class="progress-sm">
+            <div class="border border-dark">
+                <div class="progress-bar bg-blue" style="width: {{ moyenneScore }}%;height:1rem;background-color: #2FAEDE !important;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-5">
+        <table class="table-sm">
+            <tr>
+                <td>{{'results.tableau.title.success'|trans}}</td>
+                <td width="20%">{{validated}} / {{totalLines}}</td>
+            <tr>
+            <tr>
+                <td>{{'results.tableau.title.inProcess'|trans}}</td>
+                <td width="20%">{{inProcess}} / {{totalLines}}</td>
+            <tr>
+        </table>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped lms-table" id="tablefiltre">
+        
+        <thead class="thead-dark"> <!-- add class="thead-light" for a light header -->
+            <tr>
+                <th>{{ 'results.tableau.title.division'|trans }} </th>
+                <th>{{ 'results.tableau.title.equipe'|trans }} </th>
+                <th>{{ 'results.tableau.title.prenom'|trans }} </th>
+                <th>{{ 'results.tableau.title.nom'|trans }} </th>
+                <th>{{ 'results.tableau.title.session'|trans }} </th>
+                <th>{{ 'results.tableau.title.formation'|trans }} </th>
+                <th>{{ 'results.tableau.title.module'|trans }} </th>
+                <th>{{ 'results.tableau.title.progression'|trans }} </th>
+                <th>{{ 'results.tableau.title.date'|trans }} </th>
+                <th>{{ 'results.tableau.title.temps_passe'|trans }}  </th>
+                {# PRE-TEST  #}
+                <th>
+                    {{ 'results.tableau.title.nb_essais'|trans }} 
+                    {# <img src="{{ asset('images/core/badge-jaune.svg') }}" alt="Certificat(s)" height="20px"> #}
+                </th>
+                <th>
+                    {{ 'results.tableau.title.score'|trans }} 
+                    {# <img src="{{ asset('images/core/badge-jaune.svg') }}"  alt="Certificat(s)" height="20px"> #}
+                </th>
+                <th>
+                    {{ 'results.tableau.title.date_validation'|trans }} 
+                    {# <img src="{{ asset('images/core/badge-jaune.svg') }}" alt="Certificat(s)" height="20px"> #}
+                </th>
+                {# ENTRAINEMENT  #}
+                <th>
+                    {{ 'results.tableau.title.score'|trans }}
+                    {# <img src="{{ asset('images/core/badge-vert.svg') }}"alt="Certificat(s)" height="20px"> #}
+                </th>
+                {# EVALUATION #}
+                <th>{{ 'results.tableau.title.nb_essais'|trans }} 
+                    {# <img src="{{ asset('images/core/badge-rouge.svg') }}" alt="Certificat(s)" height="20px"> #}
+                </th>
+                <th>{{ 'results.tableau.title.score'|trans }} 
+                    {# <img src="{{ asset('images/core/badge-rouge.svg') }}" alt="Certificat(s)" height="20px"> #}
+                </th>
+                <th>{{ 'results.tableau.title.date_validation'|trans }} 
+                    {# <img src="{{ asset('images/core/badge-rouge.svg') }}" alt="Certificat(s)" height="20px"> #}
+                </th>
+                <th>{{ 'results.tableau.title.actions' | trans }}</th>
+            </tr>
+        </thead>
+        <thead class="thead-dark"> <!-- add class="thead-light" for a light header -->
+            <tr>
+                <th colspan="10" style="border: 1px solid white;"></th>
+                <th colspan="3" style="border: 1px solid white;"><img src="{{ asset('images/core/badge-jaune.svg') }}" alt="Certificat(s)" height="20px"></th>
+                <th style="border: 1px solid white;"><img src="{{ asset('images/core/badge-vert.svg') }}" alt="Certificat(s)" height="20px"></th>
+                <th colspan="3" style="border: 1px solid white;"><img src="{{ asset('images/core/badge-rouge.svg') }}" alt="Certificat(s)" height="20px"></th>
+                <th style="border: 1px solid white;"></th>
+            </tr>
+        </thead>
+        <thead id="filtreForm"> 
+            <tr>
+                <th>{{ 'results.tableau.title.division'|trans }} </th>
+                <th>{{ 'results.tableau.title.equipe'|trans }} </th>
+                <th>{{ 'results.tableau.title.prenom'|trans }} </th>
+                <th>{{ 'results.tableau.title.nom'|trans }} </th>
+                <th>{{ 'results.tableau.title.session'|trans }} </th>
+                <th>{{ 'results.tableau.title.formation'|trans }} </th>
+                <th>{{ 'results.tableau.title.module'|trans }} </th>
+                <th>{{ 'results.tableau.title.progression'|trans }} </th>
+                <th>{{ 'results.tableau.title.date'|trans }} </th>
+                <th>{{ 'results.tableau.title.temps_passe'|trans }}  </th>
+                {# PRE-TEST  #}
+                <th>{{ 'results.tableau.title.nb_essais'|trans }}</th>
+                <th>{{ 'results.tableau.title.score'|trans }}</th>
+                <th>{{ 'results.tableau.title.date_validation'|trans }}</th>
+                {# ENTRAINEMENT  #}
+                <th>{{ 'results.tableau.title.score'|trans }}</th>
+                {# EVALUATION #}
+                <th>{{ 'results.tableau.title.nb_essais'|trans }}</th>
+                <th>{{ 'results.tableau.title.score'|trans }}</th>
+                <th>{{ 'results.tableau.title.date_validation'|trans }}</th>
+                <th>{{ 'results.tableau.title.actions' | trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if modulefiltres|length > 0 %}
+                {% for modulefiltre in modulefiltres %}
+                    <tr>
+                        <td>{{ modulefiltre.user.division | default('-') }}</td>
+                        <td>{{ modulefiltre.user.team | default('-') }}</td>
+                        <td>{{ modulefiltre.user.firstname }}</td>
+                        <td>{{ modulefiltre.user.lastname }}</td>
+                        <td>
+                            <span data-toggle="tooltip" data-original-title="du {{ modulefiltre.session.openingDate | date('Y-m-d')}} au {{ modulefiltre.session.closingDate | date('Y-m-d') }}">{{ modulefiltre.session.title }}</span>
+                        </td>
+                        <td>{{ modulefiltre.session.formationPath.title }}</td>
+                        <td>
+                            {{ modulefiltre.module.title }} 
+                            <i class="lms-text-secondary text-uppercase">V.{{ modulefiltre.moduleVersion}}</i> 
+                            <i class="text-dark">({{ modulefiltre.module.regulatoryRef }})</i>
+                            [{{ modulefiltre.module.type.title }}]
+                            {% if modulefiltre.module.files | length > 0 %}
+                                <a href="#" data-toggle="modal" data-target="#moduleFiles{{ modulefiltre.id }}"><i class="material-icons lms-material-icons">cloud_download</i></a> 
+                                <div class="modal fade" id="moduleFiles{{ modulefiltre.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">{{ modulefiltre.module.title }} <i class="lms-text-secondary text-uppercase">V.{{ modulefiltre.moduleVersion}}</i> 
+                                                    <i class="text-dark">({{ modulefiltre.module.regulatoryRef }})</i> 
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">x</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table class="table">
+                                                    {% for f in modulefiltre.module.files %}
+                                                        {% if f.isValid %}
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="{{ asset("uploads/files/"~f.uri) }}" target="_blank">
+                                                                    {% if f.isDownload %}<i class="material-icons lms-material-icons">cloud_download</i>{% endif %}&nbsp;&nbsp;&nbsp;&nbsp;{{ f.name }}
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        {% endif %}  
+                                                    {% endfor %}   
+                                                </table>
+                                            </div>  
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'global.literal.close'|trans }}</button>
+                                            </div>  
+                                            </div> 
+                                        </div>       
+                                    </div>
+                            {% endif %}
+                        </td>
+
+                        {% if modulefiltre.module.type.conditional != 'presentiel' %}
+                            <td>
+                                {% if modulefiltre.module.scorm.scos[0] is defined and is_granted('ROLE_SUPER_ADMIN') %}
+                                    <a href="{{ path('bilan_debug', {'user': modulefiltre.user.id, 'session': modulefiltre.session.id, 'module': modulefiltre.module.id}) }}" target="_blank">{{ modulefiltre.percentage }} %</a>
+                                {% else %}   
+                                    {{ modulefiltre.percentage }} % 
+                                {% endif %}
+                            </td>
+                        {% else %}
+                            <td class="bg-dark"></td>
+                        {% endif %}
+
+                        <td>
+                            {% if modulefiltre.startDate is not null %}
+                                {% if app.request.locale == "fr" %}
+                                    {{ modulefiltre.startDate|date("d/m/y") }} 
+                                {% else %} 
+                                    {{ modulefiltre.startDate|date("y/m/d") }} 
+                                {% endif %}
+                            {% else %} 
+                                ** 
+                            {% endif %}
+                                -
+                            {% if modulefiltre.lectureDate is not null %}
+                                {% if app.request.locale == "fr" %}
+                                    {{ modulefiltre.lectureDate|date("d/m/y") }} 
+                                {% else %} 
+                                    {{ modulefiltre.lectureDate|date("y/m/d") }} 
+                                {% endif %}
+                            {% else %}
+                                 ** 
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if modulefiltre.durationTotalSec is not null %}
+                                {% set hoursMeanTime = (modulefiltre.durationTotalSec/3600)|round(0, 'floor') %}
+                                {% set minutesMeanTime =  ((modulefiltre.durationTotalSec-(hoursMeanTime*3600))/60)|round(0, 'floor') %}
+                                {{hoursMeanTime}}h{{minutesMeanTime}}
+                            {% endif %}
+                        </td>
+
+
+                        {# ------------------- Evaluation -------------------------- #}
+                        {% set dateEval = null %}
+                        {% set scoreEval = null %}
+                        {% set tentativeEval = null %}
+                        {% set numberTry = null %}
+                        {% set numberTryDescription = null %}
+                        {% set scoreTraining = null %}
+                        {% set userTestIdPre = 0 %}
+                        {% set userTestIdEval = 0 %}
+                        {% set userTestIdTrain = 0 %}
+                        {% set tentativePretest = null %}
+                        {% set datePretest = null %}
+                        {% set scorePretest = null %}
+                        {% set testConditionalPretest = null %}
+                        {% set testConditionalTraining = null %}
+                        {% set testConditionalEval = null %}
+                        {% set testSlugPretest = null %}
+                        {% set testSlugTraining = null %}
+                        {% set testSlugEval = null %}
+                        {% set eval_test_id = null %}
+                        {% set testPresentiel = false %}
+
+                        {% for mt in modulefiltre.module.moduleTests %} {# userModuleFollow #}
+                            {% if mt.test.typeTest.conditional  == 'pretest' %}
+                                {% set testConditionalPretest =  'pretest' %} {# == module.modulePreTest #}
+                                {% set testSlugPretest = mt.test.slug %} {# == module.modulePretest.slug #}
+                            {% endif %}
+                            {% if mt.test.typeTest.conditional  == 'training' %}
+                                {% set testConditionalTraining =  'training' %} {# == module.moduleEvaluation #}
+                                {% set testSlugTraining = mt.test.slug %}{# == module.moduleEvaluation.slug #}
+                            {% endif %}
+                            {% if mt.test.typeTest.conditional  == 'eval' %}
+                                {% set testConditionalEval =  'eval' %}   {# == module.moduleTraining #}
+                                {% set testSlugEval = mt.test.slug %}   {# == module.moduleTraining.slug #}
+                                {% if mt.test.istestPresentiel %}
+                                    {% set testPresentiel = true %}  {# == module.moduleTraining.istestPresentiel #}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                            
+                        {% if modulefiltre.session.users != null %}
+                            {% for user in modulefiltre.session.users %} {# userModuleFollow #}
+                                {% if user.id == modulefiltre.user.id %}
+                                    {% for usertest in user.usertests %} {# userTest #}
+                                        {% if usertest.test.typeTest.conditional == 'eval' %}
+                                            {% if usertest.session.id == modulefiltre.session.id and usertest.refModule == modulefiltre.module.reference %}
+                                                {% set numberTry = usertest.numberTry %}
+                                                {% set numberTryDescription = usertest.numberTryDescription %}
+                                                {% set eval_test_id = usertest.test.id %} {# == module.moduleEvaluation.id #}
+                                                {% if usertest.tentative > tentativeEval %}
+                                                    {% if usertest.score >= 0 %}
+                                                        {% set tentativeEval = usertest.tentative %}
+                                                        {% set dateEval = usertest.datepass %}
+                                                        {% set scoreEval = usertest.score %}
+                                                        {% set userTestIdEval = usertest.id %}
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endif %}
+                                        {# ------------------- Entrainement -------------------------- #}
+                                        {% if usertest.test.typeTest.conditional == 'training' %}
+                                            {% if usertest.session.id == modulefiltre.session.id and usertest.refModule == modulefiltre.module.reference %}
+                                                {% if usertest.tentative > tentativeEval %}
+                                                    {% if usertest.score >= 0 %}
+                                                        {% set scoreTraining = usertest.score %}
+                                                        {% set userTestIdTrain = usertest.id %}
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endif %}
+                                        {# ------------------- Pre-test -------------------------- #}
+                                        {% if usertest.test.typeTest.conditional == 'pretest' %}
+                                            {% if usertest.session.id == modulefiltre.session.id and usertest.refModule == modulefiltre.module.reference %}
+                                                {% if usertest.tentative > tentativeEval %}
+                                                    {% if usertest.score >= 0 %}
+                                                        {% set tentativePretest = usertest.tentative %}
+                                                        {% set datePretest = usertest.datepass %}
+                                                        {% set scorePretest = usertest.score %}
+                                                        {% set userTestIdPre = usertest.id %}
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                            
+                        {# --------------- recuperation du testSlug pour afficher le resume des notes  -------------------#}
+
+                        {# --------------------- Pre-test ---------------------- #}
+                        {% if testConditionalPretest == 'pretest' %}
+                            <td>  {% if tentativePretest != null %} {{ tentativePretest }}  {% endif %} </td>
+                            <td>
+                                {% if testConditionalPretest %}
+                                    <a href="{{ path('test_front_result', {'sessionSlug': modulefiltre.session.slug, 'moduleSlug': modulefiltre.module.slug, 'testSlug': testSlugPretest, 'userTestID': userTestIdPre, 'userFrom': 'bilan'  }) }}"
+                                    target="_blank">
+                                        {% if scorePretest is not empty %}
+                                            {{ scorePretest }} % <i class="material-icons lms-material-icons ">open_in_new</i>
+                                        {% endif %}
+                                    </a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if datePretest != null %}
+                                    {% if app.request.locale == "fr" %}{{ datePretest|date("d/m/y") }} {% else %} {{ datePretest|date("y/m/d") }} {% endif %}
+                                {% else %}
+                                    {{ datePretest }}
+                                {% endif %}
+                            </td>
+                        {% else %}
+                            <td class="bg-dark"></td>
+                            <td class="bg-dark"></td>
+                            <td class="bg-dark"></td>
+                        {% endif %}
+                        {# --------------------- Entrainement -------------------- #}
+                        {% if testConditionalTraining == 'training' %}
+                            <td>
+                                {% if testConditionalTraining %}
+                                    <a href="{{ path('test_front_result', {'sessionSlug': modulefiltre.session.slug, 'moduleSlug': modulefiltre.module.slug, 'testSlug': testSlugTraining, 'userTestID': userTestIdTrain, 'userFrom': 'bilan' }) }}"
+                                    target="_blank">
+                                        {% if scoreTraining is not empty %}
+                                            {{ scoreTraining }} % <i class="material-icons lms-material-icons ">open_in_new</i>
+                                        {% endif %}
+                                    </a>
+                                {% endif %}
+                            </td>
+                        {% else %}
+                            <td class="bg-dark"></td>
+                        {% endif %}
+                        {# --------------------- Evaluation ---------------------- #}
+
+
+                        {% if testConditionalEval != 'eval' %}
+                            <td bgcolor="#3C4040"></td>
+                            <td bgcolor="#3C4040"></td>
+                            <td bgcolor="#3C4040"></td>
+                        {% else %}
+                            <td>
+                                {% if tentativeEval != null %}
+                                    {{ tentativeEval }} / <span id="oldNbTry{{modulefiltre.id}}">{{ numberTry }}</span>
+                                    <a href="#"  data-toggle="modal" data-target="#popUpNbTry_{{modulefiltre.id}}">
+                                        <i class="material-icons lms-material-icons ">comment</i>
+                                    </a>
+                                    <div class="modal modal-lg" id="popUpNbTry_{{modulefiltre.id}}">
+                                        <div class="modal-content modal-lg" >
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">
+                                                    {{'userFrontManagement.test.modifon'|trans}}  ({{modulefiltre.user.username}} - {{ modulefiltre.session.title }} _ {{ modulefiltre.session.formationPath.title }} _ {{ modulefiltre.module.title }} <i class="lms-text-secondary text-uppercase">V.{{ modulefiltre.moduleVersion}}</i><i class="text-dark">({{ modulefiltre.module.regulatoryRef }})</i> [{{ modulefiltre.module.type.title }}]
+                                                </h5>
+                                                <button aria-label="Close" class="close btn btn-secondary btn-sm" data-dismiss="modal" type="button" id="modalclose{{modulefiltre.id}}">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form action="#">
+                                                <div class="modal-body" >
+                                                    <div class="col-12">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-bordered table-striped lms-table">
+                                                                <thead class="thead-dark">
+                                                                    <tr>
+                                                                        <th>{{"userFrontManagement.test.try"|trans}}</th>
+                                                                        <th>{{"userFrontManagement.test.restTry"|trans}}</th>
+                                                                        <th>{{'global.comment'|trans}}</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody >
+                                                                    {% set line = 0 %}
+                                                                    {% for usertest in modulefiltre.user.usertests %}
+                                                                        {% if usertest.test.typeTest.conditional == 'eval' and usertest.session.id == modulefiltre.session.id and usertest.test.id == eval_test_id %}
+                                                                            {% set line = line + 1 %}
+                                                                            <tr>
+                                                                                <td>{{usertest.tentative}} </td>
+                                                                                <td>
+                                                                                    <span id="lastNbTry{{line}}{{modulefiltre.id}}">{{usertest.numberTry}}</span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <span id="lastComm{{line}}{{modulefiltre.id}}">{{usertest.numberTryDescription}}</span> 
+                                                                                </td>
+                                                                            </tr>
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div><br>
+                                                    <h6>{{'userFrontManagement.test.tryModifon'|trans}} {{line}}:</h6>
+                                                    <div class="col-12 row">
+                                                        <label class="form-group col-2 font-weight-bold">{{'global.nbTry'|trans}}</label>
+                                                        <input class="form-group col-8" type="text" id="nbTry{{modulefiltre.id}}">
+                                                    </div>
+                                                    <div class="col-12 row">
+                                                        <label class="form-group col-2 font-weight-bold">{{'global.comment'|trans}}</label>
+                                                        <textarea class="form-group col-8" type="textArea" id="descritpion{{modulefiltre.id}}">{{ numberTryDescription | default('')}}</textarea>
+                                                    </div>
+                                                </div>  
+                                                <div class="modal-footer">
+                                                    <div class="col-12">
+                                                        <button type="button" class="lms-button lms-button-blue btn-sm formNumberTry" data-id="{{modulefiltre.id}}" data-line="{{line}}" data-url="{{ path('admin_testManagement_numberTry', {'user': modulefiltre.user.id, 'test': eval_test_id, 'session': modulefiltre.session.id }) }}"><i class="material-icons lms-material-icons">save</i> 
+                                                            {{'global.submit'|trans}}</button>
+                                                    </div>
+                                                </div> 
+                                            </form> 
+                                        </div>       
+                                    </div>             
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if testConditionalEval %}
+                                    {% if testPresentiel == false %}
+                                        <a href="{{ path('test_front_result', {'sessionSlug': modulefiltre.session.slug, 'moduleSlug': modulefiltre.module.slug, 'testSlug': testSlugEval, 'userTestID': userTestIdEval, 'userFrom': 'bilan'  }) }}"
+                                        target="_blank">
+                                            {% if scoreEval is not empty %}
+                                                {{ scoreEval }} % <i class="material-icons lms-material-icons ">open_in_new</i>
+                                            {% endif %}
+                                            
+                                        </a>
+                                    {% else %}
+                                        {% if scoreEval is not empty %}
+                                            {{ scoreEval }} %
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if dateEval != null %}
+                                    {% if app.request.locale == "fr" %}{{ dateEval|date("d/m/y") }} {% else %} {{ dateEval|date("y/m/d") }} {% endif %}
+                                {% else %}
+                                    {{ dateEval }}
+                                {% endif %}
+                            </td>
+                        {% endif %}
+                        <td>{% if modulefiltre.module.type.conditional == 'presentiel' %}
+                                    <a href="{{ path('results_user_module_follow_edit', {'id': modulefiltre.id}) }}"
+                                    target="blanck"><i class="material-icons lms-material-icons ">edit</i></a>
+                                    <a href="{{ path('results_user_module_follow_file_list', {'userModuleFollow': modulefiltre.id}) }}"
+                                    target="blanck"><i class="material-icons lms-material-icons">cloud_upload</i></a>
+                                {% endif %}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+

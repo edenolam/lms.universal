@@ -1,0 +1,113 @@
+<div class="d-flex justify-content-around lms-actions-block-test">
+    
+{% if module.type.conditional != "notFollow" and (module.preTestNonValid or module.preTestValid ) %}
+    <!-- pretest -->
+    <div class="text-center">
+        <p class="lms-actions-test{% if conditional is defined and conditional == " pretest" %} lms-actions-test-actif{% endif %}">{{'userFrontManagement.page.pretest'|trans}}</p>
+        <img src="{{asset('images/core/badge-jaune.svg')}}" alt="{{'global.literal.certificat'|trans}}">
+        {% if module.modulePreTestId %}
+            <a href="{{path('admin_testManagement_edit', {'test' : module.modulePreTestId })}}">
+                {% if module.isValid == false %} 
+                    <i class="material-icons lms-material-icons" data-toggle="tooltip" data-original-title="edit">edit</i>
+                {% else %}
+                    <i class="material-icons lms-material-icons" data-toggle="tooltip" data-original-title="view">remove_red_eye</i>
+                {% endif %}
+            </a>
+        {% else %}
+            {% if module.isValid == false and is_granted('ROLE_GESTION_TEST') %}
+                <a href="{{path('admin_module_add_test', {'slug' : module.slug, 'testConditional' : 'pretest'})}}">
+                    <i class="material-icons lms-material-icons" data-toggle="tooltip" data-original-title="Ajouter un pré-test">add_circle_outline</i>
+                </a>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endif %}
+
+{%  if module.type.conditional != "notFollow" %}
+    <!-- Entrainement  -->
+    <div class="text-center">
+        {% set training_id = null %}
+        {% for moduleTest in module.moduleTests %}
+            {% if 'training' == moduleTest.test.typeTest.conditional %}
+                {% set training_id = moduleTest.test.id %}
+            {% endif %}
+        {% endfor %}
+        
+        {% if module.isValid == true and training_id == null %}
+        {% else %}
+            <p class="lms-actions-test{% if conditional is defined and conditional == 'training' %} lms-actions-test-actif{% endif %}">{{'userFrontManagement.page.training'|trans}}</p>
+            <img src="{{asset('images/core/badge-vert.svg')}}" alt="{{'global.literal.certificat'|trans}}">
+        {% endif %}
+
+        {% if training_id %}
+            {% if module.isValid == false %}
+                <a href="{{path('admin_testManagement_edit', {'test' : training_id })}}">
+                    <i class="material-icons lms-material-icons" data-toggle="tooltip" data-original-title="edit">edit</i>
+                </a>
+            {% else %}
+                <a href="{{path('admin_testManagement_edit', {'test' : training_id })}}">
+                    <i class="material-icons lms-material-icons" data-toggle="tooltip" data-original-title="view">remove_red_eye</i>
+                </a>
+            {% endif %}
+        {% else %}
+            {% if module.isValid == false and is_granted('ROLE_GESTION_TEST') %}
+                <a href="{{path('admin_module_add_test', {'slug' : module.slug, 'testConditional' : 'training'})}}">
+                    <i class="material-icons lms-material-icons" data-toggle="tooltip" data-original-title="Ajouter un entrainement">add_circle_outline</i>
+                </a>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endif %}
+
+{%  if module.type.conditional != "notFollow" and module.evaluation == true %}
+    <!-- Evaluation   -->
+    <div class="text-center">
+        <p class="lms-actions-test{% if conditional is defined and conditional == 'eval' %} lms-actions-test-actif{% endif %}">{{'userFrontManagement.page.eval'|trans}}</p>
+        <img src="{{asset('images/core/badge-rouge.svg')}}" alt="{{'global.literal.certificat'|trans}}">
+        {% if module.moduleEvaluationId %}
+            {% if module.isValid == false %}
+                <a href="{{path('admin_testManagement_edit', {'test' : module.moduleEvaluationId })}}">
+                    <i class="material-icons lms-material-icons" data-toggle="tooltip" data-original-title="edit">edit</i>
+                </a>
+            {% else %}
+                <a href="{{path('admin_testManagement_edit', {'test' : module.moduleEvaluationId })}}">
+                    <i class="material-icons lms-material-icons" data-toggle="tooltip" data-original-title="view">remove_red_eye</i>
+                </a>
+            {% endif %}
+        {% else %}
+            {% if module.isValid == false and is_granted('ROLE_GESTION_TEST')%}
+                <a href="{{path('admin_module_add_test', {'slug' : module.slug, 'testConditional' : 'eval'})}}">
+                    <i class="material-icons lms-material-icons" data-toggle="tooltip" data-original-title="Ajouter un evaluation">add_circle_outline</i>
+                </a>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endif %}
+
+{%  if module.type.conditional == "notFollow" %}
+    <!-- sondage  -->
+    <div class="text-center">
+        {% set notFollow_id = null %}
+        {% if module.moduleTests|length > 0 %}
+            {% for moduleTest in module.moduleTests %}
+                {% if 'sondage' == moduleTest.test.typeTest.conditional %}
+                    {% set notFollow_id = moduleTest.test.id %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        <p class="lms-actions-test{% if conditional is defined and conditional == 'sondage' %} lms-actions-test-actif{% endif %}">{{'test.sondage'|trans}}</p>
+        {% if notFollow_id %}
+            <img src="{{asset('images/core/badge-bleu.svg')}}" alt="{{'global.literal.certificat'|trans}}">
+            <a href="{{path('admin_testManagement_edit', {'test' : notFollow_id })}}">
+                <i class="material-icons lms-material-icons" data-toggle="tooltip" data-original-title="edit">edit</i>
+            </a>
+        {% elseif is_granted('ROLE_GESTION_TEST') %}
+            <img src="{{asset('images/core/badge-bleu.svg')}}" alt="{{'global.literal.certificat'|trans}}">
+            <a href="{{path('admin_module_add_test', {'slug' : module.slug, 'testConditional' : 'sondage'})}}">
+                <i class="material-icons lms-material-icons" data-toggle="tooltip" data-original-title="Ajouter un sondage">add_circle_outline</i>
+            </a>
+        {% endif %}
+    </div>
+{% endif %}
+
+</div>

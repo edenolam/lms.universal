@@ -1,0 +1,40 @@
+{{ form_errors(form) }}
+
+<div class="form-group">
+    {{ form_label(form.url, 'ldap_url'|trans, {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.url, { 'attr': {'class': 'form-control', 'placeholder': 'ldap://my-server:389'} }) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.bindDn, 'bind_dn'|trans, {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.bindDn, { 'attr': {'class': 'form-control','placeholder': 'cn=read-only-admin,dc=example,dc=com'} }) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.password, 'password'|trans, {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.password, { 'attr': {'class': 'form-control'} }) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.userBaseDn, 'user_base_dn'|trans, {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.userBaseDn, { 'attr': {'class': 'form-control','placeholder': 'ou=People,dc=example,dc=com'} }) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.userObjectClassFilter, 'user_objectClass_filter'|trans, {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.userObjectClassFilter, { 'attr': {'class': 'form-control','placeholder': 'objectClass=person'} }) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.userAttributes, 'user_attributes'|trans, {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.userAttributes, { 'attr': {'class': 'form-control','placeholder': 'cn,sn,uid,givenname,mail'} }) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.usernameAttribute, 'username_attribute'|trans, {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.usernameAttribute, { 'attr': {'class': 'form-control','placeholder': 'uid'} }) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.mailAttribute, 'mail_attribute'|trans, {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.mailAttribute, { 'attr': {'class': 'form-control','placeholder': 'mail'} }) }}
+</div>
+<div class="form-actions"> 
+    <button type="submit" class="btn btn-sm btn-primary btn-block">
+      <i class="material-icons lms-material-icons " >save</i> {{ 'save' | trans }}
+    </button>
+</div>
+{{ form_end(form) }}    

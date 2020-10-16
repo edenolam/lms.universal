@@ -1,0 +1,84 @@
+.form {
+    &-container {
+        background-color: $gallery-gray;
+        margin-bottom: 1em;
+        padding: 1em;
+    }
+    &-control {
+        color: $prussian-blue;
+        font-size: .875rem;
+        // font-weight: 500;
+        height: auto !important;
+    }
+    &-group {
+        align-items: center;
+        display: flex;
+        justify-content: flex-start;
+        label {
+            width: 30%;
+        }
+        select,
+        input,
+        textarea {
+            border: none;
+        }
+        select {
+            border-top-left-radius: 1em;
+            border-bottom-left-radius: 1em;
+        }
+        input,
+        textarea {
+            border-radius: 1em;
+        }
+    }
+    &-view {
+        background-color: $white;
+        border-radius: 1.5rem;
+        font-size: .75rem;
+        min-height: 1.25rem;
+        padding: .35rem .75rem;
+        width: 100%;
+    }
+}
+
+.required- {
+    &field {
+        color: $scooter-blue;
+        font-size: .75rem;
+    }
+}
+
+.custom {
+    &-controls {
+        &-stacked {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            width: 100%;
+            .custom {
+                &-control {
+                    padding: 0;
+                    width: 100%;
+                    &-label {
+                        padding-left: 1.5rem;
+                        &::before,
+                        &::after {
+                            top: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &-control {
+        padding: 0;
+        width: 100%;
+        &-label {
+            padding-left: 2em;
+            &::before,
+            &::after {
+                top: 0;
+            }
+        }
+    }
+}

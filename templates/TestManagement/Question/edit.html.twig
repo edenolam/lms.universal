@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+<link href="{{ asset("assets/summernote/summernote-bs4.css") }}" rel="stylesheet" />
+<link rel="stylesheet" href="{{ asset("assets/bootstrap-editable/css/bootstrap-editable.css")}}" />
+{% endblock %}
+
+{% block body %}
+<!-- navigator -->
+<div class="lms-breadcrumb">
+   <span><a href="
+				{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+                {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+				{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+				{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+				{% else %} {{ path('home_dashboard') }}
+				{% endif %}">{{lms_name}}</a></span> > <span><a href="{{path('admin_testManagement_list')}}">{{'test.list.ariane_gestion'|trans}}</a></span> > <span><a href="{{path('admin_testManagement_edit', {'test' : test.id })}}" >{{test.title}}</a></span> > <span><a href="{{path('admin_pool_edit', {'pool' : question.pool.id })}}" >{{question.pool.title}}</a></span> > <span class="bold">{{ 'question.editor' | trans}} {% if question.title != null %}({{question.title}}){% endif %}</span> 
+</div>
+
+ <!-- title of page -->
+ <div class="d-flex align-items-center lms-title">
+	<h1 class="text-uppercase lms-h1">{{'menu.concepteur.test'|trans}} </h1><hr>
+</div>
+
+<!-- body of page -->
+<div class="row">
+    <div class="col-lg-4 mb-5">
+        <h2 class="text-uppercase lms-h2">{{ 'actions' | trans }} </h2>
+        <hr>
+        {% include "TestManagement/Question/actions.html.twig" %}    
+    </div>
+    <div class="col-lg-8"> 
+    <div class="d-flex flex-column">
+        <div>
+            <h2 class="text-uppercase lms-h2"> {{ 'question.editor' | trans }} </h2>
+            <hr>
+        </div>
+        <div class="text-center">
+            {% if is_granted('ROLE_GESTION_TEST') %}
+                <a href="{{ path('question_desactivate', {'id':question.id}) }}" class="lms-button lms-button-orange" {% if question.pool.isValid == false or module.isArchived == true or module.activeSession == true or module.isValid == true %}hidden{% endif %}>
+                {% if question.isValid == false %}<i class="material-icons lms-material-icons">toggle_on</i> {{ 'global.activer'|trans }}{% else %}<i class="material-icons lms-material-icons">toggle_off</i> {{ 'global.desactiver'|trans }}{% endif %}
+                </a> 
+                <a href="{{ path('admin_testManagement_question_delete', {'slug' : question.slug}) }}" class="lms-button lms-button-red" onclick="return confirm('Are you sure you want to delete this item?');" data-toggle="tooltip" data-original-title="{{ 'delete' | trans }}" {% if question.pool.isValid == false or module.isArchived == true or module.activeSession == true or module.isValid == true or nbQuestionUsed != 0 %}hidden{% endif %}>
+                    <i class="material-icons lms-material-icons">delete</i> {{ 'global.delete'|trans }}
+                </a>  
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <form action="{{ path('admin_testManagement_question_edit', {'question' : question.id})}}" method="post" enctype="multipart/form-data">
+                {% include "TestManagement/Question/form_edit.html.twig" %}		
+                <div class="form-group">
+                    {% if module.isArchived == false and question.pool.isValid == true and module.isValid == false and is_granted('ROLE_GESTION_TEST')%}
+                        <button type="submit" class="lms-button lms-button-blue" {% if module.activeSession == true %}hidden{% endif %}>
+                            <i class="material-icons lms-material-icons">save</i> {{ 'global.submit'|trans }}
+                        </button>  
+                    {% endif %}
+                    
+                </div>
+            </form> 
+                                    
+        </div>  
+        <div class="col-lg-6">
+        {% include "TestManagement/Answer/list_lite.html.twig" %} 
+        </div>       
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }} 
+
+<script src="{{ asset("assets/summernote/summernote-bs4.js") }}"></script>
+<script src="{{ asset('assets/bootstrap-editable/js/bootstrap-editable.js') }}"></script>
+<script>
+$(document).ready(function() {
+  $('.summernote').summernote({
+      height: 150,
+      toolbar: [
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol']]
+      ]
+    });
+});
+
+window.onload = (event) => {
+    $.fn.editableform.buttons =
+          '<button type="submit" class="btn btn-success editable-submit btn waves-effect waves-light"><i class="material-icons lms-material-icons">done_outline</i></button>' +
+          '<button type="button" class="btn btn-danger editable-cancel btn waves-effect waves-light"><i class="material-icons lms-material-icons">clear</i></button>';
+
+    $('.ed_content').editable({
+        type: 'textarea',
+        name: 'content',
+        title: 'Answer',        
+        mode: 'inline',
+        inputclass: 'form-control',
+        error: function(response, newValue) {
+            if (response.status == 'error') return response.message; 
+        }
+    });
+
+    $('.ed_content').editable('option', 'validate', function(v) {
+        if(!v) return 'Required field!';
+    });   
+
+    $('.ed_status').editable({
+            type: 'select',
+            name: 'status',
+            title: 'Answer',
+            source: [
+              {value: 1, text: 'Good Answer'},
+              {value: 0, text: 'Bad Answer'}
+            ],        
+            mode: 'inline',
+            inputclass: 'form-control',
+            error: function(response, newValue) {
+                if (response.status == 'error') return response.message; 
+            }
+    });     
+};
+</script>
+<script>
+document.querySelector('.lms-actions-questions-item-actif').closest('.lms-actions-questions-list').classList.add('show');
+</script>
+{% endblock %}

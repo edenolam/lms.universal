@@ -1,0 +1,16 @@
+<a href="{{ path('admin_testManagement_question_create', {'test' : test.id, 'pool': pool.id }) }}" class="btn btn-block btn-secondary">
+   <i class="material-icons lms-material-icons">add</i> {{ 'question.create.title' | trans }}
+</a>
+
+<table class="table card-table table-vcenter mt-5">
+    <tbody>
+{% for q in test.questions %}
+    <tr {% if question is defined and q.id == question.id %}class="bg-blue"{% endif %}>
+       <td><a {% if question is defined and q.id == question.id %}class="text-white"{% endif %} href="{{ path('admin_testManagement_question_edit', {'question' : q.id}) }}" data-toggle="tooltip" data-original-title="{{ 'edit' | trans }}">{{ loop.index }}. {{ q.title }} </a></td>
+       <td class="text-right">
+            <a {% if question is defined and q.id == question.id %}class="text-white"{% endif %} href="{{ path('admin_testManagement_question_delete', {'slug' : q.slug}) }}" data-toggle="tooltip" data-original-title="{{ 'delete' | trans }}"><i class="material-icons lms-material-icons">delete</i></span>
+        </td>
+   	</tr>
+{% endfor %}
+	</tbody>
+</table> 

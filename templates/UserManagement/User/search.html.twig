@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row row-cards">
+  <div class="col col-lg-3 d-md-none d-lg-block">
+    {% include "UserManagement/menu.html.twig" %}
+  </div>
+
+  <div class="col col-lg-9">  
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">{{ 'user.action.list' | trans }}</h3>
+          <a class="lms-button lms-button-blue mr-2" href="{{ path('admin_user_create') }}">
+            <i class="material-icons lms-material-icons">add</i> <span class="hide-768">{{ 'user.action.add' | trans }}</span>
+          </a>
+        <div class="col-lg-3 ml-auto">
+          <form class="input-icon my-3 my-lg-0" id="searchForm">
+            <input type="search" 
+                   class="form-control header-search" placeholder="Search…" 
+                   id="keywords" name="keywords" value="{{ keywords | default("") }}"
+                   tabindex="1">
+            <div class="input-icon-addon">
+              <<i class="material-icons lms-material-icons " >search</i></a> 
+            </div>
+          </form>
+        </div>           
+      </div>  
+      <div class="card-body">
+        <div class="table-responsive" id="users_list">
+          <table class="table card-table table-vcenter text-nowrap">
+           <thead> <!-- En-tête du tableau -->
+               <tr>
+                   <th>{{ 'user.avatar' | trans }}</th>
+                   <th>{{ 'user.login' | trans }}</th>
+                   <th>{{ 'user.nom' | trans }}</th>
+                   <th>{{ 'user.prenom' | trans }}</th>
+                   <th>{{ 'user.groups' | trans }}</th>
+                   {#<th>{{ 'user.email' | trans }}</th>#}
+                   {#<th>{{ 'user.create_date' | trans }}</th>#}
+                   <th>{{ 'user.statut' | trans }}</th>
+                   <th></th>
+               </tr>
+           </thead>
+           <tbody> <!-- Corps du tableau -->
+             {% for user in users %}
+                <tr>
+                  <td class="w-1">
+                    {% if user.photo %}
+                      <span class="avatar" style="background-image: url({{ asset('uploads/user/') }}{{ user.photo  }})"></span>
+                    {% else %}
+                      <span class="avatar" style="background-image: url({{ asset('https://www.placehold.it/32x32/EFEFEF/AAAAAA&amp;text=no+image') }}"></span>
+                    {% endif %}
+                  </td>                   
+                   <td>{{ user.username }}</td>
+                   <td>{{ user.lastname }}</td>
+                   <td>{{ user.firstname }}</td>
+                   <td>
+                        <select class="form-control" >
+                            {% for group in user.groups %}
+                                <option>{{ group.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                   {#<td>{{ user.email }}</td>#}
+                   {#<td>{{ user.createDate | date('d/m/Y H:i:s') }}</td>#}
+                   <td class="text-center">
+                    {% if user.enabled == 1 %}
+                          <a class="icon" href="{{ path('admin_user_active', {'username':user.username}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'global.desactiver'|trans }}"></a>
+                    {% else %}
+                          <a class="icon" href="{{ path('admin_user_active', {'username':user.username}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'global.activer'|trans }}"><i class="material-icons lms-material-icons">vpn_key</i></a> 
+                    {% endif %}
+                   </td>
+                   <td>      
+                        <div class="item-action dropdown">
+                          <a href="javascript:void(0)" data-toggle="dropdown" class="icon" aria-expanded="true"></a>
+                            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-181px, 20px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            <a href="{{ path('admin_user_view', {'username':user.username}) }}" class="dropdown-item"><i class="material-icons lms-material-icons " >search</i> {{ 'global.detail'|trans }} </a>
+                            <a href="{{ path('admin_user_edit', {'username':user.username}) }}" class="dropdown-item"><i class="material-icons lms-material-icons " >edit</i></i> {{ 'global.edit'|trans }} </a>
+                            <a href="{{ path('admin_user_delete', {'username':user.username}) }}" class="dropdown-item confirm"><i class="material-icons lms-material-icons">delete</i> {{ 'global.delete' | trans }}</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="javascript:void(0)" class="dropdown-item"> Stats</a>
+                            </div>
+                        </div>           
+                   </td>               
+               </tr>
+             {% endfor %}
+           </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card-footer">  
+      </div>  
+    </div>
+  </div> 
+</div>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }} 
+
+<script>
+$(document).ready(function() {
+    function urlencode (str) {
+      str = (str + '').toString();
+      return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
+      replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
+    }   
+
+    $('form#searchForm').submit(function () {
+        var form = $(this);
+        //console.log(form)
+        var keywords = $(this).find("input[name=keywords]").val();
+        keywords = urlencode(keywords.replace("/", " "));
+
+        if (keywords.length != "" && keywords.length >= 3) {
+
+             var route = "{{ path('admin_user_search', { 'keywords':"PLACEHOLDER" }) }}";
+             var url = route.replace("PLACEHOLDER", keywords);
+             window.location.replace(url);
+           }
+        return false;
+    }); 
+})
+</script>
+{% endblock %}

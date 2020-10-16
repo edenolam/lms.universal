@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row row-cards">
+
+    <div class="col col-12">  
+        <div class="">
+            <div class="page-title">
+              <h1 class="title">Ldap</h1>
+              <hr>
+            </div>
+        </div>  
+    </div>  
+        
+    <div class="col col-lg-8">     
+            <div class="card-body">
+              <form action="{{ path('admin_ldap_edit') }}" name="ldap" method="post" class="form-horizontal">
+                {% include "UserManagement/Ldap/form.html.twig" %}
+              </form>  
+            </div>   
+    </div> 
+
+    
+</div>
+{% endblock %}

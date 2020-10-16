@@ -1,0 +1,34 @@
+<html>
+<table>
+    <tr>
+        <th>{{'audit.ref'|trans}}</th>
+        <th>{{'audit.user'|trans }}</th>
+        <th>{{'audit.action'|trans }}</th>
+        <th>{{'audit.curent_value'|trans}}</th>
+        <th>{{'audit.datetime'|trans}}</th>
+        {% set firstaudit = content|first %}
+        {% for key,val in firstaudit["curent"] %}
+            <th>{{key}}</th>
+        {% endfor %}
+    </tr>
+
+    {% for audit in audits %}
+        <tr>
+            <th>{{audit.id}}</th>
+            <th>{{audit.user.username}}</th>
+            <th>{{audit.action}}</th>
+            <th>{{audit.entityId}}</th>
+            <th>{{audit.datetime|date('d/m/Y H:i:s')}}</th>
+
+            {% set displayOld = content[audit.id]["old"] %}
+            {% set displaynew = content[audit.id]["curent"] %}
+            
+            {% for key,obj in displaynew %}
+                <th {% if displayOld[key] is not defined or obj != displayOld[key] %}bgcolor="#992622"{% endif %}>
+                    <ul>
+                        <li>{% if obj is not iterable  %} {{ obj|nl2br}}{% endif %}</li>
+                    </ul>
+                </th>
+            {% endfor %}
+        </tr>
+    {% endfor %}

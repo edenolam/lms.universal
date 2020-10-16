@@ -1,0 +1,53 @@
+audit:
+  list: "Audit trail  "
+  id: Id de l'audit
+  user: UTILISATEUR
+  action: ACTION
+  curent_value: VALEUR OBJET
+  datetime: DATE - HEURE
+  view_details: DETAILS
+  export: Export Excel
+  ref: REFERENCE AUDIT
+  ref_entity: REFERENCE ENTITE
+  versioning_module:
+    title: Suivi des montées de version
+    hasRequiredRole: DROIT DE USER
+    jusitification: JUSTIFICATION 
+    version: VERSION
+search:
+  error: Ce contenu est en révision.
+
+faq_data:
+  forget_psw: 
+    title: J'ai oublié mon mot de passe
+    p1: En cas d’oubli de votre mot de passe, entrez votre adresse de messagerie et cliquez sur « Réinitialiser le mot de passe ». Un email vous sera envoyé avec un lien sur lequel vous pourrez choisir un nouveau mot de passe. 
+    p2: Si vous ne recevez pas de courrier électronique, vérifiez votre courrier indésirable/spam. En cas de problème persistant, nous vous prions de nous contacter par mail.
+
+  change_psw:
+    title: Je souhaite modifier mon mot de passe
+    p1: Vous pouvez modifier votre mot de passe en cliquant sur votre compte puis Profil et enfin Modifier le mot de passe. Vous devrez alors saisir votre mot de passe actuel puis votre nouveau mot de passe en le répétant une fois et valider votre modification en cliquant sur Modifier le mot de passe.
+
+  change_profil:
+    title: Je souhaite modifier mes informations personnelles
+    p1: Vous ne pouvez pas modifier les informations de votre profil directement. Vous devez nous adressez un mail ou à votre administrateur interne. 
+
+  change_language:
+    title: Je souhaite changer de langue
+    p1: Un onglet (logo de drapeau) est prévu à cet effet, il suffit de sélectionner la langue désirée
+
+  data_localisation:
+    title: Où sont localisés vos serveurs ?
+    p1: Les serveurs de notre LCMS sont localisés en France.
+
+  browser_conpatibility:
+    title: Avec quels navigateurs votre plateforme est-elle compatible ?
+    p1: Notre LCMS est compatible avec la plupart des navigateurs tels que Chrome, Firefox et Safari. 
+
+  what_is_scorm:
+    title: Qu’un ce qu’un module SCORM ?
+    p1: Un module SCORM (Shareable Content Object Reference Model) est un module e-learning qui provient d’une autre plateforme de formation en ligne. Le format SCORM permet au module d’être intégré sur une autre plateforme dans son format et selon sa charte graphique d’origine.
+
+
+
+  
+

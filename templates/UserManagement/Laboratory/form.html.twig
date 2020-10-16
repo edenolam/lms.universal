@@ -1,0 +1,97 @@
+<div class="row form-container">
+    <div class="col col-12 col-xl-3 data-photo">
+        {# <div class="form-group"> #}
+                <div class="fileupload-new" data-provides="fileupload">
+                    <div class="thumbnail">
+                        {% if laboratory.logo %}
+                            <img src="{{ asset('uploads/laboratory/') }}{{ laboratory.logo  }}" />
+                        {% else %}
+                            <img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" />
+                        {% endif %}
+                    </div>
+                    <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                    <div>
+                        <span class="btn btn-white btn-file">
+                            <span class="fileupload-new"> {{ 'laboratory.selectImage' | trans }}</span>
+                            <span class="fileupload-exists"> {{ 'laboratory.changeImage' | trans }}</span>
+                            {{ form_widget( form.image, {'attr': {'class': 'default' } } ) }}
+                        </span>
+                        <a href="#" class="lms-button lms-button-red fileupload-exists" data-dismiss="fileupload"><i class="material-icons lms-material-icons ">delete</i> {{ 'laboratory.removeImage' | trans }}</a>
+                   </div>
+                </div>                           
+        {# </div>     #}
+        <div class="info">
+            {{ 'userManagement.info' | trans | raw }}
+        </div>         
+    </div>
+
+    <div class="col col-12 col-xl-4 data-perso">
+        <h2 class="admin-h2">Coordonnées laboratoire</h2>
+        <div class="form-group">
+            {{ form_label(form.title,  'laboratory.title'|trans ) }}
+            {{ form_widget(form.title, { 'attr': {'class': 'form-control form-group'} }) }}   
+            {{ form_errors(form.title) }}
+        </div>  
+        <div class="form-group">
+            {{ form_label(form.address,  'laboratory.address'|trans) }}
+            {{ form_widget(form.address, { 'attr': {'class': 'form-control form-group'} }) }}  
+            {{ form_errors(form.address) }}
+        </div>   	
+        <div class="form-group">
+            {{ form_label(form.addressBis,  'laboratory.addressBis'|trans) }}
+            {{ form_widget(form.addressBis, { 'attr': {'class': 'form-control form-group'} }) }}   
+            {{ form_errors(form.addressBis) }}
+        </div> 
+        <div class="form-group">
+            {{ form_label(form.city,  'laboratory.city'|trans) }}
+            {{ form_widget(form.city, { 'attr': {'class': 'form-control form-group'} }) }}   
+            {{ form_errors(form.city) }}
+        </div> 
+        <div class="form-group">
+            {{ form_label(form.zipCode,  'laboratory.zipCode'|trans) }}
+            {{ form_widget(form.zipCode, { 'attr': {'class': 'form-control form-group'} }) }}   
+            {{ form_errors(form.zipCode) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.country,  'laboratory.country'|trans ) }}
+            {{ form_widget(form.country, { 'attr': {'class': 'form-control form-group'} }) }}    
+        </div>
+    </div>
+    <div class="col col-12 col-xl-5 data-pro">
+        <h2 class="admin-h2">Données personnelles</h2>
+        <div class="form-group">
+            {{ form_label(form.phone,  'laboratory.phone'|trans) }}
+            {{ form_widget(form.phone, { 'attr': {'class': 'form-control form-group'} }) }}   
+            {{ form_errors(form.phone) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.email,  'laboratory.email'|trans) }}
+            {{ form_widget(form.email, { 'attr': {'class': 'form-control form-group'} }) }}    
+            {{ form_errors(form.email) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.url,  'laboratory.url'|trans) }}
+            {{ form_widget(form.url, { 'attr': {'class': 'form-control form-group'} }) }}    
+            {{ form_errors(form.url) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.description,  'laboratory.description'|trans ) }}
+            {{ form_widget(form.description, { 'attr': {'class': 'form-control form-group'} }) }}   
+            {{ form_errors(form.description) }} 
+        </div>   
+        <div class="form-group">
+            {{ form_label(form.sort,  'laboratory.sort'|trans) }}
+            {{ form_widget(form.sort, { 'attr': {'class': 'form-control form-group'} }) }}  
+            {{ form_errors(form.sort) }}
+        </div>
+    </div>
+</div>
+<div class="required-field">
+    * {{ 'global.obligatoire' | trans}}
+</div>
+{{ form_widget(form._token) }}  
+<div class="row justify-content-around">      
+    <button type="submit" class="lms-button lms-button-blue">
+        <i class="material-icons lms-material-icons">save</i> {{ 'global.submit'|trans }}
+    </button>
+</div>

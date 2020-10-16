@@ -1,0 +1,61 @@
+<div class="table-responsive">
+    {# <table class="mt-5 table card-table table-vcenter"> #}
+    <table class="table table-bordered table-striped lms-table">
+            <thead class="thead-dark">
+            <tr>
+                <th>{{'answer.answer'|trans}}</th>            
+                <th>{{'answer.status'|trans}}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody> 
+        	{% if question is defined and question.answers | length > 0 %}
+                {% for answer in question.answers %}
+                    {% if answer.isDeleted == false %}
+                        <tr>
+                            <td>
+                                {#<a href="{{ path('admin_testManagement_answer_edit', {'slug' : answer.slug}) }}"><span data-toggle="tooltip" data-original-title="{{ 'edit' | trans }}">#}
+                                {% if module.isArchived == true or module.activeSession == true or module.isValid == true or is_granted('ROLE_GESTION_TEST') == false %}
+                                    <span> {{ answer.content | raw }}</span>
+                                {% else %}
+                                    <a href="#" class="ed_content" name="content"  data-type="textarea" data-pk="{{ answer.id }}"  data-url="{{path('admin_testManagement_answer_edit_flash', {'id': answer.id})}}" data-title="Answer"> <span>{{ answer.content | raw }}</span></a>
+                                {% endif  %}
+                            </td>
+                            <td>
+                                {% if module.isArchived == true or module.activeSession == true or module.isValid == true or is_granted('ROLE_GESTION_TEST') == false %}
+                                    <span> {% if answer.status %}<i class="material-icons lms-material-icons lms-text-success">check</i>{% else %}<i class="material-icons lms-material-icons lms-text-danger">close</i>{% endif %}
+                                    </span>
+                                {% else %}
+                                    <a href="#" class="ed_status" name="status"  data-type="select" data-pk="{{ answer.id }}" data-url="{{path('admin_testManagement_answer_edit_flash', {'id': answer.id})}}" data-title="Good answer">
+                                    {% if answer.status %}<i class="material-icons lms-material-icons lms-text-success">check</i>{% else %}<i class="material-icons lms-material-icons lms-text-danger">close</i>{% endif %}
+                                    </a>
+                                {% endif  %}
+                            </td>
+                            <td class="text-right">
+                                <a href="{{ path('reponse_desactivate', {'id': answer.id}) }}" class=""  {% if question.pool.isValid == false or question.isValid == false or module.isArchived == true or module.activeSession == true or module.isValid == true %}hidden{% endif %}>
+                                    {% if answer.isValid == true %}
+                                        <i class="material-icons lms-material-icons lms-text-primary" data-toggle="tooltip" data-original-title="{{ 'global.actif' | trans }}">toggle_on</i>
+                                    {% else %}
+                                        <i class="material-icons lms-material-icons" data-toggle="tooltip" data-original-title="{{ 'global.inactif' | trans }}">toggle_off</i>
+                                    {% endif %}
+                                </a>
+                                <a href="{{ path('admin_testManagement_answer_delete', {'slug' : answer.slug}) }}" onclick="return confirm('Are you sure you want to delete this item?');" data-toggle="tooltip" data-original-title="{{ 'delete' | trans }}" {% if question.pool.isValid == false or question.isValid == false or module.isArchived == true or module.activeSession == true or module.isValid == true or nbQuestionUsed != 0 %}hidden{% endif %}>
+                                    <i class="material-icons lms-material-icons">delete</i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <tr>
+                <td colspan="4" align="center" {% if module.activeSession == true or module.isArchived == true or module.isValid == true  %}hidden{% endif %}>
+                    {% if is_granted('ROLE_GESTION_TEST') %}
+                    <a href="{{ path('admin_testManagement_answer_create', {'question' : question.id}) }}" class="btn btn-block btn-secondary">
+                        <i class="material-icons lms-material-icons">add</i> {{ 'answer.add.title' | trans }}
+                    </a>
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody> 
+    </table>
+</div>

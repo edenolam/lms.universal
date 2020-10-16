@@ -1,0 +1,53 @@
+// EN COMPLÉMENT DE BOOTSTRAP
+.lms {
+    &-col {
+        &-xxl {
+            @media(min-width: $xxl) {
+                flex: 0 0 calc(100%/5);
+                max-width: calc(100%/5);
+            }
+        }
+        &-xxl {
+            @media(min-width: $xxxl) {
+                flex: 0 0 calc(100%/6);
+                max-width: ‭calc(100%/6);
+            }
+        }
+    }
+    &-header {
+        height: 2.5em;
+    }
+    &-container {
+        &-nav {
+            height: calc(100vh - 2.5em);
+            top: 2.5em;
+            // width: 3.125em;
+            width: 22em;
+            // @media(min-width: $md) {
+            //     width: 22em;
+            // }
+        }
+    }
+    &-content {
+        overflow-x: hidden;
+        width: 100%;
+    }
+    &-menu {
+        width: 100%;
+    }
+    &-course {
+        &-content {
+            &-expand {
+                flex: 0 0 99%;
+                max-width: 99%;
+            }
+        }
+        &-aside {
+            &-minify {
+                flex: 0 0 1em;
+                max-width: 1em;
+                overflow: hidden;
+            }
+        }
+    }
+}

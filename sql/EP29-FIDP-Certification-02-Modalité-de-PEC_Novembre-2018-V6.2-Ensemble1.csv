@@ -1,0 +1,34 @@
+Titre;question;type de réponse;réponse;statut de la réponse
+;Quelle autorité nationale délivre les AMM en France ?;2;CEPS;0
+;Quelle autorité nationale délivre les AMM en France ?;2;ANSM;1
+;Quelle autorité nationale délivre les AMM en France ?;2;HAS ;0
+;L’inscription des médicaments sur la liste des spécialités remboursables doit être renouvelée tous les 5 ans.;2;VRAI;1
+;L’inscription des médicaments sur la liste des spécialités remboursables doit être renouvelée tous les 5 ans.;2;FAUX;0
+;Quel organisme évalue les spécialités pour leur affecter un niveau de SMR et d’ASMR ?;2;ANSM;0
+;Quel organisme évalue les spécialités pour leur affecter un niveau de SMR et d’ASMR ?;2;UNCAM;0
+;Quel organisme évalue les spécialités pour leur affecter un niveau de SMR et d’ASMR ?;2;HAS (Commission de la Transparence);1
+;Quel organisme évalue les spécialités pour leur affecter un niveau de SMR et d’ASMR ?;2;CEPS;0
+;Lorsqu’un laboratoire fait une demande d’AMM nationale (France) à l’ANSM, son médicament pourra être commercialisé également dans les autres pays membres de l’Union Européenne en cas d’autorisation accordée.;2;VRAI;0
+;Lorsqu’un laboratoire fait une demande d’AMM nationale (France) à l’ANSM, son médicament pourra être commercialisé également dans les autres pays membres de l’Union Européenne en cas d’autorisation accordée.;2;FAUX;1
+;Lorsqu’un laboratoire fait une demande d’AMM à l’EMA par procédure centralisée, son médicament peut-il être commercialisé dans tous les pays membres de l’Union Européenne en cas d’autorisation accordée par la Commission Européenne ?;2;Oui;1
+;Lorsqu’un laboratoire fait une demande d’AMM à l’EMA par procédure centralisée, son médicament peut-il être commercialisé dans tous les pays membres de l’Union Européenne en cas d’autorisation accordée par la Commission Européenne ?;2;Non;0
+;Lorsqu’un laboratoire fait une demande d’AMM à l’EMA par procédure centralisée, son médicament est évalué par le comité des médicaments à usage humain de l’EMA.;2;VRAI;1
+;Lorsqu’un laboratoire fait une demande d’AMM à l’EMA par procédure centralisée, son médicament est évalué par le comité des médicaments à usage humain de l’EMA.;2;FAUX;0
+;Un laboratoire peut obtenir son AMM dans plusieurs pays de l’Union Européenne grâce à la procédure de demande d’AMM par reconnaissance mutuelle.;2;VRAI;1
+;Un laboratoire peut obtenir son AMM dans plusieurs pays de l’Union Européenne grâce à la procédure de demande d’AMM par reconnaissance mutuelle.;2;FAUX;0
+;Sur quels critères sont évalués les médicaments pour leur attribuer SMR et ASMR ?;1;La gravité de la pathologie;1
+;Sur quels critères sont évalués les médicaments pour leur attribuer SMR et ASMR ?;1;La place dans la stratégie thérapeutique au regard des autres thérapies disponibles;1
+;Sur quels critères sont évalués les médicaments pour leur attribuer SMR et ASMR ?;1;L’efficacité du médicament;1
+;Sur quels critères sont évalués les médicaments pour leur attribuer SMR et ASMR ?;1;Les effets indésirables du médicament;1
+;Quel organisme négocie le prix des médicaments avec les laboratoires en France ?;2;UNCAM;0
+;Quel organisme négocie le prix des médicaments avec les laboratoires en France ?;2;HAS;0
+;Quel organisme négocie le prix des médicaments avec les laboratoires en France ?;2;CEPS;1
+;Quel organisme négocie le prix des médicaments avec les laboratoires en France ?;2;ANSM;0
+;Quels niveaux de SMR permettent un avis favorable à l’inscription sur la liste des médicaments remboursables ?;1;SMR insuffisant;0
+;Quels niveaux de SMR permettent un avis favorable à l’inscription sur la liste des médicaments remboursables ?;1;SMR faible;1
+;Quels niveaux de SMR permettent un avis favorable à l’inscription sur la liste des médicaments remboursables ?;1;SMR modéré;1
+;Quels niveaux de SMR permettent un avis favorable à l’inscription sur la liste des médicaments remboursables ?;1;SMR important ou majeur;1
+;Que représente une ASMR de niveau I ?;2;Progrès thérapeutique majeur;1
+;Que représente une ASMR de niveau I ?;2;Absence d’amélioration du SMR;0
+;Que représente une ASMR de niveau V ?;2;Progrès thérapeutique majeur;0
+;Que représente une ASMR de niveau V ?;2;Absence d’amélioration du SMR;1

@@ -1,0 +1,61 @@
+<div class="lms-aside-card">
+	<div class="p-3 lms-aside-card-content">
+		<div class="lms-actions-title">
+			<span class="lms-actions-title-level-1 lms-actions-title-level-1-actif"> {{currentModule.title}} </span>
+			<span class="d-block text-right lms-actions-title-infos"> {{indexOfPage}} sur {{numberPages}} </span>
+		</div>
+	
+		<ul class="lms-aside-card-body pt-2 lms-aside-card-chapter">
+		{% for chapter in currentModule.moduleCourses %}
+			{% if chapter.course.isValid == true %}
+				<li class="{% if chapter.course.id == currentChapter.id and currentPage.inSummary == false and inSummaryPrevPage == false %}active{% endif %} mb-3">
+					<div class="d-flex justify-content-between">
+					{% if currentSession is not null  %}
+						<a href="{{ path('user_formation_module_organisation', {'slugSession': currentSession.slug, 'formationPath': currentSession.formationPath.id, 'slugModule': currentModule.slug,'slugChapter': chapter.course.slug}) }}" class="showSpinner lms-actions-pages-header">
+					{% else %}
+						{% if slugSession == "preview" %}
+							<a href="{{ path('user_formation_module_organisation', {'slugSession': 'preview', 'formationPath': 1, 'slugModule': currentModule.slug,'slugChapter': chapter.course.slug}) }}" class="showSpinner lms-actions-pages-header">
+						{% else %}
+							<a href="{{ path('user_formation_module_organisation', {'slugSession': slugSession, 'formationPath': currentFormation.id, 'slugModule': currentModule.slug,'slugChapter': chapter.course.slug}) }}" class="showSpinner lms-actions-pages-header">
+						{% endif %}
+					{% endif %}
+						{% if chapter.course.id == currentChapter.id %}<b>{{ chapter.course.title }}</b>{% else %}{{ chapter.course.title }}{% endif %}
+					</a>		
+					<a href="#chapter-{{ chapter.id }}" data-toggle="collapse"><svg class="expend" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></a>
+					</div>		
+					{% if chapter.userCourseFollow is not null and chapter.userCourseFollow.percentage == 100 %}
+						{% set hoursMeanTime = (chapter.userCourseFollow.durationTotalSec/3600)|round(0, 'floor') %}
+                        {% set minutesMeanTime =  ((chapter.userCourseFollow.durationTotalSec-(hoursMeanTime*3600))/60)|round(0, 'floor') %}
+						<i class="material-icons lms-text-success lms-material-icons" data-toggle="tooltip" data-original-title="vous avez lu en {{ hoursMeanTime }}h{{minutesMeanTime}}">check</i>{% endif %}
+					<ul id="chapter-{{ chapter.id }}" class="lms-aside-card-chapterlist sortable lms-actions-pages-list collapse">
+					{% for page in chapter.course.pages %}
+						{% if page.inSummary and page.isValid %}
+							{# <li class="{% if page.id == currentPage.id or  inSummaryPrevPage == page %} active  {% endif %}"> #}
+								<li class="{% if page.id == currentPage.id  %} active  {% endif %}">
+									{% if currentSession is not null  %}
+									- <a href="{{ path('user_formation_module_organisation', {'slugSession': currentSession.slug, 'formationPath': currentSession.formationPath.id, 'slugModule': currentModule.slug,'slugChapter': chapter.course.slug,'slugPage': page.slug,}) }}" class="showSpinner">
+									{% else %}
+										{% if slugSession == "preview" %}
+											- <a href="{{ path('user_formation_module_organisation', {'slugSession': 'preview', 'formationPath': 1, 'slugModule': currentModule.slug,'slugChapter': chapter.course.slug,'slugPage': page.slug,}) }}" class="showSpinner">
+
+										{% else %}
+											- <a href="{{ path('user_formation_module_organisation', {'slugSession': 'preview', 'formationPath': 1, 'slugModule': currentModule.slug,'slugChapter': chapter.course.slug,'slugPage': page.slug,}) }}" class="showSpinner">
+										{% endif %}	
+									{% endif %}	
+										{{ page.title }}
+									</a>
+									{% if page.userPageFollow is not null %}
+										{% set hoursMeanTime = (chapter.userCourseFollow.durationTotalSec/3600)|round(0, 'floor') %}
+                        				{% set minutesMeanTime =  ((chapter.userCourseFollow.durationTotalSec-(hoursMeanTime*3600))/60)|round(0, 'floor') %}
+										<i class="material-icons lms-text-success lms-material-icons" data-toggle="tooltip" data-original-title="vous avez lu en {{ hoursMeanTime }}h{{minutesMeanTime}}">check</i>
+									{% endif %}
+								</li>
+							{% endif %}
+						{% endfor %}
+					</ul>
+				</li>
+			{% endif %}
+		{% endfor %}
+		</ul>
+	</div>
+</div>

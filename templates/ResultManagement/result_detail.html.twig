@@ -1,0 +1,106 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<div class="page-header">
+  <div class="page-title">
+    {{'results.page.title'|trans}}
+  </div>
+</div>
+<div class="container">
+  <div class="row row-cards">
+
+    <div class="col col-lg-3 d-md-none d-lg-block">
+      {% include "ResultManagement/menu.html.twig" %}
+    </div>
+
+    <div class="col col-lg-9">
+    <!-- MAIN CARD -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">{{result.session.title}}</h3>
+        </div>
+        <div class="card-body">
+          <p class="card-text"><b>{{'results.formation_ref'|trans}}: </b>{{result.session.formationPath.title}}</p>
+          <p class="card-text"><b>{{'session.reference'|trans}}: </b>{{result.session.reference}}</p>
+          
+          <div class="row row-cards">
+
+            <!-- MODULE CARD -->
+            {% for module in result.modules %}
+              <div class="card card-collapsed">
+                <div class="card-header">
+                  <h4 class="card-title">{{module.module.title}} - {{module.module.reference}} - {{module.module.regulatoryRef}}</h4>
+                  <div class="card-options">
+                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"></a>
+                  </div>
+                </div>
+                <div class="card-body">
+
+                  <p class="card-text"><b>{{'results.reading_rate'|trans}} : </b>{{module.lectureDoneRate}}%</p>
+                  <p class="card-text"><b>{{'results.validation_percentage'|trans}} : </b>{{module.validationPercentage}}%</p>
+                  <p class="card-text"><b>{{'results.time_rate'|trans}} : </b>{{module.timePassedRate}}</p>
+                  
+                  <div class="row">
+                    
+                    <!-- PRE-TEST CARD -->
+                    {% if module.hasPreTest %}
+                      <div class="card">
+                        <div class="card-header">
+                          <h5 class="card-title">{{'userFrontManagement.page.pretest'|trans}}</h5>
+                        </div>
+                        <div class="card-body">
+                          <p class="card-text"><b>{{'results.participant_number'|trans}} : </b>{{module.preTestParticipants}}</p>
+                          <p class="card-text"><b>{{'results.validation_percentage'|trans}} : </b>{{module.preTestValidation}}%</p>
+                          <p class="card-text"><b>{{'results.score_rate'|trans}} : </b>{{module.preTestPercentage}}</p>
+                          <p class="card-text"><b>{{'results.time_rate'|trans}} : </b>{{module.preTestTimePassed}}</p>
+                        </div>
+                      </div>
+                    {% endif %}
+
+                    <!-- TRAINING CARD -->
+                    {% if module.hasTraining %}
+                      <div class="card">
+                        <div class="card-header">
+                          <h5 class="card-title">{{'userFrontManagement.page.training'|trans}}</h5>
+                        </div>
+                        <div class="card-body">
+                          <p class="card-text"><b>{{'results.participant_number'|trans}} : </b>{{module.trainingParticipants}}</p>
+                          <p class="card-text"><b>{{'results.validation_percentage'|trans}} : </b>{{module.trainingValidation}}%</p>
+                          <p class="card-text"><b>{{'results.score_rate'|trans}} : </b>{{module.trainingPercentage}}</p>
+                          <p class="card-text"><b>{{'results.time_rate'|trans}} : </b>{{module.trainingTimePassed}}</p>
+                        </div>
+                      </div>
+                    {% endif %}
+
+                    <!-- EVAL CARD -->
+                    {% if module.hasEval %}
+                      <div class="card">
+                        <div class="card-header">
+                          <h5 class="card-title">{{'userFrontManagement.page.eval'|trans}}</h5>
+                        </div>
+                        <div class="card-body">
+                          <p class="card-text"><b>{{'results.participant_number'|trans}} : </b>{{module.evalParticipants}}</p>
+                          <p class="card-text"><b>{{'results.validation_percentage'|trans}} : </b>{{module.evalValidation}}%</p>
+                          <p class="card-text"><b>{{'results.score_rate'|trans}} : </b>{{module.evalPercentage}}</p>
+                          <p class="card-text"><b>{{'results.time_rate'|trans}} : </b>{{module.evalTimePassed}}</p>
+                        </div>
+                      </div>
+                    {% endif %}
+                    
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="card-footer">
+          {{ form_start(form, {'method': 'post', 'action': path('results_detail', {'slug' : result.session.slug})}) }}
+          {{ form_errors(form) }}
+          {{form_row(form.hidden) }}
+          <button type="submit" class="ml-auto lms-button lms-button-blue">{{'results.export.result'|trans}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

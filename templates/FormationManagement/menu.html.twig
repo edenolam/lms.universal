@@ -1,0 +1,74 @@
+<div class="card">
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">
+      <a href="{{ path('admin_session_list') }}">
+        {% if 'session' in app.request.attributes.get('_route') %}
+          <div class="card-status bg-blue"></div>
+          <i class="fa fa-folder-open-o"></i>
+        {% else %}
+          <i class="fa fa-folder-o"></i>
+        {% endif %}
+        {{ 'menu.formation.session.list' | trans }}</a>
+    </li>
+    <li class="list-group-item">
+      <a href="{{ path('admin_formation_path_list') }}">
+        {% if 'formation_path' in app.request.attributes.get('_route') %}
+          <div class="card-status bg-blue"></div>
+          <i class="fa fa-folder-open-o"></i>
+        {% else %}
+          <i class="fa fa-folder-o"></i>
+        {% endif %}
+        {{ 'menu.formation.formation_path.list' | trans }}</a>
+    </li>
+    <li class="list-group-item">
+      <a href="{{ path('admin_module_list') }}">
+        {% if 'module' in app.request.attributes.get('_route') %}
+          <div class="card-status bg-blue"></div>
+          <i class="fa fa-folder-open-o"></i>
+        {% else %}
+          <i class="fa fa-folder-o"></i>
+        {% endif %}
+        {{ 'menu.formation.module.list' | trans }}</a>
+    </li>
+    <li class="list-group-item">
+      <a href="{{ path('admin_course_list') }}">
+        {% if 'course' in app.request.attributes.get('_route') %}
+          <div class="card-status bg-blue"></div>
+          <i class="fa fa-folder-open-o"></i>
+        {% else %}
+          <i class="fa fa-folder-o"></i>
+        {% endif %}
+        {{ 'menu.formation.course.list' | trans }}</a>
+    </li>
+    <li style="padding-left:40px;" class="list-group-item">
+      <a href="{{ path('knowledge_list') }}">
+        {% if 'knowledge' in app.request.attributes.get('_route') %}
+          <div class="card-status bg-blue"></div>
+          <i class="fa fa-folder-open-o"></i>
+        {% else %}
+          <i class="fa fa-folder-o"></i>
+        {% endif %}
+        {{ 'menu.formation.knowledge.list' | trans }}</a>
+    </li>
+    <li style="padding-left:40px;" class="list-group-item">
+      <a href="#">
+        {% if 'page' in app.request.attributes.get('_route') %}
+          <div class="card-status bg-blue"></div>
+          <i class="fa fa-folder-open-o"></i>
+        {% else %}
+          <i class="fa fa-folder-o"></i>
+        {% endif %}
+        {{ 'menu.formation.page.list' | trans }}</a>
+    </li>
+    <li style="padding-left:40px;" class="list-group-item">
+      <a href="{{ path('reference_list') }}">
+        {% if 'reference' in app.request.attributes.get('_route') %}
+          <div class="card-status bg-blue"></div>
+          <i class="fa fa-folder-open-o"></i>
+        {% else %}
+          <i class="fa fa-folder-o"></i>
+        {% endif %}
+        {{ 'formation.list.reference' | trans }}</a>
+    </li>
+  </ul>
+</div>

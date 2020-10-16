@@ -1,0 +1,36 @@
+.lms {
+    &-session {
+        &-tab {
+            border-bottom: 0.25em solid transparent;
+            &-actif {
+                border-color: $scooter-blue;
+            }
+        }
+        &-dnd {
+            &-block {
+                min-height: 40vh;
+                scroll: auto;
+            }
+            &-item {
+                @include transitionNormal;
+                background-color: $scorpion-gray;
+                color: $white;
+                cursor: all-scroll;
+                font-size: .875em;
+                font-weight: 300;
+                &:hover,
+                &:active,
+                &:focus {
+                    @include transitionNormal;
+                    background-color: $scooter-blue;
+                }
+            }
+        }
+        &-users-filters {
+            @media(min-width: $lg) {
+                flex: 0 0 calc(100%/3 - 1em);
+                width: calc(100%/3 - 1em);
+            }
+        }
+    }
+}

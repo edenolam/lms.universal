@@ -1,0 +1,139 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}  
+<link rel="stylesheet" href="{{ asset("assets/bootstrap-editable/css/bootstrap-editable.css")}}" />
+{% endblock %}
+
+{% block body %}
+<!-- navigateur -->
+<div class="lms-breadcrumb">
+   <span><a href="
+				{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+        {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+				{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+				{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+				{% else %} {{ path('home_dashboard') }}
+				{% endif %}">{{lms_name}}</a></span> > <span><a href="{{path('admin_session_list')}}">{{ 'menu.concepteur.session' | trans }}</a></span> > <span class="bold">{{ session.title}}</span>
+</div>
+
+<!-- title of page -->
+<div class="d-flex align-items-center lms-title">
+	<h1 class="text-uppercase lms-h1">{{'session.edit'|trans}}</h1><hr/>
+</div>
+
+<!-- body of page -->
+<div class="text-uppercase d-flex flex-column flex-sm-row align-items-center justify-content-sm-start">
+    <a class="px-4 px-lg-5 py-1 lms-session-tab" href="{{ path('admin_session_edit', {'slug' : session.slug}) }}">{{ 'session.date' | trans }}</a>
+    <span class="px-4 px-lg-5 py-1 lms-session-tab lms-session-tab-actif">{{ 'session.modules' | trans }}</span>
+    <a class="px-4 px-lg-5 py-1 lms-session-tab" href="{{ path('admin_session_edit_presentiel', {'slug' : session.slug}) }}">{{ 'session.presentiels' | trans }}</a>
+    <a class="px-4 px-lg-5 py-1 lms-session-tab" href="{{ path('admin_session_edit_user', {'slug' : session.slug}) }}">{{ 'session.users' | trans }}</a>
+</div>
+<form action="{{ path('admin_session_edit', {'slug' : session.slug}) }}" method="post" class="p-5 lms-bg-gray" enctype="multipart/form-data">
+    {% include "PlanningManagement/Session/form_module.html.twig" %}
+</form>
+
+{% endblock %}
+
+{% block js %}
+  {{ parent() }}
+  <script src="{{ asset('assets/bootstrap-editable/js/bootstrap-editable.js') }}"></script>
+  <script>
+
+    $(function() {
+        // ======================================================================================
+        //=======================================table===========================================
+        // ======================================================================================
+        $('#filtreForm th').each( function () {
+            var title = $(this).text();
+            $(this).html( '<input type="text" class="form-control" placeholder="{{"global.table.search"|trans}} '+title+'" />' );
+        } );
+
+        var table = $('#tablefiltre').DataTable({
+            colReorder: true,
+            responsive: false, 
+            ordering:  false,
+            searching: false,
+            paging: false,
+            language: {
+                decimal:        "",
+                emptyTable:     "-",
+                info: "[_START_/_END_]  <b>{{"global.table.total"|trans}} : </b>_TOTAL_",
+                infoEmpty:      "0/0   [0]",
+                infoFiltered:   "({{"global.table.filteredForm"|trans}} _MAX_ {{"global.table.entries"|trans}})",
+                infoPostFix:    "",
+                thousands:      " ",
+                lengthMenu:     "<b>{{"global.table.Entries"|trans}}</b> _MENU_",
+                loadingRecords: "{{"global.table.loadingRecords"|trans}}...",
+                processing:     "{{"global.table.processing"|trans}}...",
+                search:         "<b>{{"global.table.search"|trans}}</b>:",
+                zeroRecords:    "{{"global.table.zeroRecords"|trans}}",
+                paginate: {next:       ">>", previous:   "<<"},
+                
+            },
+        });
+            
+        table.columns().eq( 0 ).each( function ( colIdx ) {
+            $( 'input', $('#filtreForm th')[colIdx] ).on( 'keyup change', function () {
+                table
+                    .column( colIdx )
+                    .search( this.value )
+                    .draw();
+            } );
+        } );
+
+            // ======================================================================================
+        //=======================================table end=========================================
+        // ======================================================================================
+      });
+
+    window.onload = (event) => {
+        $.fn.editableform.buttons =
+              '<button type="submit" class="btn btn-success editable-submit btn-sm waves-effect waves-light"><i class="material-icons lms-material-icons">done_outline</i></button>' +
+              '<button type="button" class="btn btn-danger editable-cancel btn-sm waves-effect waves-light"><i class="material-icons lms-material-icons">clear</i></button>';
+
+        $('.ed_openingDate').editable({
+                type: 'date',
+                name: 'openingDate',
+                title: 'Opening Date',        
+                mode: 'inline',
+                inputclass: 'form-control-sm',
+                error: function(response, newValue) {
+                    if (response.status == 'error') return response.message; 
+                }
+        });
+        $('.ed_closingDate').editable({
+                type: 'date',
+                name: 'closingDate',
+                title: 'Closing Date',        
+                mode: 'inline',
+                inputclass: 'form-control-sm',
+                error: function(response, newValue) {
+                    if (response.status == 'error') return response.message; 
+                }
+        });
+        $('.ed_openingDateEvaluation').editable({
+                type: 'date',
+                name: 'openingDateEvaluation',
+                title: 'Opening Date Evaluation',        
+                mode: 'inline',
+                inputclass: 'form-control-sm',
+                error: function(response, newValue) {
+                    if (response.status == 'error') return response.message; 
+                }
+        });
+        $('.ed_closingDateEvaluation').editable({
+                type: 'date',
+                name: 'closingDateEvaluation',
+                title: 'Closing Date Evaluation',        
+                mode: 'inline',
+                inputclass: 'form-control-sm',
+                error: function(response, newValue) {
+                    if (response.status == 'error') return response.message; 
+                }
+        });            
+    };
+
+  </script>
+
+{% endblock %}

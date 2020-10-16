@@ -1,0 +1,54 @@
+ul[class*="lms-accordeon"] {
+    list-style: none;
+    padding: 0;
+}
+
+.lms {
+    &-accordeon {
+        &-formation {
+            margin-bottom: 1em;
+            &-title {
+                background-color: $prussian-blue;
+                color: $white;
+                font-size: .9375rem;
+                padding: .6875rem 1rem .6875rem 1.5rem;
+                svg {
+                    fill: $white;
+                }
+                &::after {
+                    clear: both;
+                    content: "";
+                    display: table;
+                }
+            }
+        }
+        &-module {
+            &-title {
+                background-color: $gallery-gray;
+                color: $prussian-blue;
+                font-size: .875em;
+                padding: .5rem 1rem .25rem 1.5rem;
+            }
+            &-note {
+                position: relative;
+            }
+        }
+        &-title {
+            &-icons {
+                cursor: pointer;
+                margin-left: 1em;
+                vertical-align: middle;
+            }
+        }
+        &-container {
+            &-note {
+                background-color: $gallery-gray;
+                font-size: .8125em;
+                overflow: hidden;
+                position: absolute;
+                width: 100%;
+                z-index: 1;
+            }
+        }
+    }
+}

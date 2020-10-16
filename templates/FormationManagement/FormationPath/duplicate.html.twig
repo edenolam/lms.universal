@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="page-header">
+  <div class="page-title">
+    <h1>{{'formation.list.title'|trans}}</h1>
+  </div>
+</div>
+
+<div class="row row-cards">
+  <div class="col col-lg-3 d-md-none d-lg-block">
+    {% include "FormationManagement/menu.html.twig" %}
+  </div>
+
+  <div class="col col-lg-9">
+
+
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title"><strong>{{'global.duplicate'|trans}} {{'formation.formation_path.literal'|trans}}</strong></h3>
+      </div>
+      <div class="card-body">
+        {{ form_start(form, {'method': 'post', 'action': path('formation_path_duplicate', {'slug' : formationPath.slug})}) }}
+        {{ form_errors(form) }}
+
+        <div class="form-group" style="display: none;">
+          {{form_row(form.title, {label_attr: {class: 'form-label'} }) }}
+        </div>
+        <div class="form-group" style="display: none;">
+          {{form_row(form.description, {label_attr: {class: 'form-label'} }) }}
+        </div>
+        <div class="form-group date-input">
+          {{form_row(form.openingDate, {label_attr: {class: 'form-label'} }) }}
+        </div>
+        <div class="form-group date-input">
+          {{form_row(form.closingDate, {label_attr: {class: 'form-label'} }) }}
+        </div>
+        <div class="form-group date-input" style="display: none;">
+          {{form_row(form.realisationTime, {label_attr: {class: 'form-label'} }) }}
+        </div>
+        <div class="form-group" style="display: none;">
+          {{form_row(form.sessionNumber, {label_attr: {class: 'form-label'} }) }}
+        </div>
+        <div class="form-group" style="display: none;">
+          {{form_row(form.users, {label_attr: {class: 'form-label'} }) }}
+        </div>
+        <div class="form-group" style="display: none;">
+          {{form_row(form.teams, {label_attr: {class: 'form-label'} }) }}
+        </div>
+        <div class="form-group" style="display: none;">
+          {{form_row(form.divisions, {label_attr: {class: 'form-label'} }) }}
+        </div>
+        <p>*{{'global.obligatoire' | trans}}</p>
+      </div>
+      <div class="card-footer text-right">
+        <div class="d-flex">
+          <a href="#" class="btn btn-link">{{'global.cancel'|trans}}</a>
+          <button type="submit" class="lms-button lms-button-blue ml-auto">
+            <i class="material-icons lms-material-icons">save</i> {{ 'global.submit' | trans }}
+          </button>
+        </div>
+      </div>
+    </div>
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+<script>
+  $(document).ready(function () {
+    var dateInputs = $('.date-input');
+    dateInputs.each(function () {
+      var selects = $(this).find('select');
+      selects.each(function () {
+        $(this).addClass('form-control');
+      });
+    });
+
+    $('#dropdown-formations .dropdown-menu').addClass('show');
+  });
+</script>
+
+{% endblock %}

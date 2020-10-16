@@ -1,0 +1,31 @@
+.page-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 1.5rem;
+    .title {
+        font-size: 0.75em;
+        color: $prussian-blue;
+        text-transform: uppercase;
+        font-weight: 500;
+        // min-width: 225px;
+        flex: 1 0 auto;
+    }
+    .formation-title {
+        color: #00354F;
+        font-family: Roboto, Geneva, sans-serif;
+    }
+    hr {
+        width: 100%;
+        background-color: $scooter-blue;
+        align-self: center;
+        margin-left: 30px;
+    }
+}
+
+.page-sub-title {
+    color: $prussian-blue;
+    font-weight: 500;
+    margin-left: 1.5rem;
+    margin-top: .5rem;
+}

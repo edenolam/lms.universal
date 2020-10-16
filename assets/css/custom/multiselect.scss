@@ -1,0 +1,87 @@
+select+.btn-group {
+    width: 100%;
+}
+
+button.multiselect {
+    text-align: left;
+    width: 100%;
+    background-color: $white;
+    border: 1px solid rgba($prussian-blue, .12);
+}
+
+button.multiselect:after {
+    float: right;
+    margin-top: 10px;
+    border-top: 0.4em solid;
+    border-right: 0.4em solid transparent;
+    border-bottom: 0;
+    border-left: 0.4em solid transparent;
+}
+
+.multiselect-container {
+    width: 100%;
+    border: 1px solid rgba($prussian-blue, .12);
+    max-height: 250px;
+    overflow: scroll;
+}
+
+.multiselect-selected-text {
+    color: $scorpion-gray;
+    font-weight: normal;
+    font-size: 12px;
+}
+
+.multiselect-container .multiselect-search {
+    border-bottom-color: rgba($prussian-blue, .12);
+}
+
+.multiselect-container .multiselect-item .input-group {
+    margin: 0;
+}
+
+.multiselect-container .multiselect-item .input-group .multiselect-clear-filter {
+    padding: 10px;
+}
+
+.multiselect-container li .checkbox {
+    padding-left: 20px;
+}
+
+.multiselect-container li:not(.multiselect-item) {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba($prussian-blue, .12);
+}
+
+.multiselect-container li:not(.multiselect-item):last-of-type {
+    border-bottom: none;
+}
+
+.multiselect-container li {
+    position: relative;
+}
+
+.multiselect-container .checkbox input {
+    visibility: hidden;
+}
+
+.multiselect-container .checkbox {
+    color: $scorpion-gray;
+}
+
+.multiselect-container li.active .checkbox::after {
+    content: "\2713";
+    position: absolute;
+    left: 22px;
+    top: 15px;
+    font-size: 14px;
+}
+
+.multiselect-container .checkbox::before {
+    content: "";
+    width: 15px;
+    height: 15px;
+    border: 1px solid $gallery-gray;
+    display: inline-block;
+    vertical-align: text-bottom;
+}

@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset("assets/summernote/summernote-bs4.css") }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block body %}
+    <!-- navigator -->
+    <div class="lms-breadcrumb">
+        <span> <a href=" {% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }} {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }} {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }} {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }} {% else %} {{ path('home_dashboard') }} {% endif %}">{{lms_name}}</a> </span> > <span> <a href="{{path('admin_testManagement_list')}}">{{'test.list.ariane_gestion'|trans}}</a> </span> > <span> <a href="{{path('admin_testManagement_edit', {'test' : test.id })}}">{{test.title}}</a> </span> > <span> <a href="{{path('admin_pool_edit', {'pool' : question.pool.id })}}">{{question.pool.title}}</a> </span> > <span class="bold">{{ 'question.create.title' | trans}}</span>
+    </div>
+
+    <!-- title of page -->
+    <div class="d-flex align-items-center lms-title">
+        <h1 class="text-uppercase lms-h1">{{'menu.concepteur.test'|trans}}
+        </h1><hr>
+    </div>
+
+    <!-- body of page -->
+    <div class="row">
+        <div class="col-lg-4 mb-5">
+            <h2 class="text-uppercase lms-h2">{{ 'actions' | trans }}</h2>
+            <hr>
+            {% include "TestManagement/Question/actions.html.twig" %}
+        </div>
+
+        <div class="col-lg-8">
+            <h2 class="text-uppercase lms-h2">{{ 'question.create.title' | trans }}</h2>
+            <hr>
+            <form action="{{ path('admin_testManagement_question_create', {"test": test.id, 'pool': pool.id })}}" enctype="multipart/form-data" method="post">
+                {% include "TestManagement/Question/form.html.twig" %}
+                <div class="text-center">
+                    <button type="submit" class="lms-button lms-button-blue">
+                        <i class="material-icons lms-material-icons">save</i> <span>{{ 'global.submit'|trans }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+
+    <script src="{{ asset("assets/summernote/summernote-bs4.js") }}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.summernote').summernote({
+                height: 150,
+                toolbar: [
+                    [ 'style', [ 'bold', 'italic', 'underline', 'clear' ] ],
+                    [ 'color', ['color'] ],
+                    [ 'para', [ 'ul', 'ol' ] ]
+                ]
+            });
+        });
+    </script>
+{% endblock %}

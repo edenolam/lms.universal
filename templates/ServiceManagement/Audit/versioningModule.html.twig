@@ -1,0 +1,141 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="lms-breadcrumb">
+        <span>
+            <a href="
+				{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+                {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+				{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+				{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+				{% else %} {{ path('home_dashboard') }}
+				{% endif %}">{{ lms_name }}</a>
+        </span> > 
+        <span>
+            <a href="{{ path('admin_audit_list') }}">{{ 'menu.lov.title'|trans }}</a>
+        </span> > 
+        <span lass="bold">{{ 'audit.list'|trans }} ({{ 'audit.versioning_module.title'|trans  }})
+        </span>
+    </div>
+    <div class="d-flex align-items-center lms-title">
+        <h1 class="text-uppercase lms-h1">{{ 'audit.versioning_module.title'|trans }} {{ 'audit.list'|trans }}</h1><hr>
+    </div> 
+    <div class="row row-cards">
+        <div class="col col-12">
+            <div class="card-body row">
+                <div class="col-9">
+                    <div class="col-7 col-md-5 col-lg-3 mb-2">
+                        {% if  audits|length > 0 %}
+                            <a href="{{ path('admin_serviceManagement_audit_export_versioning_module') }}" class="lms-button" style="margin-right: 1.5rem;">{{ 'audit.export'|trans }}</a>
+                        {% endif %} 
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped lms-table" id="tablefiltre">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>{{ 'audit.ref'|trans }}</th>
+                                    <th>{{ 'audit.user'|trans }}</th>
+                                    <th>{{ 'audit.action'|trans }}</th>
+                                    <th>{{ 'audit.ref_entity'|trans }}</th>
+                                    <th>{{ 'audit.versioning_module.version'|trans }}</th>
+                                    <th>{{ 'audit.versioning_module.jusitification'|trans }}</th>
+                                    <th>{{ 'audit.versioning_module.hasRequiredRole'|trans }}</th>
+                                    <th>{{ 'audit.datetime'|trans }}</th>
+                                </tr>
+                            </thead>
+                            <thead id="filtreForm">
+                                <tr>
+                                    <th>{{ 'audit.ref'|trans }}</th>
+                                    <th>{{ 'audit.user'|trans }}</th>
+                                    <th>{{ 'audit.action'|trans }}</th>
+                                    <th>{{ 'audit.ref_entity'|trans }}</th>
+                                    <th>{{ 'audit.versioning_module.version'|trans }}</th>
+                                    <th>{{ 'audit.versioning_module.jusitification'|trans }}</th>
+                                    <th>{{ 'audit.versioning_module.hasRequiredRole'|trans }}</th>
+                                    <th>{{ 'audit.datetime'|trans }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for audit in audits %}
+                                    <tr>
+                                        <td>{{ audit.id }}</td>
+                                        <td>{{ audit.actor.username }}</td>
+                                        <td>{{ audit.action }}</td>
+                                        <td>ID: {{ audit.module.id }} <i class="material-icons lms-material-icons lms-text-success">fingerprint</i> {{audit.module.title}} ({{ audit.module.regulatoryRef }})</td>
+                                        <td>{{ audit.moduleVersion }}</td>
+                                        <td>{{ audit.justification }}</td>
+                                        <td>
+                                            {% if audit.hasRequiredRole %}
+                                                <i class="material-icons lms-material-icons lms-text-success">check</i>
+                                            {% else %}
+                                                <i class="material-icons lms-material-icons lms-text-danger">not_interested</i>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ audit.date|date('d/m/Y H:i:s') }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-3">
+                    {% include "ServiceManagement/Audit/menu.html.twig" %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script>
+        $(function () {
+           // ======================================================================================
+            //=======================================table===========================================
+            // ======================================================================================
+             $('#filtreForm th').each( function () {
+                var title = $(this).text();
+                $(this).html( '<input type="text" class="form-control" placeholder="{{"global.table.search"|trans}} '+title+'" />' );
+            } );
+
+            var table = $('#tablefiltre').DataTable({
+                colReorder: true,
+                responsive: false, 
+                ordering:  true, 
+                searching: true,
+                paging: true,
+                order: [[ 7, "desc" ]],
+                language: {
+                    decimal:        "",
+                    emptyTable:     "-",
+                    info: "[_START_/_END_]  <b>{{"global.table.total"|trans}} : </b>_TOTAL_",
+                    infoEmpty:      "0/0   [0]",
+                    infoFiltered:   "({{"global.table.filteredForm"|trans}} _MAX_ {{"global.table.entries"|trans}})",
+                    infoPostFix:    "",
+                    thousands:      " ",
+                    lengthMenu:     "<b>{{"global.table.Entries"|trans}}</b> _MENU_",
+                    loadingRecords: "{{"global.table.loadingRecords"|trans}}...",
+                    processing:     "{{"global.table.processing"|trans}}...",
+                    search:         "<b>{{"global.table.search"|trans}}</b>:",
+                    zeroRecords:    "{{"global.table.zeroRecords"|trans}}",
+                    paginate: {next:       ">>", previous:   "<<"},
+                    
+                },
+            });
+             
+            table.columns().eq( 0 ).each( function ( colIdx ) {
+                $( 'input', $('#filtreForm th')[colIdx] ).on( 'keyup change', function () {
+                    table
+                        .column( colIdx )
+                        .search( this.value )
+                        .draw();
+                } );
+            } );
+
+             // ======================================================================================
+            //=======================================table end=========================================
+            // ======================================================================================
+
+        });
+    </script>
+{% endblock %}

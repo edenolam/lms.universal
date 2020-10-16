@@ -1,0 +1,23 @@
+Titre;question;type de réponse;réponse;statut de la réponse
+;Quelle est l’action principale d’un informateur promotionnel lorsqu’un effet indésirable est porté à sa connaissance ?;2;Valider les données par rapport aux documents originaux;0
+;Quelle est l’action principale d’un informateur promotionnel lorsqu’un effet indésirable est porté à sa connaissance ?;2;Conserver 3 ans tout document relatif au cas signalé;0
+;Quelle est l’action principale d’un informateur promotionnel lorsqu’un effet indésirable est porté à sa connaissance ?;2;Prévenir immédiatement le laboratoire, selon les procédures internes;1
+;Quelle est l’action principale d’un informateur promotionnel lorsqu’un effet indésirable est porté à sa connaissance ?;2;Evaluer le lien de causalité entre le médicament et l'EI;0
+;Vous devez rapporter toute information relative à la Pharmacovigilance de votre produit au :;2;Directeur Régional;0
+;Vous devez rapporter toute information relative à la Pharmacovigilance de votre produit au :;2;Service de Pharmacovigilance;1
+;Vous devez rapporter toute information relative à la Pharmacovigilance de votre produit au :;2;Service Médical;0
+;Vous devez rapporter toute information relative à la Pharmacovigilance de votre produit au :;2;Service Marketing;0
+;Les laboratoires pharmaceutiques ont l’obligation de notifier à Eudravigilance les effets indésirables survenant avec l’un de leurs produits.;2;VRAI;1
+;Les laboratoires pharmaceutiques ont l’obligation de notifier à Eudravigilance les effets indésirables survenant avec l’un de leurs produits.;2;FAUX;0
+;Le laboratoire pharmaceutique doit déclarer aux autorités de santé les effets indésirables graves :;2;Dans les 15 jours maximum suivant la prise de connaissance;1
+;Le laboratoire pharmaceutique doit déclarer aux autorités de santé les effets indésirables graves :;2;Dans les 30 jours maximum suivant la prise de connaissance;0
+;Le laboratoire pharmaceutique doit déclarer aux autorités de santé les effets indésirables graves :;2;Dans les 3 mois maximum suivant la prise de connaissance;0
+;En cas d’effet indésirable (EI) présumé, le laboratoire pharmaceutique doit évaluer le lien de causalité entre le médicament et l'EI présumé.;2;VRAI;1
+;En cas d’effet indésirable (EI) présumé, le laboratoire pharmaceutique doit évaluer le lien de causalité entre le médicament et l'EI présumé.;2;FAUX;0
+;La remontée immédiate d’un effet indésirable par l’informateur promotionnel :;1;N’est pas fondamentale car le professionnel de santé est le seul responsable de cette remontée;0
+;La remontée immédiate d’un effet indésirable par l’informateur promotionnel :;1;Est un élément primordial de la pharmacovigilance;1
+;La remontée immédiate d’un effet indésirable par l’informateur promotionnel :;1;Est fondamentale car le délai de soumission est calculé à partir de la date d’information du premier collaborateur de la firme;1
+;Pour le laboratoire, quels sont les délais pour déclarer à Eudravigilance un EI grave et non grave ?;1;90 jours pour les cas non graves;1
+;Pour le laboratoire, quels sont les délais pour déclarer à Eudravigilance un EI grave et non grave ?;1;15 jours pour les cas non-graves;0
+;Pour le laboratoire, quels sont les délais pour déclarer à Eudravigilance un EI grave et non grave ?;1;90 jours pour les cas graves;0
+;Pour le laboratoire, quels sont les délais pour déclarer à Eudravigilance un EI grave et non grave ?;1;15 jours maximum pour les cas graves;1

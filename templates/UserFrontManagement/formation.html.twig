@@ -1,0 +1,193 @@
+{% extends "base.html.twig" %}
+{% block stylesheets %}
+    {# Calendar #}
+    {{ parent() }}
+    <style>
+    </style>
+{% endblock %}
+
+
+{% block body %}
+	<div class="lms-breadcrumb"> 
+		<a href="
+			{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+			{% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+			{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+			{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+			{% else %} {{ path('home_dashboard') }}
+			{% endif %}">{{lms_name}}
+		</a> > <span>{{'menu.userFormation.title'|trans}}</span>
+	</div>
+
+	<!-- Switch -->
+	<div id="myTab" class="d-flex flex-wrap justify-content-center align-items-center text-center mb-5 lms-progress-formation">
+		<div class="col-6 px-0 text-uppercase lms-tab {% if app.request.get('downFormation') is null %}show{% endif %}" data-tab="#tab1">{{activeFormations|length}} {{'userFrontManagement.formation.number_on_going'|trans}}</div>
+		<div class="col-6 px-0 text-uppercase lms-tab {% if app.request.get('downFormation') is not null %}show{% endif %}" data-tab="#tab2">{{overFormations|length}} {{'userFrontManagement.formation.number_done'|trans}}</div>
+	</div>
+
+	<div class="d-flex align-items-center lms-title">
+		<h1 class="text-uppercase lms-h1">{{'menu.userFormation.title'|trans}}</h1>
+		<hr>
+	</div>
+
+	<div class="lms-subcontent">
+		<div id="tab1" class="lms-panel {% if app.request.get('downFormation') is null %}active{% endif %}" rol="tabpanel"><!-- tab-pane -->
+			<div class="d-flex flex-wrap justify-content-center justify-content-lg-start">
+				{% if activeFormations is defined and activeFormations is not null and activeFormations is not empty %}
+					{% for activeFormation in activeFormations %}
+						<!-- Rotating card -->
+						<div class="lms-card-formation">
+							<div class="card lms-card">
+								<!-- Card front -->
+								<div class="card text-center lms-card-front">
+									<div class="lms-card-img">
+										{% if activeFormation.formation.uri is defined and activeFormation.formation.uri is not empty and activeFormation.formation.uri is not null %}
+											<img src="{{asset('uploads/files/' ~ activeFormation.formation.uri)}}" class="card-img-top" alt="{{activeFormation.formation}}"/>
+										{% else %}
+											<img src="/images/core/logo.png" class="card-img-top" alt="Visuel du module"/>
+										{% endif %}
+									</div>
+									{% if activeFormation.userFormation is not null and activeFormation.userFormation.percentage is not null %}
+										<div class="progress lms-progress-circle" data-percentage="{{activeFormation.userFormation.percentage}}" >
+											<span class="progress-left">
+												<span class="progress-bar"></span>
+											</span>
+											<span class="progress-right">
+												<span class="progress-bar"></span>
+											</span>
+											<div class="progress-value lms-progress-value">
+												<div > {{ activeFormation.userFormation.percentage }} % </div>
+											</div>
+										</div>
+									{% else %}
+										<div class="progress lms-progress-circle" data-percentage="0">
+											<span class="progress-left"><span class="progress-bar"></span></span>
+											<span class="progress-right"><span class="progress-bar"></span></span>
+											<div class="progress-value lms-progress-value"><div>0%</div></div>
+										</div>
+									{% endif %}
+									<div class="card-body lms-card-body">
+										<p class="card-title text-uppercase lms-card-title">{{activeFormation.formation.title}}</p>
+										<p>
+										<a class="lms-button lms-button-blue lms-card-rotate" href="#">{{'global.literal.learn_more'|trans}}</a>
+										</p>
+									</div>
+									<div class="card-footer d-flex flex-column align-items-center p-0 lms-card-footer">
+										<p class="m-0 lms-card-day">{{ 'global.literal.expected_duration' | trans }} {{activeFormation.formation.realisationTime|date('H')}}{{'global.duration.litle.hours'|trans}}{{activeFormation.formation.realisationTime|date('i')}}</p>
+										{% if app.request.locale == "fr" %}
+											<p class="m-0 lms-card-date"> {{activeFormation.session.openingDate | date('d/m/Y')}} > {{activeFormation.session.closingDate | date('d/m/Y')}}</p>
+										{% else %}
+											<p class="m-0 lms-card-date"> {{activeFormation.session.openingDate | date('Y/m/d')}} > {{activeFormation.session.closingDate | date('Y/m/d')}}</p>
+										{% endif %}
+									</div>
+								</div>
+								<!-- Card back -->
+								<div class="card lms-card-back">
+									<div class="card-back">
+										<div class="card-body lms-card-body-back">
+											<svg class="lms-card-rotate lms-icon-cross" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+											<p class="card-title text-uppercase font-weight-bold lms-card-title-back">{{activeFormation.formation.title}}</p>
+											<p>{{activeFormation.formation.description|raw}}</p>
+											{% if activeFormation.session.openingDate <= date() %}
+												<p class="text-center">
+													<a href="{{ path('user_formation_module', {'slugSession':activeFormation.session.slug}) }}" class="lms-button lms-button-blue">
+													{% if activeFormation.userFormation is not null and activeFormation.userFormation.percentage is not null %}
+													{{'dashboard.i_continue'|trans}}
+													{% else %}
+													{{'dashboard.i_begin'|trans}}
+													{% endif %}
+													</a>
+												</p>
+											{% else %}
+												<p class="text-center">
+													<button class="lms-button lms-button-blue" >{{'dashboard.i_future'|trans}}</button>
+												</p>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				{% else %}
+					<div class="w-100 alert lms-alert-danger" role="alert">{{'userFrontManagement.formation.empty'|trans}}</div>
+				{% endif %}
+			</div>
+		</div><!-- /tab-pane -->
+
+		<div id="tab2" class="lms-panel {% if app.request.get('downFormation') is not null %}active{% endif %}" rol="tabpanel"><!-- tab-pane -->
+				<div class="d-flex flex-wrap justify-content-center justify-content-lg-start">
+				{% if overFormations is defined and overFormations is not null and overFormations is not empty %}
+					{% for overFormation in overFormations %}
+						<!-- Rotating card -->
+						<div class="lms-card-formation">
+							<div class="card lms-card">
+								<!-- Card front -->
+								<div class="card text-center lms-card-front">
+									<div class="lms-card-img">
+										{% if overFormation.formation.uri is defined and overFormation.formation.uri is not empty and overFormation.formation.uri is not null %}
+											<img src="{{asset('uploads/files/' ~ overFormation.formation.uri)}}" alt="{{overFormation.formation}}">
+										{% else %}
+											<img src="/images/core/logo.png" alt="Visuel du module">
+										{% endif %}
+										{% if overFormation.userFormation is not null and overFormation.userFormation.success %}
+											<div class="lms-card-succeed">
+												<img src="{{asset('images/core/bravo.svg')}}" alt="{{'global.literal.certificat'|trans}}">
+											</div>
+											<div class="progress lms-progress-circle" data-percentage="{{overFormation.userFormation.percentage}}">
+												<span class="progress-left"><span class="progress-bar"></span></span>
+												<span class="progress-right"><span class="progress-bar"></span></span>
+												<div class="progress-value lms-progress-value"><div>{{overFormation.userFormation.percentage}}%</div></div>
+											</div>
+										{% endif %}
+									</div>
+									<div class="card-body lms-card-body">
+										<p class="card-title text-uppercase lms-card-title">{{overFormation.formation.title}}</p>
+										<a href="{{ path('user_formation_module', {'slugSession':overFormation.session.slug}) }}" class="lms-button lms-button-orange lms-card-rotate">
+											{{'dashboard.i_review'|trans}}
+										</a>
+									</div>
+									<div class="card-footer d-flex flex-column align-items-center p-0 lms-card-footer">
+										<p class="m-0 lms-card-day">{{overFormation.formation.realisationTime|date('H')}}{{'global.duration.litle.hours'|trans}}{{overFormation.formation.realisationTime|date('i')}}</p>
+										{% if app.request.locale == "fr" %}
+										<p class="m-0 lms-card-date">{{overFormation.session.openingDate|date('d/m/Y')}} > {{overFormation.session.closingDate|date('d/m/Y')}}</p>
+										{% else %}
+										<p class="m-0 lms-card-date">{{overFormation.session.openingDate|date('Y/m/d')}} > {{overFormation.session.closingDate|date('Y/m/d')}}</p>
+										{% endif %}
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				{% endif %}
+			</div>
+		</div><!-- /tab-pane -->
+	</div><!-- /tab-content -->
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+	<script>
+	
+		$(document).ready(function(){
+		    $('.lms-card-rotate').click(function() {
+		        $(this).closest('.lms-card').find('.lms-card-front').toggleClass('lms-card-front-rotate');
+		        $(this).closest('.lms-card').find('.lms-card-back').toggleClass("lms-card-back-rotate");
+		    });			
+			// $('.custom-nav li').on('click', function(){
+			// 	$('.custom-nav li').removeClass('show');
+			// 	$(this).addClass('show');
+			// 	$('.tab-pane').removeClass('active');
+			// 	$($(this).attr('data-tab')).addClass('active');
+			// });
+
+			// $(".btn-rotate").click(function() {
+			// 	$(this).closest('.rotate-container').find('.card-front').toggleClass('rotate-card-front');
+			// 	$(this).closest('.rotate-container').find('.card-back').toggleClass("rotate-card-back");
+			// });
+		});
+
+	</script>
+
+{% endblock %} 

@@ -1,0 +1,20 @@
+<div class="panel-heading">
+    <h3 class="panel-title">Enregistrement d'utilisateur</h3>
+</div>
+<div>
+    {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+    {{ form_errors(form) }}
+        
+     <div class="form-group">
+        {{ form_label(form.civility, "Civility") }}
+                {{ form_widget(form.civility, { 'attr': {'class': 'form-control genre'} }) }}
+    </div> 
+
+    {{ form_widget(form) }}
+    <div>
+        <button type="submit">
+            {{ 'registration.submit' | trans }}
+        </button>
+    </div>
+    {{ form_end(form) }}
+</div>

@@ -1,0 +1,67 @@
+<div class="m-auto lms-card-user">
+    <div class="card lms-card">
+        <div class="card lms-card-front">
+            <p class="card-title text-center lms-card-title">
+                {% if user_module_follow.user.civility %}{{ user_module_follow.user.civility }} {% endif %}{{ user_module_follow.user.lastname }} {{ user_module_follow.user.firstName }}
+            </p>
+            <div class="lms-card-img-round">
+                {% if user_module_follow.user.photo %}
+                    <img src="{{ asset('uploads/user/') }}{{ user_module_follow.user.photo }}">
+                {% else %}
+                    <img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image">
+                {% endif %}
+            </div>
+            <div class="card-body lms-card-body">
+                <div class="lms-card-infos">
+                    <p class="lms-card-user-label">{{ 'user.login'|trans }}</p>
+                    <p class="lms-card-user-item">{{ user_module_follow.user.username }}</p>
+                </div>
+                    {# <div class="form-group">
+                        <label class="form-label">{{ 'user.email'|trans }}</label>
+                        <span class="form-view col-sm-6">{{ user_module_follow.user.email }}</span>
+                    </div> #}
+                <div class="lms-card-infos">
+                    <p class="lms-card-user-label">{{ 'lov.laboratory'|trans }}</p>
+                    {% if user_module_follow.user.laboratory %}
+                        <p class="lms-card-user-item"> {{ user_module_follow.user.laboratory }} </p>
+                    {% endif %}
+                </div>
+                <div class="lms-card-infos">
+                    <p class="lms-card-user-label">{{ 'lov.division'|trans }}</p>
+                    {% if user_module_follow.user.division %}
+                        <p class="lms-card-user-item"> {{ user_module_follow.user.division }} </p>
+                    {% endif %}
+                </div>
+                <div class="lms-card-infos">
+                    <p class="lms-card-user-label">{{ 'lov.team'|trans }}</p>
+                    {% if user_module_follow.user.team %}
+                        <p class="lms-card-user-item"> {{ user_module_follow.user.team }} </p>
+                    {% endif %}
+                </div>
+                {# <div class="form-group">
+                    <label class="form-label">{{ 'user.groups'|trans }}</label>
+                    <div class="col-sm-12">
+                        {% for group in user_module_follow.user.groups %}
+                            <div class="form-group m-2">
+                                <input type="checkbox" checked="checked" disabled="disabled" />
+                                <label>{{ group.name }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="dropdown-divider"></div>
+                <div class="form-group">
+                    <label class="form-label">{{ 'user.roles'|trans }}</label>
+                    <div class="col-sm-12">
+                        {% for id, role in user_module_follow.user.roles %}
+                            <div class="form-group m-2">
+                                <input type="checkbox" checked="checked" disabled="disabled"/>
+                                <label>{{ role }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div> #}
+            </div>
+        </div>
+    </div>
+</div> 

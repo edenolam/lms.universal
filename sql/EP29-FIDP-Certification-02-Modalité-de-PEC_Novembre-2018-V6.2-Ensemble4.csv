@@ -1,0 +1,18 @@
+Titre;question;type de réponse;réponse;statut de la réponse
+;Les spécialités distribuées à l’hôpital doivent être inscrites sur la liste des spécialités pharmaceutiques agréées à l'usage des collectivités.;2;VRAI;1
+;Les spécialités distribuées à l’hôpital doivent être inscrites sur la liste des spécialités pharmaceutiques agréées à l'usage des collectivités.;2;FAUX;0
+;Quels médicaments peuvent être inscrits sur la liste des spécialités agréées à l’usage des collectivités et divers services publics ?;1;Médicaments disposant d'une AMM;1
+;Quels médicaments peuvent être inscrits sur la liste des spécialités agréées à l’usage des collectivités et divers services publics ?;1;Médicaments importés;1
+;Quels médicaments peuvent être inscrits sur la liste des spécialités agréées à l’usage des collectivités et divers services publics ?;1;Médicaments avec ATU;1
+;Quels médicaments peuvent être inscrits sur la liste des spécialités agréées à l’usage des collectivités et divers services publics ?;1;Médicaments homéopathiques;1
+;La prise en charge des médicaments inscrits sur la liste des spécialités agréées à l’usage des collectivités est garantie.;2;VRAI;1
+;La prise en charge des médicaments inscrits sur la liste des spécialités agréées à l’usage des collectivités est garantie.;2;FAUX;0
+;Quels médicaments peuvent être sur la liste des spécialités prises en charge en sus des prestations d’hospitalisation ?;1;Médicaments stupéfiants;0
+;Quels médicaments peuvent être sur la liste des spécialités prises en charge en sus des prestations d’hospitalisation ?;1;Spécialités nouvelles et coûteuses;1
+;Quels médicaments peuvent être sur la liste des spécialités prises en charge en sus des prestations d’hospitalisation ?;1;Spécialités prescrites dans des pathologies rares et coûteuses;1
+;Pour être vendues à des patients non hospitalisés (ambulatoire), les spécialités hospitalières doivent être inscrites sur :;2;La seule liste des spécialités agréées à l'usage des collectivités;0
+;Pour être vendues à des patients non hospitalisés (ambulatoire), les spécialités hospitalières doivent être inscrites sur :;2;"La liste des spécialités agréées à l'usage des collectivités et la liste ""rétrocession""";1
+;Le remboursement aux établissements de santé des médicaments rétrocédés est basé sur le prix de cession au public.;2;VRAI;1
+;Le remboursement aux établissements de santé des médicaments rétrocédés est basé sur le prix de cession au public.;2;FAUX;0
+;Les PUI (Pharmacies à Usage Intérieur) peuvent vendre librement toutes les spécialités hospitalières à des patients non hospitalisés ?;2;VRAI;0
+;Les PUI (Pharmacies à Usage Intérieur) peuvent vendre librement toutes les spécialités hospitalières à des patients non hospitalisés ?;2;FAUX;1

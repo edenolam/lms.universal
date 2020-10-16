@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="168.134" height="109.016" viewBox="0 0 168.134 109.016">
+  <g id="Groupe_2698" data-name="Groupe 2698" transform="translate(-558.852 -719)">
+    <g id="Groupe_2589" data-name="Groupe 2589" transform="translate(259.164 425.038)">
+      <g id="Groupe_2584" data-name="Groupe 2584" transform="translate(337.753 293.962)">
+        <g id="Groupe_2581" data-name="Groupe 2581" transform="translate(0 0)">
+          <g id="Groupe_2564" data-name="Groupe 2564" transform="translate(0.875 23.922)">
+            <rect id="Rectangle_1290" data-name="Rectangle 1290" width="114.027" height="84.219" fill="#2faede"/>
+          </g>
+          <g id="Groupe_2565" data-name="Groupe 2565" transform="translate(0 23.047)">
+            <path id="Tracé_1548" data-name="Tracé 1548" d="M453.529,388.613H337.753V302.644H453.529ZM339.5,386.863H451.779V304.394H339.5Z" transform="translate(-337.753 -302.644)" fill="#2e2e2e"/>
+          </g>
+          <g id="Groupe_2566" data-name="Groupe 2566" transform="translate(11.121 4.112)">
+            <rect id="Rectangle_1291" data-name="Rectangle 1291" width="105.387" height="73.121" fill="#fff"/>
+          </g>
+          <g id="Groupe_2567" data-name="Groupe 2567" transform="translate(10.246 3.237)">
+            <path id="Tracé_1549" data-name="Tracé 1549" d="M450.744,366.2H343.607V291.325H450.744Zm-105.387-1.75H448.994V293.075H345.357Z" transform="translate(-343.607 -291.325)" fill="#2e2e2e"/>
+          </g>
+          <g id="Groupe_2568" data-name="Groupe 2568" transform="translate(17.764)">
+            <path id="Tracé_1574" data-name="Tracé 1574" d="M0,0,102.336-1.137l-.842,81.883L-.842,81.883Z" transform="translate(0 14.717) rotate(-7.631)" fill="#f9cb6b"/>
+          </g>
+          <g id="Groupe_2569" data-name="Groupe 2569" transform="translate(16.137 14.082)">
+            <rect id="Rectangle_1293" data-name="Rectangle 1293" width="110.827" height="81.995" fill="#fff"/>
+          </g>
+          <g id="Groupe_2570" data-name="Groupe 2570" transform="translate(15.261 13.206)">
+            <path id="Tracé_1550" data-name="Tracé 1550" d="M464.431,380.767H351.852V297.021H464.431ZM353.6,379.017H462.681V298.771H353.6Z" transform="translate(-351.852 -297.021)" fill="#2e2e2e"/>
+          </g>
+          <g id="Groupe_2571" data-name="Groupe 2571" transform="translate(2.032 20.16)">
+            <path id="Tracé_1551" data-name="Tracé 1551" d="M439.491,313.15l3.219-12.156H410.526l-8.851,12.156H351.788l-12.874,75.536h106.21L458,313.15Z" transform="translate(-338.914 -300.994)" fill="#2faede"/>
+          </g>
+          <g id="Groupe_2572" data-name="Groupe 2572" transform="translate(0.98 19.284)">
+            <path id="Tracé_1552" data-name="Tracé 1552" d="M446.309,389.937h-108l13.19-77.286h50.231l8.862-12.157h33.7l-3.222,12.157H459.5Zm-106.044-1.75H444.958L457.549,314.4H438.918l3.222-12.157H411.387L402.525,314.4H352.856Z" transform="translate(-338.313 -300.494)" fill="#2e2e2e"/>
+          </g>
+        </g>
+      </g>
+      <g id="Groupe_2588" data-name="Groupe 2588" transform="translate(376.524 353.467)">
+        <g id="Groupe_2585" data-name="Groupe 2585" transform="translate(3.642)">
+          <rect id="Rectangle_1302" data-name="Rectangle 1302" width="47.347" height="1.75" fill="#fff"/>
+        </g>
+        <g id="Groupe_2586" data-name="Groupe 2586" transform="translate(1.822 8.194)">
+          <rect id="Rectangle_1303" data-name="Rectangle 1303" width="47.345" height="1.75" fill="#fff"/>
+        </g>
+        <g id="Groupe_2587" data-name="Groupe 2587" transform="translate(0 16.389)">
+          <rect id="Rectangle_1304" data-name="Rectangle 1304" width="47.347" height="1.75" fill="#fff"/>
+        </g>
+      </g>
+    </g>
+    <g id="Groupe_2590" data-name="Groupe 2590" transform="translate(561 753.957)">
+      <path id="Tracé_1547" data-name="Tracé 1547" d="M-702.836,149.407h21.7V133.531h-21.7V121.079l-20.906,20.389,20.906,20.39Z" transform="translate(723.742 -121.079)" fill="#fff" stroke="#1d1d1b" stroke-miterlimit="10" stroke-width="3"/>
+    </g>
+  </g>
+</svg>

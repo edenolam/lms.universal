@@ -1,0 +1,84 @@
+test:
+    sondage: Sondage
+    validation: Seuil de validation
+    quit: Abandonner
+    required_nb: Question(s) manquante(s)
+    expected_score: attendu
+    score_possible: Extremum de points entre
+    and: et
+    title: Nom du test
+    ref: Référence du test 
+    nbQuestion: Nb questions requises
+    explicationNbQ: (autre que obligatoires)
+    theorical_duration: Durée théorique (H:m)
+    view: Details du test
+    description: Description du test
+    submit: Envoyer le test
+    edit: Editer le test
+    score_needed: Score requis
+    date_done: Date de passage
+    valid: validé
+    no_valid: non validé
+    module: Module
+    score: Pourcentage de validation 
+    validation_score: (Sur le score plus petit score manximum possible)
+    chronoQuestion: Chronométrer les questions
+    chronoTest: Chronométrer le test
+    numberTry: Nombre d'essais 
+    is_test_commune: Pré-test question commun
+    is_test_presentiel: Test Présentiel ?
+    create:
+        title: Créer un test
+    front:
+        title: "Voici votre test "
+    list:
+        question: Liste des questions
+        ariane_gestion: Gestion des Tests
+    pre: Pré-test
+    eval: Evaluation
+    instruction_1: Vous allez commencer votre série de questions.
+    instruction_2: Le seuil de passage est de %percentage% %. Tant que votre score est inférieur au seuil de passage, vous avez %try% essai(s) pour atteindre le score.
+    instruction_2_training: Ceci est un entrainement. Le seuil de passage est de %percentage% %, il n'y a pas de nombre maximum d'essai.
+    instruction_chrono_test: <span class="bold">Attention</span>, vous disposez d'un <span class="bold">temps limité (%chronoTestTime%)</span> pour réaliser votre évaluation. Au-delà de ce temps, votre évaluation sera invalidée.
+    instruction_chrono_question: <span class="bold">Attention</span>, vous disposez d'un <span class="bold">temps limité (%chronoTestQuestion%)</span> par question. Au-delà de ce temps, la question sera invalidée.
+    tirage_alea: Tirage
+question:
+    pool: Ensemble de la question
+    comment: Commentaire
+    create:
+      title: Créer une question
+    editor: Question editeur  
+    view: Détails de la question 
+    test: Test
+    ref: Référence question
+    question: Question
+    content: Contenu
+    nbanswer: Nb de réponses possibles
+    lessonpage: Page associée contenant la solution
+    weight: Pondération
+    theoricalduration: Temps théorique de réalisation
+    required: Obligatoire
+    knowledges: Connaissances associées
+
+answer:
+    add:
+        title: Ajouter une réponse
+    answer: Réponse
+    content: Contenu
+    status: Bonne réponse
+    edit: Modification de la réponse
+    success: Réponse correcte
+    fail: Réponse incorrecte
+    notice_multiple: NOTICE Il y a plusieurs réponses possible.
+    notice_unique: NOTICE Il y a une seule réponse possible.
+    notice_text: NOTICE insérez du texte.
+    notice_graduation: NOTICE choisissez une valeur entre 1 et 10.
+
+pool:
+    create:
+        title: Créer un ensemble de questions
+    editor: Editer un ensemble de questions
+    nbRequQuestions: Nombre de questions à tirer dans l'ensemble
+    
+
+

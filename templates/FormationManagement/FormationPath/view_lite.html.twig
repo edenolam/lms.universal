@@ -1,0 +1,81 @@
+<div class="col-xl-4 px-xl-5">
+    <div class="form-group">
+        <div class="mb-4 text-center">
+            {% if formationPath.uri is not null %}
+                <img src="{{asset('/uploads/files/' ~ formationPath.uri)}}"/>
+            {% else %}
+                <img src="/images/core/logo.png"/>
+            {% endif %}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.title, 'formation.formation_path.title'|trans) }}
+    </div>
+    <div class="form-group">
+        {{ form_widget(form.title, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.description, 'formation.formation_path.description'|trans) }}
+    </div>
+    <div class="form-group bg-white p-2">
+        {{ formationPath.description | raw }}
+        {# form_widget(form.description, { 'attr': {'class': 'form-control'} }) #}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.realisationTime, 'formation.formation_path.realisation'|trans) }}
+    </div>
+    <div class="form-group">
+        {{ form_widget(form.realisationTime, { 'attr': {'class': 'form-control col-4'} }) }}
+    </div>
+    <div class="form-group d-none">
+        {{ form_label(form.file, 'formation.formation_path.file'|trans) }}
+        {{ form_widget(form.file, { 'attr': {'class': 'form-control check-mime', 'data-mime':'image/jpeg'} }) }}
+    </div>
+</div>
+<div class="col-xl-4 px-xl-5">
+    <h2 class="lms-h2">{{ 'formation.formation_path.module'|trans }}</h2><hr>
+    <ul class="pl-2">
+        {% for formationPathModule in formationPath.formationPathModules %}
+            <li>{{ formationPathModule.module.title }}
+                <i class="text-uppercase">V.{{ formationPathModule.module.version}}</i>
+                <i>({{ formationPathModule.module.regulatoryRef }})</i>
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="form-group">
+        {% if formationPath.isModulesAleatoires == true %}
+            <input type="radio" checked="checked">
+            <label for="formation_path_isModulesAleatoires_0" class="required">{{ 'formation.formation_path.aleatoire' | trans }}</label>
+        {% else %}
+            <input type="radio" checked="checked">
+            <label for="formation_path_isModulesAleatoires_0" class="required">{{ 'formation.formation_path.non_aleatoire' | trans }}</label>
+        {% endif %}
+    </div>
+    {#<div class="form-group">
+              {{ form_label(form.formationPathModules, 'formation.formation_path.module'|trans) }}
+              {{ form_widget(form.isModulesAleatoires) }}
+            </div>
+            <div class="form-group">      
+             <ul id="link_list" data-prototype="{{ form_widget(form.formationPathModules.vars.prototype)|e('html_attr') }}">
+                  {% for formPathModule in form.formationPathModules %}
+                    <li>{{ formPathModule.module.title }}
+                    {{ form_widget(formPathModule.module,{ 'attr': {'class': 'form-control'} }) }}  
+                      {{ form_widget(formPathModule.sort,{ 'attr': {'class': 'form-control'}}) }} 
+                      <p hidden>{{ form_widget(formPathModule.formationPath) }}</p>
+                    </li>
+                  {% endfor %}
+              </ul>
+            </div> #}
+    {# <div class="form-group">
+              {{ form_label(form.modules, 'formation.formation_path.module'|trans) }}
+            </div>
+            <div class="form-group d-none">      
+              {{ form_widget(form.modules, { 'attr': {'class': 'form-control'} }) }}
+            </div>     #}
+</div>
+<div class="text-center col-xl-4 text-xl-right">
+    <a target="_blank" href="{{path('user_formation_syllabus',{'slugSession':"null", 'slugFormation':formationPath.slug})}}" class="lms-button lms-button-blue syllabus">
+        <i class="material-icons lms-material-icons">cloud_download</i>
+        <span>{{'userFrontManagement.syllabus'|trans}}</span>
+    </a>
+</div>

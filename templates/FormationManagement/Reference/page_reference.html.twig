@@ -1,0 +1,312 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}  
+<link rel="stylesheet" href="{{ asset("assets/bootstrap-editable/css/bootstrap-editable.css")}}" />    
+{% endblock %}
+
+{% block body %}
+  <!-- navigateur -->
+  <div class="lms-breadcrumb">
+      <span>
+        <a href="
+        {% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+        {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+        {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+        {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+        {% else %} {{ path('home_dashboard') }}
+        {% endif %}">{{lms_name}}</a></span> > <span><a href="{{path('admin_module_list')}}">{{ 'menu.concepteur.module' | trans }}</a></span> > <span> <a href="{{ path('admin_module_edit', {'slug': module.slug}) }}">{{ module.title }}</a> </span> > <span><a href="{{ path('admin_course_edit', {'slug' : course.slug, 'slugm' : module.slug}) }}" >{{ course.title }}</a></span> > <span class="bold">{{page.title}}
+      </span>
+  </div>
+
+  <!-- title of page -->
+  <div class="page-title">
+    <h2 class="title capitalize">{{ 'menu.concepteur.module' | trans }}</h2><hr/>
+  </div>
+
+  <!-- body of page -->
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card border-0">
+        <div class="card-header">
+          <h3 class="card-title"> 
+            <span class="lms-text-primary text-capitalize font-weight-bold">{{ 'actions' | trans }} </span>
+          </h3>
+        </div>        
+      </div>    
+      {% include "FormationManagement/Module/actions.html.twig" %} 
+    </div>
+
+    <div class="col-8">
+      <div class="card border-0">
+
+        <div class="card-header"> 
+            <h3 class="card-title"> 
+              <span class="lms-text-primary text-capitalize font-weight-bold">
+                {{ 'formation.page.edit' | trans }}
+                {% if formationPath %}
+                  &nbsp;&nbsp;
+                  <a href="{{ path('user_formation_module_organisation', {'slugSession': 'preview', 'formationPath': formationPath.id, 'slugModule': module.slug, 'slugChapter': course.slug,'slugPage': page.slug }) }}" class="icon" target="_blank"  data-toggle="tooltip" data-original-title="Préview"><i class="material-icons lms-material-icons">search</i> </a>
+                {% endif %}   
+              </span>
+            </h3>       
+        </div>
+
+        <div class="card mt-2 border-0">
+          <div class="card-header">
+            {{ 'formation.page.reference' | trans }}
+          </div>
+          <div class="card-body">
+            <table class="table table-bordered table-striped lms-table" id="tablefiltre">
+              <thead class="thead-dark">
+                <tr>
+                  <th></th>
+                  <th>{{"reference.title"|trans}}</th>
+                  <th>{{"reference.author"|trans}}</th>
+                  <th>{{"reference.date"|trans}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for reference in references %}
+                  {% set checked = false %}
+                  {% set pageReference_id = null %}
+                  {% for pageReference in page.pageReferences %}
+                    {% if reference.id  == pageReference.reference.id %}
+                      {% set checked = true %}
+                      {% set pageReference_id = pageReference.id %}
+                    {% endif %}
+                  {% endfor %}
+                  {% if references | length > 0 %} 
+                    <tr>
+                      <td>
+                        <input type="checkbox" name="reference" value="{{ reference.id }}" 
+                          {% if checked %}
+                            checked="checked"
+                            data-url="{{ path('admin_page_reference_unselected', {'page': page.id, 'pageReference': pageReference_id, 'reference': reference.id})}}"
+                          {% else %}  
+                            data-url="{{ path('admin_page_reference_selected', {'page': page.id, 'reference': reference.id})}}"
+                          {% endif %}
+                          
+                          >
+                      </td>
+                      <td>
+                        <a href="#" class="ed_title" name="title" data-type="textarea" data-pk="{{ reference.id }}" data-url="{{path('admin_page_reference_edit_flash', {'reference': reference.id})}}" data-title="title">{{ reference.title }}</a>
+                      </td>
+                      <td>
+                        <a href="#" class="ed_author" name="author" data-type="text" data-pk="{{ reference.id }}" data-url="{{path('admin_page_reference_edit_flash', {'reference': reference.id})}}" data-title="title">{{ reference.author }}</a>
+                      </td>
+                      <td>
+                        <a href="#" class="ed_date" name="date" data-type="date" data-pk="{{ reference.id }}" data-url="{{path('admin_page_reference_edit_flash', {'reference': reference.id})}}" data-title="title">{{ reference.date | date('Y-m-d') }}</a>
+                      </td>
+                    </tr>
+                  {% endif %}  
+                {% endfor %}   
+              </tbody>
+              <tfoot>
+                <tr><th colspan="4" class="text-center">
+                    <a href="{{ path('admin_page_edit', {'slugm': module.slug,'slugc': course.slug,'slug': page.slug }) }}" class="lms-button lms-button-blue">
+                      <i class="material-icons lms-material-icons">save</i> {{ 'global.submit'|trans }}
+                    </a>
+                  </td>
+                </th>
+              </tfoot>
+            </table>  
+          </div>
+        </div>  
+        
+        {% if module.activeSession == false and module.isValid == false and module.isArchived == false %}
+          <div class="card mt-2">
+            <div class="card-header">
+              {{ 'formation.page.ref_notice' | trans }}
+            </div>  
+            <div class="card-body">
+              {{ include('FormationManagement/Reference/_form.html.twig') }}     
+            </div>
+          </div> 
+        {% endif %}   
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+  {{ parent() }}
+<script src="{{asset('bundles/aceeditor/ace.js')}}" type="text/javascript" charset="utf-8"></script>
+<script src="{{asset('bundles/aceeditor/mode-javascript.js')}}" type="text/javascript" charset="utf-8"></script>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script src="{{ asset('assets/bootstrap-editable/js/bootstrap-editable.js') }}"></script>
+<script>
+$(function () {
+  
+  $('#dropdown-formations .dropdown-menu').addClass('show');
+
+  {% if module.activeSession == false and module.isValid == false %}
+
+    // reference selected
+    $("input[name='reference']").on('change', function() {
+        var request =$.ajax({
+            url: $(this).data('url'),
+            type: "POST",
+            cache: false,
+            dataType: "json",
+        });
+        $(".spinner").show();
+
+        request.done(function( data ) {          
+          if (data.success) {
+            toastr.success(data.message, "Success");
+          } else {
+            console.log("data");
+            toastr.error(data.message, "Error");
+          }
+          $(".spinner").hide();
+        });
+
+        request.fail(function( jqXHR, textStatus ) {
+          toastr.error("Request failed: " + textStatus, "Error");          
+          $(".spinner").hide();
+        });        
+    });
+    // page ordre
+    $(".sortable" ).sortable({
+       update: function () {
+        var ids = $(this).children().get().map(function(el) {
+              return el.id
+            }).join(",");
+        var route = $(this).data('url');
+        route = route.replace("ORDER", ids);
+        var request =$.ajax({
+            url: route,
+            type: "POST",
+            cache: false,
+            dataType: "json",
+        });
+        $(".spinner").show();
+
+        request.done(function( data ) {          
+          if (data.success) {
+            toastr.success(data.message, data.messageTitle);
+          } else {
+            toastr.error(data.message, data.messageTitle);
+          }
+          $(".spinner").hide();
+        });
+
+        request.fail(function( jqXHR, textStatus ) {
+          toastr.error("Request failed: " + textStatus, "Error");          
+          $(".spinner").hide();
+        });        
+      }
+    });
+
+    // course ordre
+    $('body').on('click', '.courseOrder', function(){
+      event.preventDefault();
+      $(".spinner").show();
+      var request = $.ajax({
+          url: $(this).data('url'),
+          type: "POST",
+          cache: false,
+          dataType: "json"    
+      });
+
+      request.done(function( data ) {
+        if (data.success) {
+          toastr.success(data.message, "");     
+          location.reload();                
+        } else {
+          toastr.error(data.message, "");
+          $(".spinner").hide();
+        }        
+      });      
+    });
+    
+  {% endif %}
+
+});
+{% if module.activeSession == false and module.isValid == false %}
+window.onload = (event) => {
+    $.fn.editableform.buttons =
+          '<button type="submit" class="btn btn-success editable-submit btn waves-effect waves-light"><i class="material-icons lms-material-icons">done_outline</i></button>' +
+          '<button type="button" class="btn btn-danger editable-cancel btn waves-effect waves-light"><i class="material-icons lms-material-icons">clear</i></button>';
+
+    $('.ed_title').editable({
+            type: 'text',
+            name: 'title',
+            title: 'Title',        
+            mode: 'inline',
+            inputclass: 'form-control',
+            error: function(response, newValue) {
+                if (response.status == 'error') return response.message; 
+            }
+    });            
+    $('.ed_author').editable({
+            type: 'text',
+            name: 'author',
+            title: 'Author',        
+            mode: 'inline',
+            inputclass: 'form-control',
+            error: function(response, newValue) {
+                if (response.status == 'error') return response.message; 
+            }
+    }); 
+    $('.ed_date').editable({
+            type: 'date',
+            name: 'date',
+            title: 'Date',        
+            mode: 'inline',
+            inputclass: 'form-control',
+            error: function(response, newValue) {
+                if (response.status == 'error') return response.message; 
+            }
+    });     
+};
+{% endif %}
+  // ======================================================================================
+  //=======================================table===========================================
+  // ======================================================================================
+  
+  var table = $('#tablefiltre').DataTable({
+            colReorder: true,
+            responsive: false, 
+            ordering:  true, 
+            searching: false,
+            paging: false,
+            language: {
+                decimal:        "",
+                emptyTable:     "-",
+                info: "[_START_/_END_]  <b>{{"global.table.total"|trans}} : </b>_TOTAL_",
+                infoEmpty:      "0/0   [0]",
+                infoFiltered:   "({{"global.table.filteredForm"|trans}} _MAX_ {{"global.table.entries"|trans}})",
+                infoPostFix:    "",
+                thousands:      " ",
+                lengthMenu:     "<b>{{"global.table.Entries"|trans}}</b> _MENU_",
+                loadingRecords: "{{"global.table.loadingRecords"|trans}}...",
+                processing:     "{{"global.table.processing"|trans}}...",
+                search:         "<b>{{"global.table.search"|trans}}</b>:",
+                zeroRecords:    "{{"global.table.zeroRecords"|trans}}",
+                paginate: {next:       ">>", previous:   "<<"},
+                
+            },
+        });
+      
+  table.columns().eq( 0 ).each( function ( colIdx ) {
+      $( 'input', $('#filtreForm th')[colIdx] ).on( 'keyup change', function () {
+          table
+              .column( colIdx )
+              .search( this.value )
+              .draw();
+      } );
+  } );
+
+  // ======================================================================================
+  //=======================================table end=========================================
+  // ======================================================================================
+
+</script>
+{% if page.uriAudio is not null  and page.pageType.conditional != 'video' %} 
+  <script type='text/javascript' src="{{asset('js/audio-player.js')}}" async></script>
+{% endif %}
+{% endblock %}

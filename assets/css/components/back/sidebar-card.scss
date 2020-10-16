@@ -1,0 +1,114 @@
+.sidebar-card {
+    background-color: $gallery-grey;
+    padding: 17px 12px;
+    margin-top: 22px;
+    &.no-margin {
+        margin-top: 0;
+    }
+    .sidebar-card-title {
+        border-bottom: 1px solid $white;
+        color: $black;
+        text-transform: uppercase;
+        padding-bottom: 10px;
+    }
+    .sidebar-card-body {
+        padding: 10px 0;
+    }
+    /* SUMMARY */
+    &.sumary {
+        .page-list {
+            margin-top: .5em;
+            li {
+                font-size: .8125rem;
+                line-height: 25px;
+                position: relative;
+                &.active {
+                    color: $black;
+                    font-weight: 500;
+                    &:before {
+                        content: '';
+                        display: block;
+                        position: absolute;
+                        left: -12px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        width: 0;
+                        height: 0;
+                        border-style: solid;
+                        border-width: 5px 0 5px 6px;
+                        border-color: transparent transparent transparent $black;
+                    }
+                }
+                a {
+                    color: inherit;
+                    text-decoration: none;
+                    &:hover,
+                    &:active,
+                    &:focus {
+                        color: black;
+                    }
+                }
+            }
+        }
+    }
+    &.notes {
+        .sidebar-card-title {
+            p {
+                position: relative;
+            }
+            #add-note {
+                display: block;
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 14px;
+                height: 14px;
+                cursor: pointer;
+                transition: all ease-in-out 0.3s;
+                &.active {
+                    // &::before {
+                    //     transform: rotate(270deg);
+                    // }
+                    &::after {
+                        transform: rotate(-90deg);
+                    }
+                }
+                // &::before {
+                //     content: '';
+                //     display: block;
+                //     width: 2px;
+                //     height: 14px;
+                //     background-color: $black;
+                //     position: absolute;
+                //     transition: all ease-in-out 0.3s;
+                // }
+                &::after {
+                    background: url(../images/outline-create-24px.svg) right center no-repeat;
+                    content: '';
+                    display: block;
+                    width: 24px;
+                    height: 24px;
+                    position: absolute;
+                    top: -5px;
+                    right: -5px;
+                    transition: all ease-in-out 0.3s;
+                }
+            }
+        }
+        a {
+            display: block;
+            margin-top: 20px;
+        }
+        .note-open {
+            max-height: 100vh;
+            visibility: visible;
+            transition: max-height ease 0s, visibility ease .5s;
+        }
+        .note-close {
+            visibility: hidden;
+            max-height: 0;
+            transition: visibility ease 0s, max-height ease .5s;
+        }
+    }
+}

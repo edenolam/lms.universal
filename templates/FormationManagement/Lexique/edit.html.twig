@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Lexique{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+<link href="{{ asset("assets/summernote/summernote-bs4.css") }}" rel="stylesheet" /> 
+{% endblock %}
+
+{% block body %}
+
+<div class="lms-breadcrumb">
+     <span><a href="
+			{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+      {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+			{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+			{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+			{% else %} {{ path('home_dashboard') }}
+			{% endif %}">{{lms_name}}</a></span> > <span class="bold">{{'dashboard.lexique' | trans}}</span>
+</div>
+
+<div class="page-title">
+  <h1 class="title">Edit Lexique</h1>
+  <hr>
+</div>
+
+<div class="container">
+{{ form_start(form, { 'action': path('admin_lexique_edit', {'id' : lexique.id}) } ) }}
+    {{ include('FormationManagement/Lexique/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('user_lexique') }}">back to list</a>
+</div>
+    {# include('FormationManagement/Lexique/_delete_form.html.twig') #}
+{% endblock %}
+
+{% block js %}
+  {{ parent() }}
+<script src="{{ asset("assets/summernote/summernote-bs4.js") }}"></script>
+<script>
+$(document).ready(function() {
+  $('.summernote').summernote({
+      height: 150,
+      toolbar: [
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol']]
+      ]
+    });
+});
+</script>
+{% endblock %}

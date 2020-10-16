@@ -1,0 +1,15 @@
+<div class="lms-aside-card">
+    <div class="p-3 lms-aside-card-content">
+        <div class="d-flex justify-content-between pb-3 lms-aside-card-title">
+            <span class="text-uppercase">{{'userFrontManagement.page.reference_bibli'|trans}}</span>
+        </div>
+
+        <div class="lms-aside-card-body pt-2">
+            <ol>
+                {% for ref in currentPage.pageReferences %}
+                    <li><i class="material-icons lms-material-icons">menu_book</i> {{ref.reference.title}}, {{ref.reference.author}}, {{ref.reference.date| date('d/m/Y')}}</li>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+</div>

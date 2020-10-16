@@ -1,0 +1,10 @@
+<form  action="{{path('results_user_module_follow_csv_check')}}" method="post" enctype="multipart/form-data">
+    <span>{{ 'results.form.classepresentiel'|trans }}</span><br><i>{{ 'results.form.classe_presentiel_info'|trans }}</i>
+    <div class="my-3">
+        <input class="form-control" id="csv" name="csv" type="file"/>  
+    </div>
+    <div class="my-3">
+        <input type="submit" class="lms-button lms-button-blue" value="{{ 'presentiel.csv.import'|trans }}" name="submit" id="exportcsv" >
+        </input> 
+    </div>
+</form>

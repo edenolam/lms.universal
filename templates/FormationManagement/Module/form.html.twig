@@ -1,0 +1,130 @@
+<div class="row">
+  {{ form_errors(form) }}
+  <div class="col-lg-5">
+    <div class="row">
+      <div class="form-group col-3">
+        {{ form_label(form.type, 'formation.module.type'|trans) }}
+      </div>
+      <div class="form-group col-8">      
+        {{ form_widget(form.type, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.type) }}
+      </div>
+    </div>    
+    <div class="row">
+      <div class="form-group col-3">
+        {{ form_label(form.title, 'formation.formation_path.title'|trans) }}
+      </div>
+      <div class="form-group col-8">      
+        {{ form_widget(form.title, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.title) }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-3">
+        {{ form_label(form.description, 'formation.formation_path.description'|trans) }}
+      </div>
+      <div class="form-group col-8">  
+        {{ form_widget(form.description, { 'attr': {'class': 'form-control summernote'} }) }}
+        {{ form_errors(form.description) }}  
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-3">
+        {{ form_label(form.file, 'formation.formation_path.file'|trans) }}
+      </div>
+      <div class="form-group col-8">  
+        {{ form_widget(form.file, { 'attr': {'class': 'form-control check-mime', 'data-mime':'image/jpeg'} }) }}
+        {{ form_errors(form.file) }}  
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-3"> 
+        {{ form_label(form.prerequisites, 'formation.module.conseils'|trans) }}
+      </div>
+      <div class="form-group col-8">  
+        {{ form_widget(form.prerequisites, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.prerequisites) }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-3 ">
+        {{ form_label(form.validationModes, 'formation.module.mode_de_validation'|trans) }}
+      </div>  
+      <div class="form-group bg-white col 8">  
+        {% for validationMode in validationModes %}
+        <div class="form-group m-2">
+          <input type="checkbox" value="{{ validationMode.id }}" id="module_validationModes_{{ validationMode.id }}" name="module[validationModes][]" required>
+          <label for="module_validationModes_{{ validationMode.id }}" id="label_validationModes_{{ validationMode.id }}" >{{ validationMode.title }}</label>
+        </div>  
+        {% endfor %}
+        {{ form_errors(form.validationModes) }}
+      </div> 
+    </div> 
+  </div>
+
+  <div class="col-lg-5">
+    <div class="row">
+      <div class="form-group col-5">
+        {{ form_label(form.regulatoryRef, 'formation.module.regulatory_ref'|trans) }}
+      </div>
+      <div class="form-group col-6">  
+        {{ form_widget(form.regulatoryRef, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.regulatoryRef) }}  
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-5">
+        {{ form_label(form.realisationTime, 'formation.module.duree'|trans) }}
+      </div>
+      <div class="form-group col-6"> 
+        {{ form_widget(form.realisationTime, { 'attr': {'class': 'form-control col-8', 'placeholder': 'hh:mm', 'pattern':'^[0-5][0-9]\:[0-5][0-9]\.[0-9]{1,3}$' } }) }}
+        {{ form_errors(form.realisationTime) }}  
+      </div>
+    </div>
+    <div class="lms-bg-secondary p-4 module module-scorm">
+      <div class="form-group">
+        {{ form_label(form.scormZip, 'formation.module.scorm_zip'|trans) }} :</br></br>
+        {{ form_widget(form.scormZip, { 'attr': {'class': 'form-control', 'accept':'.zip'} }) }}
+        {{ form_errors(form.scormZip) }}
+      </div>     
+    </div> 
+{#    <div class="row module module-presentiel">#}
+{#      <div class="form-group col-5 ">#}
+{#        {{ form_label(form.lieuFormation, 'formation.module.lieu_formation'|trans) }}#}
+{#      </div>#}
+{#      <div class="form-group col-6">#}
+{#        {{ form_widget(form.lieuFormation, { 'attr': {'class': 'form-control'} }) }}#}
+{#        {{ form_errors(form.lieuFormation) }}#}
+{#      </div>#}
+{#    </div>#}
+{#    <div class="row module module-presentiel">#}
+{#      <div class="form-group col-5">#}
+{#        {{ form_label(form.nomAnimateur, 'formation.module.nom_animateur'|trans) }}#}
+{#      </div>#}
+{#      <div class="form-group col-6">#}
+{#        {{ form_widget(form.nomAnimateur, { 'attr': {'class': 'form-control'} }) }}#}
+{#        {{ form_errors(form.nomAnimateur) }}#}
+{#      </div>#}
+{#    </div>#}
+{#    <div class="row module module-presentiel">#}
+{#      <div class="form-group col-5">#}
+{#        {{ form_label(form.codeClient, 'formation.module.code_client'|trans) }}#}
+{#      </div>#}
+{#      <div class="form-group col-6">#}
+{#        {{ form_widget(form.codeClient, { 'attr': {'class': 'form-control'} }) }}#}
+{#        {{ form_errors(form.codeClient) }}#}
+{#      </div>#}
+{#    </div>#}
+  </div>
+
+  <div class="col-lg-2">
+        <div class="form-group">
+            <button type="submit" class="lms-button lms-button-blue">
+                <i class="material-icons lms-material-icons">save</i> {{ 'global.submit'|trans }}
+            </button> 
+            <a href="{{ path('admin_module_list') }}" class="btn btn-block btn-white">{{ 'global.cancel'|trans }}</a>
+        </div>          
+  </div>
+</div>
+   {{ form_widget(form._token) }}  
+</div>  

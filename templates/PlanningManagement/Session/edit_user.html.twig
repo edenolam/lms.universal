@@ -1,0 +1,206 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+    <!-- navigateur -->
+    <div class="lms-breadcrumb">
+        <span>
+            <a href="{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}{% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}{% else %} {{ path('home_dashboard') }}{% endif %}">
+                {{lms_name}}
+            </a>
+        </span>
+        >
+        <span>
+            <a href="{{path('admin_session_list')}}">
+                {{ 'menu.concepteur.session' | trans }}
+            </a>
+        </span>
+        >
+        <span class="bold">
+            {{ session.title}}
+        </span>
+    </div>
+
+    <!-- title of page -->
+    <div class="d-flex align-items-center lms-title">
+        <h1 class="text-uppercase lms-h1">{{'session.edit'|trans}}</h1><hr>
+    </div>
+
+    <!-- body of page -->
+    <div class="text-uppercase d-flex flex-column flex-sm-row align-items-center justify-content-sm-start">
+        <a class="px-4 px-lg-5 py-1 lms-session-tab" href="{{ path('admin_session_edit', {'slug' : session.slug}) }}">{{ 'session.date' | trans }}</a>
+        <a class="px-4 px-lg-5 py-1 lms-session-tab" href="{{ path('admin_session_edit_module', {'slug' : session.slug}) }}">{{ 'session.modules' | trans }}</a>
+        <a class="px-4 px-lg-5 py-1 lms-session-tab" href="{{ path('admin_session_edit_presentiel', {'slug' : session.slug}) }}">{{ 'session.presentiels' | trans }}</a>
+        <span class="px-4 px-lg-5 py-1 lms-session-tab lms-session-tab-actif">{{ 'session.users' | trans }}</span>
+    </div>
+
+    <form action="{{ path('admin_session_edit_user', {'slug' : session.slug}) }}" method="post" class="p-5 lms-bg-gray">
+        {# <div class="d-xl-flex justify-content-xl-between"> #}
+            <div class="d-flex flex-column flex-lg-row justify-content-lg-between mb-3">
+                <div class="mb-3 p-0 lms-session-users-filters">
+                    <select id="team_filter" multiple class="form-control custom-select">
+                        <option value="team" class="mb-2 border-bottom" selected>{{"team.all"|trans}}</option>
+                        {% for team in teams %}
+                            <option value="{{team.id}}">{{team.title}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3 p-0 lms-session-users-filters">
+                    <select id="division_filter" multiple class="form-control custom-select">
+                        <option value="division" class="mb-2 border-bottom" selected>{{"division.all"|trans}}</option>
+                        {% for division in divisions %}
+                            <option value="{{division.id}}">{{division.title}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3 p-0 lms-session-users-filters">
+                    <select id="lab_filter" multiple class="form-control custom-select">
+                        <option value="lab" class="mb-2 border-bottom" selected>{{"laboratory.all"|trans}}</option>
+                        {% for lab in labs %}
+                            <option value="{{lab.id}}">{{lab.title}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        {# </div> #}
+        <p class="lms-text-secondary">{{ 'session.select_user' | trans }}</p>
+        <div class="d-flex justify-content-between dnd">
+            <div class="list bg-white mr-2 w-50 lms-session-dnd-block" hqy-droppable-element="active" id="listOfUser">
+                {% for apprenant in apprenants %}
+                {# d-inline-block #}
+                    <div class="dnd-item  px-2 py-1 m-1 lms-session-dnd-item" hqy-droppable-element="active" equipeid="{% if apprenant.team != NULL %}{{apprenant.team.id}}{% endif %}" divisionid="{% if apprenant.division != NULL %}{{apprenant.division.id}}{% endif %}" labid="{% if apprenant.laboratory != NULL %}{{apprenant.laboratory.id}}{% endif %}" iduser="{{apprenant.id}}">
+                        {{apprenant.lastName}}
+                        {{apprenant.firstName}}
+                        ({{apprenant.username}})
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="list bg-white ml-2 w-50 lms-session-dnd-block" hqy-droppable-element="active" id="add_users">
+                {% for oldApprenant in oldApprenants %}
+                    <div class="dnd-item  px-2 py-1 m-1 lms-session-dnd-item" hqy-droppable-element="active" equipeid="{% if oldApprenant.team != NULL %}{{oldApprenant.team.id}}{% endif %}" divisionid="{% if oldApprenant.division != NULL %}{{oldApprenant.division.id}}{% endif %}" labid="{% if oldApprenant.laboratory != NULL %}{{oldApprenant.laboratory.id}}{% endif %}" iduser="{{oldApprenant.id}}">
+                        {{oldApprenant.lastName}}
+                        {{oldApprenant.firstName}}
+                        ({{oldApprenant.username}})
+                    </div>
+                {% endfor %}
+            </div>
+            {% include "PlanningManagement/Session/form_user.html.twig" %}
+        </div>
+        <div class="text-center mt-3">
+            <button type="submit" class="lms-button lms-button-blue">
+                <i class="material-icons lms-material-icons">save</i>
+                <span>{{ 'global.submit'|trans }}</span></button>
+        </div>
+    </form>
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script src="{{asset('js/hqy.interact.min.js')}}"></script>
+
+    <script>
+        $(document).ready(function () { // filtre
+            var filtreTeam = $('#team_filter');
+            var filtreDivision = $('#division_filter');
+            var filtreLab = $('#lab_filter');
+            var listOfUser = document.getElementById('listOfUser').children;
+
+            filtreTeam.change(filterUser);
+            filtreDivision.change(filterUser);
+            filtreLab.change(filterUser);
+
+            function filterUser() {
+                
+                for (var i = 0; i < listOfUser.length; i++) {
+                    listOfUser[i].hidden = true;
+                    $inteam = false;
+                    $indivision = false;
+                    $inlab = false;
+
+                    if (filtreTeam.val().includes(listOfUser[i].getAttribute('equipeId')) || filtreTeam.val() == "team") {
+                        $inteam = true;
+                    }
+                    if (filtreDivision.val().includes(listOfUser[i].getAttribute('divisionId')) || filtreDivision.val() == "division") {
+                        $indivision = true;
+                    }
+                    if (filtreLab.val().includes(listOfUser[i].getAttribute('labId')) || filtreLab.val() == "lab") {
+                        $inlab = true;
+                    }
+                    if (filtreTeam.val() == "team" && filtreDivision.val() == "division" && filtreLab.val() == "lab") {
+                        $inteam = true;
+                        $indivision = true;
+                        $inlab = true;
+                    }
+
+                    if ($inteam == true && $indivision == true && $inlab == true) {
+                        listOfUser[i].hidden = false;
+                    }
+                }
+            }
+
+            // Drag and Drop management
+            var $ph,
+                axisY;
+            var childrenDivDnD = document.getElementById('add_users').children;
+            var selcetUser = document.getElementById('session_users');
+            $('.dnd-item').hqyDraggable({
+                proxy: 'clone',
+                onStartDrag: function (event, target) {
+                    $(target).width($(this).width());
+
+                    $ph = $(this).clone();
+                    $ph.addClass('op2');
+                    $(this).hide().before($ph);
+                },
+                onStopDrag: function () {
+                    $ph.after(this);
+                    $ph.remove();
+                    $ph = null;
+                    $(this).show();
+                    var idUser = [];
+                    for (var i = 0; i < childrenDivDnD.length; i++) {
+                        idUser[i] = childrenDivDnD[i].getAttribute('idUser');
+                    }
+
+                    for (var i = 0; i < selcetUser.options.length; i++) {
+                        selcetUser.options[i].selected = false;
+                        if (idUser.indexOf(selcetUser.options[i].value) >= 0) {
+                            selcetUser.options[i].selected = true;
+                        }
+                    }
+                }
+            });
+
+            $('.dnd-item').hqyDroppable({
+                onDragEnter: function () {
+                    axisY = 0;
+                },
+                onDragOver: function (event, target) {
+                    if (event.data.top > axisY) {
+                        $(this).after($ph);
+                    } else {
+                        $(this).before($ph);
+                    } axisY = event.data.top;
+                }
+            });
+
+            $('.dnd .list').hqyDroppable({
+                onDragEnter: function (event, target) {
+                    var $filter = $(this).find('.dnd-item:visible').filter(function () {
+                        return this !== target;
+                    });
+                    if ($filter.length <= 0) {
+                        $(this).append($ph);
+                    }
+                }
+            });
+
+        });
+    </script>
+
+{% endblock %}

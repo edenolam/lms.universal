@@ -1,0 +1,44 @@
+.lms {
+    &-header {
+        background-color: $prussian-blue;
+        color: $white;
+        .nav-link {
+            color: $white;
+        }
+        input {
+            background-color: transparent;
+            border: none;
+            border-bottom: .0625em solid $white;
+            color: $white;
+        }
+        .material-icons {
+            cursor: pointer;
+        }
+        &-avatar {
+            &-container {
+                background-color: $white;
+                display: flex;
+                height: 2em;
+                margin: auto;
+                width: 2em;
+                @supports(clip-path: circle()) {
+                    clip-path: circle(50% at center center);
+                }
+            }
+        }
+    }
+    &-notification {
+        &-number {
+            background-color: $jaffa-orange;
+            border-radius: 100%;
+            bottom: 0;
+            display: inline-block;
+            font-size: .7em;
+            height: 1.5em;
+            left: 1.5em;
+            position: absolute;
+            text-align: center;
+            width: 1.5em;
+        }
+    }
+}

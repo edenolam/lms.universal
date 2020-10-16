@@ -1,0 +1,129 @@
+ <style type="text/css">
+	h1 { 
+		color: #006080; 
+		text-align: center;
+		margin-top: 150px;
+		width: 400px;
+		font-family: Times;
+		font-size: 25px;
+	}
+	
+	div.content{
+	 	margin-top: 20px;
+		margin-left: 50px;
+		margin-right: 50px;
+		text-align: justify;
+  		text-justify: inter-word;
+	}
+	div.inner-content{
+		margin-top: 10px;
+	}
+	table.footer, table.header{
+	 	margin-left: 35px;
+	 	margin-right: 35px;
+	 	margin-bottom: 30px;
+	}
+	img.lab{
+	    max-width:200px;
+	}
+}
+</style>
+
+
+<page backcolor="#FEFEFE" style="font-size: 12pt">
+	 <page_header> 
+    	<table class="header">
+    		<tr>
+	    		<td style="text-align: center; width: 330px; padding-top: 20px;">
+					{% if userAttestation.userLabLogoUrl is not null and userAttestation.user.laboratory != null and userAttestation.user.laboratory.logo != null and userAttestation.userLabLogoUrl == userAttestation.user.laboratory.logo %}<img class="lab" src="{{chemin}}/public/uploads/laboratory/{{userAttestation.userLabLogoUrl}}" height="70
+	    			" >{% endif %}
+					</td>
+	    		<td style="text-align: center; width: 330px; padding-top: 20px;"><img class="lab" src="{{chemin}}/public/images/core/logo.png" height="70
+	    			" ></td>
+	    	</tr>
+		</table>
+    </page_header> 
+
+	 <div class="body">
+		<h1>{{'userFrontManagement.formation.attestation_litteral'|trans}}</h1>
+		<div class="content">
+			<p>
+				La société EUROPHARMA, 106 Bureaux de la Colline à Saint-Cloud, représentée par Monsieur Rafi MARDACHTI, enregistrée sous le numéro 11780707678 auprès du préfet de la Région Ile de France comme organisme de formation, atteste avoir organisé la formation "{{userAttestation.formationTitle}}" d'une durée de {{userAttestation.durationSessionFormation}}, qui s'est déroulée du {{userAttestation.startDate|date("d/m/Y")}} au {{userAttestation.endDate|date("d/m/Y")}}.
+			</p>
+			<p>
+				M/Mme {{userAttestation.userLitteralLastname}} {{userAttestation.userLitteralFirstName}} a suivi avec assiduité cette formation en ligne.
+			</p>
+			<p>
+				L'évaluation des acquis à donnée lieu aux resultat de réussite aux modules suivant:
+			</p>
+			<div class="data">
+				<table style="border: 1px solid black;">
+					<tr>
+						<td style="width: 330px; padding-bottom: 7px;">
+							<b>{{"userFrontManagement.module.title_m"|trans}}</b>
+						</td>
+						<td style="width: 330px; padding-bottom: 7px;">
+							<b>{{"userFrontManagement.module.validation_score_short"|trans}}</b>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		{% set nb = 1 %}
+		<div class="content">				 				 	
+		{% for module in userAttestation.moduleDetails %}
+			
+				<table style="border: 1px solid black;">
+					<tr>
+						<td style="width: 330px; padding-top: 5px;">
+							{{module["module_name"]}}
+						</td>
+						<td style="width: 330px; padding-top: 5px;">
+							{% if module.test_eval is defined and module["test_eval"] != null %}
+								- {{"test.eval"|trans}} {{module["test_eval"]}} %<br>
+								{% set nb = nb + 1 %}
+							{% endif %}
+							{% if module.test_pre is defined and module["test_pre"] != null %}
+								- {{"test.pre"|trans}} {{module["test_pre"]}} %<br>
+								{% set nb = nb + 1 %}
+							{% endif %}
+							{% if (module.test_pre is not defined or module["test_pre"] == null) and (module.test_eval is not defined and  module["test_eval"] == null) %}
+								{% set nb = nb + 1 %}
+							{% endif %}
+						</td>
+					</tr>
+				</table>
+			
+			{% if nb > 12 %}
+				</div>
+				<div style="page-break-before:always; clear:both; padding-top: 100px;"></div>	
+				{% set nb = 1 %}
+				<div class="content">		
+			{% endif %} 
+			
+		{% endfor %} 
+		</div>
+		<div class="content">
+			<p>Pour servir et valoir ce que droit.</p>
+			<p>Fait à Saint-Cloud, le {{"now"|date("d/m/Y")}}.<br>
+				Monsieur Rafi MARDACHTI <br>
+				<b>EURO</b>PHARMA FOR LIFE SCIENCE
+			</p>
+		</div>
+	</div> 
+    <page_footer> 
+    	<table class="footer">
+    		<tr>
+	    		<td style="text-align: left; width: 220px;">
+	    			<p>{{'global.id_unicite'|trans}} <b><cert src="/home/certification/".{{userFormation.id}} name="Certificat d'authenticité du certificat" location={{app.request.locale}} reason="Certification d'authenticité du document" contactinfo="info@universalmedica.com">{{userAttestation.serialCode}}</cert></b></p>
+					<p>{{'global.page'|trans}} : [[page_cu]]/[[page_nb]]</p>
+					{{'userFrontManagement.module.certificat_geration_by'|trans}} {{app.user.username}}
+	    		</td> 
+	    		<td style="text-align: center; width: 150px;"><p> <br>{{version_core}}</p></td>
+	    		<td style="text-align: right; padding-left: 60px;">
+	    			106 Bureaux de la Colline <br> 92210 Saint-Cloud Cedex <br> tèl: 01 41 12 27 77
+	    		</td>
+	    	</tr>
+		</table>
+    </page_footer> 
+ </page> 

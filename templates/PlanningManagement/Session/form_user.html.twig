@@ -1,0 +1,26 @@
+<div>
+{{ form_errors(form) }}
+  <div class="d-none">
+    <div class="form-group d-none">
+      {{ form_label(form.title, 'session.title'|trans) }}
+      {{ form_widget(form.title, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+    <div class="form-group d-none">
+      {{ form_label(form.formationPath, 'session.formationPath'|trans) }}
+      {{ form_widget(form.formationPath, { 'attr': {'class': 'form-control'} }) }}   
+    </div>
+    <div class="form-group">
+      {{ form_label(form.openingDate, 'session.openingDate'|trans) }}
+      {{ form_widget(form.openingDate, { 'attr': {'class': 'form-control'} }) }}   
+    </div>
+    <div class="form-group">   
+      {{ form_label(form.closingDate, 'session.closingDate'|trans) }}
+      {{ form_widget(form.closingDate, { 'attr': {'class': 'form-control'} }) }}   
+    </div>      
+    <div class="form-group d-none" >
+      {{ form_label(form.users, 'session.users'|trans) }}
+      {{ form_widget(form.users, { 'attr': {'class': 'form-control'} }) }}           
+    </div>
+  </div>    
+  {{ form_widget(form) }}
+</div> 

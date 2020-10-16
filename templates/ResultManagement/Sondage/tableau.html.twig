@@ -1,0 +1,135 @@
+<div class="table-responsive">
+    <table class="table table-bordered table-striped lms-table" id="tablefiltre">
+        <thead class="thead-dark"> 
+            <tr>
+                <th>{{ 'results.tableau.title.division'|trans }} </th>
+                <th>{{ 'results.tableau.title.equipe'|trans }} </th>
+                <th>{{ 'results.tableau.title.prenom'|trans }} </th>
+                <th>{{ 'results.tableau.title.nom'|trans }} </th>
+                <th>{{ 'results.tableau.title.session'|trans }} </th>
+                <th>{{ 'results.tableau.title.formation'|trans }} </th>
+                <th>{{ 'results.tableau.title.test'|trans }} </th>
+                <th>{{ 'results.tableau.title.date'|trans }} </th>
+                {# Response  #}
+                {% set i = 0 %}
+                {% if test is not null %}
+                    {% for question in testLook.questions if  i < 21 %}
+                        <th class="text-sm">{% if origine == 'sondage' %}{{ question.question |truncate(20)}}{% else %}{{ question.question}}{% endif %}</th>
+                        {% set i = i + 1 %}
+                    {% endfor %}
+                {% endif %}
+            </tr>
+        </thead>
+        {% if origine == 'sondage' %}
+            <thead id="filtreForm"> 
+                <tr>
+                    <th>{{ 'results.tableau.title.division'|trans }} </th>
+                    <th>{{ 'results.tableau.title.equipe'|trans }} </th>
+                    <th>{{ 'results.tableau.title.prenom'|trans }} </th>
+                    <th>{{ 'results.tableau.title.nom'|trans }} </th>
+                    <th>{{ 'results.tableau.title.session'|trans }} </th>
+                    <th>{{ 'results.tableau.title.formation'|trans }} </th>
+                    <th>{{ 'results.tableau.title.test'|trans }} </th>
+                    <th>{{ 'results.tableau.title.date'|trans }} </th>
+                    {# Response  #}
+                    {% set i = 0 %}
+                    {% if test is not null %}
+                        {% for question in testLook.questions if  i < 21 %}
+                            <th class="text-sm">{{ question.question|truncate(100)}}</th>
+                            {% set i = i + 1 %}
+                        {% endfor %}
+                    {% endif %}
+
+                </tr>
+            </thead>
+        {% endif %}
+        <tbody>
+            {% if test is not null %}
+                {% for testfiltre in testfiltreresult %}
+                    <tr>
+                        <td>
+                            {% if testfiltre.user.division != null %}
+                                {{ testfiltre.user.division.title }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if testfiltre.user.team != null %}
+                                {{ testfiltre.user.team.title }}
+                            {% endif %}
+                        </td>
+                        <td>{{ testfiltre.user.firstname }}</td>
+                        <td>{{ testfiltre.user.lastname }}</td>
+                        <td>{{ testfiltre.session.title }}</td>
+                        <td>{{ testfiltre.session.formationPath.title }}</td>
+                        <td>{{ testfiltre.test.title }}</td>                   
+                        <td>
+                            {% if app.request.locale == "fr" %}{{ testfiltre.datePass|date("d/m/y") }} {% else %} {{testfiltre.datePass|date("y/m/d") }} {% endif %}
+                        </td>
+                        
+                        {# ------------------- Response -------------------------- #}
+                        {% set i = 0 %}
+                        {% for question in testLook.questions if  i < 21 %}
+                            <td class="text-sm">
+                                {% if question.answerType.conditional == "text" %}
+                                    {% if origine == 'sondage' %}{{ output[testfiltre.id][question.slug].userAnswers|trim|truncate(30)}}{% else %}{{ output[testfiltre.id][question.slug].userAnswers|trim}}{% endif %}
+                                {% elseif question.answerType.conditional == "graduation" %}
+                                    {{ output[testfiltre.id][question.slug].userAnswers}}
+                                {% elseif question.answerType.conditional == "unique" %}
+                                    {% for answers in output[testfiltre.id][question.slug].verbalAnswers %}
+                                        {% if answers.id == output[testfiltre.id][question.slug].userAnswers %}
+                                            {% if origine == 'sondage' %}{{answers.content|trim|truncate(100)}}{% else %}{{answers.content|trim}}{% endif %}<br>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% elseif question.answerType.conditional == "multiple" %}
+                                    {% for answers in output[testfiltre.id][question.slug].verbalAnswers %}
+                                        {% for uanswer in output[testfiltre.id][question.slug].userAnswers %}
+                                            {% if answers.id == uanswer %}
+                                                {% if origine == 'sondage' %}{{answers.content|trim|truncate(100)}}{% else %}{{answers.content|trim}}{% endif %}<br>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                {% endif %}
+                            </td>
+                            {% set i = i + 1 %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                
+            {% endif %}
+        </tbody>
+        <tfoot>
+            {% if test is not null %}
+                <tr class="lms-bg-primary">
+                    <th colspan="2"><b>{{'sondage.totalUser'|trans}}</b></th>
+                    <th colspan="2">{% if test is not null %}<b>{{output["totalUserF"]}}{% endif %}</b></th>
+                    <th colspan="4"><b>{{'sondage.statistique'|trans}}</b></th>
+                    {% set i = 0 %}
+                    {% for question in testLook.questions if  i < 21 %}
+                        <th class="text-sm">
+                            {% if question.answerType.conditional == "graduation" %}
+                                {{( output["somme"][question.slug] / output["totalUserF"] )|round(1, 'floor')}}
+                            {% elseif question.answerType.conditional == "unique" %}
+                                {% for answer in question.answers %} 
+                                    {% if output["unique"][question.slug][answer.id] is defined %}
+                                        {% if origine == 'sondage' %}{{answer.content|truncate(10)}}{% else %}{{answer.content}}{% endif %} : {{(output["unique"][question.slug][answer.id] / output["totalUserF"] * 100 )|round(1, 'floor') }} % <br>
+                                    {% else %}
+                                        {% if origine == 'sondage' %}{{answer.content|truncate(10)}}{% else %}{{answer.content}}{% endif %} : 0 % <br>
+                                    {% endif %}
+                                {% endfor %}
+                            {% elseif question.answerType.conditional == "multiple" %}
+                                {% for answer in question.answers %} 
+                                    {% if output["multiple"][question.slug][answer.id] is defined %}
+                                        {% if origine == 'sondage' %}{{answer.content|truncate(10)}}{% else %}{{answer.content}}{% endif %} : {{(output["multiple"][question.slug][answer.id] / output["totalUserF"] * 100 )|round(1, 'floor') }} % <br>
+                                    {% else %}
+                                        {% if origine == 'sondage' %}{{answer.content|truncate(10)}}{% else %}{{answer.content}}{% endif %} : 0 % <br>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}  
+                        </th>
+                        {% set i = i + 1 %}
+                    {% endfor %}
+                </tr>
+            {% endif %}
+        </tfoot>
+    </table>
+</div>     

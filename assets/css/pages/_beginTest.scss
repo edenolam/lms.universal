@@ -1,0 +1,94 @@
+.lms {
+    &-question {
+        &-type {
+            &-text {
+                border-bottom: .0625em solid $scorpion-gray;
+                color: $prussian-blue;
+                font-size: 1.125em;
+                font-weight: 600;
+                margin-left: 1em;
+                text-transform: uppercase;
+                width: 100%;
+            }
+        }
+        &-title {
+            margin: 1em 0;
+            .lms-h3,
+            .lms-h4 {
+                font-size: 1.125em;
+            }
+        }
+        &-notice {
+            font-style: italic;
+        }
+        &-question {
+            ul,
+            ol {
+                list-style: none;
+                padding: 0;
+            }
+        }
+    }
+}
+
+// .begin-test-container{
+//     margin-top: 40px;
+//     display: flex;
+//     justify-content: flex-start;
+//     align-items: center;
+//     @media screen and (max-width: $laptop) {
+//         display: block;
+//     }
+//     .side{
+//         &.img-side{
+//             max-width: 325px;
+//             width: 100%;
+//             @media screen and (max-width: $laptop){
+//                 max-width: 100%;
+//             }
+//             img{
+//                 display: block;
+//                 margin: 0 auto;
+//             }
+//         }
+//         &.infos-side{
+//             max-width: 768px;
+//             width: 100%;
+//             .title{
+//                 color: $prussian-blue;
+//                 text-transform: uppercase;
+//                 span{
+//                     margin-left: 20px;
+//                 }
+//             }
+//             .text{
+//                 font-size: 1em;
+//                 line-height: 2em;
+//                 svg{
+//                     vertical-align: sub;
+//                 }
+//                 &:first-of-type{
+//                     margin-top: 20px;
+//                 }
+//             }
+//             .btn-container{
+//                 margin-top: 50px;
+//                 .blue-button{
+//                     float: right;
+//                     @media screen and (max-width: $mobile){
+//                         float: none;
+//                         max-width: 100%;
+//                         display: block;
+//                         margin-top: 10px;
+//                     }
+//                 }
+//                 .grey-button{
+//                     @media screen and (max-width: $mobile){
+//                         display: block;
+//                         max-width: 100%;
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }

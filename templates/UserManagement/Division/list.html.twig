@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="lms-breadcrumb">
+    <span><a href="
+				{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+        {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+				{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+				{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+				{% else %} {{ path('home_dashboard') }}
+				{% endif %}">{{lms_name}}</a></span> > <span class="bold">{{ 'division.action.list' | trans }} </span>
+</div>
+
+<!-- title of page -->
+<div class="d-flex align-items-center lms-title">
+	<h1 class="text-uppercase lms-h1">{{ 'division.action.list'|trans }}</h1>
+  <hr>
+</div>  
+
+<div class="row"><div class="col-md-5"><p>  </p></div></div>
+
+<!-- add button -->
+<div class="card-body text-right">
+    <a class="lms-button lms-button-blue" href="{{ path('admin_division_create') }}">
+      <i class="material-icons lms-material-icons">add</i> {{ 'division.action.create'|trans }}
+    </a>
+</div>
+
+<div class="card-body">
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped lms-table" id="tablefiltre">
+      <thead class="thead-dark">
+        <tr>
+          <th>{{ 'division.laboratory' | trans }}</th>
+          <th>{{ 'division.title' | trans }}</th>
+          <th>{{ 'division.teams' | trans }}</th>
+          <th>{{ 'division.create_date' | trans }}</th>
+          <th>{{ 'global.action' | trans }}</th> 
+        </tr>    
+      </thead>
+      <thead id="filtreForm">
+        <tr>
+          <th>{{ 'division.laboratory' | trans }}</th>
+          <th>{{ 'division.title' | trans }}</th>
+          <th>{{ 'division.teams' | trans }}</th>
+          <th>{{ 'division.create_date' | trans }}</th>
+          <th>{{ 'global.action' | trans }}</th> 
+        </tr>    
+      </thead>
+      <tbody> <!-- Corps du tableau -->       
+        {% for division in divisions %}
+            <tr>
+              <td>{{ division.laboratory.title }}</td>
+              <td>{% if division.isValid == 0 %}<del>{% endif %}{{ division.title }}{% if division.isValid == 0 %}</del>{% endif %}</td>
+              <td>
+                <select  class="form-control" >
+                    {% for id,value in division.teams %}
+                      <option>{{ value }}</option>
+                    {% endfor %}
+                </select>
+              </td>
+              <td>{{ division.createDate | date('d/m/Y H:i:s') }}</td>
+                            
+              <td> 
+                  <a href="{{ path('admin_division_view', {'slug': division.slug }) }}" class="icon" data-toggle="tooltip" data-placement="top" title="{{ 'global.detail' | trans }}" title="{{ 'global.detail' | trans }}"><i class="material-icons lms-material-icons">remove_red_eye</i></a>    
+                  <a href="{{ path('admin_division_edit', {'slug': division.slug }) }}" class="icon" data-toggle="tooltip" data-placement="top" title="{{ 'global.edit' | trans }}"><i class="material-icons lms-material-icons ">edit</i></a>
+                {% if CountUserDiv[division.slug] == 0 %}
+                  <a href="{{ path('admin_division_active', {'slug': division.slug }) }}" class="icon confirm" >{% if division.isValid %}<i class="material-icons lms-material-icons lms-text-primary" data-toggle="tooltip" data-original-title="{{ 'global.actif' | trans }}">toggle_on</i>{% else %}<i class="material-icons lms-material-icons" data-toggle="tooltip" data-original-title="{{ 'global.inactif' | trans }}">toggle_off</i>{% endif %}</a>     
+                {% else %}  
+                  <span class="badge badge-info" data-toggle="tooltip" data-placement="top" title="{{ 'users' | trans }}">{{CountUserDiv[division.slug]}}</span>  
+                {% endif %}               
+              </td>
+            </tr>  
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+  <script>
+      $(function() {
+          // ======================================================================================
+        //=======================================table===========================================
+        // ======================================================================================
+        $('#filtreForm th').each( function () {
+            var title = $(this).text();
+            $(this).html( '<input type="text" class="form-control" placeholder="{{"global.table.search"|trans}} '+title+'" />' );
+        } );
+
+        var table = $('#tablefiltre').DataTable({
+            colReorder: true,
+            responsive: false, 
+            ordering:  true, 
+            searching: true,
+            paging: true,
+            language: {
+                decimal:        "",
+                emptyTable:     "-",
+                info: "[_START_/_END_]  <b>{{"global.table.total"|trans}} : </b>_TOTAL_",
+                infoEmpty:      "0/0   [0]",
+                infoFiltered:   "({{"global.table.filteredForm"|trans}} _MAX_ {{"global.table.entries"|trans}})",
+                infoPostFix:    "",
+                thousands:      " ",
+                lengthMenu:     "<b>{{"global.table.Entries"|trans}}</b> _MENU_",
+                loadingRecords: "{{"global.table.loadingRecords"|trans}}...",
+                processing:     "{{"global.table.processing"|trans}}...",
+                search:         "<b>{{"global.table.search"|trans}}</b>:",
+                zeroRecords:    "{{"global.table.zeroRecords"|trans}}",
+                paginate: {next:       ">>", previous:   "<<"},
+                
+            },
+        });
+            
+        table.columns().eq( 0 ).each( function ( colIdx ) {
+            $( 'input', $('#filtreForm th')[colIdx] ).on( 'keyup change', function () {
+                table
+                    .column( colIdx )
+                    .search( this.value )
+                    .draw();
+            } );
+        } );
+
+            // ======================================================================================
+        //=======================================table end=========================================
+        // ======================================================================================
+      });
+
+      $('#dropdown-users .dropdown-menu').addClass('show');
+  </script>
+{% endblock %}

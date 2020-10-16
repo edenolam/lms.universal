@@ -1,0 +1,182 @@
+.lms {
+    &-actions {
+        @include transitionNormal;
+        align-items: center;
+        background-color: $gallery-gray;
+        color: $prussian-blue;
+        display: flex;
+        font-size: 1em;
+        font-weight: 500;
+        margin: 1em 0;
+        padding: .75rem 1.25rem;
+        .lms-material-icons {
+            @include transitionNormal;
+            color: $prussian-blue;
+            font-size: 2em;
+            margin-right: .5em;
+        }
+        &-block {
+            &-infos,
+            &-title,
+            &-content,
+            &-test {
+                color: $prussian-blue;
+            }
+            &-infos {
+                font-size: .875em;
+                font-style: italic;
+            }
+            &-content {
+                &-title {
+                    border-bottom: .0625em solid $scorpion-gray;
+                    border-top: .0625em solid $scorpion-gray;
+                    font-weight: 500;
+                }
+            }
+            &-ensemble {
+                &-title {
+                    font-weight: 500;
+                    &-actif {
+                        border-bottom: .25em solid $scooter-blue;
+                    }
+                }
+            }
+            &-test {
+                font-size: .875em;
+            }
+        }
+        &-button {
+            font-size: .875em;
+            font-weight: 500;
+            .lms-material-icons {
+                font-size: 1.4rem;
+                vertical-align: bottom;
+            }
+        }
+        &-title {
+            border-bottom: .0625em solid rgba(0, 0, 0, .2);
+            font-weight: 500;
+            &-level {
+                &-1 {
+                    display: inline-block;
+                    font-size: 1em;
+                    padding-bottom: .25em;
+                    &-actif {
+                        border-bottom: 0.25em solid $scooter-blue;
+                        span {
+                            padding-right: 1em;
+                        }
+                    }
+                }
+            }
+            &-infos {
+                font-size: .875em;
+            }
+        }
+        &-ensemble {
+            &-header {
+                line-height: 1.3;
+                &-infos {
+                    font-size: .875em;
+                    font-weight: 500;
+                }
+                >* {
+                    width: 35%;
+                }
+            }
+        }
+        &-questions,
+        &-pages {
+            &-header {
+                border-bottom: .0625em solid rgba(0, 0, 0, .2);
+                font-size: .875em;
+                font-weight: 500;
+                .expend {
+                    @include transitionNormal;
+                }
+                [aria-expanded=true] .expend {
+                    @include transitionNormal;
+                    transform: rotate(-180deg);
+                }
+            }
+            &-list {
+                font-size: .875em;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            &-item {
+                line-height: 1.3;
+                margin: 0 0 .5em;
+                &-actif {
+                    border-bottom: 0.25em solid $scooter-blue;
+                }
+            }
+        }
+        &-pages {
+            &-item {
+                cursor: all-scroll;
+                font-weight: 400;
+            }
+        }
+        &-test {
+            border-bottom: 0.25em solid transparent;
+            &-actif {
+                border-color: $scooter-blue;
+            }
+        }
+        &-alert {
+            background-color: $green-mid;
+            color: $white;
+            .lms-material-icons {
+                color: $white;
+                cursor: auto;
+            }
+        }
+        &-danger {
+            background-color: $cinnabar-red;
+            color: $white;
+            .lms-material-icons {
+                color: $white;
+            }
+            a {
+                &:hover,
+                &:active,
+                &:focus {
+                    color: inherit;
+                    text-decoration: underline;
+                }
+            }
+        }
+        &-warning {
+            background-color: $goldenrod-yellow;
+            color: $prussian-blue;
+            .lms-material-icons {
+                color: $prussian-blue;
+            }
+            a {
+                &:hover,
+                &:active,
+                &:focus {
+                    color: inherit;
+                    text-decoration: underline;
+                }
+            }
+        }
+        &-success {
+            background-color: $green-mid;
+            color: $white;
+            .lms-material-icons {
+                color: $white;
+            }
+            a {
+                &:hover,
+                &:active,
+                &:focus {
+                    color: inherit;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}

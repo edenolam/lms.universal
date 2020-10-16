@@ -1,0 +1,292 @@
+<!DOCTYPE html> 
+<head lang="{{ app.request.locale }}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Language" content="en" />
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#4188c9">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon"/>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" /> 
+    <title>{{ 'global.lcms' | trans }}</title>
+    <!-- Font-awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <!-- Table sorter-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/css/jquery.tablesorter.pager.min.css" rel="stylesheet" type="text/css" />
+    <!-- tableau bis -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/colreorder/1.5.0/css/colReorder.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.bootstrap4.min.css">
+    <!-- Bootstrap -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">  
+    <!-- Material Design -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('css/app') }}
+        {{ encore_entry_link_tags('css/concepteur') }}
+        {# {{ encore_entry_link_tags('css/admin') }} #}
+    {% endblock %}
+</head>
+
+<body>
+<!-- Main Container -->
+{% block header %}
+    {% include "home/header.html.twig" %}
+{% endblock header %}
+
+<!-- Partie centrale -->
+<div class="container-fluid p-0 lms-container">
+	<div class="d-flex">
+        {% include "home/menu.html.twig" %}
+        <!-- Contenu principal -->
+        <main class="lms-content">
+        {% block body %} {% endblock body %}
+        </main>
+        <!-- Fin contenu principal -->
+    </div>
+</div>	 
+    
+{% block footer %}
+    {% include "home/footer.html.twig" %}
+{% endblock footer %}
+
+<!-- LOADER -->
+<div class="spinner">
+    <div class="sk-folding-cube">
+        <div class="sk-cube1 sk-cube"></div>
+        <div class="sk-cube2 sk-cube"></div>
+        <div class="sk-cube4 sk-cube"></div>
+        <div class="sk-cube3 sk-cube"></div>
+    </div>
+    <div class="sa-icon sa-success hide animate">
+        <span class="sa-line sa-tip animateSuccessTip"></span>
+        <span class="sa-line sa-long animateSuccessLong"></span>
+        <div class="sa-placeholder"></div>
+        <div class="sa-fix"></div>
+        <p class="succes-question">{{'answer.success'|trans}}</p>
+    </div>
+    <div class="sa-error hide">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+            <circle class="path circle" fill="none" stroke="#D06079" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1"/>
+            <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8" y2="92.3"/>
+            <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="95.8" y1="38" x2="34.4" y2="92.2"/>
+        </svg>
+        <p class="fail-question">{{'answer.fail'|trans}}</p>
+    </div>
+</div>
+
+{% block js %}
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="  crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script  src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <!-- Toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <!-- Table Sorter -->
+    {# <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/extras/jquery.tablesorter.pager.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.widgets.js"></script> #}
+    <!--- tableau bis -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/colreorder/1.5.0/js/dataTables.colReorder.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.min.js"></script>
+    <!-- jQuery Validation -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.min.js"></script>
+<script>
+
+$(function()
+{   
+    // rotatingCard
+    /*$('#min-menu-btn').on('click', function() {
+        $('#headerMenuCollapse').toggleClass('minify');
+    });*/
+
+    // enableAccordeon
+    $('.lms-accordeon-open').on('click', function() {
+        var parentLevel = $(this).closest('.lms-accordeon-module-note');
+        var nextLevel = $(parentLevel).children('.lms-accordeon-container-note');
+        if ($(this).hasClass('lms-icon-cross')) {
+            $(this).addClass('lms-icon-plus').removeClass('lms-icon-cross');
+        } else {
+            $('.lms-accordeon-open').addClass('lms-icon-plus').removeClass('lms-icon-cross');
+            $(this).addClass('lms-icon-cross').removeClass('lms-icon-plus');
+        }
+        if ($(nextLevel).hasClass('lms-is-open')) {
+            $('.lms-accordeon-container-note').addClass('lms-is-close').removeClass('lms-is-open');
+        } else {
+            $('.lms-accordeon-container-note').addClass('lms-is-close').removeClass('lms-is-open');
+            $(nextLevel).addClass('lms-is-open').removeClass('lms-is-close');
+        }
+    });
+
+    // tabs = function() {
+    $('.lms-tab').on('click', function() {
+        $('.lms-tab').removeClass('show');
+        $(this).addClass('show');
+        $('.lms-panel').removeClass('active');
+        $($(this).attr('data-tab')).addClass('active');
+    });
+
+    // For menu
+    $('#myDropdown .dropdown-menu').on({
+        "click":function(e){
+            e.stopPropagation();
+        }
+    });
+
+    toastr.options={closeButton:!0,debug:!1,progressBar:!1,positionClass:"toast-top-right",onclick:null,showDuration:"300",hideDuration:"1000",timeOut:"15000",extendedTimeOut:"1000",showEasing:"swing",hideEasing:"linear",showMethod:"fadeIn","progressBar": true,hideMethod:"fadeOut"};
+
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        toastr.success("{{ flashMessage }}", "Success");    
+    {% endfor %}    
+
+    {% for flashMessage in app.session.flashbag.get('error') %}
+        toastr.error("{{ flashMessage }}", "Error");    
+    {% endfor %}  
+
+    {% if app.request.hasPreviousSession %}
+        {% for type, messages in app.session.flashBag.all %}
+            {% for message in messages %}
+                {% if type == "success" %}
+                    toastr.success("{{  message|trans({}, 'FOSUserBundle') }}", "Success"); 
+                {% elseif type == "error" %}    
+                    toastr.error("{{ message|trans({}, 'FOSUserBundle') }}", "Error"); 
+                {% elseif type == "info" %}    
+                    toastr.info("{{ message|trans({}, 'FOSUserBundle') }}", "Info");                 
+                {% endif %}    
+            {% endfor %}
+        {% endfor %}
+    {% endif %}    
+
+    $('.confirm').on('click', function () {
+      return confirm('Êtes-vous sûr(e) ?');
+    }); 
+
+    // lms clock
+    function showTime(){
+        var date=new Date,h=date.getHours(),m=date.getMinutes(),s=date.getSeconds(),session="AM";0==h&&(h=12),12<h&&(h-=12,session="PM");var time=(h=h<10?"0"+h:h)+":"+(m=m<10?"0"+m:m)+":"+(s=s<10?"0"+s:s)+" "+session;document.getElementById("lmsClockDisplay").innerText=time,document.getElementById("lmsClockDisplay").textContent=time,setTimeout(showTime,1e3);
+    }
+    showTime();
+
+    // // jQuery Validation
+    $("form").validate( {
+                 submitHandler: function(form) {
+                        $(".spinner").show();
+                        form.submit();
+                    },
+                 error: function() {
+                        $(".spinner").hide();
+                }
+             });
+    
+    /** Initialize tooltips */
+    $('[data-toggle="tooltip"]').tooltip();
+
+    $(".spinner").hide();
+    
+    $('.showSpinner').on('click', function() {
+        $(".spinner").show(); 
+    });
+
+    //search function
+    $('#toSearchButton').on('click', function(){
+        $('.spinner').fadeIn();
+        var data = {'textToSearch': $('#toSearch').val()};
+        $.ajax({
+            method: 'post',
+            url: $('#toSearchButton').attr('data-path'),
+            contentType: 'application/json; charset=utf-8',
+            data : JSON.stringify(data),
+        }).done(function(response){
+            var rep = JSON.parse(response)
+            var urlBrut = "{{ path('user_search_result',{'textSearch':"replace"})}}";
+            var urlNew = urlBrut.replace('replace',rep['textSearch']);
+            $('.spinner').fadeOut();
+            if(rep['status'] == 'ok'){
+                window.location.href = urlNew;
+            }else{
+                alert("Mot trop court")
+            }
+        }).fail(function(jxh, textmsg, errorThrown){
+             $('.spinner').fadeOut();
+        }); 
+    });
+
+});
+
+
+const menu = document.getElementById('headerMenuCollapse'),
+      btMenu = document.getElementById('min-menu-btn');
+
+let choice = localStorage.getItem('choice');
+
+function navigation() {
+
+    /* Comportement par défaut avant de cliquer sur le bouton du menu */
+    if (localStorage['choice'] === undefined) {
+
+        if (window.innerWidth > 768) {
+            menu.classList.remove('minify');
+
+        } else if (window.innerWidth <= 768) {
+            menu.classList.add('minify');
+        }
+
+    /* Application du choix mémorisé (menu ouvert ou fermé) */
+    } else if (localStorage['choice'] === 'open') {
+        menu.classList.remove('minify');
+
+    } else if (localStorage['choice'] === 'close') {
+        menu.classList.add('minify');
+    }
+
+    /* Modification du positionnement du menu ouvert suivant la largeur du viewport */
+    if (window.innerWidth > 768) {
+        menu.classList.remove('lms-container-nav-over');
+    }
+
+    if (window.innerWidth <= 768 && !menu.classList.contains('minify')) {
+        menu.classList.add('lms-container-nav-over');
+    }
+
+
+    btMenu.onclick = function() {
+
+        if (menu.classList.contains('minify')) {
+            menu.classList.remove('minify');
+            localStorage.setItem('choice', 'open');
+
+            if (window.innerWidth <= 768) {
+                menu.classList.add('lms-container-nav-over');
+            }
+
+        } else {
+            menu.classList.add('minify');
+            menu.classList.remove('lms-container-nav-over');
+            localStorage.setItem('choice', 'close');
+        }
+    };
+
+
+    if (window.addEventListener) {
+        window.addEventListener('resize', navigation, { passive: true });
+    }
+}
+
+navigation();
+
+</script>
+{% endblock js %}
+
+</body>
+</html>

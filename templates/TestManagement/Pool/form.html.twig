@@ -1,0 +1,21 @@
+{{ form_errors(form) }}                    
+        <div class="form-group">
+            {{ form_label(form.title, 'global.literal.title'|trans, {'label_attr': {}}) }}
+        </div>
+        <div class="form-group">  
+            {{ form_widget(form.title, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.nbRequQuestions, 'pool.nbRequQuestions'|trans, {'label_attr': {}}) }}
+        </div>
+        <div class="form-group">                        
+            {{ form_widget(form.nbRequQuestions, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.test, 'test.title'|trans, {'label_attr': {}}) }}
+        </div>  
+        <div class="form-group" >                       
+            {{ form_widget(form.test, { 'attr': {'class': 'form-control col-4', 'disabled': 'disabled'  } }) }}
+        </div>
+    {{ form_rest(form) }} 

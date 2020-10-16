@@ -1,0 +1,172 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <!-- navigator -->
+
+    <div class="lms-breadcrumb">
+      <span><a href="
+				{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+        {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+				{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+				{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+				{% else %} {{ path('home_dashboard') }}
+				{% endif %}">{{lms_name}}</a></span> > <span class="bold">{{'test.list.ariane_gestion'|trans}}</span>
+    </div>
+
+
+  <!-- title of page -->
+  <div class="page-title"><h2 class="title capitalize">{{'menu.test.title'|trans}}</h2><hr></div>
+
+  <div class="row"><div class="col-md-5"><p>  </p></div></div>
+
+  <!-- add button -->
+  {#<div class="row mb-5">
+    <div class="col-md-9"></div>
+    <div class="col-md-2">
+        <a target="_blank" href="{{path('admin_testManagement_add')}}" class="lms-button lms-button-blue">
+          {{'test.create.title'|trans}}
+       </a>
+    </div>
+  </div>#}
+  
+  <!-- body of page -->
+  <div class="card border-0">
+    	<div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped lms-table" id="tablefiltre">
+            <thead class="thead-dark">
+              <tr>
+                <th>{{'global.literal.title'|trans }}</th>
+                <th>{{'global.creation'|trans }}</th>
+                <th>{{'lov.type_test'|trans }}</th>
+                <th>{{'test.tirage_alea'|trans}}</th>
+                <th>{{'global.maj'|trans}}</th>
+                <th>{{'formation.module.literal'|trans}}</th>
+                <th>{{'test.theorical_duration'|trans}}</th>
+                <th>{{'global.literal.en_cours'|trans}}</th>
+                <th>{{'global.action'|trans }}</th>
+              </tr>
+            </thead>
+            <thead id="filtreForm">
+              <tr>
+                <th>{{'global.literal.title'|trans }}</th>
+                <th>{{'global.creation'|trans }}</th>
+                <th>{{'lov.type_test'|trans }}</th>
+                <th>{{'test.tirage_alea'|trans}}</th>
+                <th>{{'global.maj'|trans}}</th>
+                <th>{{'formation.module.literal'|trans}}</th>
+                <th>{{'test.theorical_duration'|trans}}</th>
+                <th>{{'global.literal.en_cours'|trans}}</th>
+                <th>{{'global.action'|trans }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for test in tests_list %}
+                <tr>
+                  <td class="{% if test.alert_success == true %}lms-text-warning{% endif%}">{{test.test.title}}</td>
+                  <td>{{test.test.createDate|date('d/m/Y')}}</td>
+                  <td>{{test.test.typeTest}}</td>
+                  <td>{{test.totalQuestionRequired}}/{{test.totalQuestion }}</td>
+                  <td>{{test.test.updateDate|date('d/m/Y')}}</td>
+                  <td>
+                    <select class="form-control">
+                      {% for moduleTest in test.test.moduleTests %}
+                        <option value="">{{moduleTest.module.title}} <i class="lms-text-secondary text-uppercase">V.{{ moduleTest.module.version}}</i> <i class="text-dark">({{ moduleTest.module.regulatoryRef }})</i></option>
+                        }
+                      {% endfor %}
+                    </select>
+                  </td> 
+                  <td>{{test.test.theoricalDuration|date('H:i')}}</td> 
+                  <td class="text-center">
+                  {% set m = null %}
+                    {% for moduleTest in test.test.moduleTests %}
+                       {% set m = moduleTest %} 
+                    {% endfor %}
+                    
+                    {% if test.test.moduleTest.module.activeSession == true %}
+                      <span  class="lms-text-danger">{{'global.literal.is_session'|trans}}</span>
+                    {% elseif m != null and m.module.isArchived == true %}
+                      <span  class="text-info">{{'global.archived'|trans}}</span>
+                    {% elseif m != null  and m.module.isValid == true %}
+                      <span class="lms-text-warning">{{'formation.module.published'|trans}}</span>
+                    {% elseif m != null and m.module.isValid == false %}
+                      <span  class="lms-text-success">{{'formation.module.unPublished'|trans}}</span>
+                    {% else %}
+                      <span  class="lms-text-warning">{{'error'|trans}}</span>
+                    {% endif %}       
+                  </td>
+                  <td> 
+                      {% if test.test.moduleTest.module.activeSession == false and m != null and  m.module.isValid == false and  m.module.isArchived == false %}
+                        <a class="icon" href="{{ path('admin_testManagement_edit', {'test': test.test.id }) }}" data-toggle="tooltip" data-original-title="{{ 'edit' | trans }}">
+                          <i class="material-icons lms-material-icons" data-toggle="tooltip" data-original-title="edit">edit</i>
+                        </a>
+                      {% else %}
+                          <a class="icon" href="{{ path('admin_testManagement_edit', {'test': test.test.id }) }}" data-toggle="tooltip" data-original-title="{{ 'edit' | trans }}">
+                              <i class="material-icons lms-material-icons" data-toggle="tooltip" data-original-title="edit">remove_red_eye</i>
+                          </a>
+                      {% endif %}
+                  </td>                        
+                </tr>
+              {% endfor %}    
+            </tbody>
+          </table>
+        </div>
+      </div>
+  </div>
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }} 
+
+<script>
+ $(function() {
+   // ======================================================================================
+        //=======================================table===========================================
+        // ======================================================================================
+        $('#filtreForm th').each( function () {
+            var title = $(this).text();
+            $(this).html( '<input type="text" class="form-control" placeholder="{{"global.table.search"|trans}} '+title+'" />' );
+        } );
+
+        var table = $('#tablefiltre').DataTable({
+            colReorder: true,
+            responsive: false, 
+            ordering:  true, 
+            searching: true,
+            paging: true,
+            language: {
+                decimal:        "",
+                emptyTable:     "-",
+                info: "[_START_/_END_]  <b>{{"global.table.total"|trans}} : </b>_TOTAL_",
+                infoEmpty:      "0/0   [0]",
+                infoFiltered:   "({{"global.table.filteredForm"|trans}} _MAX_ {{"global.table.entries"|trans}})",
+                infoPostFix:    "",
+                thousands:      " ",
+                lengthMenu:     "<b>{{"global.table.Entries"|trans}}</b> _MENU_",
+                loadingRecords: "{{"global.table.loadingRecords"|trans}}...",
+                processing:     "{{"global.table.processing"|trans}}...",
+                search:         "<b>{{"global.table.search"|trans}}</b>:",
+                zeroRecords:    "{{"global.table.zeroRecords"|trans}}",
+                paginate: {next:       ">>", previous:   "<<"},
+                
+            },
+        });
+            
+        table.columns().eq( 0 ).each( function ( colIdx ) {
+            $( 'input', $('#filtreForm th')[colIdx] ).on( 'keyup change', function () {
+                table
+                    .column( colIdx )
+                    .search( this.value )
+                    .draw();
+            } );
+        } );
+
+            // ======================================================================================
+        //=======================================table end=========================================
+        // ======================================================================================
+         
+  });
+
+</script>
+{% endblock %}

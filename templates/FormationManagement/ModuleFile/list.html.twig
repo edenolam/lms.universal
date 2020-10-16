@@ -1,0 +1,235 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}  
+<link rel="stylesheet" href="{{ asset("assets/bootstrap-editable/css/bootstrap-editable.css")}}" />
+{% endblock %}
+
+{% block body %}
+<!-- navigateur -->
+<div class="lms-breadcrumb">
+    <span><a href="
+        {% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+        {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+        {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+        {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+        {% else %} {{ path('home_dashboard') }}
+        {% endif %}">{{lms_name}}</a></span> > <span><a href="{{path('admin_module_list')}}">{{ 'menu.concepteur.module' | trans }}</a></span> > <span class="bold"> {{ module.title }} </span>
+</div>
+
+<!-- title of page -->
+<div class="page-title">
+  <h2 class="title capitalize">{{ 'menu.concepteur.module' | trans }} 
+    {% if module.type is not null %}
+    <small>({{ module.type.title }})</small>
+    {% endif %}</h2>
+  <hr/>
+</div>
+
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card border-0">
+            <div class="card-header">
+                <h3 class="card-title">
+                      <span class="lms-text-primary text-capitalize font-weight-bold">
+                    {% if module.activeSession == false %}
+                          {{ 'formation.module.action.edit' | trans }} </span>
+                    {% else %}
+                        {{ 'formation.module.infos' | trans }} </span>
+                    {% endif %}
+                </h3>
+            </div>        
+        </div>    
+        {% include "FormationManagement/Module/actions.html.twig" %} 
+    </div>
+    <div class="col-8">
+        <div class="card border-0">
+            <div class="card-header">
+                <h3 class="card-title"> 
+                      <span class="lms-text-primary text-capitalize font-weight-bold">{{ 'formation.module.action.edit' | trans }}</span>
+                  </h3>                     
+            </div>
+            <div class="card mt-2 border-0">
+              <div class="card-header">
+                {{ 'formation.download.list.title' | trans }}
+              </div>
+              <div class="card-body">
+                  <table class="table table-striped lms-table" id="tablefiltre">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th></th>
+                        <th></th>
+                        <th>{{ 'global.literal.title' | trans }}</th>
+                        <th>{{'formation.module_file.downloadable'|trans}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for file in module.files %}
+                        <tr>
+                          <td>
+                            <input type="checkbox" name="moduleFile" value="{{ file.id }}" 
+                            {% if file.isValid %}checked="checked"{% endif %}
+                              data-url="{{ path('admin_module_file_update', {'moduleFile': file.id, 'action': 'ACTION' })}}">
+                          </td>
+                          <td class="text-center">
+                            <a href="{{ asset("uploads/files/"~file.uri) }}" target="_blank">
+                            <i class="material-icons lms-material-icons">cloud_download</i></a> 
+                          </td>
+                          <td>
+                            <a href="#" class="ed_name" name="name" data-type="text" data-pk="{{ file.id }}" data-url="{{path('admin_module_file_edit_flash', {'moduleFile': file.id})}}" data-title="name">{{ file.name }}
+                            </a></td>
+                          <td>
+                            <a href="#" class="ed_isDownload" name="isDownload" data-type="select" data-pk="{{ file.id }}" data-url="{{path('admin_module_file_edit_flash', {'moduleFile': file.id})}}" data-title="Is Download">
+                              {% if file.isDownload %}<i class="material-icons lms-material-icons">check</i>{% else %}<i class="material-icons lms-material-icons">not_interested</i>{% endif %}
+                            </a>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                    <tfoot>
+                      {% if module.files | length > 0 %}
+                        <tr>
+                          <th colspan="4"  class="text-center">
+                            <a href="{{ path('admin_module_edit', {'slug': module.slug }) }}" class="lms-button lms-button-blue">
+                               <i class="material-icons lms-material-icons">save</i> {{ 'global.submit'|trans }}
+                            </a>
+                          </th>
+                        </tr>
+                      {% endif %}                      
+                    </tfoot>
+                  </table>    
+              </div>
+            </div>  
+
+          {% if module.activeSession == false and module.isValid == false and module.isArchived == false %}
+            <div class="card mt-2">
+              <div class="card-header">
+                {{ 'formation.download.create.title' | trans }}
+              </div>  
+              <div class="card-body">
+                {{ include('FormationManagement/ModuleFile/_form.html.twig') }}     
+              </div>
+            </div>  
+          {% endif %}  
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }} 
+<script src="{{ asset('assets/bootstrap-editable/js/bootstrap-editable.js') }}"></script>    
+<script>
+$(function () {
+  {% if module.activeSession == false and module.isValid == false %}
+    // download selected 
+    $("input[name='moduleFile']").on('change', function() {
+        var action = 'unselected';
+        if(this.checked){
+          action = 'selected';
+        } 
+        var route = $(this).data('url');
+        route = route.replace("ACTION", action);
+        var request =$.ajax({
+            url: route,
+            type: "POST",
+            cache: false,
+            dataType: "json",
+        });
+        $(".spinner").show();
+
+        request.done(function( data ) {          
+          if (data.success) {
+            toastr.success(data.message, "Success");
+          } else {
+            toastr.error(data.message, "Error");
+          }
+          $(".spinner").hide();
+        });
+
+        request.fail(function( jqXHR, textStatus ) {
+          toastr.error("Request failed: " + textStatus, "Error");          
+          $(".spinner").hide();
+        });        
+    });
+
+  {% endif %}  
+});
+
+{% if module.activeSession == false and module.isValid == false %}
+  window.onload = (event) => {
+    $.fn.editableform.buttons =
+          '<button type="submit" class="btn btn-success editable-submit btn waves-effect waves-light"><i class="material-icons lms-material-icons">done_outline</i></button>' +
+          '<button type="button" class="btn btn-danger editable-cancel btn waves-effect waves-light"><i class="material-icons lms-material-icons">clear</i></button>';
+
+    $('.ed_name').editable({
+            type: 'text',
+            name: 'name',
+            title: 'Name',        
+            mode: 'inline',
+            inputclass: 'form-control',
+            error: function(response, newValue) {
+                if (response.status == 'error') return response.message; 
+            }
+    });            
+
+    $('.ed_isDownload').editable({
+            type: 'select',
+            name: 'isDownload',
+            title: 'isDownload',
+            source: [
+              {value: 1, text: 'is download'},
+              {value: 0, text: 'is not download'}
+            ],        
+            mode: 'inline',
+            inputclass: 'form-control',
+            error: function(response, newValue) {
+                if (response.status == 'error') return response.message; 
+            }
+    });   
+  };
+{% endif %}
+
+  // ======================================================================================
+  //=======================================table===========================================
+  // ======================================================================================
+  var table = $('#tablefiltre').DataTable({
+          colReorder: true,
+          responsive: false, 
+          ordering:  true, 
+          searching: false,
+          paging: false,
+          language: {
+              decimal:        "",
+              emptyTable:     "-",
+              info: "[_START_/_END_]  <b>{{"global.table.total"|trans}} : </b>_TOTAL_",
+              infoEmpty:      "0/0   [0]",
+              infoFiltered:   "({{"global.table.filteredForm"|trans}} _MAX_ {{"global.table.entries"|trans}})",
+              infoPostFix:    "",
+              thousands:      " ",
+              lengthMenu:     "<b>{{"global.table.Entries"|trans}}</b> _MENU_",
+              loadingRecords: "{{"global.table.loadingRecords"|trans}}...",
+              processing:     "{{"global.table.processing"|trans}}...",
+              search:         "<b>{{"global.table.search"|trans}}</b>:",
+              zeroRecords:    "{{"global.table.zeroRecords"|trans}}",
+              paginate: {next:       ">>", previous:   "<<"},
+              
+          },
+      });
+      
+  table.columns().eq( 0 ).each( function ( colIdx ) {
+      $( 'input', $('#filtreForm th')[colIdx] ).on( 'keyup change', function () {
+          table
+              .column( colIdx )
+              .search( this.value )
+              .draw();
+      } );
+  } );
+
+  // ======================================================================================
+  //=======================================table end=========================================
+  // ======================================================================================
+
+</script>
+{% endblock %}    

@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+<link rel="stylesheet" href="{{ asset("assets/bootstrap-editable/css/bootstrap-editable.css")}}" />
+{% endblock %}
+
+{% block body %}
+<!-- navigator -->
+<div class="lms-breadcrumb">
+   &gt; <span>{{'test.list.ariane_gestion'|trans}}</span> &gt; "{{ test.title }}"
+</div>
+
+<!-- title of page -->
+<div class="d-flex align-items-center lms-title">
+	<h1 class="text-uppercase lms-h1">{{'menu.concepteur.test'|trans}} </h1><hr>
+</div>
+
+<!-- body of page -->
+<div class="row ml-2 mr-2">
+    <div class="col-lg-4">
+      <div class="card border-0">
+        <div class="card-header">
+            <h1 class="text-uppercase lms-h1">{{ 'actions' | trans }} </h1>
+        </div>
+      </div>  
+        {% include "TestManagement/Question/actions.html.twig" %}    
+    </div>
+    <div class="col-lg-8"> 
+        <div class="card border-0"> 
+            <div class="card-header">
+                <h1 class="text-uppercase lms-h1">{{ 'question.editor' | trans }} </h1>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+        				{% include "TestManagement/Question/view_lite.html.twig" %}		
+        			</div>  
+        			<div class="col-lg-6">
+        				{% include "TestManagement/Answer/list_lite.html.twig" %} 
+        				<form action="{{ path('admin_testManagement_answer_create', {"question": question.id} ) }}" method="post" class="card lms-bg-light" enctype="multipart/form-data">
+                            <div class="card-body">
+            					{% include "TestManagement/Answer/form.html.twig" %}
+            					<div class="form-group">
+            			            <button type="submit" class="lms-button lms-button-blue">
+            			                <i class="material-icons lms-material-icons">save</i> {{ 'global.submit'|trans }}
+            			            </button>  
+            			        </div>
+                            </div>    
+        				</form>				
+                    </div>       
+                </div> 
+            </div>     
+        </div>                      
+    </div>
+</div>
+	
+{% endblock %}
+
+{% block js %}
+    {{ parent() }} 
+
+<script src="{{ asset('assets/bootstrap-editable/js/bootstrap-editable.js') }}"></script>
+<script>
+window.onload = (event) => {
+    $.fn.editableform.buttons =
+          '<button type="submit" class="btn btn-success editable-submit btn waves-effect waves-light"><i class="material-icons lms-material-icons">done_outline</i></button>' +
+          '<button type="button" class="btn btn-danger editable-cancel btn waves-effect waves-light"><i class="material-icons lms-material-icons">clear</i></button>';
+
+    $('.ed_content').editable({
+            type: 'text',
+            name: 'content',
+            title: 'Answer',        
+            mode: 'inline',
+            inputclass: 'form-control',
+            error: function(response, newValue) {
+                if (response.status == 'error') return response.message; 
+            }
+    });   
+
+     $('.ed_content').editable('option', 'validate', function(v) {
+        if(!v) return 'Required field!';
+    });   
+    
+
+    $('.ed_status').editable({
+            type: 'select',
+            name: 'Good Answer',
+            title: 'Answer',
+            source: [
+              {value: 1, text: 'Good Answer'},
+              {value: 0, text: 'Bad Answer'}
+            ],        
+            mode: 'inline',
+            inputclass: 'form-control',
+            error: function(response, newValue) {
+                if (response.status == 'error') return response.message; 
+            }
+    });   
+};
+</script>
+{% endblock %}

@@ -1,0 +1,81 @@
+
+<div class="mt-2">
+   <p class="bold">{{ 'menu.formation.title' | trans }}</p>
+
+   <a href="{{ path('admin_audit_list', {'entity': 'Session' }) }}" class="lms-button {% if entity == "Session" %}lms-button-blue{% endif %} mt-2">   
+      {{ 'menu.formation.session.list' | trans }}
+   </a>
+   <a href="{{ path('admin_audit_list', {'entity': 'FormationPath' }) }}" class="lms-button {% if entity == "FormationPath" %}lms-button-blue{% endif %} mt-2"> 
+      {{ 'menu.formation.formation_path.list' | trans }}
+   </a>
+   <a href="{{ path('admin_audit_list', {'entity': 'Course' }) }}" class="lms-button {% if entity == "Course" %}lms-button-blue{% endif %} mt-2">   
+      {{ 'menu.formation.course.list' | trans }}
+   </a>
+   <a href="{{ path('admin_audit_list', {'entity': 'Module' }) }}" class="lms-button {% if entity == "Module" %}lms-button-blue{% endif %} mt-2">   
+   {{ 'menu.formation.module.list' | trans }}
+   </a>
+   <a href="{{ path('admin_audit_list', {'entity': 'Page' }) }}" class="lms-button {% if entity == "Page" %}lms-button-blue{% endif %} mt-2">   
+      {{ 'menu.formation.page.list' | trans }}
+   </a>
+   <a href="{{ path('admin_audit_list', {'entity': 'Knowledge' }) }}" class="lms-button {% if entity == "Knowledge" %}lms-button-blue{% endif %} mt-2">   
+      {{ 'menu.formation.knowledge.list' | trans }}
+   </a>
+   <a href="{{ path('admin_audit_list', {'entity': 'Reference' }) }}" class="lms-button {% if entity == "Reference" %}lms-button-blue{% endif %} mt-2">   
+      {{ 'menu.formation.reference.list' | trans }}
+   </a>
+   <a href="{{ path('admin_audit_list', {'entity': 'Lexique' }) }}" class="lms-button {% if entity == "Lexique" %}lms-button-blue{% endif %} mt-2">   
+      {{ 'menu.lexique.list' | trans }}
+   </a>  
+   <a href="{{ path('admin_audit_versioning_module') }}" class="lms-button {% if "admin_audit_versioning_module" in app.request.attributes.get('_route') %}lms-button-blue{% endif %} mt-2">   
+      {{ 'audit.versioning_module.title' | trans }}
+   </a> 
+</div>
+
+<div class="mt-2">
+   <p class="bold">{{ 'menu.test.title' | trans }}</p>
+
+   <a href="{{ path('admin_audit_list', {'entity': 'Test' }) }}" class="lms-button {% if entity == "Test" %}lms-button-blue{% endif %} mt-2">   
+      {{ 'menu.test.title' | trans }}
+   </a>
+    <a href="{{ path('admin_audit_list', {'entity': 'Pool' }) }}" class="lms-button {% if entity == "Pool" %}lms-button-blue{% endif %} mt-2">   
+      {{ 'menu.pool.title' | trans }}
+   </a>
+   <a href="{{ path('admin_audit_list', {'entity': 'Question' }) }}" class="lms-button {% if entity == "Question" %}lms-button-blue{% endif %} mt-2">   
+      {{ 'menu.question.title' | trans }}
+   </a>
+   <a href="{{ path('admin_audit_list', {'entity': 'Answer' }) }}" class="lms-button {% if entity == "Answer" %}lms-button-blue{% endif %} mt-2">   
+      {{ 'menu.answer.title' | trans }}
+   </a>
+</div>
+ 
+<div class="mt-2">
+   <p class="bold">{{ 'menu.user.title' | trans }}</p>
+
+   <a href="{{ path('admin_audit_list', {'entity': 'Laboratory' }) }}" class="lms-button {% if entity == "Laboratory" %}lms-button-blue{% endif %} mt-2">  
+      {{ 'laboratory.menu' | trans }}
+   </a>
+   <a href="{{ path('admin_audit_list', {'entity': 'Division' }) }}" class="lms-button {% if entity == "Division" %}lms-button-blue{% endif %} mt-2">   
+      {{ 'division.menu' | trans }}
+   </a>
+   <a href="{{ path('admin_audit_list', {'entity': 'Team' }) }}" class="lms-button {% if entity == "Team" %}lms-button-blue{% endif %} mt-2">   
+      {{ 'team.menu' | trans }}
+   </a>
+   <a href="{{ path('admin_audit_list', {'entity': 'Group' }) }}" class="lms-button {% if entity == "Group" %}lms-button-blue{% endif %} mt-2">   
+      {{ 'group.menu' | trans }}
+   </a>
+    <a href="{{ path('admin_audit_list', {'entity': 'User' }) }}" class="lms-button {% if entity == "User" %}lms-button-blue{% endif %} mt-2">   
+      {{ 'user.menu' | trans }}
+   </a>
+</div>
+
+<div class="mt-2">
+   <p class="bold">{{ 'menu.tuteur.audit' | trans }}</p>
+   <a href="{{ path('admin_audit_list', {'entity': 'UserModuleFollow' }) }}" class="lms-button {% if entity == "UserModuleFollow" %}lms-button-blue{% endif %} mt-2">  
+      {{ 'menu.tuteur.userModuleFollow' | trans }}
+   </a>
+   <a href="{{ path('admin_audit_list', {'entity': 'UserTest' }) }}" class="lms-button {% if entity == "UserTest" %}lms-button-blue{% endif %} mt-2">   
+      {{ 'menu.tuteur.userTest' | trans }}
+   </a>
+</div>
+                           
+

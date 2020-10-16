@@ -1,0 +1,14 @@
+.try-icon{
+    display: inline-block;
+    width: 6px;
+    height: 15px;
+    border: 1px solid $prussian-blue;
+
+    &:not(:first-child){
+        margin-left: 2px;
+    }
+
+    &.done{
+        background-color: $prussian-blue;
+    }
+}

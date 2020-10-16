@@ -1,0 +1,138 @@
+.blue-button {
+    text-align: center;
+    display: inline-block;
+    max-width: 225px;
+    width: 100%;
+    height: 45px;
+    border-radius: 22.5px;
+    background-color: $scooter-blue;
+    color: $white;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin: 0 auto;
+    border: 2px solid $scooter-blue;
+    transition: all ease-in-out 0.3s;
+    line-height: 42px;
+    outline: none;
+    &:hover {
+        background-color: $white;
+        color: $scooter-blue;
+        text-decoration: none;
+    }
+}
+
+.grey-button {
+    text-align: center;
+    line-height: 42px;
+    display: inline-block;
+    max-width: 150px;
+    width: 100%;
+    height: 45px;
+    border-radius: 22.5px;
+    border: 2px solid $gallery-grey;
+    color: $scorpion-grey;
+    text-transform: uppercase;
+    background-color: $gallery-grey;
+    transition: all ease-in-out 0.3s;
+    outline: none;
+    &:hover {
+        background-color: darken($gallery-grey, 20%);
+        color: $scorpion-grey;
+        text-decoration: none;
+    }
+}
+
+.download-button {
+    display: block;
+    height: 30px;
+    border: 1px solid $black;
+    color: black;
+    background-color: $white;
+    text-transform: uppercase;
+    border-radius: 15px;
+    line-height: 30px;
+    text-align: center;
+    text-decoration: none;
+    padding: 0 15px;
+    font-weight: 300;
+    transition: all ease-in-out 0.3s;
+    &:hover {
+        text-decoration: none;
+        background-color: black;
+        color: $white;
+        i {
+            color: $white;
+        }
+    }
+    i {
+        display: inline;
+        transition: all ease-in-out 0.3s;
+    }
+}
+
+.test-button {
+    display: block;
+    height: 35px;
+    line-height: 35px;
+    text-transform: uppercase;
+    position: relative;
+    padding: 0 24px;
+    text-align: center;
+    color: $white;
+    border-radius: 17.5px;
+    transition: all ease-in-out 0.3s;
+    &:hover {
+        background-color: $white !important;
+        text-decoration: none;
+        &#eval {
+            color: $eval;
+            svg {
+                fill: $eval;
+            }
+        }
+        &#training {
+            color: $prussian-blue;
+            svg {
+                fill: $prussian-blue;
+            }
+        }
+    }
+    &#eval {
+        background-color: $eval;
+        border: 2px solid $eval;
+    }
+    &#training {
+        background-color: $prussian-blue;
+        border: 2px solid $prussian-blue;
+    }
+    svg {
+        position: absolute;
+        left: 25px;
+        top: 50%;
+        fill: $white;
+        transform: translateY(-50%);
+        transition: all ease-in-out 0.3s;
+    }
+}
+
+.cancel-button {
+    background-color: $gallery-grey;
+    display: inline-block;
+    max-width: 225px;
+    width: 100%;
+    height: 45px;
+    border-radius: 22.5px;
+    color: $gray;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin: 0 auto;
+    border: 2px solid $gray;
+    transition: all ease-in-out 0.3s;
+    line-height: 42px;
+    text-align: center;
+    outline: none;
+    &:hover {
+        background-color: $white;
+        text-decoration: none;
+    }
+}

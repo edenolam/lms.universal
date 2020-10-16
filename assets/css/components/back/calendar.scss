@@ -1,0 +1,35 @@
+#calendar{
+
+
+    .fc-toolbar{
+
+        .btn-group{
+
+            .btn-primary{
+                background-color: $gallery-grey;
+                border: none;
+                outline: none;
+                transition: background-color ease-in-out 0.3s;
+
+                &:hover{
+                    background-color: darken($gallery-grey, 20%);
+                }
+
+                .fa:before{
+                    color: $scorpion-grey;
+                }
+            }
+        }
+
+        h2{
+            text-transform: capitalize;
+            line-height: 33px;
+        }
+    }
+
+    .fc-event.opened{
+        background-color: $gallery-grey;
+        border: none;
+        color: $scorpion-grey;
+    }
+}

@@ -1,0 +1,82 @@
+{% extends 'UserFrontManagement/emails/mail_layout.html.twig' %}
+
+{% block mail %}
+<tr mc:hideable >
+    <td align="center" valign="top">
+        <!-- CENTERING TABLE // -->
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#eeeeee">
+            <tr>
+                <td align="center" valign="top">
+                    <!-- FLEXIBLE CONTAINER // -->
+                    <table border="0" cellpadding="0" cellspacing="0" width="600" class="flexibleContainer">
+                        <tr>
+                            <td align="center" valign="top" width="600" class="flexibleContainerCell">
+                                <table border="0" cellpadding="30" cellspacing="0" width="100%">
+                                    <tr>
+                                        <td align="center" valign="top">
+
+                                            <!-- CONTENT TABLE // -->
+                                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                <tr>
+                                                    <td valign="top" class="textContent">
+                                                        <div mc:edit="body" style="text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#5F5F5F;line-height:135%;">
+                                                        <br/><b>{{ 'userFrontManagement.mail.layout.bonjour'|trans }} {{ user.firstname }} {{ user.lastname}}</b>
+                                                        <br/>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+<table border="0" cellpadding="0" cellspacing="0"  width="100%" style="text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:13px;color:#5F5F5F;">
+
+    {% for formation in formations_todo|slice(0,1) %}
+        <tr>
+            <td>
+                {{ 'userFrontManagement.mail.body.formation_ouvert'|trans({'%title%':formation.session.formationPath.title }) }}  <a href="{{ base_url }}" target="_blank">{{lms_name}}</a>.
+                {{ 'userFrontManagement.mail.body.formation_ouvert_date'|trans({'%closing%':formation.session.closingDate|date('d/m/Y') }) }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ 'userFrontManagement.mail.body.access_module'|trans }}
+                <ul>
+                    {% for module in modules_todo %}
+                        <li>{{ module.module.title }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+        {#% for formation in formations_todo %}
+            <tr>
+                <td>
+                    {% if formation.userformationSessionfollow is not null %}
+                        Vous avez faire que {{ formation.userformationSessionfollow.percentage }}% de la formation "<a href="{{ base_url }}" target="_blank">{{ formation.session.formationPath.title }}</a>", il terminera à {{ formation.session.closingDate | date('d/m/Y')}}.
+                    {% else %}
+                        Vous avez la formation "<a href="{{ base_url }}" target="_blank">{{ formation.session.formationPath.title }}</a>" à faire avant le {{ formation.session.closingDate | date('d/m/Y')}}.
+                    {% endif %}
+                    <ul>
+                         {% for formationPathModule in formation.session.formationPath.formationPathModules %}
+                            <li>{{ formationPathModule.module.title }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %#}
+</table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- // FLEXIBLE CONTAINER -->
+                </td>
+            </tr>
+        </table>
+        <!-- // CENTERING TABLE -->
+    </td>
+</tr>
+<!-- // MODULE ROW -->
+{% endblock %}
+

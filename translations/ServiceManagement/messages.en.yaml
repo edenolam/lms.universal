@@ -1,0 +1,21 @@
+audit:
+  list: "Audit trail"
+  id: ID of the aduit
+  user: Username
+  action: Action
+  curent_value: Valuable item
+  datetime: Date and time
+  view_details: Details
+  export: Export Excel
+  ref: Reference of the audit
+  ref_entity: Entity reference
+  versioning_module:
+    title: Tracking the version upgrades
+    hasRequiredRole: Right of the user to perform this action
+    jusitification: justification 
+    version: Version
+search:
+  error: This content is under review.
+
+  
+

@@ -1,0 +1,32 @@
+.lms {
+    &-dashboard {
+        &-title {
+            font-size: 1.375em;
+            margin: .5em 0 0;
+        }
+        &-subtitle {
+            font-size: 1.125em;
+            font-weight: 300;
+        }
+        &-link {
+            color: inherit;
+        }
+        &-number {
+            color: $scooter-blue;
+            font-size: 1.6875em;
+            font-weight: 700;
+        }
+        &-list,
+        &-note {
+            font-size: .8125em;
+            font-weight: 300;
+        }
+        &-list {
+            list-style: none;
+            padding: 0 0 0 .3em;
+        }
+        i.lms-material-icons {
+            cursor: auto;
+        }
+    }
+}

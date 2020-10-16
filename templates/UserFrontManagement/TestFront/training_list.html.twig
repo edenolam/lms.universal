@@ -1,0 +1,184 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<div class="page-header">
+  <div class="page-title">
+    {{'userFrontManagement.formation.detail'|trans}}
+  </div>
+</div>
+<div class="container formation-user-detail">
+  <div class="row row-cards">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">{{module.title}} - {{'userFrontManagement.page.trainings'|trans}}</h3>
+      </div>
+      <div class="card-body">
+
+        <div style="max-width: 750px; margin: 50px auto; position: relative;" class="graph-container">
+          <canvas id="total-graph"></canvas>
+        </div>
+
+        {% for userTest in userTests %}
+
+          <div class="row row-cards">
+            <div class="card card-collapsed">
+
+              <div class="card-header">
+                <h3 class="card-title">{{'userFrontManagement.page.training'|trans}} n°{{userTest.userTest.tentative}}</h3>
+                <div class="card-options">
+                  <a href="#" class="card-options-collapse" data-toggle="card-collapse">{{"v"}}</a>
+                </div>
+              </div>
+
+              <div class="card-body">
+
+                <div class="row">
+                    <div class="col col-lg-9">
+
+                      <div class="card">
+                        <div class="card-header">
+                          <h3 class="card-title">{{'userFrontManagement.title.question'|trans}}</h3>
+                        </div>
+                        <div class="card-body">
+                          {% for correction in userTest.correction %}
+                            <h4>{{correction.questionTitle}}</h4>
+                            <div class="table-responsive">
+                              <table class="table card-table table-vcenter text-nowrap">
+                                <thead>
+                                  <tr>
+                                    <th>{{'userFrontManagement.test.answer'|trans}}</th>
+                                    <th class="text-center">{{'userFrontManagement.test.user_answer'|trans}}</th>
+                                    <th class="text-center">{{'userFrontManagement.test.correction'|trans}}</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {% for answer in correction.answers %}
+                                    <tr>
+                                      <td>{{answer['title']|raw}}</td>
+                                      <td class="text-center">
+                                        {% if answer['voted'] %}
+                                           <i class="material-icons lms-material-icons lms-text-success">check</i>
+                                        {% else %}
+                                           <i class="material-icons lms-material-icons lms-text-danger">close</i>
+                                        {% endif %}
+                                      </td>
+                                      <td class="text-center">
+                                        {% if answer['status'] %}
+                                           <i class="material-icons lms-material-icons lms-text-success">check</i>
+                                        {% else %}
+                                           <i class="material-icons lms-material-icons lms-text-danger">close</i>
+                                        {% endif %}
+                                      </td>
+                                    </tr>
+                                  {% endfor %}
+                                </tbody>
+                              </table>
+                            </div>
+                            <hr>
+                          {% endfor %}
+                            
+    
+                        </div>
+                      </div>
+    
+                    </div>
+                    <div class="col col-lg-3">
+    
+                      <div class="card">
+                        <div class="card-header">
+                          <h3 class="card-title">{{'userFrontManagement.title.result'|trans}}</h3>
+                        </div>
+                        <div class="card-body">
+                          <div>
+                            <canvas id="graph-{{userTest.userTest.id}}" data-tentative="{{userTest.userTest.tentative}}" data-id="{{userTest.userTest.id}}" class="score-graph" data-score="{{userTest.userTest.score}}" data-total="{{userTest.userTest.test.questions|length}}"></canvas>
+                          </div>
+                        </div>
+                      </div>
+    
+                    </div>
+                </div>
+                
+              </div>
+
+            </div>
+          </div>
+
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+	{{ parent() }}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+	<script>
+    $(document).ready(function(){
+      var totalScoreArray = [];
+      var tentativeArray = [];
+      /* PIE GRAPH */
+      $('.score-graph').each(function(elem){
+        var score = $(this).attr('data-score');
+        totalScoreArray.push(score);
+        tentativeArray.push($(this).attr('data-tentative'));
+        var wrong = $(this).attr('data-total') - score;
+        var id = $(this).attr('data-id');
+        var ctx = $('#graph-' + id);
+        var chart = new Chart(ctx, {
+          type: 'doughnut',
+          aspectRatio: 1,
+          responsive: false,
+          data: {
+            labels: ['{{'formation.module.score'|trans}}', '{{'userFrontManagement.test.wrong_answers'|trans}}'],
+            datasets: [{
+              data: [score, wrong],
+              backgroundColor: [
+                '#4CAF50',
+                '#D06079'
+              ]
+            }]
+          },
+          options: {
+            cutoutPercentage: 50,
+            title: {
+              display: true,
+              text: score + '/' + $(this).attr('data-total'),
+              fontSize: 15
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        });
+      });
+
+      console.log(totalScoreArray);
+      /* GLOBAL LINE GRAPH*/
+      var totalCtx = $('#total-graph');
+      var totalChart = new Chart(totalCtx, {
+        type: 'line',
+        data: {
+          labels: tentativeArray,
+          datasets: [{
+            backgroundColor: '#00000',
+            borderColor: '#4CAF50',
+            label: '{{'formation.module.score'|trans}}',
+            data: totalScoreArray,
+            fill: false
+          }]
+        },
+        options: {
+          scales: {
+            xAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: '{{'global.literal.tentatives'|trans}}'
+              }
+            }]
+          }
+        }
+      });
+    });
+	</script>
+{% endblock %}

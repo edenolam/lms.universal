@@ -1,0 +1,13 @@
+footer.footer{
+    background-color: $gray;
+    color: $white;
+    border: none;position: relative;
+
+    a{
+        color: $white;
+    }
+
+    a:not(.btn){
+        color: $white;
+    }
+}

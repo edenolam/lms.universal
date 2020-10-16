@@ -1,0 +1,42 @@
+:root {
+    --breakpoint-sm: 36em;
+    --breakpoint-md: 48em;
+    --breakpoint-lg: 62em;
+    --breakpoint-xl: 75em;
+}
+
+// COLORS
+$white: white;
+$black: black;
+$gray: #848282;
+$gray-dark: #333;
+$prussian-blue: #00354F;
+$gallery-gray: #eeeeee;
+$scooter-blue: #2FAEDE;
+$scorpion-gray: #5B5B5B;
+$cinnabar-red: #E34747;
+$jaffa-orange: #F17046;
+$downy-blue: #63C4CA;
+$goldenrod-yellow: #F9CB6B;
+$tiara-gray: #C2CDCE;
+$athens-gray: #E9E9F0;
+$eval: #F17046;
+$green-mid: #95A21C;
+$green-dark: #42540E;
+// RESPONSIVE BREAKPOINTS
+$sm: 36em;
+$md: 48em;
+$lg: 62em;
+$xl: 75em;
+$xxl: 88em;
+$xxxl: 110em;
+// RADIUS
+$radiusButton: 1.5em;
+$radiusProgressBar: $radiusButton;
+// BORDER
+$borderButton: .125em;
+$borderProgressBar: .0625em;
+$borderInput: .0625em;
+// TAILLE
+$logoWidth: 11.6875em;
+$logoHeight: 11.6875em;

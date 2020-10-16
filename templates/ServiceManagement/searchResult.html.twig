@@ -1,0 +1,248 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<div class="lms-breadcrumb">
+            <span><a href="
+                {% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+                {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+                {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+                {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+                {% else %} {{ path('home_dashboard') }}
+                {% endif %}">{{lms_name}}</a></span> > <span class="bold">{{'global.search'|trans}}</span>
+
+	</div>
+    <div class="page-title">
+		<h1 class="title"><span class="capitalize">{{'global.search'|trans}}</span></h1>
+		<hr>
+	</div>
+
+  <div class="col-12 ">
+    <div class="row lms-bg-warning border p-2 ml-5 mr-5">
+      <div class="col-8 bold">{{'global.result_search'|trans}} : " {{textSearch}} "</div>
+      <div class="col-4 bold d-flex flex-row-reverse">({{'global.nb_search_result'|trans}} : {{totalfind}})</div>
+    </div>
+    <div class="col-12 row ">
+      <div class="col-4 h-100 ">
+        <div class="col-12 m-3 p-3 h-50 lms-bg-light border border-info">
+          <p class="bold">{{'global.search_formation'|trans}}</p>
+          {% if formationSearchs|length > 0 %}
+            <ul id="list_formation">
+              {% for formationSearch in formationSearchs %}
+                <li><a href="{{ path('user_search_access_formation', {'slug': formationSearch.slug,'textSearch':textSearch}) }}" class="showSpinner">{{formationSearch.title}}</a></li>
+              {% endfor %}
+            </ul>
+            <div class="d-flex flex-row-reverse">
+              <nav aria-label="Formation navigation" >
+                <ul class="pagination mt-5 lms-text-secondary">
+                  {% if pageFormation > 0 %}
+                    <li class="page-item">
+                      <a class="page-link" href="#" aria-label="Previous" id="Previous_Formation">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                  {% set totalPageFormation = countTotalresultFormation/maxresult + 1 %}
+                  <li class="mt-3">{{pageFormation + 1 }}/{{totalPageFormation|round}}</li>
+                  {% if pageFormation < countTotalresultFormation/maxresult - 1 %}
+                    <li class="page-item">
+                      <a class="page-link" href="#" aria-label="Next" id="Next_Formation">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                </ul>
+              </nav>
+            </div>
+          {% else %}
+            <p class="pt-4 font-italic">{{"global.search_no_result"|trans}}</p>
+          {% endif %}
+
+        </div>
+        <div class="col-12 m-3 p-3 h-50 lms-bg-light border border-success">
+          <p class="bold">{{'global.search_module'|trans}}</p>
+          {% if moduleSearchs|length > 0 %}
+            <ul id="list_module">
+              {% for moduleSearch in moduleSearchs %}
+                <li><a href="{{ path('user_search_access_module', {'slug': moduleSearch.slug,'textSearch':textSearch}) }}" class="showSpinner">{{moduleSearch.title}}</h3>
+              <i >({{ moduleSearch.regulatoryRef }})</i></a></li>
+              {% endfor %}
+            </ul>
+            <div class="d-flex flex-row-reverse">
+              <nav aria-label="Formation navigation ">
+                <ul class="pagination mt-5 lms-text-secondary">
+                  {% if pageModule > 0 %}
+                    <li class="page-item">
+                      <a class="page-link" href="#" aria-label="Previous" id="Previous_Module">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                  {% set totalpageModule = countTotalresultModule/maxresult + 1 %}
+                  <li class="mt-3">{{pageModule + 1 }}/{{totalpageModule|round}}</li>
+                  {% if pageModule < countTotalresultModule/maxresult - 1 %}
+                    <li class="page-item">
+                      <a class="page-link" href="#" aria-label="Next" id="Next_Module">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                </ul>
+              </nav>
+            </div>
+          {% else %}
+            <p class="pt-4 font-italic">{{"global.search_no_result"|trans}}</p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-4 ">
+        <div class="col-12 m-3 p-3 h-100 lms-bg-light border border-warning">
+          <p class="bold">{{'global.search_course'|trans}}</p>
+          {% if courseSearchs|length > 0 %}
+            <ul id="list_course">
+              {% for courseSearch in courseSearchs %}
+                <li><a href="{{ path('user_search_access_course', {'slug': courseSearch.slug,'textSearch':textSearch}) }}" class="showSpinner">{{courseSearch.title}}</a></li>
+              {% endfor %}
+            </ul>
+            <div class="d-flex flex-row-reverse">
+              <nav aria-label="Formation navigation ">
+                <ul class="pagination mt-5 lms-text-secondary">
+                  {% if pageCourse > 0 %}
+                    <li class="page-item">
+                      <a class="page-link" href="#" aria-label="Previous" id="Previous_Course">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                  {% set totalpageCourse = countTotalresultCourse/maxresult + 1 %}
+                  <li class="mt-3">{{pageCourse + 1 }}/{{totalpageCourse|round}}</li>
+                  {% if pageCourse < countTotalresultCourse/maxresult - 1 %}
+                    <li class="page-item">
+                      <a class="page-link" href="#" aria-label="Next" id="Next_Course">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                </ul>
+              </nav>
+            </div>
+          {% else %}
+            <p class="pt-4 font-italic">{{"global.search_no_result"|trans}}</p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-4 ">
+        <div class="col-12 m-3 p-3 h-100 lms-bg-light border border-secondary">
+          <p class="bold">{{'global.search_page'|trans}}</p>
+          {% if pageSearchs|length > 0 %}
+            <ul id="list_page">
+              {% for pageSearch in pageSearchs %}
+                <li><a href="{{ path('user_search_access_page', {'slug': pageSearch.slug,'textSearch':textSearch}) }}" class="showSpinner">{{ pageSearch.title }} </a></li>
+              {% endfor %}
+            </ul>
+          <div class="d-flex flex-row-reverse">
+              <nav aria-label="Formation navigation ">
+                <ul class="pagination mt-5 lms-text-secondary">
+                  {% if pagePage > 0 %}
+                    <li class="page-item">
+                      <a class="page-link" href="#" aria-label="Previous" id="Previous_Pages">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                  {% set totalpagePage = countTotalresultPage/maxresult + 1 %}
+                  <li class="mt-3">{{pagePage + 1 }}/{{totalpagePage|round}}</li>
+                  {% if pagePage < countTotalresultPage/maxresult - 1 %}
+                    <li class="page-item">
+                      <a class="page-link" href="#" aria-label="Next" id="Next_Pages" data-path="{{ path('user_search_result',{'textSearch':textSearch})}}">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                </ul>
+              </nav>
+            </div>
+          {% else %}
+            <p class="pt-4 font-italic">{{"global.search_no_result"|trans}}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block js %}
+  {{ parent() }} 
+  <script>
+    $(document).ready(function(){
+
+      $('#Next_Formation').on('click', function(event){
+         changePage("{{textSearch}}", "{{pageFormation+1}}", "{{pageModule}}", "{{pageCourse}}", "{{pagePage}}");
+      });  
+
+      $('#Previous_Formation').on('click', function(event){
+         changePage("{{textSearch}}", "{{pageFormation-1}}", "{{pageModule}}", "{{pageCourse}}", "{{pagePage}}");
+      }); 
+
+       $('#Next_Module').on('click', function(event){
+         changePage("{{textSearch}}", "{{pageFormation}}", "{{pageModule+1}}", "{{pageCourse}}", "{{pagePage}}");
+      });  
+
+      $('#Previous_Module').on('click', function(event){
+         changePage("{{textSearch}}", "{{pageFormation}}", "{{pageModule-1}}", "{{pageCourse}}", "{{pagePage}}");
+      });
+       $('#Next_Course').on('click', function(event){
+         changePage("{{textSearch}}", "{{pageFormation}}", "{{pageModule}}", "{{pageCourse+1}}", "{{pagePage}}");
+      });  
+
+      $('#Previous_Course').on('click', function(event){
+         changePage("{{textSearch}}", "{{pageFormation}}", "{{pageModule}}", "{{pageCourse-1}}", "{{pagePage}}");
+      });
+       $('#Next_Pages').on('click', function(event){
+         changePage("{{textSearch}}", "{{pageFormation}}", "{{pageModule}}", "{{pageCourse}}", "{{pagePage+1}}");
+      });  
+
+      $('#Previous_Pages').on('click', function(event){
+         changePage("{{textSearch}}", "{{pageFormation}}", "{{pageModule}}", "{{pageCourse}}", "{{pagePage-1}}");
+      });
+      
+       
+    });
+
+    function changePage(textSearch, pageFormation, pageModule, pageCourse, pagePage){
+      $('.spinner').fadeIn();
+      answerJSON = {
+        'textSearch' : textSearch,
+        'pageFormation' : pageFormation,
+        'pageModule' : pageModule,
+        'pageCourse' : pageCourse,
+        'pagePage' : pagePage,
+      };
+      $.ajax({
+        method: 'post',
+        url: $('#Next_Pages').attr('data-path'),
+        contentType: 'application/json; charset=utf-8',
+        data : JSON.stringify(answerJSON)
+      }).done(function(response){
+        var rep = JSON.parse(response)
+        var urlBrut = "{{ path('user_search_result',{'textSearch':"replacetxt",'pageFormation':"replaceFormation",'pageModule':"replaceModule",'pageCourse':"replaceCourse",'pagePage':"replacePage"})}}";
+        var urlNew = urlBrut.replace('replacetxt',rep['textSearch']);
+        urlNew = urlNew.replace('replaceFormation',rep['pageFormation']);
+        urlNew = urlNew.replace('replaceModule',rep['pageModule']);
+        urlNew = urlNew.replace('replaceCourse',rep['pageCourse']);
+        urlNew = urlNew.replace('replacePage',rep['pagePage']);
+        if(rep['status'] == 'ok'){
+          
+          window.location.href = urlNew;
+          $('.spinner').fadeOut();
+        }else{
+          $('.spinner').fadeOut();
+        }
+      }).fail(function(jxh, textmsg, errorThrown){
+        $('.spinner').fadeOut();
+      });
+    }
+    
+  </script>
+{% endblock %}

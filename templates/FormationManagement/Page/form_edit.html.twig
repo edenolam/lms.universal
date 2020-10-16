@@ -1,0 +1,206 @@
+<div class="row lms-bg-light">
+    {{ form_errors(form) }}
+    <div class="col-4 mt-2">
+        <div class="form-group">
+            {{ form_label(form.course, 'formation.course.title'|trans) }}
+        </div>
+    </div>
+    <div class="col-8">
+        <div class="form-group">
+            {{ form_widget(form.course, { 'attr': {'class': 'form-control'} }) }}
+            {{ form_errors(form.course) }}
+        </div>
+    </div>
+</div>
+
+<div class="row lms-bg-light">
+    <div class="col-4">
+        <div class="form-group">
+            {{ form_label(form.inSummary,  'formation.page.in_summary'|trans) }}
+        </div>
+    </div>
+    <div class="col-8">
+        <div class="form-group">
+            {{ form_widget(form.inSummary, { 'attr': {'class': 'form-control '} }) }}
+            {{ form_errors(form.inSummary) }}
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-12 form-group">
+        {{ form_label(form.pageType, 'formation.page.type'|trans) }}
+        {{ form_widget(form.pageType, { 'attr': {'class': 'form-control lms-bg-light'}}) }}
+    </div>
+</div>
+
+<div class="row lms-bg-light">
+
+    <div class="col-lg-12 mt-2 row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                {{ form_label(form.title, 'formation.formation_path.title'|trans) }}
+                {{ form_widget(form.title, { 'attr': {'class': 'form-control'} } ) }}
+                {{ form_errors(form.title) }}
+            </div>
+        </div>
+        {% if page.pageType.conditional == 'video' and page.uri %}
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <video style="width: 100%;" controls src="{{ asset("uploads/files/"~page.uri) }}"></video>
+                </div>
+            </div>
+        {% elseif page.pageType.conditional == 'pdf' %}
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <iframe src="{{ asset("uploads/files/"~page.uri) }}" width="100%" height="350px"></iframe>
+                </div>
+            </div>
+        {% endif %}
+        <div class="col-lg-12">
+            <div class="form-group {% if page.pageType.conditional == 'video' or  page.pageType.conditional == 'pdf' %}{% else %}d-none{% endif %}">
+                {% if page.pageType.conditional == 'video' %}
+                    {{ form_label(form.file, 'formation.page.edit_video'|trans) }}
+                {% elseif page.pageType.conditional == 'pdf' %}
+                    {{ form_label(form.file, 'formation.page.edit_pdf'|trans) }}
+                {% endif %}
+                {{ form_widget(form.file, { 'attr': {'class': 'form-control'} } ) }}
+                {{ form_errors(form.file) }}
+            </div>
+        </div>
+        {% if page.uriAudio is not null and page.pageType.conditional != 'video' %}
+            <div class="col-lg-12 text-center">
+                <div id="audio-container" class="lms-audio">
+                    <audio id="audio-file" src="{{ asset('uploads/files/'~page.uriAudio) }}"></audio>
+                    <div id="audio-controls" class="lms-audio-controls" data-state="hidden">
+                        <button id="playpause" type="button" data-state="play">Play/Pause</button>
+                        <div class="lms-audio-progress">
+                            <progress id="progress" value="0" min="0">
+                                <span id="progress-bar"></span>
+                            </progress>
+                        </div>
+                        <button id="mute" type="button" data-state="mute">Mute/Unmute</button>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div class="col-lg-12 {% if page.pageType.conditional == 'video' %}d-none{% endif %}">
+            <div class="form-group ">
+                {% if page.uriAudio is not null %}
+                    {{ form_label(form.fileAudio, 'formation.page.edit_file_audio'|trans) }}
+                {% else %}
+                    {{ form_label(form.fileAudio, 'formation.page.file_audio'|trans) }}
+                {% endif %}
+                {{ form_widget(form.fileAudio, { 'attr': {'class': 'form-control'} } ) }}
+                {{ form_errors(form.fileAudio) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 mt-2">
+        <div class="form-group {% if page.pageType.conditional == 'video' or  page.pageType.conditional == 'pdf' %}d-none{% else %}d-none{% endif %}">
+            <label>{{ 'formation.page.previsualsation'|trans }}</label>
+        </div>
+        <div class="form-group {% if page.pageType.conditional == 'video' or  page.pageType.conditional == 'pdf' %}d-none{% endif %}">
+            {{ page.contentCode|raw }}
+        </div>
+        <div class="form-group {% if page.pageType.conditional == 'video' or  page.pageType.conditional == 'pdf' %}d-none{% endif %}">
+            {{ form_label(form.contentCode, 'formation.page.content_code'|trans) }}
+            {{ form_widget(form.contentCode, { 'attr': {'class': 'form-control'} } ) }}
+            {{ form_errors(form.contentCode) }}
+        </div>
+        <div class="form-group {% if page.pageType.conditional == 'video' or  page.pageType.conditional == 'pdf' %}d-none{% endif %}">
+            {{ form_label(form.jsCode, 'formation.page.js_code'|trans) }}
+            {{ form_widget(form.jsCode, { 'attr': {'class': 'form-control editor-area'} } ) }}
+            {{ form_errors(form.jsCode) }}
+            <div id="editor"></div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.textualContent, 'formation.page.textual_content'|trans) }}
+            {{ form_widget(form.textualContent, { 'attr': {'class': 'form-control'} } ) }}
+            {{ form_errors(form.textualContent) }}
+        </div>
+    </div>
+
+</div>
+
+{# connaissance / ref biblio#}
+<div class="col-lg-12 row mt-2 mb-2 border p-2">
+    {# ref connaissance #}
+    <div class="col-lg-12">
+        <div class="form-group ">
+        {% if is_granted('ROLE_GESTION_PAGE') %}
+           <a href="{{ path('admin_page_knowledge', {'module': module.id, 'course': course.id, 'page': page.id }) }}">{{ 'formation.page.connaissances' | trans }} <i class="material-icons lms-material-icons">edit</i></a>
+        {% else %}
+                {{ 'formation.page.connaissances' | trans }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <table class="table">
+              {% for knowledge in page.knowledges %}
+                <tr>
+                    <td><i class="material-icons lms-material-icons">school</i> {{ knowledge.title }}</td>
+                </tr>
+              {% endfor %}   
+            </table>
+        </div>    
+    </div>
+</div>
+
+<div class="col-lg-12 row mt-2 mb-2 border p-2">
+    {# ref biblio #}
+    <div class="col-lg-12">
+        <div class="form-group ">
+        {% if is_granted('ROLE_GESTION_PAGE') %}
+           <a href="{{ path('admin_page_reference', {'module': module.id, 'course': course.id, 'page': page.id }) }}">{{ 'formation.page.reference' | trans }} <i class="material-icons lms-material-icons">edit</i></a>
+           {% else %}
+                {{ 'formation.page.reference' | trans }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <table class="table">
+              {% for pageReference in page.pageReferences %}
+                <tr>
+                    <td><i class="material-icons lms-material-icons">menu_book</i> {{ pageReference.reference.title }}, {{ pageReference.reference.author }}, {{ pageReference.reference.date | date('d/m/Y') }}</td>
+                </tr>
+              {% endfor %}   
+            </table>
+        </div> 
+    </div>       
+</div>
+
+<div class="col-lg-12 row mt-2 mb-2 border p-2">
+    {# ref download #}
+    <div class="col-lg-12">
+        <div class="form-group ">
+            {% if is_granted('ROLE_GESTION_PAGE') %}
+                <a href="{{ path('admin_page_download', {'module': module.id, 'course': course.id, 'page': page.id }) }}">{{ 'formation.page.download' | trans }} <i class="material-icons lms-material-icons">edit</i></a>
+            {% else %}
+                {{ 'formation.page.download' | trans }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <table class="table">
+              {% for download in page.downloads %}
+                <tr>
+                    <td>
+                        <a href="{{ asset("uploads/files/"~download.uri) }}">
+                        {% if download.isDownload == true %}<i class="material-icons lms-material-icons">cloud_download</i>{% endif %}&nbsp;&nbsp;&nbsp;&nbsp;{{ download.title }}
+                        </a>
+                    </td>
+                </tr>
+              {% endfor %}   
+            </table>
+        </div> 
+    </div>       
+</div>
+
+{% if module.activeSession == false and module.isValid == false and module.isArchived == false and is_granted('ROLE_GESTION_PAGE')  %}
+    <div class="col-12 text-center mt-2">
+        <button type="submit" class="lms-button lms-button-blue">
+            <i class="material-icons lms-material-icons">save</i>  {{ 'global.submit'|trans }}
+        </button>
+    </div>
+{% endif %} 
+
+{{ form_widget(form) }}

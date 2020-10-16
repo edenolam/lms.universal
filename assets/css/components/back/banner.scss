@@ -1,0 +1,169 @@
+.banner{
+    background-color: $gallery-grey;
+    display: flex;
+    width: 100%;
+    padding: 20px;
+    justify-content: flex-start;
+    align-content: center;
+    position: relative;
+    
+    .img-container{
+        display: inline-block;
+        min-width: 130px;
+        
+        img{
+            display: block;
+            width: 100%;
+        }
+    }
+
+    .infos-container{
+        font-size: 1.25em;
+        font-weight: 300;
+        align-self: center;
+        margin-left: 20px;
+        
+        .infos{
+            color: $scorpion-grey;
+            font-weight: 400;
+
+            span{
+                color: $prussian-blue;
+                font-weight: 500;
+            }
+
+            &.small{
+                font-size: 0.75em;
+                font-weight: 400;
+            }
+
+            &+.infos{
+                margin-top: 20px;
+            }
+        }
+    }
+}
+
+.bannerFormation{
+    color:#5B5B5B;
+    font-size:24px;
+    font-weight: bold;
+    
+}
+
+.title{
+    color:#EEEEEE;
+    font-size:24px;
+    text-transform: uppercase;
+}
+
+.bannerModule{
+    background-color:#eeeeee;
+    width: 100%;
+    padding: 0px;
+    justify-content: flex-start;
+    margin-left: 0;
+    position: relative;
+
+    @media screen and (max-width: $tablet){
+        padding-bottom: 15px;
+    }
+
+    .image{
+        padding-left: 0px;
+
+        @media screen and (max-width: $tablet){
+            padding-left: 15px;
+            padding-top: 15px;
+        }
+
+        img{
+            min-height: 110px;
+
+            @media screen and (max-width: $tablet){
+                display: block;
+                min-width: initial;
+                max-width: 350px;
+                margin: 0 auto;
+            }
+
+            @media screen and (max-width: $mobile){
+                max-width: 200px;
+            }
+        }
+    }
+
+    .texte{
+        h1{
+            font-weight: 700;
+            margin: 17px 0px 10px 0px;
+        }
+        p{
+            font-size: 13px;
+            font-weight: 400;
+        }
+    }
+
+    .date{
+        text-align: right;
+        padding-right: 0px;
+        position: absolute;
+        top: 11px;
+        right: 0;
+
+        @media screen and (max-width: $tablet){
+            position: static;
+            height: 37px;
+            margin-top: 21px;
+        }
+
+        .date-periode{
+            background-color: #00354F;
+            color:white;
+            padding: 13px 10px 10px 10px;
+            font-size: 12px;
+            font-weight: bolder;
+            margin-right: -4px;
+        }
+        .date-jour{
+            background-color: #2FAEDE;
+            color:white;
+            padding: 13px 10px 10px 10px;
+            font-size: 12px;
+            font-weight: bolder;
+        }
+    }
+
+    .syllabus{
+        max-width:120px;
+        background-color: white;
+        height: 30px;
+        color: black;
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+        font-size: 13px;
+        border: 1px solid black;
+        line-height: 10px;
+        transition: all ease-in-out 0.3s;
+
+        @media screen and (max-width: $tablet){
+            position: static;
+            height: 37px;
+            margin-top: 21px;
+        }
+
+        i{
+            transition: color ease-in-out 0.3s;
+        }
+
+        &:hover{
+            background-color: black;
+            color: white;
+
+            i{
+                color: white;
+            }
+        }
+    }
+}

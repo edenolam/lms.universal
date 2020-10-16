@@ -1,0 +1,39 @@
+Titre;question;type de réponse;réponse;statut de la réponse
+;Quel sera le taux de remboursement de l’assurance maladie d’une spécialité ayant obtenu un SMR important ?;2;100%;0
+;Quel sera le taux de remboursement de l’assurance maladie d’une spécialité ayant obtenu un SMR important ?;2;65%;1
+;Quel sera le taux de remboursement de l’assurance maladie d’une spécialité ayant obtenu un SMR important ?;2;30%;0
+;Quel sera le taux de remboursement de l’assurance maladie d’une spécialité ayant obtenu un SMR important ?;2;15%;0
+;Quel sera le taux de remboursement de l’assurance maladie d’une spécialité ayant obtenu un SMR modéré ?;2;100%;0
+;Quel sera le taux de remboursement de l’assurance maladie d’une spécialité ayant obtenu un SMR modéré ?;2;65%;0
+;Quel sera le taux de remboursement de l’assurance maladie d’une spécialité ayant obtenu un SMR modéré ?;2;30%;1
+;Quel sera le taux de remboursement de l’assurance maladie d’une spécialité ayant obtenu un SMR modéré ?;2;15%;0
+;Quel sera le taux de remboursement de l’assurance maladie d’une spécialité ayant obtenu un SMR faible ?;2;65%;0
+;Quel sera le taux de remboursement de l’assurance maladie d’une spécialité ayant obtenu un SMR faible ?;2;30%;0
+;Quel sera le taux de remboursement de l’assurance maladie d’une spécialité ayant obtenu un SMR faible ?;2;15%;1
+;Quel sera le taux de remboursement de l’assurance maladie d’une spécialité ayant obtenu un SMR faible ?;2;Non remboursé;0
+;Un médicament d’exception utilisé dans le respect de la fiche d’informations thérapeutiques est remboursé par l’assurance maladie.;2;VRAI;1
+;Un médicament d’exception utilisé dans le respect de la fiche d’informations thérapeutiques est remboursé par l’assurance maladie.;2;FAUX;0
+;Quel est le taux de remboursement par l’assurance maladie d’une spécialité utilisée pour le traitement de maladies figurant sur une liste d’Affection Longue Durée ?;2;100%;1
+;Quel est le taux de remboursement par l’assurance maladie d’une spécialité utilisée pour le traitement de maladies figurant sur une liste d’Affection Longue Durée ?;2;65%;0
+;Quel est le taux de remboursement par l’assurance maladie d’une spécialité utilisée pour le traitement de maladies figurant sur une liste d’Affection Longue Durée ?;2;30%;0
+;Quel est le taux de remboursement par l’assurance maladie d’une spécialité utilisée pour le traitement de maladies figurant sur une liste d’Affection Longue Durée ?;2;Non remboursé;0
+;Quel est le taux de remboursement par l’assurance maladie d’un médicament d’exception utilisé en dehors des indications prévues par la fiche d’informations thérapeutiques ?;2;100%;0
+;Quel est le taux de remboursement par l’assurance maladie d’un médicament d’exception utilisé en dehors des indications prévues par la fiche d’informations thérapeutiques ?;2;65%;0
+;Quel est le taux de remboursement par l’assurance maladie d’un médicament d’exception utilisé en dehors des indications prévues par la fiche d’informations thérapeutiques ?;2;30%;0
+;Quel est le taux de remboursement par l’assurance maladie d’un médicament d’exception utilisé en dehors des indications prévues par la fiche d’informations thérapeutiques ?;2;Non remboursé;1
+;Quel organisme décide du taux de remboursement des spécialités remboursables ?;2;UNCAM;1
+;Quel organisme décide du taux de remboursement des spécialités remboursables ?;2;HAS (Commission de la Transparence);0
+;Quel organisme décide du taux de remboursement des spécialités remboursables ?;2;CEPS;0
+;Quel organisme décide du taux de remboursement des spécialités remboursables ?;2;ANSM;0
+;Le tarif forfaitaire de responsabilité (TFR) calculé à partir du prix de vente hors taxe des génériques du groupe.;2;VRAI;0
+;Le tarif forfaitaire de responsabilité (TFR) calculé à partir du prix de vente hors taxe des génériques du groupe.;2;FAUX;1
+;Dans un même groupe générique, le TFR des génériques et de leur princeps est identique.;2;VRAI;1
+;Dans un même groupe générique, le TFR des génériques et de leur princeps est identique.;2;FAUX;0
+;Certaines spécialités princeps et génériques peuvent être soumises à un remboursement sur une même base appelée TFR.;2;VRAI;1
+;Certaines spécialités princeps et génériques peuvent être soumises à un remboursement sur une même base appelée TFR.;2;FAUX;0
+;Pour les spécialités d’un groupe générique soumis au TFR, la prise en charge de l’assurance maladie est basée :;2;Sur le TFR si le prix de vente est supérieur au TFR;1
+;Pour les spécialités d’un groupe générique soumis au TFR, la prise en charge de l’assurance maladie est basée :;2;Sur le prix de vente si le prix de vente est supérieur au TFR;0
+;Toutes les spécialités génériques d’un même groupe ont un prix public identique et inférieur à celui du médicament de référence (sauf cas particulier du TFR).;2;VRAI;1
+;Toutes les spécialités génériques d’un même groupe ont un prix public identique et inférieur à celui du médicament de référence (sauf cas particulier du TFR).;2;FAUX;0
+;L’UNCAM fixe le taux de remboursement des médicaments selon le SMR de la spécialité.;2;VRAI;1
+;L’UNCAM fixe le taux de remboursement des médicaments selon le SMR de la spécialité.;2;FAUX;0

@@ -1,0 +1,322 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/fullcalendar-3.9.0/fullcalendar.min.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/fullcalendar-3.9.0/fullcalendar.print.css')}}" media="print" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block body %}
+
+    <!-- Fil d'ariane -->
+    <div class="lms-breadcrumb">
+        <a href="
+            {% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+            {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+            {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+            {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+            {% else %} {{ path('home_dashboard') }}
+            {% endif %}">{{lms_name}}</a> > <span>{{'menu.dashboard.literal'|trans}}</span>
+    </div>
+
+    <!-- Bannière -->
+    {# <div class="d-flex flex-wrap align-items-center">
+        <div class="col-lg-2 p-0">
+            {% if app.user.photo %}
+                <div class="lms-banner-avatar-container">
+                    <img src="{{ asset('uploads/user/') }}{{ app.user.photo }}" class="d-block m-auto lms-banner-avatar-img" alt="Avatar">
+                </div>
+            {% else %}
+                <div class="lms-banner-avatar-container">
+                    <img src="{{ asset('images/core/avatar.svg') }}" class="d-block m-auto lms-banner-avatar-img" alt="Avatar">
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-lg-7 text-center text-lg-left lms-banner-dashboard-container">
+            <p class="lms-banner-dashboard-title">{{'global.literal.welcome'|trans}}
+                <span class="lms-banner-dashboard-firstName">{{ app.user.firstname }}</span>
+                <span class="lms-banner-dashboard-lastName">{{ app.user.lastname }}</span>
+                !</p>
+            
+            <p class="lms-banner-dashboard-text">
+                {{'dashboard.you_are'|trans}}
+                {% set group_name = '' %}
+                {% if is_granted('ROLE_SUPER_ADMIN') %} 
+                    {% set group_name = 'dashboard.superadmin'|trans %}
+                {% else %}
+                    {% set position = 1 %}
+                    {% if is_granted('ROLE_APPRENANT') %}
+                        {% set group_name = 'dashboard.apprenant'|trans %}
+                        {% set position = position + 1 %}
+                    {% endif %}
+                    {% if is_granted('ROLE_TUTEUR') %} 
+                        {% if position == 1 %}
+                            {% set group_name = 'dashboard.tuteur'|trans %}
+                        {% elseif position == app.user.groups|length %}
+                            {% set group_name = group_name ~ " et " ~ 'dashboard.tuteur'|trans %}
+                        {% else %}
+                            {% set group_name = group_name ~ ", " ~ 'dashboard.tuteur'|trans %}
+                        {% endif %}
+                        {% set position = position + 1 %}
+                    {% endif %}
+                    {% if is_granted('ROLE_RESPONSABLE_FORMATION') %} 
+                        {% if position == 1 %}
+                            {% set group_name = 'dashboard.respo'|trans %}
+                        {% elseif position == app.user.groups|length %}
+                            {% set group_name = group_name ~ " et " ~ 'dashboard.respo'|trans %}
+                        {% else %}
+                            {% set group_name = group_name ~ ", " ~ 'dashboard.respo'|trans %}
+                        {% endif %}
+                        {% set position = position + 1 %}
+                    {% endif %}
+                    {% if is_granted('ROLE_CONCEPTEUR') %} 
+                        {% if position == 1 %}
+                            {% set group_name = 'dashboard.concepteur'|trans %}
+                        {% elseif position == app.user.groups|length %}
+                            {% set group_name = group_name ~ " et " ~ 'dashboard.concepteur'|trans %}
+                        {% else %}
+                            {% set group_name = group_name ~ ", " ~ 'dashboard.concepteur'|trans %}
+                        {% endif %}
+                        {% set position = position + 1 %}
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %} 
+                        {% if position == 1 %}
+                            {% set group_name = 'dashboard.admin'|trans %}
+                        {% elseif position == app.user.groups|length %}
+                            {% set group_name = group_name ~ " et " ~ 'dashboard.admin'|trans %}
+                        {% else %}
+                            {% set group_name = group_name ~ ", " ~ 'dashboard.admin'|trans %}
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+                {{group_name}}
+                {% if app.user.laboratory is not null %}
+                    {{'dashboard.in_Lab'|trans}} {{app.user.laboratory.title}}
+                {% endif %}
+            </p>   
+        </div>
+        <div class="col-lg-12 p-0 lms-switchToggle">
+            {% if is_granted('ROLE_GESTION_BILANS') %}
+                <div class="d-flex justify-content-end" id="switchToggle">
+                    <a href="{{path('dashboard_tuteur')}}">
+                        <input checked id="switch" type="checkbox"/>
+                        <label for="switch">Toggle</label>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div> #}
+
+    <!-- Switch -->
+    {% if is_granted('ROLE_GESTION_BILANS') %}
+    <div id="myTab" class="d-flex flex-wrap justify-content-center align-items-center text-center lms-progress-formation">
+        <div class="col-6 px-0 text-uppercase show lms-tab"><span>{{'global.literal.learner'|trans}}</span></div>
+        <div class="col-6 px-0 text-uppercase lms-tab"><a href="{{path('dashboard_tuteur')}}">{{'global.literal.tuteur'|trans}}</a></div>
+    </div>
+    {% endif %}
+
+    <!-- Titre -->
+    <div class="d-flex align-items-center lms-title">
+        <h1 class="text-uppercase lms-h1">{{'dashboard.title'|trans}}</h1>
+        <hr>
+    </div>
+
+    <!-- Contenu -->
+    <div class="d-flex flex-wrap lms-dashboard">
+
+        <!--- Mes formations -->
+        <div class="col-sm-12 col-lg-6 col-xl-4 p-0 mb-3 pr-lg-3">
+            <div class="d-sm-flex justify-content-around align-items-center p-3 h-100 text-center lms-bg-gray">
+                <img src="{{asset('images/core/mes-formations.svg')}}" alt="{{'menu.userFormation.title'|trans}}" class="img-fluid"/>
+                <p>
+                <span class="d-inline-block text-uppercase lms-dashboard-title">{{'menu.userFormation.title'|trans}}</span><br>
+                    {% if userLastFormation is not null %}
+                        {% if userLastFormation.lastCourse is not null and userLastFormation.lastPage is not null %}
+                            <a href="{{ path('user_formation_module_organisation', {'slugSession' : userLastFormation.session.slug, 'formationPath': userLastFormation.session.formationPath.id, 'slugModule': userLastFormation.lastModule.slug, 'slugChapter': userLastFormation.lastCourse.slug, 'slugPage': userLastFormation.lastPage.slug}) }}" class="mt-3 lms-button lms-button-blue">
+                            {{'global.literal.reprendre'|trans}}</a>
+                        {% elseif userLastFormation.lastModule is not null and userLastFormation.lastModule.isScorm == true %}
+                            <a class="mt-3 lms-button lms-button-blue" href="{{ path('user_formation_module_organisation_scorm', {'slugSession': userLastFormation.session.slug, 'slugModule': userLastFormation.lastModule.slug}) }}">{{'global.literal.start'|trans}}</a>
+                        {% else %}
+                            <a href="{{ path('user_formation') }}" class="mt-3 lms-button lms-button-blue">{{'dashboard.i_begin'|trans}}</a>    
+                        {% endif %}
+                    {% else %}
+                        <a href="{{ path('user_formation') }}" class="mt-3 lms-button lms-button-blue">{{'dashboard.i_begin'|trans}}</a>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <!--- Formations en cours -->
+        <div class="col-sm-6 col-lg-3 col-xl-2 p-0 pr-sm-3 mb-3">
+            <div class="p-3 h-100 text-center lms-bg-gray">
+                <a class="d-flex flex-column align-items-center lms-dashboard-link" href="{{ path('user_formation') }}">
+                    <img src="{{asset('images/core/formation-en-cours.svg')}}" alt="{{'userFrontManagement.formation.onGoing'|trans}}" class="img-fluid pb-3"/>
+                    <p class="m-0">
+                        <span class="lms-dashboard-number">{{ formationsActive }}</span>
+                        <br>
+                        <span class="text lms-dashboard-subtitle">{{'userFrontManagement.formation.onGoing'|trans}}</span>
+                    </p>
+                </a>
+            </div>
+        </div>
+
+        <!--- Formations termineés -->
+        <div class="col-sm-6 col-lg-3 col-xl-2 p-0 pr-xl-3 mb-3">
+            <div class="p-3 h-100 text-center lms-bg-gray">
+                <a class="lms-dashboard-link" href="{{ path('user_formation', {'downFormation' : true}) }}">
+                    <img src="{{asset('images/core/formation-terminee.svg')}}" alt="{{'userFrontManagement.formation.done'|trans}}" class="img-fluid pb-3"/>
+                    <p class="m-0">
+                        <span class="lms-dashboard-number">{{downFormations}}</span>
+                        <br>
+                        <span class="text lms-dashboard-subtitle">{{'userFrontManagement.formation.done'|trans}}</span>
+                    </p>
+                </a>
+            </div>
+        </div>
+
+        <!--- Formations mes notifications -->
+        <div class="col-sm-12 col-lg-6 col-xl-4 p-0 pr-lg-3 pr-xl-0 mb-3">
+            <div class="h-100 p-3 lms-bg-gray">
+                <p>
+                    <i class="material-icons lms-material-icons lms-material-icons-blue">
+                        notification_important
+                    </i>
+                    <span class="lms-dashboard-subtitle">{{'userFrontManagement.formation.notification'|trans}}</span>
+                </p>
+                <ul class="lms-dashboard-list">
+                {% if evals_todo | length > 0 %}
+                    <li>
+                        <i class="material-icons lms-material-icons">
+                            check_circle_outline</i>
+                        <span>{{ evals_todo | length }}
+                            évaluations à réaliser</span>
+                    </li>
+                {% endif %}
+                {% if modules_todo | length > 0 %}
+                    <li>
+                        <i class="material-icons lms-material-icons">
+                            check_circle_outline</i>
+                        <span>{{ modules_todo | length }}
+                            {{'global.literal.notifModule'|trans}}</span>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Agenda -->
+        <div class="col-sm-12 col-lg-6 col-xl-4 mb-3 p-0">
+            <div class="h-100 p-3">
+                <p>
+                    <i class="material-icons lms-material-icons lms-material-icons-blue">
+                        calendar_today
+                    </i>
+                    <span class="lms-dashboard-subtitle">{{'global.literal.agenda'|trans}}</span>
+                    <div id="calendar" class="lms-calendar"></div>
+                </p>
+            </div>
+        </div>
+
+        <!-- Mes évaluations à finir -->
+        <div class="col-sm-6 col-lg-6 col-xl-2 mb-3 p-0 pr-lg-3">
+            <div class="d-flex flex-column h-100 p-3 lms-bg-gray">
+                <div class="d-flex flex-lg-column align-items-center mb-3">
+                    <img alt="{{'dashboard.eval_to_finish'|trans}}" class="img-fluid pr-3 pb-3" src="{{asset('images/core/evaluation-top.svg')}}"/>
+                    <p class="lms-dashboard-subtitle">{{'dashboard.eval_to_finish'|trans}}</p>
+                </div>
+                <ul class="m-2 p-1 lms-dashboard-list">
+                    {% for eval in evals_todo %}
+                        <li>
+                            <a class="" href="{{path('test_front_begin', {'sessionSlug' : eval.session, 'moduleSlug' : eval.module, 'testSlug' : eval.test})}}">{{eval.test_name}}</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            {{'userFrontManagement.formation.eval_empty'|trans}}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-6 col-xl-2 p-0 pr-sm-0 pl-sm-3 pl-lg-0 mb-3 pr-xl-3 mt-sm-0">
+
+          <div class="col-12 mb-sm-0 lms-h-50 p-3 lms-bg-gray">
+              <a href="{{ path('user_certificat_attestation') }}" class="d-flex flex-xl-column justify-content-around align-items-center lms-dashboard-link">
+                  <img src="{{asset('images/core/certification-top.svg')}}" alt="{{'global.literal.certificat'|trans}}" class="img-fluid pb-3" />
+                  <p class="m-0 text-center">
+                      <span class="lms-dashboard-number">{{certificats|length}}</span>
+                      <br>
+                      <span class="text bold lms-dashboard-subtitle">{{'global.literal.certificat'|trans}}</span>
+                  </p>
+              </a>
+          </div>
+          <div class="col-12 mt-3 lms-h-50 p-3 lms-bg-gray">
+              <a href="{{ path('user_certificat_attestation') }}" class="d-flex flex-xl-column justify-content-around align-items-center lms-dashboard-link">
+                  <img src="{{asset('images/core/attestation-top.svg')}}" alt="{{'global.literal.attestation'|trans}}" class="img-fluid pb-3" />
+                  <p class="m-0 text-center">
+                      <span class="lms-dashboard-number">{{attestations|length}}</span>
+                      <br>
+                      <span class="text bold lms-dashboard-subtitle">{{'global.literal.attestation'|trans}}</span>
+                  </p>
+              </a>
+          </div>
+      </div>
+
+      <div class="col-sm-12 col-lg-12 col-xl-4 mb-3 p-0">
+        <div class="h-100 p-3 lms-bg-gray">
+            <p>
+                <i class="material-icons lms-material-icons lms-material-icons-blue"> create </i>
+                <span class="lms-dashboard-subtitle">{{'dashboard.my_notes'|trans}}</span>
+            </p>
+            {% for note in notes | slice(0,5) %}
+            <p class="lms-dashboard-note"><a href="{{ path('user_formation_module_organisation', {'slugSession': note.session.slug, 'formationPath': note.session.formationPath.id, 'slugModule': note.module.slug,'slugChapter': note.course.slug,'slugPage': note.page.slug,}) }}" class="lms-dashboard-link">{{ note.page.title }}</a> : {{ note.note | truncate(50) }}</p>
+            {% else %}
+            <p class="lms-dashboard-note">{{'dashboard.notes_empty' | trans }}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% endblock %}
+
+
+    {% block js %}
+        {{ parent() }}
+        <script type='text/javascript' src="{{asset('assets/fullcalendar-3.9.0/lib/moment.min.js')}}"></script>
+        <script type='text/javascript' src="{{asset('assets/fullcalendar-3.9.0/lib/jquery-ui.min.js')}}"></script>
+        <script type='text/javascript' src="{{asset('assets/fullcalendar-3.9.0/fullcalendar.min.js')}}"></script>
+        <script type='text/javascript' src="{{asset('assets/fullcalendar-3.9.0/locale-all.js')}}"></script>
+
+        <script>
+            var events = JSON.parse({{ events|json_encode|raw }});
+
+            $(function () {
+                $('#calendar').fullCalendar({ {% if app.request.getLocale() == "fr" %}
+                    // defaultView: 'listWeek',
+                    locale : 'fr',{% endif %}
+                    themeSystem: 'bootstrap4',
+                    events: events,
+                    eventClick: function (event) {
+                        if (event.url) {
+                            this.open(event.url);
+                            return false;
+                        }
+                    },
+                    header: {
+                        left: 'prev, next',
+                        center: 'title',
+                        right: 'listWeek, month'
+                    },
+                    eventLimit: true, // allow "more" link when too many events
+                }, 'render');
+
+                $('#switchToggle').on('click', function () {
+                    console.log($(this).find('a')[0]);
+                    $(this).find('a')[0].click();
+                });
+            });
+            /*document.getElementById("switch").onclick = function () {
+      location.href = "{{ path('dashboard_tuteur') }}";
+  };*/
+        </script>
+
+    {% endblock %}

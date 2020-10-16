@@ -1,0 +1,156 @@
+ {% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}  
+
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/bootstrap-fileupload/bootstrap-fileupload.css') }}" />
+{% endblock %}
+
+{% block body %}
+ <div class="lms-breadcrumb">
+     <a href="
+      {% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+      {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+      {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+      {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+      {% else %} {{ path('home_dashboard') }}
+      {% endif %}">{{lms_name}}</a> > <span>{{'user.profile'|trans}}</span></div>
+
+<div class="d-flex align-items-center lms-title">
+  <h1 class="text-uppercase lms-h1">{{'user.profile'|trans}}</h1>
+  <hr>
+</div>
+
+<div class="container">
+  <div class="row">
+        <div class="col col-md-3">
+          <div class="card card-profile">
+              <div class="card-header" style="background-image: url(https://www.placehold.it/280x150/EFEFEF/AAAAAA&amp;text=no+image);"></div>
+              <div class="card-body text-center">
+                {% if user.photo %}
+                  <img class="card-profile-img" src="{{ asset('uploads/user/') }}{{ user.photo  }}">
+                {% else %}
+                  <img class="card-profile-img" src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image">
+                {% endif %}  
+                <h3 class="mb-3">{{ user.firstName }} {{ user.lastname }}</h3>
+                <p class="mb-4">
+                  {{ user.function}} 
+                </p>
+              </div>
+            </div>
+        </div>
+        <div class="col col-md-9"> 
+          <div class="card">
+            <div class="card-body">
+              {% if user.civility %}
+                <div class="form-group">
+                    <label class="form-label">{{ 'user.civility'|trans }}</label>
+                    <span class="form-view col-sm-6">{{ user.civility }}</span>
+                </div> 
+              {% endif %}          
+              <div class="form-group">
+                  <label class="form-label">{{ 'user.nom'|trans }}</label>
+                  <span class="form-view col-sm-6">{{ user.lastname }}</span>
+              </div>
+              <div class="form-group">   
+                  <label class="form-label">{{ 'user.prenom'|trans }}</label>
+                  <span class="form-view col-sm-6">{{ user.firstName }}</span>
+               </div>                  
+              <div class="form-group">
+                  <label class="form-label">{{ 'user.login'|trans }}</label>
+                  <span class="form-view col-sm-6">{{ user.username}}</span>
+              </div>
+              <div class="form-group">
+                  <label class="form-label">{{ 'user.email'|trans }}</label>
+                  <span class="form-view col-sm-6">{{ user.email}}</span>
+              </div>                
+              <div class="form-group">
+                  <label class="form-label">{{ 'lov.laboratory'|trans }}</label>
+                  <span class="form-view col-sm-6">{{ user.laboratory }}</span>
+              </div> 
+              {% if user.division %}
+                <div class="form-group">
+                    <label class="form-label">{{ 'lov.division'|trans }}</label>
+                    <span class="form-view col-sm-6">{{ user.division }}</span>
+                </div> 
+              {% endif %}  
+              {% if user.team %}
+                <div class="form-group">
+                    <label class="form-label">{{ 'lov.team'|trans }}</label>
+                    <span class="form-view col-sm-6">{{ user.team }}</span>
+                </div> 
+              {% endif %}  
+              
+              <div class="dropdown-divider"></div>  
+              <div class="form-group">
+                  <label class="form-label">{{ 'user.supervisor'|trans }}</label>
+                  <div class="col-sm-6">  
+                      {% for id, supervisor in user.supervisors %}
+                        <div class="form-group m-2">
+                          <input type="checkbox" checked="checked" />
+                          <label>{{ supervisor.lastName }} {{ supervisor.firstName }} ({{ supervisor.username }})</label>
+                        </div>  
+                      {% endfor %}
+                  </div>
+              </div>   
+              <div class="dropdown-divider"></div>  
+              <div class="form-group">
+                  <label class="form-label">{{ 'user.tutor'|trans }}</label>
+                  <div class="col-sm-6">  
+                      {% for id, userFollow in tutorFollow %}
+                        <div class="form-group m-2">
+                          <input type="checkbox" checked="checked" />
+                          <label>{{ userFollow.lastName }} {{ userFollow.firstName }} ({{ userFollow.username }})</label>
+                        </div>  
+                      {% endfor %}
+                  </div>
+              </div>  
+              <div class="dropdown-divider"></div> 
+              <div class="form-group">
+                  <label class="form-label">{{ 'user.groups'|trans }}</label>
+                  <div class="col-sm-6">
+                      {% for group in user.groups %}
+                        <div class="form-group m-2">
+                          <input type="checkbox" checked="checked" />
+                          <label>{{ group.name }}</label>
+                        </div>  
+                      {% endfor %}
+                  </div>
+              </div>    
+              <div class="dropdown-divider"></div>  
+              <div class="form-group">
+                  <label class="form-label">{{ 'user.roles'|trans }}</label>
+                  <div class="col-sm-6">  
+                      {% for id, role in user.roles %}
+                        <div class="form-group m-2">
+                          <input type="checkbox" checked="checked" />
+                          <label>{{ role }}</label>
+                        </div>  
+                      {% endfor %}
+                  </div>
+              </div> 
+  
+            </div>
+            {% if user.ldapUser %}
+            {% else %}
+              <div class="card-footer">
+                  {#<a href="{{ path('user_profile') }}" class="btn btn-outline-primary">
+                    
+                    {{ 'global.edit'|trans }}
+                  </a> #}
+                  <a  class="lms-button lms-button-red" href="{{ path('fos_user_change_password') }}">
+                    <i class="material-icons lms-material-icons ">vpn_key</i> 
+                    {{ 'change_password.submit'|trans({}, 'FOSUserBundle') }}
+                  </a>                  
+              </div>
+            {% endif %} 
+          </div>                                                          
+        </div>                         
+  </div>
+</div>  
+{% endblock %}
+
+{% block js %}
+    {{ parent() }} 
+
+{% endblock %}

@@ -1,0 +1,154 @@
+// SIDEBAR MENU
+.lms {
+    &-logo {
+        &-container {
+            // display: none;
+            // @media(min-width: $md) {
+            background-color: $white;
+            height: $logoHeight;
+            width: $logoWidth;
+            a {
+                align-items: center;
+                display: flex;
+                height: 100%;
+                justify-content: center;
+                width: 11.6875em;
+            }
+            // }
+        }
+        &-img {
+            height: auto;
+            max-width: 90%;
+        }
+    }
+    &-container {
+        padding-left: 2.125em;
+        padding-top: .8125em;
+        &-nav {
+            background-color: $gallery-gray;
+            .lms-logo-container,
+            .lms-nav-link span {
+                transition: .5s ease;
+            }
+            &.minify {
+                width: 3.125em;
+                .lms-logo-container,
+                .lms-nav-link span {
+                    height: 0;
+                    margin-left: 1em;
+                    width: 0;
+                    transition: all .5s ease;
+                }
+                .lms-menu-btn {
+                    transform: rotate(180deg);
+                }
+            }
+            &-over {
+                position: absolute !important;
+                z-index: 2;
+            }
+        }
+    }
+    &-nav {
+        font-size: .875em;
+        padding-top: 1.5em;
+        text-transform: uppercase;
+        &-item {
+            &:hover,
+            &:active,
+            &:focus {
+                .lms-nav-link {
+                    background-color: $scooter-blue;
+                    color: $white;
+                    transition: background-color .3s;
+                    i {
+                        color: $white;
+                    }
+                }
+                .expend {
+                    fill: $white;
+                    transition: all ease-in-out .3s;
+                }
+            }
+            &.active {
+                .lms-nav-link {
+                    background-color: $scooter-blue;
+                    color: $white;
+                    transition: background-color .3s;
+                    >i {
+                        color: $white;
+                    }
+                }
+                .expend {
+                    fill: $white;
+                }
+            }
+            .dropdown-menu {
+                background-color: transparent !important;
+                border: none;
+                font-size: .8em;
+                padding-left: 1.65em;
+                position: static !important;
+                transform: none !important;
+                width: 100%;
+            }
+            .dropdown-item {
+                background-color: transparent;
+                color: black;
+                &:hover,
+                &:active,
+                &:focus {
+                    text-decoration: underline;
+                }
+                &.active {
+                    font-weight: 500;
+                    &::before {
+                        content: ">";
+                        display: inline-block;
+                        margin-right: .5em;
+                    }
+                }
+            }
+            .expend {
+                position: absolute;
+                right: .5em;
+                top: .8em;
+            }
+            &.show {
+                .expend {
+                    transform: rotate(-180deg);
+                }
+            }
+        }
+        &-link {
+            background-color: transparent;
+            color: black;
+            display: block;
+            padding: .65em 1em;
+            transition: background-color .3s;
+            white-space: nowrap;
+            // span {
+            //     display: inline-block;
+            //     text-indent: -9999px;
+            //     @media(min-width: $md) {
+            //         text-indent: inherit;
+            //     }
+            // }
+        }
+    }
+    &-menu {
+        overflow-x: hidden;
+        overflow-y: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        &::-webkit-scrollbar {
+            width: 0;
+        }
+        &-btn {
+            cursor: pointer;
+            position: absolute;
+            right: -.625em;
+            top: 0;
+        }
+    }
+}

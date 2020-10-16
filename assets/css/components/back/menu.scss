@@ -1,0 +1,195 @@
+// SIDEBAR MENU
+.header.collapse {
+    padding-top: 15px;
+    background-color: $gallery-grey;
+    transition: all ease-in-out 0.3s;
+    @media screen and(max-width: $tablet) {
+        display: block !important;
+    }
+    svg#min-menu-btn {
+        @media screen and(max-width: $tablet) {
+            display: none;
+        }
+    }
+    .logo-container {
+        display: block;
+        position: relative;
+        max-width: 187px;
+        max-height: 187px;
+        height: 100%;
+        width: 100%;
+        margin: 0 auto;
+        background-color: $white;
+        @media screen and(max-width: $tablet) {
+            display: none;
+        }
+        img {
+            position: absolute;
+            width: 90%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+        }
+    }
+    ul.nav {
+        margin-top: 12px;
+        background-color: $gallery-grey;
+        padding-bottom: 10px;
+        li {
+            margin-top: 10px;
+            padding: 0;
+            &.dropdown.show {
+                .expend {
+                    transform: rotate(-180deg);
+                }
+            }
+            .expend {
+                position: absolute;
+                right: 5px;
+                top: 4px;
+                transition: all ease-in-out 0.3s;
+                @media screen and(max-width: $tablet) {
+                    display: none;
+                }
+            }
+            &.active {
+                .expend {
+                    fill: $white;
+                }
+                a {
+                    color: $white;
+                    background-color: $scooter-blue;
+                    svg {
+                        fill: $white;
+                        .svg-filled {
+                            fill: $white;
+                        }
+                    }
+                    &.active {
+                        font-weight: 500;
+                        &::before {
+                            content: "\f105";
+                            display: inline-block;
+                            font-family: "FontAwesome";
+                            margin-right: .5em;
+                        }
+                    }
+                }
+            }
+            &:hover {
+                .expend {
+                    fill: $white;
+                }
+                a {
+                    color: $white;
+                    background-color: $scooter-blue;
+                    svg {
+                        fill: $white;
+                        .svg-filled {
+                            fill: $white;
+                        }
+                    }
+                }
+            }
+            a {
+                display: block;
+                display: block;
+                width: 100%;
+                padding: 7.5px 12px;
+                color: $black;
+                border: none;
+                text-transform: uppercase;
+                font-size: 0.8em;
+                position: relative;
+                padding-left: 50px;
+                border-radius: 0;
+                transition: all ease-in-out 0.3s;
+                @media screen and(max-width: $tablet) {
+                    padding-left: 0;
+                    height: 50px;
+                }
+                &:hover {
+                    border: 0;
+                    color: $white;
+                }
+                svg,
+                i {
+                    fill: $prussian-blue;
+                    color: $prussian-blue;
+                    vertical-align: sub;
+                    width: 20px;
+                    height: 20px;
+                    position: absolute;
+                    left: 12px;
+                    bottom: 4px;
+                    @media screen and(max-width: $tablet) {
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                    }
+                }
+                span {
+                    @media screen and(max-width: $tablet) {
+                        display: none;
+                    }
+                }
+            }
+            .dropdown-menu {
+                position: static !important;
+                transform: none !important;
+                border: none;
+                background-color: transparent;
+                width: 100%;
+                a {
+                    text-transform: inherit;
+                    background-color: transparent;
+                    color: $black;
+                    padding-left: 34px;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+    &.minify {
+        max-width: 50px;
+        &+.content {
+            max-width: calc(100% - 50px);
+            margin-left: 50px;
+        }
+        svg#min-menu-btn {
+            transform: rotate(180deg);
+        }
+        .logo-container {
+            display: none;
+        }
+        ul.nav {
+            li {
+                .expend {
+                    display: none;
+                }
+                a {
+                    padding-left: 0;
+                    height: 50px;
+                    svg {
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                    }
+                    span {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $tablet) {
+    #dropdown-users .dropdown-menu.show,
+    #dropdown-formations .dropdown-menu.show {
+        display: none;
+    }
+}

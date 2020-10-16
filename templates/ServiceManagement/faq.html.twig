@@ -1,0 +1,60 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<div class="lms-breadcrumb">
+            <span><a href="
+                {% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+                {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+                {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+                {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+                {% else %} {{ path('home_dashboard') }}
+                {% endif %}">{{lms_name}}</a></span> > <span class="bold">{{"global.faq"|trans}}</span>
+
+	</div>
+    <div class="page-title">
+		<h1 class="title"><span class="capitalize">{{"global.faq"|trans}}</span></h1>
+		<hr>
+	</div>
+
+    <div class="col-12 lms-banner ">
+        <h3 class="col-8"><i class="material-icons lms-material-icons">info</i>{{"faq_data.forget_psw.title"|trans}}</h3>
+        <p class="col-8">{{"faq_data.forget_psw.p1"|trans}}</p>
+        <p class="col-8">{{"faq_data.forget_psw.p2"|trans}}</p>
+    </div>
+
+    <div class="col-12 lms-banner ">
+        <h3 class="col-8"><i class="material-icons lms-material-icons">info</i>{{"faq_data.change_psw.title"|trans}}</h3>
+        <p class="col-8">{{"faq_data.change_psw.p1"|trans}}</p>
+    </div>
+
+    <div class="col-12 lms-banner ">
+        <h3 class="col-8"><i class="material-icons lms-material-icons">info</i>{{"faq_data.change_profil.title"|trans}}</h3>
+        <p class="col-8">{{"faq_data.change_profil.p1"|trans}}</p>
+    </div>
+
+    <div class="col-12 lms-banner ">
+        <h3 class="col-8"><i class="material-icons lms-material-icons">info</i>{{"faq_data.change_language.title"|trans}}</h3>
+        <p class="col-8">{{"faq_data.change_language.p1"|trans}}</p>
+    </div>
+
+    <div class="col-12 lms-banner ">
+        <h3 class="col-8"><i class="material-icons lms-material-icons">info</i>{{"faq_data.data_localisation.title"|trans}}</h3>
+        <p class="col-8">{{"faq_data.data_localisation.p1"|trans}}</p>
+    </div>
+
+    <div class="col-12 lms-banner ">
+        <h3 class="col-8"><i class="material-icons lms-material-icons">info</i>{{"faq_data.browser_conpatibility.title"|trans}}</h3>
+        <p class="col-8">{{"faq_data.browser_conpatibility.p1"|trans}}</p>
+    </div>
+
+    <div class="col-12 lms-banner ">
+        <h3 class="col-8"><i class="material-icons lms-material-icons">info</i>{{"faq_data.what_is_scorm.title"|trans}}</h3>
+        <p class="col-8">{{"faq_data.what_is_scorm.p1"|trans}}</p>
+    </div>
+{% endblock %}
+
+
+{% block js %}
+
+{% endblock %}

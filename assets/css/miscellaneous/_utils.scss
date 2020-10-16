@@ -1,0 +1,103 @@
+.lms {
+    &-text {
+        &-primary {
+            color: $scooter-blue;
+        }
+        &-secondary {
+            color: $scorpion-gray;
+        }
+        &-light {
+            color: $gallery-gray;
+        }
+        &-success {
+            color: $green-mid;
+        }
+        &-danger {
+            color: $cinnabar-red;
+        }
+        &-warning {
+            color: $goldenrod-yellow;
+        }
+    }
+    &-bg {
+        &-primary {
+            background-color: $scooter-blue;
+        }
+        &-secondary {
+            background-color: $scorpion-gray;
+        }
+        &-light {
+            background-color: $gallery-gray;
+        }
+        &-success {
+            background-color: $green-mid;
+        }
+        &-danger {
+            background-color: $cinnabar-red;
+        }
+        &-warning {
+            background-color: $goldenrod-yellow;
+        }
+        &-dark {
+            background-color: $prussian-blue;
+        }
+    }
+    &-alert,
+    &-badge {
+        &-primary {
+            background-color: $scooter-blue;
+            color: $white;
+            .lms-material-icons {
+                color: $white;
+            }
+        }
+        &-secondary {
+            background-color: $scorpion-gray;
+            color: $white;
+            .lms-material-icons {
+                color: $white;
+            }
+        }
+        &-light {
+            background-color: $gallery-gray;
+            color: $prussian-blue;
+            .lms-material-icons {
+                color: $prussian-blue;
+            }
+        }
+        &-success {
+            background-color: $green-mid;
+            color: $white;
+            .lms-material-icons {
+                color: $white;
+            }
+        }
+        &-danger {
+            background-color: $cinnabar-red;
+            color: $white;
+            .lms-material-icons {
+                color: $white;
+            }
+        }
+        &-warning {
+            background-color: $goldenrod-yellow;
+            color: $prussian-blue;
+            .lms-material-icons {
+                color: $prussian-blue;
+            }
+        }
+        &-dark {
+            background-color: $prussian-blue;
+            color: $white;
+            .lms-material-icons {
+                color: $white;
+            }
+        }
+    }
+    &-list {
+        &-none {
+            list-style: none;
+            padding: 0;
+        }
+    }
+}

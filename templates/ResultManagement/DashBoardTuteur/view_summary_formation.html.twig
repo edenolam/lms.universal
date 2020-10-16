@@ -1,0 +1,137 @@
+{% extends "base.html.twig" %}
+{% block stylesheets %}
+    {# Calendar #}
+    {{ parent() }}
+<style>
+    /* custom toogle */
+    .outerDivFull { margin:50px; }
+    .lm-switchToggle input[type=checkbox]{height: 0; width: 0; visibility: hidden; position: absolute; }
+    .lm-switchToggle label {cursor: pointer; text-indent: -9999px; width: 115px; max-width: 115px; height: 30px; background: #00354F; display: block; border-radius: 100px; position: relative; line-height: 21px;}
+    .lm-switchToggle label:after {content: ''; position: absolute; top: 2px; left: 2px; width: 26px; height: 26px; background: #fff; border-radius: 90px; transition: 0.3s; }
+    .lm-switchToggle input:checked + label, .lm-switchToggle input:checked + input + label  {background: #00354F; }
+    .lm-switchToggle input + label:before, .lm-switchToggle input + input + label:before {content: '{{'global.literal.tuteur'|trans}}'; text-transform: uppercase; position: absolute; top: 5px; left: 35px; width: 26px; height: 26px; border-radius: 90px; transition: 0.3s; text-indent: 0;font-size:12px; color: #fff; }
+    .lm-switchToggle input:checked + label:before, .lm-switchToggle input:checked + input + label:before {content: '{{'global.literal.learner'|trans}}'; text-transform: uppercase; position: absolute; top: 5px; left: 10px; width: 86px; height: 26px; border-radius: 90px; transition: 0.3s; text-indent: 0; color: #fff; }
+    .lm-switchToggle input:checked + label:after, .lm-switchToggle input:checked + input + label:after {left: calc(100% - 2px); transform: translateX(-100%); }
+    .lm-switchToggle label:active:after {width: 60px; }
+    .toggle-switchArea { margin: 10px 0 10px 0; }
+    /* fin custom toogle */
+  </style>
+{% endblock %}
+{% block body %}
+    <div class="lms-breadcrumb">
+            <a href="
+            {% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+            {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+            {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+            {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+            {% else %} {{ path('home_dashboard') }}
+            {% endif %}">{{lms_name}}</a>
+        >
+        <span>{{'menu.dashboard.literal'|trans}}</span>
+    </div>
+
+    <!-- Bannière -->
+    {# <div class="d-flex flex-wrap align-items-center">
+        <div class="col-lg-2">
+            <div class="lms-banner-avatar-container">
+                {% if app.user.photo %}
+                    <img src="{{ asset('uploads/user/') }}{{ app.user.photo }}" alt="Avatar" class="d-block m-auto m-lg-0 lms-banner-avatar-img">
+                {% else %}
+                    <img src="{{ asset('images/core/avatar-small.svg') }}" alt="Avatar" class="d-block m-auto m-lg-0 lms-banner-avatar-img">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-lg-7 text-center text-lg-left lms-banner-dashboard-container">
+            <p class="lms-banner-dashboard-title">{{'global.literal.welcome'|trans}} <span class="lms-banner-dashboard-firstName">{{ app.user.firstname }}</span> <span class="lms-banner-dashboard-lastName">{{ app.user.lastname }}</span> !</p>
+            {% if app.user.laboratory is not null %}
+                <p class="lms-banner-dashboard-text">{{'dashboard.user_laboratory'|trans}}{{app.user.laboratory.title}} </p>
+            {% endif %}
+        </div>
+        <div class="col-lg-12 p-0 lms-switchToggle">
+            <div class="d-flex justify-content-end" id="switchToggle">
+                <input id="switch" type="checkbox" />
+                <label for="switch">Toggle</label>
+            </div>
+        </div>
+    </div> #}
+
+    <!-- Switch -->
+    {% if is_granted('ROLE_GESTION_BILANS') and is_granted('ROLE_APPRENANT') %}
+        <div id="myTab" class="d-flex flex-wrap justify-content-center align-items-center text-center lms-progress-formation">
+            <div class="col-6 px-0 text-uppercase lms-tab"><a href="{{path('home_dashboard')}}">{{'global.literal.learner'|trans}}</a></div>
+            <div class="col-6 px-0 text-uppercase show lms-tab"><span>{{'global.literal.tuteur'|trans}}</span></div>
+        </div>
+    {% endif %}
+
+    <!-- Titre -->
+    <div class="d-flex align-items-center lms-title">
+        <h1 class="text-uppercase lms-h1">{{'menu.dashboard.title'|trans}}</h1>
+        <hr>
+    </div>
+
+    <!-- Contenu -->
+    <div class="d-flex flex-wrap justify-content-center justify-content-md-start lms-subcontent">
+        {% for session in sessions %}
+            <!-- Rotating card -->
+            <div class="lms-card-tuteur">
+                <div class="card lms-card">
+                    <!-- Card front -->
+                    <div class="text-center lms-card-front">
+                        <div class="lms-card-img">
+                            {% if session.session.formationPath.uri %}
+                                <img src="{{asset('uploads/files/' ~ session.session.formationPath.uri)}}" alt="Visuel du module">
+                            {% else %}
+                                <img src="/images/core/logo.png" alt="Visuel du module">
+                            {% endif %}
+                        </div>
+
+                        {% set diff = date(session.session.closingDate).diff(date()) %}
+                        {% set leftDays = diff.days %}
+
+                        <div class="card-body lms-card-body">
+                            <p class="card-title text-uppercase lms-card-title">{{session.session.title}}<br>&ndash;<br>{{session.session.formationPath.title}}</p>
+
+                            <div class="d-flex justify-content-between align-items-center lms-card-item lms-card-item-first">
+                                <p class="lms-card-entitled"> <i class="material-icons lms-material-icons"> person </i> {{'results.user_finish'|trans}}</p>
+                                <p class="lms-card-result">{{session.userDone}}/{{session.userFormations}}</p>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center lms-card-item">
+                                <p class="lms-card-entitled"> <i class="material-icons lms-material-icons"> school </i> {{'results.global_result'|trans}}</p>
+                                <p class="lms-card-result">{{session.percentage|round}}%</p>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center lms-card-item">
+                                <p class="lms-card-entitled"> <i class="material-icons lms-material-icons"> access_time </i> {{'results.time_rate'|trans}} </p>
+                                <p class="lms-card-result"> {{session.meanTime.h}}h{{session.meanTime.m}}</p>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center lms-card-item">
+                                <p class="lms-card-entitled"> <i class="material-icons lms-material-icons"> access_time </i> {{'results.lecturePercent'|trans}} </p>
+                                <p class="lms-card-result"> {{session.lecturePercent|round}}%</p>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center lms-card-item">
+                                <p class="lms-card-entitled"> <i class="material-icons lms-material-icons"> calendar_today </i> {{'results.remaining_days'|trans}}</p>
+                                <p class="lms-card-result">{{leftDays}}</p>
+                            </div>
+
+
+                            <a href="{{path('results_list', {'slugSession' : session.session.slug, 'slugFormation' : session.session.formationPath.slug})}}" class="lms-button lms-button-blue">{{'global.detail'|trans}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Rotating card -->
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script>
+        document.getElementById("switch").onclick = function () {
+            location.href = "{{ path('home_dashboard') }}";
+        };
+    </script>
+{% endblock %}

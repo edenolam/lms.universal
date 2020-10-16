@@ -1,0 +1,35 @@
+session:
+  literal: Sessions
+  create:
+    title: Session creation
+  edit: Session editor  
+  list:
+    title: List of training sessions
+    create: Create a session
+  reference: Session reference
+  title: Session title
+  formationPath: Training
+  openingDate: Opening date
+  closingDate: Closing date
+  openingDateEvaluation: Evaluation opening date
+  closingDateEvaluation: Evaluation closing date 
+  date: Date
+  modules: Modules
+  module: Module
+  users: Users
+  teams: Teams
+  divisions: Divisions
+  select_user: Select the users for this training session by dragging to the right column
+
+virtual_class_room:
+    action:
+        add: Add a virtual class
+        edit: Modify the virtual class 
+        list: List of virtual classes
+        delete: Delete the virtual class
+    title:  Title 
+    openingDate: Opening date
+    closingDate: Closing date
+    teacher: Participant
+    students: Participants
+    no_records_found: No records found       

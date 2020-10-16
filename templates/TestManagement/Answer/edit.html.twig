@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<!-- navigator -->
+<div class="lms-breadcrumb">
+   &gt; <span>{{'test.list.ariane_gestion'|trans}}</span> &gt; "{{ test.title }}"
+</div>
+
+<!-- title of page -->
+<div class="page-title"><h2 class="title capitalize"> {{'menu.concepteur.test'|trans}} </h2><hr></div>
+
+<!-- body of page -->
+<div class="row ml-2 mr-2">
+    <div class="col-lg-4">
+      <div class="card border-0">
+        <div class="card-header">
+            <h3 class="card-title"> 
+                <span class="lms-text-primary text-capitalize font-weight-bold">{{ 'actions' | trans }} </span>
+            </h3>
+        </div>
+      </div>  
+        {% include "TestManagement/Question/actions.html.twig" %}    
+    </div>
+    <div class="col-lg-8"> 
+        <div class="card border-0"> 
+			<div class="card-header">
+				<h2 class="page-title">{{ 'answer.edit'|trans }}</h2>
+			</div>
+			<div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+        				{% include "TestManagement/Question/view_lite.html.twig" %}		
+        			</div>  
+        			<div class="col-lg-6">
+        				{% include "TestManagement/Answer/list_lite.html.twig" %} 
+        				<form action="{{ path('admin_testManagement_answer_edit', {"slug": answer.slug} ) }}" method="post" class="card lms-bg-light"  enctype="multipart/form-data">
+        					<div class="card-body">
+                                {% include "TestManagement/Answer/form.html.twig" %}
+            					<div class="form-group">
+            			            <button type="submit" class="lms-button lms-button-blue">
+            			                <i class="material-icons lms-material-icons">save</i> {{ 'global.submit'|trans }}
+            			            </button>  
+            			        </div>
+                            </div>    
+        				</form>				
+                    </div>       
+                </div> 
+			</div>
+		</div>
+	</div>
+</div>
+	
+{% endblock %}
+
+{% block js %}
+    {{ parent() }} 
+{% endblock %}

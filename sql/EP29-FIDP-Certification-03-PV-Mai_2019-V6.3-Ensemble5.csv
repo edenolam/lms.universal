@@ -1,0 +1,22 @@
+Titre;question;type de réponse;réponse;statut de la réponse
+;Comment se définit une anomalie liée au produit ?;1;Non-conformité aux spécifications décrites dans le dossier d’AMM;1
+;Comment se définit une anomalie liée au produit ?;1;Déviation importante par rapport aux bonnes pratiques de fabrication;1
+;Comment se définit une anomalie liée au produit ?;1;Déviation importante par rapport aux bonnes pratiques de distribution;1
+;Les défauts significatifs constatés sur un médicament sont considérés comme des anomalies et doivent être déclarés à l’ANSM.;2;VRAI;1
+;Les défauts significatifs constatés sur un médicament sont considérés comme des anomalies et doivent être déclarés à l’ANSM.;2;FAUX;0
+;Dans quel cas peut-on parler d’un médicament contrefait ?;2;Médicament générique;0
+;Dans quel cas peut-on parler d’un médicament contrefait ?;2;Médicament non conforme à la législation de l’Union européenne;1
+;Dans quel cas peut-on parler d’un médicament contrefait ?;2;Médicament importé de l’étranger;0
+;Dans quels contextes une réclamation produit est-elle faite ?;1;Médicament contrefait;1
+;Dans quels contextes une réclamation produit est-elle faite ?;1;Médicament falsifié;1
+;Dans quels contextes une réclamation produit est-elle faite ?;1;Médicament non conforme;1
+;Dans quels cas peut-on parler d’un médicament falsifié ?;1;Fausse présentation de son emballage;1
+;Dans quels cas peut-on parler d’un médicament falsifié ?;1;Composition fausse y comprise celle des excipients;1
+;Dans quels cas peut-on parler d’un médicament falsifié ?;1;Défaut de qualité non intentionnel;0
+;Dans quels cas peut-on parler d’un médicament falsifié ?;1;Informations erronées sur les documents relatifs au circuit de distribution;1
+;Les défauts de qualité significatifs sont ceux susceptibles d’avoir des conséquences pour la santé ou la sécurité des patients.;2;VRAI;1
+;Les défauts de qualité significatifs sont ceux susceptibles d’avoir des conséquences pour la santé ou la sécurité des patients.;2;FAUX;0
+;Quel est le délai de la transmission à l’ANSM, par le Pharmacien Responsable, d’une réclamation produit susceptible d’avoir des conséquences pour la santé ou la sécurité des patients ?;2;15 jours;0
+;Quel est le délai de la transmission à l’ANSM, par le Pharmacien Responsable, d’une réclamation produit susceptible d’avoir des conséquences pour la santé ou la sécurité des patients ?;2;90 jours;0
+;Quel est le délai de la transmission à l’ANSM, par le Pharmacien Responsable, d’une réclamation produit susceptible d’avoir des conséquences pour la santé ou la sécurité des patients ?;2;Immédiatement ;1
+;;;;

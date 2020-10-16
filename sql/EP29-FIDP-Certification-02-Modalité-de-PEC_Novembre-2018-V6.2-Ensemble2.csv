@@ -1,0 +1,30 @@
+Titre;question;type de réponse;réponse;statut de la réponse
+;Les spécialités remboursables doivent être inscrites sur une liste spécifique.;2;VRAI;1
+;Les spécialités remboursables doivent être inscrites sur une liste spécifique.;2;FAUX;0
+;Les laboratoires doivent déclarer au CEPS le prix qu’ils prévoient de pratiquer pour leurs spécialités hospitalières.;2;VRAI;1
+;Les laboratoires doivent déclarer au CEPS le prix qu’ils prévoient de pratiquer pour leurs spécialités hospitalières.;2;FAUX;0
+;Le CEPS peut modifier les prix des spécialités remboursables en cas de dépassement des prévisions des volumes de vente.;2;VRAI;1
+;Le CEPS peut modifier les prix des spécialités remboursables en cas de dépassement des prévisions des volumes de vente.;2;FAUX;0
+;Le taux de remboursement est décidé par l’UNCAM après avis de la Commission de la Transparence.;2;VRAI;1
+;Le taux de remboursement est décidé par l’UNCAM après avis de la Commission de la Transparence.;2;FAUX;0
+;Le taux de remboursement d’un médicament est identique pour toutes ses indications.;2;VRAI;0
+;Le taux de remboursement d’un médicament est identique pour toutes ses indications.;2;FAUX;1
+;Dans quel cas un médicament d’exception est-il remboursable ?;2;S’il est prescrit dans l’une des indications mentionnées dans la FIT (Fiche d’informations thérapeutiques);1
+;Dans quel cas un médicament d’exception est-il remboursable ?;2;S’il est prescrit dans une indication non mentionnée dans la FIT;0
+;Dans quel cas un médicament d’exception est-il remboursable ?;2;Quelle que soit l’indication dans laquelle il est prescrit;0
+;La spécialité que vous présentez fait partie de la stratégie thérapeutique d’une affection longue durée. Quelle sera la prise en charge ?;2;100% par l’assurance maladie;1
+;La spécialité que vous présentez fait partie de la stratégie thérapeutique d’une affection longue durée. Quelle sera la prise en charge ?;2;65% par l’assurance maladie et le complément par l’assurance complémentaire;0
+;La spécialité que vous présentez fait partie de la stratégie thérapeutique d’une affection longue durée. Quelle sera la prise en charge ?;2;100% par l’assurance maladie complémentaire;0
+;Quelles propositions sont correctes concernant les modalités de prise en charge d’une spécialité possédant plusieurs indications ?;1;Chaque indication de la spécialité est évaluée indépendamment des autres;1
+;Quelles propositions sont correctes concernant les modalités de prise en charge d’une spécialité possédant plusieurs indications ?;1;Chaque indication de la spécialité possèdera son propre SMR et ASMR;1
+;Quelles propositions sont correctes concernant les modalités de prise en charge d’une spécialité possédant plusieurs indications ?;1;Toutes les indications de la spécialité ont le même SMR;0
+;Quelles propositions sont correctes concernant les modalités de prise en charge d’une spécialité possédant plusieurs indications ?;1;Certaines indications de la spécialité peuvent avoir un taux de remboursement différent des autres;1
+;Quelle fiche précise la place du médicament dans la stratégie thérapeutique, dans le cas d’un nouveau médicament avec risque de mésusage ?;2;Fiche de transparence;0
+;Quelle fiche précise la place du médicament dans la stratégie thérapeutique, dans le cas d’un nouveau médicament avec risque de mésusage ?;2;Fiche de bon usage du médicament;1
+;Sur quelle fiche devez-vous vous appuyer lors d’une visite pour que le médecin comprenne dans quelle indication votre médicament d’exception sera remboursé ?;2;Fiche de transparence;0
+;Sur quelle fiche devez-vous vous appuyer lors d’une visite pour que le médecin comprenne dans quelle indication votre médicament d’exception sera remboursé ?;2;Fiche d’Informations Thérapeutiques;1
+;Sur quelle fiche devez-vous vous appuyer lors d’une visite pour que le médecin comprenne dans quelle indication votre médicament d’exception sera remboursé ?;2;Fiche de bon usage du médicament;0
+;L’ASMR est attribuée d’une manière unique pour toutes les indications d’une spécialité.;2;VRAI;0
+;L’ASMR est attribuée d’une manière unique pour toutes les indications d’une spécialité.;2;FAUX;1
+;La Commission de la Transparence rend son avis sur les niveaux de SMR et d’ASMR pour chacune des indications d’une spécialité ?;2;VRAI;0
+;La Commission de la Transparence rend son avis sur les niveaux de SMR et d’ASMR pour chacune des indications d’une spécialité ?;2;FAUX;1

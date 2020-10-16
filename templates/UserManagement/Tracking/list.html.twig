@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {# <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/css/bootstrap4-toggle.min.css" rel="stylesheet"> #}
+{% endblock %}
+
+{% block body %}
+<!-- navigator -->
+
+    <div class="lms-breadcrumb">
+      <span><a href="
+      {% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}{% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+      {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+      {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+      {% else %} {{ path('home_dashboard') }}
+      {% endif %}">{{ lms_name }}</a></span> > <span class="bold">{{ 'tracking.menu' | trans }}</span>
+    </div>
+
+    <div id="myTab" class="d-flex flex-wrap justify-content-center align-items-center text-center lms-progress-formation">
+        <div class="col-6 px-0 text-uppercase show lms-tab"><span>{{'global.traking'|trans}}</span></div>
+        <div class="col-6 px-0 text-uppercase lms-tab"><a href="{{ path('admin_mail_log_list') }}">{{'global.mailLog'|trans}}</a></div>
+    </div>
+
+    <div class="d-flex align-items-center lms-title">
+        <h1 class="text-uppercase lms-h1">
+            {{ 'tracking.action.list' | trans }}
+            {# <input type="checkbox" id="viewArchivedToggle" checked data-toggle="toggle" data-on="{{'global.traking'|trans}}" data-off="{{'global.mailLog'|trans}}" data-onstyle="success" data-offstyle="success" data-url="{{ path('admin_mail_log_list') }}"> #}
+        </h1>   <hr/>
+    </div>
+
+<!-- add button -->
+{#<div class="row mb-5">
+    <div class="col-12 text-right">
+        <a class="lms-button lms-button-blue" href="{{ path('admin_tracking_download') }}" style=" margin-left: 30px;" ><i class="material-icons lms-material-icons">cloud_download</i> {{ "tracking.action.download" | trans }}</a>
+    </div>
+</div>#}
+
+<div class="card border-0">
+    <div class="card-body">
+        <div class="table-responsive" id="users_list">
+        <table class="table table-bordered table-striped lms-table">
+            <thead class="thead-dark">
+              <tr>
+                  <th>{{ "tracking.created" | trans  }}</th>
+                  <th>{{ "tracking.path_info" | trans  }}</th>
+                  <th>{{ "tracking.ip_request" | trans  }}</th>
+                  <th>{{ "tracking.user" | trans  }}</th>
+                  <th>{{ "detail" | trans  }}</th>
+              </tr>
+           </thead>
+           <tbody> 
+             {% for tracking in trackings %}
+                <tr>                                              
+                  <td>{{ tracking.created|date('d/m/Y H:i')}}</td>
+                  <td><span data-toggle="tooltip" data-original-title="{{ tracking.pathInfo }}">{{ tracking.pathInfo  | truncate(40) }}</span></td>
+                  <td>{{ tracking.ipRequest }}</td>
+                  <td>{{ tracking.user.username }}</td>
+                  <td><a href="#" data-toggle="modal" data-target="#tracking-{{ tracking.id }}"><i class="material-icons lms-material-icons">remove_red_eye</i></a></td>
+                </tr>
+             {% endfor %}
+           </tbody>
+          </table>
+      </div>
+  </div>
+  <div class="card-footer">
+      <div class="d-flex">
+            <ul class="pagination ml-auto">
+                {% if pagination.page > 1 %}
+                    <li class="page-item page-prev"><a class="page-link showSpinner" aria-label="Previous" href="{{ path(pagination.route,pagination.route_params|merge({'page': 1})) }}">&laquo;</a></li>
+                {% endif %}
+                        {% for p in range(max(pagination.page-4, 1), min(pagination.page+4, pagination.pages_count)) %}
+                          {% if p == pagination.page %} 
+                             <li  class="page-item active"><a class="page-link showSpinner" href="{{ path(pagination.route, pagination.route_params|merge({'page': p} )) }}">{{ p }}</a></li>
+                            {% else %}
+                             <li  class="page-item "><a class="page-link showSpinner" href="{{ path(pagination.route, pagination.route_params|merge({'page': p} )) }}">{{ p }}</a></li>
+                          {% endif %}
+                            
+
+                        {% endfor %}
+                {% if pagination.page < pagination.pages_count %}
+                    
+                    <li class="page-item page-next"><a class="page-link showSpinner" aria-label="Next" href="{{ path(pagination.route, pagination.route_params|merge({ 'page': pagination.pages_count})) }}">&raquo;</a></li>
+                {% endif %}
+            </ul>  
+      </div>      
+  </div>  
+</div>
+
+{% for tracking in trackings %}
+<div class="modal fade" id="tracking-{{ tracking.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Détail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body col-12 h-75" >
+                {% set query_request = tracking.queryRequest |json_decode %}
+                  {#{ dump(query_request) }#}
+                    {# if query_request is iterable %}
+                      <ul>
+                          {% for subKey,subObj in obj %}
+                              <li>{{subKey}} :
+                                  {% if subObj is iterable %}
+                                      <ul>
+                                          {% for littleKey,littelObj in subObj %}
+                                              <li>{{littleKey}} : {{littelObj}}</li>
+                                          {% endfor %}
+                                      </ul>
+                                  {% else %}
+                                       {{subObj}}
+                                   {% endif %}
+                              </li>
+                          {% endfor %}
+                      </ul>
+                    {% else %}
+                        {{query_request}}
+                    {% endif #}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'global.literal.close'|trans}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}
+
+{# {% block js %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/js/bootstrap4-toggle.min.js"></script>
+    <script>
+    $(function() {  
+        $('#viewArchivedToggle').change(function() {
+            // var url = $(this).attr('data-url');
+            window.location = $(this).attr('data-url');;  
+        })
+    });
+        
+    </script>
+{% endblock %}     #}

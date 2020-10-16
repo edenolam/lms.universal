@@ -1,0 +1,74 @@
+.card {
+    &-body {
+        font-size: .8125em;
+    }
+}
+
+.blue {
+    &-button {
+        max-width: none;
+        padding: 0 1em;
+        width: auto;
+        span {
+            display: inline-block;
+            line-height: normal;
+        }
+    }
+}
+
+.blue-button,
+.grey-button {
+    font-size: .9375rem;
+    margin: auto;
+    min-width: 14rem;
+}
+
+.select-button {
+    border: 1px solid $gray;
+    color: $black;
+    display: inline-block;
+    font-weight: 300;
+    margin-left: 1.5rem;
+    padding: .5em 1em;
+}
+
+.dropdown {
+    &-menu {
+        background-color: $scooter-blue;
+        color: $white;
+        padding: 0 1em;
+        a {
+            color: $white;
+        }
+    }
+    &-item {
+        &:hover {
+            background-color: transparent;
+        }
+        &:last-child {
+            margin-bottom: 1em;
+        }
+    }
+    &-lov {
+        padding: .5em 1em 0;
+        .dropdown-item {
+            padding: .5em 0;
+        }
+    }
+}
+
+.first-item {
+    margin-top: 1em;
+}
+
+.nav-item {
+    padding: 0;
+}
+
+.info {
+    font-size: 12px;
+    font-style: italic;
+    line-height: normal;
+    margin: 1em;
+    text-align: left;
+}

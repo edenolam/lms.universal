@@ -1,0 +1,39 @@
+<div class="row form-container">
+	<div class="col col-12 col-xl-12 data-perso">
+		<div class="form-group">
+            {{ form_label(form.title,  'virtual_class_room.title'|trans ) }}
+            {{ form_widget(form.title, { 'attr': {'class': 'form-control form-group'} }) }}
+            {{ form_errors(form.title) }}
+        </div>  
+		<div class="form-group">
+            {{ form_label(form.openingDate,  'virtual_class_room.openingDate'|trans ) }}
+            {{ form_widget(form.openingDate, { 'attr': {'class': 'openingDate form-control form-group', 'autocomplete':'off' } }) }}
+            {{ form_errors(form.openingDate) }}
+        </div>  
+		<div class="form-group">
+            {{ form_label(form.closingDate,  'virtual_class_room.closingDate'|trans ) }}
+            {{ form_widget(form.closingDate, { 'attr': {'class': 'closingDate form-control form-group', 'autocomplete':'off' } }) }}
+            {{ form_errors(form.closingDate) }}
+        </div>  
+		<div class="form-group">
+            {{ form_label(form.teacher,  'virtual_class_room.teacher'|trans ) }}
+            {{ form_widget(form.teacher, { 'attr': {'class': 'form-control form-group'} }) }}
+            {{ form_errors(form.teacher) }}
+        </div>  
+		<div class="form-group">
+            {{ form_label(form.students,  'virtual_class_room.students'|trans ) }}
+            {{ form_widget(form.students, { 'attr': {'class': 'form-control form-group'} }) }}
+            {{ form_errors(form.students) }}
+        </div>  
+	</div>	
+</div>
+{{ form_widget(form._token) }}
+<div class="required-field">
+    * {{ 'global.obligatoire' | trans}}
+</div>
+
+<div class="row justify-content-around">      
+    <button type="submit" class="lms-button lms-button-blue">
+        <i class="material-icons lms-material-icons">save</i> {{ 'global.submit'|trans }}
+    </button>
+</div>	

@@ -1,0 +1,177 @@
+<!-- Sidebar gauche -->
+<div id="headerMenuCollapse" class="d-flex position-sticky minify lms-container-nav {% if 'user_formation_module_organisation' in app.request.attributes.get('_route') %}minify{% endif %}">
+    <div class="pt-3 lms-menu">
+        <svg id="min-menu-btn" class="lms-menu-btn" xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24"> <path opacity=".87" fill="none" d="M24 0v24H0V0h24z" /> <path d="M14 7l-5 5 5 5V7z" /></svg>
+        <!-- Logo -->
+        <div class="d-flex justify-content-center align-items-center text-center mx-auto lms-logo-container">
+            <a href="
+              {% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+              {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+              {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+              {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+              {% else %} {{ path('home_dashboard') }}
+              {% endif %}">{% if app.user.laboratory is not null and app.user.laboratory.logo is not null %}<img src="{{asset('uploads/laboratory/')}}{{app.user.laboratory.logo}}" class="lms-logo-img" alt="logo"/>{% else %}<img src="{{asset('images/core/logo_square.png')}}" class="lms-logo-img" alt="logo"/>{% endif %}</a>
+        </div>
+        <!-- Fin logo -->
+        <!-- Menu -->
+        <div class="lms-nav">
+            <ul id="myDropdown" class="nav nav-tabs border-0 flex-column">
+                <!-- ONGLET Accueil -->
+                {% if is_granted('ROLE_DASHBOARD') %}
+                  {% if not is_granted('ROLE_APPRENANT') and (is_granted('ROLE_TUTEUR') or is_granted('ROLE_CONCEPTEUR')) %}
+                    <li class="lms-nav-item {% if 'dashboard_tuteur' in app.request.attributes.get('_route') or 'dashboard_tuteur' in app.request.attributes.get('_route') %}active{% endif %}">
+                      <a href="{{ path('dashboard_tuteur') }}" class="lms-nav-link">
+                        <i class="material-icons lms-material-icons"> apps </i> <span>{{ 'menu.dashboard.title' | trans }}</span>
+                      </a>
+                    </li>
+                  {% else %}
+                    <li class="lms-nav-item {% if 'home_dashboard' in app.request.attributes.get('_route') or 'dashboard_tuteur' in app.request.attributes.get('_route') %}active{% endif %}">
+                      <a href="{{ path('home_dashboard') }}" class="lms-nav-link">
+                        <i class="material-icons lms-material-icons"> apps </i> <span>{{ 'menu.dashboard.title' | trans }}</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                {% endif %}
+                <!-- //ONGLET Mon suivi -->
+                {% if is_granted('ROLE_FORMATION')%}
+                <li class="lms-nav-item {% if 'suivis' in app.request.attributes.get('_route') %}active{% endif %}">
+                  <a href="{{ path('user_mon_suivis') }}" class="lms-nav-link">
+                    <i class="material-icons lms-material-icons"> bar_chart </i> <span>{{ 'menu.suivi.title' | trans }}</span>
+                  </a>
+                </li>
+                {% endif %}
+                <!-- //ONGLET Mes formations -->
+                {% if is_granted('ROLE_FORMATION')%}
+                <li class="lms-nav-item {% if 'user_formation' in app.request.attributes.get('_route') or 'user_formation_module_organisation' in app.request.attributes.get('_route') or 'user_formation_module' in app.request.attributes.get('_route')%}active{% endif %}">
+                  <a href="{{ path('user_formation') }}" class="lms-nav-link">
+                    <i class="material-icons lms-material-icons"> school</i> <span>{{ 'menu.userFormation.title' | trans }}</span>
+                  </a>
+                </li>
+                {% endif %}
+                <!-- //ONGLET Classe virtuelle -->
+                {% if is_granted('ROLE_FORMATION') or is_granted('ROLE_GESTION_BILANS') %}
+                <li class="lms-nav-item {% if 'user_virtual_class_room' in app.request.attributes.get('_route') %}active{% endif %}">
+                  <a href="{{ path('user_virtual_class_room') }}" class="lms-nav-link" target="_blank">
+                    <i class="material-icons lms-material-icons"> videocam </i> <span>{{ 'menu.virtual_class_room.list' | trans }}</span>
+                  </a>
+                </li>
+                {% endif %}
+                <!-- //ONGLET Mes notes de pages -->
+                {% if is_granted('ROLE_BOITE_OUTILS')%}
+                <li class="lms-nav-item {% if 'user_notes_list' in app.request.attributes.get('_route') %}active{% endif %}">
+                  <a href="{{ path('user_notes_list') }}" class="lms-nav-link">
+                    <i class="material-icons lms-material-icons"> create </i> <span>{{ 'dashboard.my_notes' | trans }}</span>
+                  </a>
+                </li>
+                {% endif %}
+                <!-- //ONGLET lexique -->
+                {% if is_granted('ROLE_BOITE_OUTILS')%}
+                <li class="lms-nav-item {% if 'user_lexique' in app.request.attributes.get('_route') %}active{% endif %}">
+                  <a href="{{ path('user_lexique') }}" class="lms-nav-link">
+                    <i class="material-icons lms-material-icons"> find_in_page </i> <span>{{ 'dashboard.lexique' | trans }}</span>
+                  </a>
+                </li>
+                {% endif %}
+                <!-- //ONGLET Les bilans restreint aux tuteurs -->
+                {% if is_granted('ROLE_GESTION_BILANS') %}
+                <li class="lms-nav-item {% if 'results_list' in app.request.attributes.get('_route')%}active{% endif %}">
+                  <a href="{{path('results_list')}}" class="lms-nav-link">
+                    <i class="material-icons lms-material-icons"> check_circle </i> <span>{{'menu.results.list'|trans}}</span>
+                  </a>
+                </li>
+                {% endif %} 
+                {% if is_granted('ROLE_ANALYSE_SONDAGE') %}
+                <li class="lms-nav-item {% if 'sondage_view' in app.request.attributes.get('_route')%}active{% endif %}">
+                  <a href="{{path('sondage_view')}}" class="lms-nav-link">
+                    <i class="material-icons lms-material-icons"> pie_chart </i> <span>{{'menu.sondage.title'|trans}}</span>
+                  </a>
+                </li>
+                {% endif %}
+                {% if is_granted('ROLE_GESTION_SESSION') %}
+                <!-- //ONGLET Classe virtuelle -->
+                <li class="lms-nav-item {% if 'admin_virtual_class_room' in app.request.attributes.get('_route') %}active{% endif %}">
+                  <a class="lms-nav-link" href="{{path('admin_virtual_class_room_index')}}">
+                    <i class="material-icons lms-material-icons"> cast_for_education </i> <span> {{ 'menu.virtual_class_room.title' | trans }} </span>
+                  </a>
+                </li>
+                {% endif %}
+                <!--  //ONGLETS Gestion-->
+                {% if is_granted('ROLE_GESTION_SESSION') %}
+                <!-- //ONGLET Mes sessions -->
+                <li class="lms-nav-item {% if 'session' in app.request.attributes.get('_route') %}active{% endif %}">
+                  <a class="lms-nav-link" href="{{path('admin_session_list')}}">
+                    <i class="material-icons lms-material-icons"> calendar_today </i> <span>{{ 'menu.concepteur.session' | trans }}</span>
+                  </a>
+                </li>
+                {% endif %}
+                
+                {% if is_granted('ROLE_GESTION_PARCOURS_FORMATION') %}
+                <!-- //ONGLET Mes formations -->
+                <li class="lms-nav-item {% if 'admin_formation_path' in app.request.attributes.get('_route') %}active{% endif %}">
+                  <a class="lms-nav-link" href="{{path('admin_formation_path_list')}}">
+                    <i class="material-icons lms-material-icons"> library_books</i> <span>{{ 'menu.concepteur.formation' | trans }}</span>
+                  </a>
+                </li>
+                {% endif %}
+                {% if is_granted('ROLE_GESTION_MODULES') or is_granted('ROLE_PUBLICATION_MODULE')  %}
+                <!-- //ONGLET Mes modules -->
+                <li class="lms-nav-item {% if 'admin_module' in app.request.attributes.get('_route')  or 'admin_course' in app.request.attributes.get('_route')  or 'admin_page' in app.request.attributes.get('_route') %}active{% endif %}">
+                  <a class="lms-nav-link" href="{{path('admin_module_list')}}">
+                    <i class="material-icons lms-material-icons"> import_contacts </i> <span>{{ 'menu.concepteur.module' | trans }}</span>
+                  </a>
+                </li>
+                {% endif %}
+                {% if is_granted('ROLE_GESTION_TEST') %}
+                <!-- //ONGLET Mes test -->
+                <li class="lms-nav-item {% if 'admin_testManagement' in app.request.attributes.get('_route') %}active{% endif %}">
+                  <a class="lms-nav-link" href="{{path('admin_testManagement_list')}}">
+                    <i class="material-icons lms-material-icons"> layers </i> <span> {{ 'menu.concepteur.test' | trans }} </span>
+                  </a>
+                </li>
+                {% endif %}
+                <!-- //ONGLET Utilisateurs -->
+                {% if is_granted('ROLE_GESTION_UTILSATEURS') %}
+                <li id="dropdown-users" class="lms-nav-item dropdown {% if ('admin_user' in app.request.attributes.get('_route') or 'admin_laboratory' in app.request.attributes.get('_route')  or 'admin_division' in app.request.attributes.get('_route') or 'admin_group' in app.request.attributes.get('_route') or 'admin_team' in app.request.attributes.get('_route')) %}active{% endif %}">
+                  <a href="javascript:void(0)" class="lms-nav-link" data-toggle="dropdown">
+                    <i class="material-icons lms-material-icons"> group </i> <span>{{ 'menu.user.title' | trans }}</span>
+                  </a>
+                  <svg class="expend" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                  <div class="dropdown-menu">
+                      <a class="dropdown-item {% if 'group' in app.request.attributes.get('_route') %}active{% endif %}" href="{{path('admin_group_list')}}">{{ 'menu.group.list' | trans }}</a>
+                      <a class="dropdown-item {% if 'user' in app.request.attributes.get('_route') %}active{% endif %}" href="{{path('admin_user_index')}}">{{ 'menu.user.list' | trans }}</a>
+                      <a class="dropdown-item {% if 'laboratory' in app.request.attributes.get('_route') %}active{% endif %}" href="{{path('admin_laboratory_list')}}">{{ 'laboratory.menu' | trans }}</a>
+                      <a class="dropdown-item {% if 'division' in app.request.attributes.get('_route') %}active{% endif %}" href="{{path('admin_division_list')}}">{{ 'division.menu' | trans }}</a>
+                      <a class="dropdown-item {% if 'team' in app.request.attributes.get('_route') %}active{% endif %}" href="{{path('admin_team_list')}}">{{ 'team.menu' | trans }}</a>
+                      {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <a class="dropdown-item {% if 'ldap' in app.request.attributes.get('_route') %}active{% endif %}" href="{{path('admin_ldap_view')}}">{{ 'menu.ldap.list' | trans }}</a>
+                      {% endif %}
+                  </div>
+                </li>
+                {% endif %}
+                <!-- //ONGLET Gestion des LOV restreint aux administrateurs -->
+                {% if is_granted('ROLE_GESTION_LOV') %}
+                <li class="lms-nav-item dropdown {% if 'lov' in app.request.attributes.get('_route') %}active{% endif %}">
+                  <a class="lms-nav-link" href="{{path('admin_lovManagement_list')}}">
+                    <i class="material-icons lms-material-icons"> settings </i> <span>{{ 'menu.lov.title' | trans }}</span>
+                  </a>
+                </li> 
+                {% endif %}
+                <!-- //ONGLET audit restreint aux administrateurs -->
+                {% if is_granted('ROLE_AUDIT') %}
+                  <li class="lms-nav-item dropdown {% if 'admin_audit' in app.request.attributes.get('_route') %}active{% endif %}">
+                    <a class="lms-nav-link" href="{{path('admin_audit_list')}}">
+                      <i class="material-icons lms-material-icons"> usb </i> <span>{{ 'menu.audit.title' | trans }}</span>
+                    </a>
+                  </li> 
+                  <li class="lms-nav-item dropdown {% if 'admin_tracking' in app.request.attributes.get('_route') or 'admin_mail_log_list' in app.request.attributes.get('_route') %}active{% endif %}">
+                      <a class="lms-nav-link" href="{{ path('admin_tracking_list') }}">
+                        <i class="material-icons lms-material-icons"> bar_chart </i> <span>{{ 'tracking.menu' | trans }}</span>
+                      </a>
+                  </li> 
+                {% endif %}
+            </ul>
+        </div>
+        <!-- Fin menu -->
+    </div>
+</div>
+<!-- Fin sidebar gauche -->

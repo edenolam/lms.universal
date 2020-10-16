@@ -1,0 +1,33 @@
+
+{{ form_errors(form) }}
+
+
+
+<div class="form-container p-5 lms-bg-light">
+    <div class="row col-12">
+        {{ form_label(form.title, 'lov.title'|trans, {'label_attr': {'class': 'col-1'}}) }}
+        {{ form_widget(form.title, { 'attr': {'class': 'form-control col-8'} }) }}
+        {{ form_label(form.sort, 'lov.sort'|trans, {'label_attr': {'class': 'col-1'}}) }}
+        {{ form_widget(form.sort, { 'attr': {'class': 'form-control col-1', 'type': 'number'} }) }}
+    </div>
+    <div class="row col-12 mt-4">
+        {{ form_label(form.description, 'lov.description'|trans, {'label_attr': {'class': 'col-1'}}) }}
+        {{ form_widget(form.description, { 'attr': {'class': 'form-control col-8'} }) }}
+        {{ form_label(form.keywords, 'lov.keywords'|trans, {'label_attr': {'class': 'col-1'}}) }}
+        {{ form_widget(form.keywords, { 'attr': {'class': 'form-control col-2'} }) }}
+    </div>
+    
+    <div class="row col-12 mt-4">
+        <div class="col-9">
+            
+        </div> 
+        <div class="form-group col-2">
+            <button type="submit" class="lms-button lms-button-blue">
+                <i class="material-icons lms-material-icons">save</i> {{ 'global.submit'|trans }}</button>
+            </button>
+        </div> 
+    </div>
+     
+
+    {{ form_rest(form) }}
+</div>

@@ -1,0 +1,43 @@
+session:
+  literal: Sessions
+  create:
+    title: Création de session
+  edit: Session editor  
+  list:
+    title: Liste des sessions de formations
+    create: Créer une session
+  reference: Référence de la session
+  title: Titre de la session
+  formationPath: Formation
+  openingDate: Date ouverture
+  closingDate: Date fermeture 
+  openingDateEvaluation: Date ouverture d'évaluation
+  closingDateEvaluation: Date fermeture d'évaluation  
+  date: Planning formation
+  modules: Planning Modules
+  module: Module
+  presentiels: Configuration Présentiels
+  presentiel: Configuration Présentiel
+  users: Inscription Utilisateurs
+  teams: Équipes
+  divisions: Divisions
+  select_user: Sélectionner des utilisateurs pour cette session de formation en les glissant dans la colonne de droite
+  animator:
+    add: Ajouter un animateur
+    edit: Modifier un animateur
+    show: Afficher un animateur
+    list: Afficher les animateurs
+    remove: Supprimer un animateur
+
+virtual_class_room:
+    action:
+        add: Ajouter une classe virtuelle
+        edit: Modifier la classe virtuelle  
+        list: Liste des classes virtuelles
+        delete: Supprimer la classe virtuelle
+    title:  Titre 
+    openingDate: Date ouverture
+    closingDate: Date fermeture 
+    teacher: Intervenant
+    students: Participants
+    no_records_found: Aucun enregistrement trouvé       

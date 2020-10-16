@@ -1,0 +1,17 @@
+{# {% extends "@FOSUser/layout.html.twig" %} #}
+{% extends "@FOSUser/layout.html.twig" %}
+{# https://tabler.github.io/tabler/login.html #}
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{asset('build/css/app.css')}}">
+{% endblock %}
+{% block fos_user_content %}
+    <div class="lms-login-bloc">
+		<div class="lms-login-form">
+            {% include 'bundles/FOSUserBundle/Resetting/request_content.html.twig' %}
+        </div>
+        <div class="lms-login-img">
+            <img src="{{asset('images/core/illus-connexion.svg')}}" alt="" />
+        </div>
+	</div>	
+
+{% endblock fos_user_content %}

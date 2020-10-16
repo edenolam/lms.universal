@@ -1,0 +1,13 @@
+<div class="lms-aside-card">
+    <div class="p-3 lms-aside-card-content">
+        <div class="d-flex justify-content-between pb-3 lms-aside-card-title">
+            <span class="text-uppercase">{{'userFrontManagement.page.download'|trans}}</span>
+        </div>
+
+        <div class="lms-aside-card-body pt-2">
+            {%  for download in currentPage.downloads %}
+                {% if download.isDownload %}<i class="material-icons lms-material-icons">cloud_download</i> <a href="{{ asset("uploads/files/"~download.uri) }}">{{ download.title }}</a><br/>{% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

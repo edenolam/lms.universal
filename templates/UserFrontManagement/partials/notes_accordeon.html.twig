@@ -1,0 +1,149 @@
+{% if listeNote is defined %}
+    <ul class="d-flex flex-wrap w-100 lms-accordeon">
+        {% for noteSession in listeNote %}
+            <li class="col-12 col-xl-6 lms-accordeon-formation">
+                <span class="d-flex justify-content-between align-items-center lms-accordeon-formation-title">
+                    <span class="flex-grow-1 lms-accordeon-title-txt"><span
+                                class="text-uppercase">{{ 'global.literal.formation' | trans }}</span> : {{ noteSession['session'].formationPath.title }}</span>
+                    <span class="lms-accordeon-title-icons">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"> <path fill="none" d="M0 0h24v24H0V0z" /> <path d="M19 8h-1V3H6v5H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zM8 5h8v3H8V5zm8 12v2H8v-4h8v2zm2-2v-2H6v2H4v-4c0-.55.45-1 1-1h14c.55 0 1 .45 1 1v4h-2z" /> <circle cx="18" cy="11.5" r="1" /></svg>
+                        {% for key,noteModule in noteSession['data'] %}
+                        <a href="{{ path('export_word_note', {'slugModule': noteModule['module'].slug ,'slugSession': noteSession['session'].slug }) }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"> <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" /> <path d="M0 0h24v24H0z" fill="none" /></svg>
+                        </a>
+                        {% endfor %}
+                    </span>
+                </span>
+                <ul class="lms-accordeon-module">
+                    {% for noteModule in noteSession['data'] %}
+                    <li class="lms-accordeon-module-note">
+                        <span class="d-flex justify-content-between align-items-center lms-accordeon-module-title">
+                            <span class="flex-grow-1 lms-accordeon-title-txt"><span
+                                        class="text-uppercase">{{ 'userFrontManagement.module.title_m' | trans }}</span> : {{ noteModule['module'].title }}</span>
+                            <span class="lms-accordeon-title-icons">
+                                <svg class="lms-accordeon-open" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                     viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path
+                                            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                            </span>
+                        </span>
+                        <ul class="px-4 pb-3 lms-accordeon-container-note lms-is-close">
+                            {% set arrayTitle = [] %}
+                            {% for note in noteModule['data'] %}
+                                {% if note.page.course.title not in arrayTitle %}
+                                    <li class="lms-accordeon-item-note">
+                                        <span class="flex-grow-1 lms-accordeon-title-txt"><span class="text-uppercase">{{ 'userFrontManagement.module.title_c' | trans }}  </span>{{ note.page.course.title }}</span>
+                                        <ul class="list-unstyled">
+                                            {% for notes in noteModule['data'] %}
+                                                {% if note.page.course.title == notes.page.course.title %}
+                                                    <li>
+                                                        <span class="font-weight-bold lms-accordeon-title-note"> <span class="uppercase">{{ 'formation.page.literal' | trans }} </span> : </span> <a href="{{ path('user_formation_module_organisation', {'slugSession': notes.session.slug,  'formationPath': notes.session.formationPath.id, 'slugModule': notes.module.slug,'slugChapter': notes.course.slug,'slugPage': notes.page.slug,}) }}"> {{ notes.page.title }} </a>
+                                                        <div>
+                                                            {{ notes.note|raw }}
+                                                        </div>
+                                                    </li>
+                                                    {% set arrayTitle = arrayTitle|merge([notes.page.course.title]) %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+                {% endfor %}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+
+{% set i = 0 %}
+
+    <ul class="accordeon">
+        <li class="accordeon-formation">
+                <span class="accordeon-formation-title">
+                    <span class="title-txt"><span class="uppercase">{{'global.literal.formation' | trans}}</span> : {{ notes[i].session.formationPath.title }}</span>
+                    <span class="title-icons">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M19 8h-1V3H6v5H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zM8 5h8v3H8V5zm8 12v2H8v-4h8v2zm2-2v-2H6v2H4v-4c0-.55.45-1 1-1h14c.55 0 1 .45 1 1v4h-2z"/><circle cx="18" cy="11.5" r="1"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                    </span>
+                </span>
+            <ul class="accordeon-module">
+                <li class="note-module">
+                        <span class="accordeon-module-title">
+                            <span class="title-txt"><span class="uppercase">{{'userFrontManagement.module.title_m' | trans}}</span> : {{ notes[i].module.title }}</span>
+                            <span class="title-icons">
+                                <svg class="accordeon-open" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                            </span>
+                        </span>
+                    <ul class="accordeon-note-container is-open">
+                        {% for note in notes %}
+                            <li class="accordeon-note-item">
+                                <span class="accordeon-note-title">
+                                    <span class="uppercase">{{'formation.page.literal' | trans}}
+                                    </span> :
+                                    <a href="{{ path('user_formation_module_organisation', {'slugSession': note.session.slug, 'formationPath': note.session.formationPath.id,  'slugModule': note.module.slug,'slugChapter': note.course.slug,'slugPage': note.page.slug,}) }}">
+                                        {{ note.page.title }}
+                                    </a>
+                                </span>
+                                <div> {{note.note|raw}} </div>
+                                {# <div style="display: none;" class="note-area">
+                                    <textarea name="" id="">{{note.note|raw}}</textarea>
+                                </div> #}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    {#{'dashboard.notes_empty'|trans}#}
+{% endif %}
+
+
+{# {% if notes | length > 0 %}
+    {% for note in notes %}
+    <div class="accordeon-level level-1 opened">
+        <p class="title-note">
+        <span class="uppercase">{{'global.literal.formation' | trans}}</span> : {{note.session.formationPath.title}}
+        <span class="icons">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M19 8h-1V3H6v5H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zM8 5h8v3H8V5zm8 12v2H8v-4h8v2zm2-2v-2H6v2H4v-4c0-.55.45-1 1-1h14c.55 0 1 .45 1 1v4h-2z"/><circle cx="18" cy="11.5" r="1"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+            <svg class="open-accordeon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        </span>
+        </p>
+    </div>
+    <div class="accordeon-level level-2">
+        <p class="title-note">
+        <span class="uppercase">{{'userFrontManagement.module.title_m' | trans}}</span> : {{note.module.title}}
+        <span class="icons">
+            <svg class="open-accordeon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        </span>
+        </p>
+    </div>
+    <div class="accordeon-level level-3">
+        <p class="title-note">
+        <span class="uppercase">{{'formation.course.title' | trans}}</span> : {{note.course.title}}
+        <span class="icons">
+            <svg class="open-accordeon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        </span>
+        </p>
+    </div>
+    <div class="accordeon-level level-4">
+        <p class="title-note">
+        <span class="uppercase">{{'formation.page.literal' | trans}}</span> : {{note.page.title}}
+        <span class="icons">
+            <svg class="edit-note" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM5.92 19H5v-.92l9.06-9.06.92.92L5.92 19zM20.71 5.63l-2.34-2.34c-.2-.2-.45-.29-.71-.29s-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41z"/></svg>
+        </span>
+        <div class="content">
+            {{note.note|raw}}
+        </div>
+        <div style="display: none;" class="note-area">
+            <textarea name="" id="">{{note.note|raw}}</textarea>
+        </div>
+        </p>
+    </div>
+    {% endfor %}
+{% else %}
+    {{'dashboard.notes_empty'|trans}}
+{% endif %} #}

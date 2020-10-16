@@ -1,0 +1,83 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<div class="lms-breadcrumb">
+     <span><a href="
+				{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+        {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+				{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+				{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+				{% else %} {{ path('home_dashboard') }}
+				{% endif %}">{{lms_name}}</a></span> > 
+    <span><a href="{{path('user_formation')}}">{{'menu.userFormation.title'|trans}}</a></span> > 
+    <span>{{currentModule.title}}</span>
+</div>
+<div class="page-title">
+  <h1 class="title"><span class="capitalize">{{currentModule.title}}</span><button id="lms-fullscreen" class="lms-button lms-button-blue" data-toggle="tooltip" data-original-title="Plein écran"><i style="margin-top: 6px;" class="material-icons lms-material-icons ">fullscreen</i></button></h1> 
+  <hr>
+</div>
+
+<div class="formation-page-container">
+  <div class="formation-page-content" id="lms-course-content">
+     <iframe width="100%" id="scorm" src="{{ scoEntryUrl }}"></iframe>
+ </div>
+</div>
+{% endblock %}
+
+{% block js %}
+     {{parent()}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/4.2.1/screenfull.min.js"></script>     
+<script type="text/javascript" language="javascript">
+
+    const setIframeHeight = (id, navWidth) => {
+        if ( document.getElementById ) {
+            let theIframe = document.getElementById(id);
+            if (theIframe) {
+                let height = getWindowHeight();
+                theIframe.style.height = Math.round( height ) - navWidth + "px";
+                theIframe.style.marginTop = Math.round( ((height - navWidth) - parseInt(theIframe.style.height) )/2 ) + "px";
+            }
+        }
+    }
+
+    const getWindowHeight = () => {
+        let height = 0;
+        if (window.innerHeight) {
+            height = window.innerHeight - 18;
+        }
+        else if (document.documentElement && document.documentElement.clientHeight) {
+            height = document.documentElement.clientHeight;
+        }
+        else if (document.body && document.body.clientHeight) {
+            height = document.body.clientHeight;
+        }
+        return height - 100;
+    }
+
+    const SetupIFrame = () => {
+        //set our iFrame for the content to take up the full screen except for our navigation
+        let navWidth = 40;
+        setIframeHeight("scorm", navWidth);
+        //need this in a setTimeout to avoid a timing error in IE6
+        window.setTimeout('window.onresize = function() { setIframeHeight("scorm", ' + navWidth + '); }', 1000);
+    }
+
+    $(document).ready(function() {
+        // any code goes here
+        SetupIFrame();
+        const target = $('#lms-course-content')[0]; // Get DOM element from jQuery collection
+
+        $('#lms-fullscreen').on('click', () => {
+            if (screenfull.enabled) {
+                screenfull.request(target);
+            }
+        });        
+    });
+
+    $('#dropdown-formations .dropdown-menu').addClass('show');
+
+</script>	
+
+<script type='text/javascript' src="{{asset('js/offline_api_wrapper.min.js')}}"></script>
+{% endblock js %}

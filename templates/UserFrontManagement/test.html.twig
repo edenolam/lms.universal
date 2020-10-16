@@ -1,0 +1,50 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<div class="page-header">
+		<div class="page-title">
+			<a href="{{ path('user_formation_module', {'slugSession':currentSession.slug}) }}">{{ currentFormation.title }}</a> / {{ currentModule.title }} / {{attribute(validationVia, 6)}}
+		</div>
+	</div>	
+    <div class="row row-cards">
+		{% if test is defined and test is not null and test is not empty %}
+			<div class="col-lg-9 col-md-8 col-sm-12 col-xs-12">
+				<div class="card">
+					<div class="card-status card-status-left bg-blue"></div>
+					<div class="card-header">
+						<h3 class="card-title">{{'test.front.title' | trans}} : {{typeOfTest.Title}}</h3>
+					</div>
+					{{ form_start(form) }}
+					<div class="card-body ">
+						{% for question in test %}
+							{% set element = 'rep_'~question.id %}
+				            <div class="controls-row">
+				                {{ form_label(attribute(form, element))}}
+				                {{ form_widget(attribute(form, element))}}
+				            </div>
+				        </br>
+						{% endfor %}					
+					</div>
+					<div class="card-footer text-center">
+						 {{ form_widget(form.save, {'label': 'test.submit'|trans},  { 'attr': {'class': 'btn btn-pill btn-primary'} }) }}
+					</div>
+					{{ form_end(form) }}
+                </div>	 
+			</div>
+			<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+				{% include 'UserFrontManagement/tools/sommaire.html.twig' %}
+				{% include 'UserFrontManagement/tools/note.html.twig' %}
+				{% include 'UserFrontManagement/tools/document.html.twig' %}
+			</div>
+		{% else %}
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="alert lms-alert-danger" role="alert">
+					{{ 'userFrontManagement.page.empty' | trans | raw }}
+				</div>
+			</div>
+		{% endif %}
+    </div>	
+    <script type="text/javascript">
+    //document.getElementById('UserFrontManagement_testformtype_save').addEventListenner('click')
+    </script>	
+{% endblock %}

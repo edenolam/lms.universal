@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% for signature in signatures %}
+        <p>{{ signature.id }}</p>
+        <p>{{ signature.code }}</p>
+        <p>{{ signature.date }}</p>
+        <p>{{ signature.ip }}</p>
+        <p>{{ signature.isValid }}</p>
+        <p>{{ signature.raison }}</p>
+        <p>{{ signature.sessionFormationPathModule }}</p>
+
+    {% endfor %}
+{% endblock %}

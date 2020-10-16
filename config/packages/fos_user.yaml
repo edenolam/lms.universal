@@ -1,0 +1,71 @@
+fos_user:
+    db_driver: orm 
+    user_class: App\Entity\UserManagement\User
+    firewall_name: main
+    model_manager_name:     null  # change it to the name of your entity/document manager if you don't want to use the default one.
+    use_listener:           true
+    use_flash_notifications: true
+    use_authentication_listener: true
+    use_username_form_type: true
+    from_email:
+        address: info@universalmeica.com
+        sender_name: UNIVERSAL MEDICA
+    profile:
+        form:
+            type:               FOS\UserBundle\Form\Type\ProfileFormType
+            name:               fos_user_profile_form     
+    change_password:
+        form:
+            type:               FOS\UserBundle\Form\Type\ChangePasswordFormType
+            name:               fos_user_change_password_form              
+    registration:
+        confirmation:
+            enabled:    true # change to true for required email confirmation
+            from_email: # Use this node only if you don't want the global email address for the confirmation email
+                address:        info@universalmeica.com
+                sender_name:    UNIVERSAL MEDICA
+            template:   '@FOSUser/Registration/email_txt.html.twig'
+
+        form:
+            type:                 App\Form\UserManagement\UserType #FOS\UserBundle\Form\Type\RegistrationFormType # or 'fos_user_registration' on Symfony < 2.8
+            name:                 user_registration          
+    resetting:
+        retry_ttl: 72000 # Value in seconds, logic will use as hours
+        token_ttl: 86400
+        email:
+            template:   '@FOSUser/Resetting/email.txt.twig'
+            from_email: # Use this node only if you don't want the global email address for the resetting email
+                address:        info@universalmedica.com
+                sender_name:    UNIVERSAL MEDICA
+            
+        form:
+            type:               FOS\UserBundle\Form\Type\ResettingFormType
+            name:               fos_user_resetting_form
+            validation_groups:  [ResetPassword, Default]   
+    service:
+        mailer:               fos_user.mailer.twig_swift
+        email_canonicalizer:  fos_user.util.canonicalizer.default
+        token_generator:      fos_user.util.token_generator.default
+        username_canonicalizer:  fos_user.util.canonicalizer.default
+        user_manager:         fos_user.user_manager.default
+
+    group:
+        group_class:          App\Entity\UserManagement\Group
+        group_manager:        fos_user.group_manager.default
+        form:
+            type:                App\Form\UserManagement\GroupType #FOS\UserBundle\Form\Type\GroupFormType # umds_user_group on Symfony < 2.8
+            name:                user_group #fos_user_group_form                     
+
+services:    
+    user.registration.form.type:
+        class:     App\Form\UserManagement\UserType
+        arguments: ['%fos_user.model.user.class%']
+        tags:
+            - { name: form.type, alias: user_registration }
+            
+            
+    user.group.form.type:
+       class: App\Form\UserManagement\GroupType
+       arguments: ['%fos_user.group_manager.class%']
+       tags:
+           - { name: form.type, alias: user_group }

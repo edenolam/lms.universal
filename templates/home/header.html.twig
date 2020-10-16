@@ -1,0 +1,64 @@
+<!-- <div class="fixed-top"> -->
+<header class="navbar navbar-expand flex-md-row sticky-top lms-header">
+    <div class="d-none">
+        <svg class="open-search" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0h24v24H0V0z" fill="none"/>
+            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
+        <svg class="close" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0h24v24H0V0z" fill="none"/>
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+        </svg>
+        <div class="hidden-search">
+            <input type="text">
+            <svg height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 0h24v24H0V0z" fill="none"/>
+                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+            </svg>
+        </div>
+    </div>
+	<ul class="navbar-nav align-items-center ml-auto">
+		<li class="nav-item text-nowrap mx-3">
+			<input id="toSearch" type="text" placeholder="{{'global.search'|trans}}">
+								<a  data-path="{{ path('user_search') }}" id="toSearchButton">
+								
+			<i class="material-icons align-bottom"> search </i></a>
+		</li>
+		<li class="nav-item text-nowrap dropdown mx-3">
+			<a href="#" class="d-flex align-items-center nav-link pr-0 leading-none" data-toggle="dropdown">
+				<span class="mr-2 d-none d-lg-inline-block">
+					<span class="text-default"> <span class="text-capitalize">{{ app.user.firstname }}</span> <span class="text-capitalize">{{ app.user.lastname | truncate(1, false, '.') }}</span> </span>
+				</span>
+				{% if app.user.photo %}
+					<span class="lms-header-avatar-container"><img src="{{ asset('uploads/user/') }}{{ app.user.photo  }}" alt="Avatar"></span>
+				{% else %}
+					<span class="lms-header-avatar-container"><img src="{{ asset('images/core/avatar-small.svg') }}" alt="Avatar"></span>
+				{% endif %}
+			</a>
+			<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+				{#<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+					<path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" />
+					<path d="M0 0h24v24H0z" fill="none" /></svg>#}
+				{% if is_granted('ROLE_USER') %}
+				<a class="dropdown-item" href="{{ path('user_profil') }}"><i class="material-icons lms-material-icons">account_circle</i> {{'user.profile'|trans}}</a>
+				{% endif %}
+				<a class="dropdown-item" href="{{ path('fos_user_security_logout') }}"><i class="material-icons lms-material-icons">exit_to_app</i> {{'user.sign_out'|trans}}</a>
+			</div>
+		</li>
+		<li class="nav-item text-nowrap dropdown item lang mx-2">
+			<a href="#" class="d-flex align-items-center nav-link pr-0 leading-none" data-toggle="dropdown">
+				<span class="mr-2 d-none d-lg-inline-block">
+					<span class="text-default"> <span class="text-uppercase">{{ app.request.locale  }}</span> </span>
+				</span>
+			</a>
+			<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+				{#<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+					<path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" />
+					<path d="M0 0h24v24H0z" fill="none" />
+				</svg>#}
+				<a class="dropdown-item" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'fr'})) }}"><img src="{{ asset('images/iconfinder_FR_167740.png') }}"> Français</a>
+				<a class="dropdown-item" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'en'})) }}"><img src="{{ asset('images/iconfinder_GB_167794.png') }}"> English</a>			
+			</div>
+		</li>
+	</ul>
+</header>

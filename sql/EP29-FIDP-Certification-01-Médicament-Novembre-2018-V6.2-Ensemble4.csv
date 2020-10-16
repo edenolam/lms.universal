@@ -1,0 +1,65 @@
+Titre;question;type de réponse;réponse;statut de la réponse
+;Quelle affirmation est correcte concernant la prescription des médicaments ?;2;Tous les médicaments sont soumis à prescription;0
+;Quelle affirmation est correcte concernant la prescription des médicaments ?;2;Certains médicaments peuvent être achetés directement sans ordonnance;1
+;Quelle affirmation est correcte concernant la prescription des médicaments ?;2;Les médicaments prescrits sur ordonnance sont obligatoirement remboursés;0
+;Tous les professionnels de santé autorisés à prescrire peuvent prescrire n’importe quel médicament.;2;VRAI;0
+;Tous les professionnels de santé autorisés à prescrire peuvent prescrire n’importe quel médicament.;2;FAUX;1
+;Quelles prescriptions sont possibles sur une ordonnance classique ?;1;Un médicament sur Liste I;1
+;Quelles prescriptions sont possibles sur une ordonnance classique ?;1;Un médicament stupéfiant;0
+;Quelles prescriptions sont possibles sur une ordonnance classique ?;1;Un médicament sur Liste II;1
+;Quelles prescriptions sont possibles sur une ordonnance classique ?;1;Un médicament d’exception pour une indication non listée sur la FIT;1
+;Dans quel(s) cas est utilisée une ordonnance bizone ?;1;Dans le cas de médicaments d’exception;0
+;Dans quel(s) cas est utilisée une ordonnance bizone ?;1;Pour les affections de longue durée;1
+;Dans quel(s) cas est utilisée une ordonnance bizone ?;1;Pour les stupéfiants ou les médicaments apparentés aux stupéfiants;0
+;Dans quel(s) cas est utilisée une ordonnance bizone ?;1;Pour les maladies rares;0
+;Sur quelles ordonnances les médecins peuvent prescrire un médicament d’exception ?;1;Sur une ordonnance sécurisée quelle que soit l’indication;0
+;Sur quelles ordonnances les médecins peuvent prescrire un médicament d’exception ?;1;Sur une ordonnance dite d’exception pour les indications listées sur la FIT;1
+;Sur quelles ordonnances les médecins peuvent prescrire un médicament d’exception ?;1;Sur une ordonnance classique pour les indications non listées sur la FIT;1
+;Sur quelles ordonnances les médecins peuvent prescrire un médicament d’exception ?;1;Sur une ordonnance bizone quelle que soit l’indication;0
+;La fiche d’informations thérapeutiques permet de connaître les indications pour lesquelles le médicament d’exception sera pris en charge.;2;VRAI;1
+;La fiche d’informations thérapeutiques permet de connaître les indications pour lesquelles le médicament d’exception sera pris en charge.;2;FAUX;0
+;Quelle prescription est obligatoire sur une ordonnance sécurisée ?;2;Un stupéfiant;1
+;Quelle prescription est obligatoire sur une ordonnance sécurisée ?;2;Un médicament sur Liste II;0
+;Quelle prescription est obligatoire sur une ordonnance sécurisée ?;2;Un médicament d’exception;0
+;Quels sont les délais à respecter pour présenter la première fois une ordonnance à la pharmacie et s’assurer qu’elle soit exécutée dans son intégralité ?;1;3 jours maximum pour les stupéfiants;1
+;Quels sont les délais à respecter pour présenter la première fois une ordonnance à la pharmacie et s’assurer qu’elle soit exécutée dans son intégralité ?;1;3 mois pour les médicaments sur Liste I;1
+;Quels sont les délais à respecter pour présenter la première fois une ordonnance à la pharmacie et s’assurer qu’elle soit exécutée dans son intégralité ?;1;6 mois pour les médicaments sur Liste II;0
+;Quels sont les délais à respecter pour présenter la première fois une ordonnance à la pharmacie et s’assurer qu’elle soit exécutée dans son intégralité ?;1;Aucun délai;0
+;Quelle est la durée maximale de prescription que peut faire un médecin pour un médicament stupéfiant ou apparenté aux stupéfiants ?;2;7 jours;0
+;Quelle est la durée maximale de prescription que peut faire un médecin pour un médicament stupéfiant ou apparenté aux stupéfiants ?;2;28 jours;1
+;Quelle est la durée maximale de prescription que peut faire un médecin pour un médicament stupéfiant ou apparenté aux stupéfiants ?;2;3 mois;0
+;Quelle est la durée maximale de prescription que peut faire un médecin pour un médicament stupéfiant ou apparenté aux stupéfiants ?;2;12 mois;0
+;Quel médicament peut être renouvelé, sauf mention contraire du médecin ?;2;Un médicament sur Liste I;0
+;Quel médicament peut être renouvelé, sauf mention contraire du médecin ?;2;Un médicament sur Liste II;1
+;Quel médicament peut être renouvelé, sauf mention contraire du médecin ?;2;Un médicament apparenté aux stupéfiants;0
+;Quel médicament peut être renouvelé, sauf mention contraire du médecin ?;2;Un médicament d’exception;0
+;Le dosage de la spécialité, le nombre de prises et le nombre d'unités thérapeutiques par prise doivent figurer en toutes lettres sur une ordonnance sécurisée.;2;VRAI;1
+;Le dosage de la spécialité, le nombre de prises et le nombre d'unités thérapeutiques par prise doivent figurer en toutes lettres sur une ordonnance sécurisée.;2;FAUX;0
+;Quelle affirmation est vraie concernant les médicaments sur Liste I et sur Liste II ?;2;Ils sont soumis à prescription obligatoire;1
+;Quelle affirmation est vraie concernant les médicaments sur Liste I et sur Liste II ?;2;Le pharmacien peut les délivrer sans ordonnance;0
+;Quelles sont les propositions correctes concernant les mentions devant figurer sur le conditionnement des médicaments de Liste I ?;2;Rectangle blanc à bord rouge pour les produits sur Liste I;1
+;Quelles sont les propositions correctes concernant les mentions devant figurer sur le conditionnement des médicaments de Liste I ?;2;Rectangle blanc à bord vert pour les produits sur Liste I;0
+;Quelles sont les propositions correctes concernant les mentions devant figurer sur le conditionnement des médicaments de Liste II ?;2;Rectangle blanc à bord rouge pour les produits sur Liste II;0
+;Quelles sont les propositions correctes concernant les mentions devant figurer sur le conditionnement des médicaments de Liste II ?;2;Rectangle blanc à bord vert pour les produits sur Liste II;1
+;Un médicament soumis à prescription obligatoire n’est pas forcément remboursable.;2;VRAI;1
+;Un médicament soumis à prescription obligatoire n’est pas forcément remboursable.;2;FAUX;0
+;Un médicament réservé à l’usage hospitalier (RH) peut être distribué en pharmacie de ville.;2;VRAI;0
+;Un médicament réservé à l’usage hospitalier (RH) peut être distribué en pharmacie de ville.;2;FAUX;1
+;Quelle catégorie de médicaments soumis à prescription restreinte ne peut pas être distribuée en pharmacie de ville ?;2;Réservé à l’usage hospitalier (RH);1
+;Quelle catégorie de médicaments soumis à prescription restreinte ne peut pas être distribuée en pharmacie de ville ?;2;Prescription hospitalière (PH);0
+;Quelle catégorie de médicaments soumis à prescription restreinte ne peut pas être distribuée en pharmacie de ville ?;2;Prescription initiale hospitalière (PIH);0
+;Quelle catégorie de médicaments soumis à prescription restreinte ne peut pas être distribuée en pharmacie de ville ?;2;Prescription réservée à certains spécialistes (PRS);0
+;Quelle catégorie de médicaments soumis à prescription restreinte ne peut pas être distribuée en pharmacie de ville ?;2;Médicament nécessitant une surveillance particulière (SP);0
+;Quelles sont les affirmations correctes concernant les médicaments dits « de prescription médicale facultative » ?;2;Ils sont soumis à prescription obligatoire;0
+;Quelles sont les affirmations correctes concernant les médicaments dits « de prescription médicale facultative » ?;2;Ils peuvent être remboursables si prescrits et inscrits sur la liste des spécialités remboursables;1
+;Quelles sont les affirmations correctes concernant les médicaments dits « de prescription médicale facultative » ?;2;La publicité auprès du grand public est possible;0
+;En cas de traitement d’une durée de 6 mois, comment le pharmacien doit-il dispenser les médicaments ?;1;Il délivre tout en une seule fois;0
+;En cas de traitement d’une durée de 6 mois, comment le pharmacien doit-il dispenser les médicaments ?;1;Il délivre la quantité pour 3 mois en cas de pathologie chronique;1
+;En cas de traitement d’une durée de 6 mois, comment le pharmacien doit-il dispenser les médicaments ?;1;Il délivre la quantité pour 30 jours de traitement, le patient reviendra 5 fois;1
+;Le pharmacien peut substituer un médicament par un autre appartenant au même groupe générique.;2;VRAI;1
+;Le pharmacien peut substituer un médicament par un autre appartenant au même groupe générique.;2;FAUX;0
+;Quelle mention doit noter un médecin sur l’ordonnance pour exclure une substitution ?;2;« NS » écrit à la main;0
+;Quelle mention doit noter un médecin sur l’ordonnance pour exclure une substitution ?;2;« Non substituable » écrit à la main;1
+;Quelle mention doit noter un médecin sur l’ordonnance pour exclure une substitution ?;2;« Non substituable » tapé à l’ordinateur;0
+;Lors de la substitution, le pharmacien doit être vigilant aux excipients à effets notoire des génériques.;2;VRAI;1
+;Lors de la substitution, le pharmacien doit être vigilant aux excipients à effets notoire des génériques.;2;FAUX;0

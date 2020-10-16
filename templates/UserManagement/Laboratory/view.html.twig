@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="lms-breadcrumb">
+    <span><a href="
+				{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+        {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+				{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+				{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+				{% else %} {{ path('home_dashboard') }}
+				{% endif %}">{{lms_name}}</a></span> >  <span><a href="{{path('admin_laboratory_list')}}">{{ 'laboratory.action.list' | trans }}</a></span> > <span class="bold">{{ 'laboratory.action.view' | trans }} ({{ laboratory.title }})</span>
+</div>
+<div class="d-flex align-items-center lms-title">
+	<h1 class="text-uppercase lms-h1">{{ laboratory.title }} </h1><hr>
+</div>  
+
+<div class="row row-cards">
+  <div class="col col-12 d-md-none">
+    {% include "UserManagement/menu.html.twig" %}
+  </div>
+
+  <div class="col col-12"> 
+    <div class="card-body">
+      <div class="row form-container">
+        <div class="col col-12 col-md-4 col-xl-2 data-photo">
+          <div class="fileupload-new thumbnail">
+              {% if laboratory.logo %}
+                <img src="{{ asset('uploads/laboratory/') }}{{ laboratory.logo  }}" />
+              {% else %}
+                <img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" />
+              {% endif %}
+          </div>
+        </div>
+        <div class="col col-12 col-md-8 col-xl-5 data-perso"> 
+          <h2 class="admin-h2">Coordonnées laboratoire</h2>
+          <div class="form-group">
+              <label class="">{{ 'laboratory.title'|trans }}</label>
+              <span class="form-view">{{ laboratory.title}}</span>
+          </div> 
+          <div class="form-group">
+              <label class="">{{ 'laboratory.address'|trans }}</label>
+              <span class="form-view">{{ laboratory.address}}</span>
+          </div> 
+          <div class="form-group">
+              <label class="">{{ 'laboratory.addressBis'|trans }}</label>
+              <span class="form-view">{{ laboratory.addressBis}}</span>
+          </div> 
+          <div class="form-group">
+              <label class="">{{ 'laboratory.city'|trans }}</label>
+              <span class="form-view">{{ laboratory.city}}</span>
+          </div> 
+          <div class="form-group">
+              <label class="">{{ 'laboratory.zipCode'|trans }}</label>
+              <span class="form-view">{{ laboratory.zipCode}}</span>
+          </div> 
+          <div class="form-group">
+              <label class="">{{ 'laboratory.country'|trans }}</label>
+              <span class="form-view">{{ laboratory.country}}</span>
+          </div>
+        </div>
+        <div class="col col-12 col-xl-5 data-pro">
+          <h2 class="admin-h2">Données professionnelles</h2>
+          <div class="form-group">
+              <label class="">{{ 'laboratory.phone'|trans }}</label>
+              <span class="form-view">{{ laboratory.phone}}</span>
+          </div>                 
+          <div class="form-group">
+              <label class="">{{ 'laboratory.email'|trans }}</label>
+              <span class="form-view">{{ laboratory.email}}</span>
+          </div>  
+          <div class="form-group">
+              <label class="">{{ 'laboratory.url'|trans }}</label>
+              <span class="form-view">{{ laboratory.url}}</span>
+          </div>                                  
+          <div class="form-group">
+              <label class="">{{ 'laboratory.description'|trans }}</label>
+              <span class="form-view">{{ laboratory.description}}</span>
+          </div>    
+          <div class="form-group">
+              <label class="">{{ 'laboratory.sort'|trans }}</label>
+              <span class="form-view">{{ laboratory.sort}}</span>
+          </div>  
+          <div class="form-group">
+              <label class="">{{ 'laboratory.divisions'|trans }}</label>
+              {# <span class="form-view"> #}
+                  <div class="custom-controls-stacked">        
+                    {% for id,value in laboratory.divisions %}
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" name="laborator_divisions[divisions][]" value="{{ id }}" class="custom-control-input" checked="checked" />
+                            <span class="custom-control-label">{{ value }}</span>
+                        </div>
+                    {% endfor %}
+                  </div> 
+              {# </span> #}
+          </div>                              
+        </div>
+      </div> 
+      <div class="row form-container">
+      </div>          
+    </div> 
+    <div class="row justify-content-around">
+          <a href="{{ path('admin_laboratory_list') }}" class="lms-button lms-button-gray">
+            {{ 'global.back' | trans }}
+          </a>  
+    </div>          
+  </div>  
+
+</div>
+
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+<script>
+$('#dropdown-users .dropdown-menu').addClass('show');
+</script>
+{% endblock %}

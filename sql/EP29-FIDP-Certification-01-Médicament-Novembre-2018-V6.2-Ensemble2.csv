@@ -1,0 +1,37 @@
+Titre;question;type de réponse;réponse;statut de la réponse
+;Chaque médicament est unique et dispose d’une autorisation de mise sur le marché spécifique.;2;VRAI;1
+;Chaque médicament est unique et dispose d’une autorisation de mise sur le marché spécifique.;2;FAUX;0
+;Quel document fourni au professionnel de santé est la carte d’identité du médicament ?;2;La notice;0
+;Quel document fourni au professionnel de santé est la carte d’identité du médicament ?;2;Le résumé des caractéristiques du produit;1
+;Quel document fourni au professionnel de santé est la carte d’identité du médicament ?;2;L’avis de la Commission de la Transparence;0
+;Quel document fourni au professionnel de santé est la carte d’identité du médicament ?;2;L’autorisation de mise sur le marché;0
+;Le RCP de toutes les spécialités est composé des mêmes rubriques dans le même ordre.;2;VRAI;1
+;Le RCP de toutes les spécialités est composé des mêmes rubriques dans le même ordre.;2;FAUX;0
+;Quelles informations cliniques doivent être clairement indiquées sur tous les documents promotionnels ?;1;Les effets indésirables;1
+;Quelles informations cliniques doivent être clairement indiquées sur tous les documents promotionnels ?;1;Les précautions d’emploi;1
+;Quelles informations cliniques doivent être clairement indiquées sur tous les documents promotionnels ?;1;Les contre-indications;1
+;Quelles informations doivent être présentées au prescripteur ?;1;L’avis de la Commission de la Transparence quand il existe;1
+;Quelles informations doivent être présentées au prescripteur ?;1;La fiche de bon usage du médicament quand elle existe;1
+;Quelles informations doivent être présentées au prescripteur ?;1;La fiche d’information thérapeutique quand elle existe;1
+;Quelles informations doivent être présentées au prescripteur ?;1;Les recommandations de l’ANSM, HAS ou INCa quand elles existent;1
+;Les documents médico-économiques remis informent le prescripteur sur :;1;Le prix limite de vente;1
+;Les documents médico-économiques remis informent le prescripteur sur :;1;Le remboursement ou non du produit présenté;1
+;Les documents médico-économiques remis informent le prescripteur sur :;1;Le coût journalier du traitement quand il existe;1
+;Les documents médico-économiques remis informent le prescripteur sur :;1;Le tarif forfaitaire de responsabilité si le produit est concerné;1
+;Sur quel document, remis au professionnel de santé, retrouve-t-on les informations sur le service médical rendu ?;2;La notice;0
+;Sur quel document, remis au professionnel de santé, retrouve-t-on les informations sur le service médical rendu ?;2;L’avis de la Commission de la Transparence;1
+;Sur quel document, remis au professionnel de santé, retrouve-t-on les informations sur le service médical rendu ?;2;L’autorisation de mise sur le marché;0
+;Quel document concerne spécifiquement les médicaments d’exception ?;2;La fiche d’information thérapeutique;1
+;Quel document concerne spécifiquement les médicaments d’exception ?;2;La fiche de transparence;0
+;Quel document concerne spécifiquement les médicaments d’exception ?;2;Le résumé des caractéristiques du produit;0
+;Quel document concerne spécifiquement les médicaments d’exception ?;2;L’autorisation de mise sur le marché;0
+;Quelles informations contient la fiche d’information thérapeutique pour les médicaments d’exception ?;2;Un rappel des indications thérapeutiques et des conditions d’utilisation;1
+;Quelles informations contient la fiche d’information thérapeutique pour les médicaments d’exception ?;2;Un rappel des coûts des différents traitements;0
+;Quelles informations contient la fiche d’information thérapeutique pour les médicaments d’exception ?;2;Le tarif forfaitaire de responsabilité;0
+;Quels documents doivent être obligatoirement remis au professionnel de santé lors d’une visite ?;1;Le RCP (fiche posologie);1
+;Quels documents doivent être obligatoirement remis au professionnel de santé lors d’une visite ?;1;L’avis de la Commission de la Transparence;1
+;Quels documents doivent être obligatoirement remis au professionnel de santé lors d’une visite ?;1;Le ou les arrêtés d’inscription sur les listes en sus et/ou rétrocession;1
+;La Charte de l’information promotionnelle rappelle les dispositions du Code de la Santé Publique, concernant les informations qui doivent être présentées au professionnel de santé et les documents qui lui sont remis.  ;2;VRAI;1
+;La Charte de l’information promotionnelle rappelle les dispositions du Code de la Santé Publique, concernant les informations qui doivent être présentées au professionnel de santé et les documents qui lui sont remis.  ;2;FAUX;0
+;Les informations promotionnelles données lors des visites participent au bon usage des médicaments.  ;2;VRAI;1
+;Les informations promotionnelles données lors des visites participent au bon usage des médicaments.  ;2;FAUX;0

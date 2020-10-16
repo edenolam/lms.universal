@@ -1,0 +1,15 @@
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+    <div class="form-group">
+      {{form_row(form.name, {label_attr: {class: 'form-label'} }) }}
+    </div>
+    <div class="form-group">
+      {{form_row(form.file, {label_attr: {class: 'form-label'} }) }}
+    </div>
+    <div class="form-group">
+      {{form_row(form.isDownload, {label_attr: {class: 'form-label'} }) }}
+    </div>
+    <div class="form-group">       
+      <button type="submit" class="lms-button lms-button-blue ml-auto"><i class="material-icons lms-material-icons">save</i> {{ 'global.submit' | trans }}</button>
+    </div>  
+{{ form_end(form) }}

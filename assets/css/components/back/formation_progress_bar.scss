@@ -1,0 +1,63 @@
+.progress-module-container {
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    margin: 20px auto;
+    .progress-module {
+        height: 15px;
+        background-color: $gallery-grey;
+        position: relative;
+        flex: 1 0 auto;
+        &+.progress-module {
+            margin-left: 2px;
+        }
+        &:first-of-type {
+            border-bottom-left-radius: 7.5px;
+            border-top-left-radius: 7.5px;
+        }
+        &:last-of-type {
+            border-bottom-right-radius: 7.5px;
+            border-top-right-radius: 7.5px;
+        }
+        &.success {
+            background-color: $downy-blue;
+        }
+        &.eval {
+            max-width: 14px;
+            &.success {
+                background-color: $eval;
+            }
+            img {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+        .pretest {
+            &.success {
+                display: block;
+                width: 14px;
+                height: 15px;
+                background-color: $goldenrod-yellow;
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+        }
+        img {
+            display: block;
+            width: 14px;
+            position: absolute;
+            top: -20px;
+        }
+        .current {
+            display: block;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 5px 6px 5px;
+            border-color: transparent transparent $black transparent;
+            position: absolute;
+            bottom: -10px;
+        }
+    }
+}

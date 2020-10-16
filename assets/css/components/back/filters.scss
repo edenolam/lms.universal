@@ -1,0 +1,60 @@
+.filters-container {
+    align-items: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    .filter-select {
+        // flex: 1 0 150px;
+        background-color: $white;
+        color: $prussian-blue;
+        margin: 1em 0;
+        padding: 6.5px 10px;
+        text-transform: uppercase;
+        border: none;
+        border-bottom: 1px solid $scorpion-grey;
+        font-size: 0.95em;
+        width: 100%;
+        option {
+            color: $prussian-blue;
+            text-transform: uppercase;
+            border: none;
+            border: black;
+            background-color: $white;
+            &:hover {
+                background-color: $gallery-grey;
+            }
+        }
+        @media (min-width: $tablet) {
+            width: calc(100%/2 - 1em);
+        }
+    }
+}
+
+.needs-validation .multiselect.dropdown-toggle.btn.btn-default {
+    line-height: 1.6;
+    padding-bottom: 0;
+    padding-top: 7px;
+    overflow: hidden;
+}
+
+.needs-validation .multiselect-selected-text {
+    display: inline-block;
+    font-size: 16px;
+    max-width: 95%;
+    overflow: hidden;
+}
+
+.needs-validation button.multiselect {
+    &::after {
+        float: none;
+        position: absolute;
+        right: .5em;
+    }
+}
+
+li.multiselect-all {
+    border-bottom: 1px solid rgba(0, 40, 100, 0.12);
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

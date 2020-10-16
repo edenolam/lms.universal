@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}    
+{% endblock %}
+
+{% block body %}
+<!-- navigateur -->
+<div class="lms-breadcrumb">
+   <span><a href="
+				{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+        {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+				{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+				{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+				{% else %} {{ path('home_dashboard') }}
+				{% endif %}">{{lms_name}}</a></span> > <span><a href="{{path('admin_module_list')}}">{{ 'menu.concepteur.module' | trans }}</a></span> > <span> <a href="{{ path('admin_module_edit', {'slug': module.slug}) }}">{{ module.title }}</a> </span> > <span class="bold"> {{ 'test.create.title'|trans}} ({{conditional}})</span>
+</div>
+
+<!-- title of page -->
+<div class="d-flex align-items-center lms-title">
+	<h1 class="text-uppercase lms-h1">{{ 'menu.concepteur.module' | trans }}</h1>
+  <hr/>
+</div>
+
+<!-- body of page -->
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card border-0">
+            <div class="card-header">
+                <h1 class="text-uppercase lms-h1 font-weight-bold"> {{ 'actions' | trans }} </h1>
+            </div>        
+        </div>    
+        {% include "FormationManagement/Module/actions.html.twig" %} 
+    </div>
+    <div class="col-8">
+      <div class="card border-0">
+          <div class="card-header">
+              <h1 class="text-uppercase lms-h1 font-weight-bold"> {{'test.create.title'|trans}} ({{ conditional }})</h1>
+          </div>        
+          <div class="card-body">
+             {{ form_start(formModuleTest, {'method': 'post', 'action': path('admin_module_add_test', {'slug': module.slug, 'testConditional' : conditional})}) }}
+             {{ form_errors(formModuleTest) }}
+              {% include "FormationManagement/ModuleTest/form.html.twig" %}  
+              <div class="form-group">
+                  <button type="submit" class="lms-button lms-button-blue">
+                     <i class="material-icons lms-material-icons">save</i> {{ 'global.submit'|trans }}</button>
+                  </button>  
+              </div>
+              {{ form_end(formModuleTest) }}
+          </div>     
+      </div>
+    </div>  
+</div>
+
+{% endblock %}
+
+{% block js %}
+  {{ parent() }}
+
+<script>
+  $(document).ready(function () {
+
+      $('#module_test_chronoQuestionTime').hide();
+      $('#module_test_chronoTestTime').hide();
+
+    $('body').on('change', '#module_test_chronoQuestion', function(event){
+      if(this.checked){
+        $('#module_test_chronoQuestionTime').fadeIn();
+      }else{
+        $('#module_test_chronoQuestionTime').fadeOut();
+      }
+    });
+
+    $('body').on('change', '#module_test_chronoTest', function(event){
+      if(this.checked){
+        $('#module_test_chronoTestTime').fadeIn();
+      }else{
+        $('#module_test_chronoTestTime').fadeOut();
+      }
+    });
+  });
+  
+</script>
+
+{% endblock %}

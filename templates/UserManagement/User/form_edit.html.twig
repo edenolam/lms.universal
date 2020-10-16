@@ -1,0 +1,167 @@
+<div class="row form-container">
+    <div class="col col-12 col-xl-3">
+                <div class="fileupload-new" data-provides="fileupload">
+                    <div class="thumbnail">
+                        {% if user.photo %}
+                            <img src="{{ asset('uploads/user/') }}{{ user.photo  }}" />
+                        {% else %}
+                            <img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" />
+                        {% endif %}
+                    </div>
+                    <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                    <div>
+                        <span class="btn btn-white btn-file">
+                            <span class="fileupload-new">{{ 'laboratory.selectImage' | trans }}</span>
+                            <span class="fileupload-exists">{{ 'laboratory.changeImage' | trans }}</span>
+                            {{ form_widget( form.image, {'attr': {'class': 'default' } } ) }}
+                        </span>
+                        <a href="#" class="lms-button lms-button-red" data-dismiss="fileupload"><i class="material-icons lms-material-icons ">delete</i> {{ 'laboratory.removeImage' | trans }}</a>
+                   </div>
+                </div>    
+        <div class="info">
+            {{ 'userManagement.info' | trans | raw }}
+        </div>         
+    </div>
+
+    <div class="col col-12 col-xl-4 data-perso">
+        <div class="form-group">
+          <b>{{ 'user.donnees_personnelles' | trans }}</b>
+        </div> 
+        <div class="form-group">
+            {{ form_label(form.civility,  'user.civility'|trans ) }}
+        </div> 
+        <div class="form-group">            
+            {{ form_widget(form.civility, { 'attr': {'class': 'form-control form-group'} }) }}   
+        </div>      
+        <div class="form-group">
+            {{ form_label(form.firstname,  'user.prenom'|trans) }}
+        </div> 
+        <div class="form-group">            
+            {{ form_widget(form.firstname, { 'attr': {'class': 'form-control form-group'} }) }}  
+        </div>
+        <div class="form-group">
+            {{ form_label(form.lastname,  'user.nom'|trans) }}
+        </div> 
+        <div class="form-group">            
+            {{ form_widget(form.lastname, { 'attr': {'class': 'form-control form-group'} }) }}    
+        </div>    
+        <div class="form-group">
+            {{ form_label(form.email,  'user.email'|trans~'*') }}
+        </div> 
+        <div class="form-group">            
+            {{ form_widget(form.email, { 'attr': {'class': 'form-control form-group', 'required':'required'} }) }}    
+            {{ form_errors(form.email) }}
+        </div>
+    </div>
+
+    <div class="col col-12 col-xl-5 data-pro">
+        <div class="form-group">
+          <b>{{ 'user.donnees_professionnelles' | trans }}</b>
+        </div> 
+        <div class="form-group">
+            {{ form_label(form.function,  'user.function'|trans) }}
+        </div> 
+        <div class="form-group">            
+            {{ form_widget(form.function, { 'attr': {'class': 'form-control form-group'} }) }}  
+            {{ form_errors(form.function) }}  
+        </div>   
+        <div class="form-group">
+            {{ form_label(form.username,  'user.username'|trans) }}
+        </div> 
+        <div class="form-group">            
+            {{ form_widget(form.username, { 'attr': {'class': 'form-control form-group', 'readonly': 'true'} }) }}
+             {{ form_errors(form.username) }}
+        </div>   
+        <div class="form-group">
+            {{ form_label(form.laboratory,  'lov.laboratory'|trans ) }}
+        </div> 
+        <div class="form-group">            
+            {{ form_widget(form.laboratory, { 'attr': {'class': 'form-control form-group'} }) }}   
+        </div>  
+        <div class="form-group">
+            {{ form_label(form.division,  'lov.division'|trans ) }}
+        </div> 
+        <div class="form-group">            
+            {{ form_widget(form.division, { 'attr': {'class': 'form-control form-group'} }) }}   
+        </div>    
+        <div class="form-group">
+            {{ form_label(form.team,  'lov.team'|trans ) }}
+        </div> 
+        <div class="form-group">            
+            {{ form_widget(form.team, { 'attr': {'class': 'form-control form-group'} }) }}   
+        </div>
+          <div class="form-group">   
+            {{ form_label(form.hierarchyLevel,  'user.hierarchyLevel'|trans ) }}         
+            {{ form_widget(form.hierarchyLevel, { 'attr': {'class': 'form-control form-group'} }) }} 
+            {{ form_errors(form.hierarchyLevel) }}   
+        </div>      
+        <div class="form-group">
+            {{ form_label(form.supervisors,  'user.supervisor'|trans ) }}
+        </div> 
+        <div class="form-group">            
+            {{ form_widget(form.supervisors, { 'attr': {'class': 'form-control form-group'} }) }}   
+        </div>    
+        <div class="form-group"> 
+            {{ form_label(form.groups,  'user.groups'|trans ) }}
+        </div> 
+        
+        <div class="form-group bg-white">
+                {% for group in groups %}
+                        {% set checked = false %}
+                            {% for g in user.groups %}
+                                {% if g.id == group.id %}
+                                    {% set checked = true %}
+                                {% endif %}
+                            {% endfor %}
+                        {% if 'ROLE_SUPER_ADMIN' in group.roles %}
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                <div class="form-group m-2">
+                                    <input id="groupe_{{group.id}}" type="checkbox" name="user_registration[groups][]" value="{{ group.id }}" {% if checked %}checked="checked"{% endif %}/>
+                                    <label>{{ group.name }}</label>
+                                </div>
+                            {% endif %}
+                        {% elseif 'ROLE_ADMIN' in group.roles %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <div class="form-group m-2">
+                                    <input id="groupe_{{group.id}}" type="checkbox" name="user_registration[groups][]" value="{{ group.id }}" {% if checked %}checked="checked"{% endif %}/>
+                                    <label>{{ group.name }}</label>
+                                </div>    
+                            {% endif %}                          
+                        {% else %}    
+                            <div class="form-group m-2">
+                                <input id="groupe_{{group.id}}" type="checkbox" name="user_registration[groups][]" value="{{ group.id }}" {% if checked %}checked="checked"{% endif %}/>
+                                <label>{{ group.name }}</label>
+                            </div>    
+                        {% endif %} 
+                {% endfor %}   
+        </div>                     
+      
+           
+                                  
+        <div class="form-group ">
+            {{ form_label(form.info1,  'user.info1'|trans ) }}
+            {{ form_widget(form.info1, { 'attr': {'class': 'form-control form-group'} }) }} 
+            {{ form_errors(form.info1) }}   
+        </div> 
+        <div class="form-group ">
+            {{ form_label(form.info2,  'user.info2'|trans ) }}
+            {{ form_widget(form.info2, { 'attr': {'class': 'form-control form-group'} }) }} 
+            {{ form_errors(form.info2) }}   
+        </div> 
+        <div class="form-group ">
+            {{ form_label(form.info3,  'user.info3'|trans ) }}
+            {{ form_widget(form.info3, { 'attr': {'class': 'form-control form-group'} }) }} 
+            {{ form_errors(form.info3) }}   
+        </div>  
+        {{ form_widget(form._token) }}
+    </div>    
+</div>    
+<div class="required-field">
+        * {{ 'global.obligatoire' | trans}}
+</div>  
+
+<div class="row justify-content-around">  
+    <button id="button_edit_user" type="submit" class="lms-button lms-button-blue">
+        <i class="material-icons lms-material-icons">save</i> {{ 'global.submit'|trans }}
+    </button>
+</div>

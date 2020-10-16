@@ -1,0 +1,154 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+<link href="{{ asset('assets/fullcalendar-3.9.0/fullcalendar.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/fullcalendar-3.9.0/fullcalendar.print.css')}}" media="print" rel="stylesheet" type="text/css" />    
+{% endblock %}
+
+{% block body %}
+	<div class="lms-breadcrumb"> 
+		<a href="
+			{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+        	{% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+			{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+			{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+			{% else %} {{ path('home_dashboard') }}
+			{% endif %}">{{lms_name}}</a> > <span>{{'menu.virtual_class_room.list'|trans}}</span>
+	</div>
+
+<div class="d-flex align-items-center lms-title">
+	<h1 class="text-uppercase lms-h1">{{'menu.virtual_class_room.list'|trans}}</h1>
+	<hr>
+</div>
+
+<div class="row">
+	<!-- currentVirtualClassRoom --> 
+	
+	    <div class="col-4 text-center">
+	      <p class="grid-title">
+	          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
+	          <span>{{'userFrontManagement.virtual_class_rooms.current'|trans}}</span>
+	      </p>	     
+	      {% if currentVirtualClassRoom %}
+		      <ul class="list">
+		      	 {% if currentVirtualClassRoom is iterable %}
+			      	{% for vc in currentVirtualClassRoom %}
+				        <li>
+				            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"></path></svg>
+				            <p>{{ vc.title }}, De {{ vc.openingDate|date('d/m/Y H:i') }} à {{ vc.closingDate | date('H:i') }}, {{ 'virtual_class_room.teacher'|trans }}: {{ vc.teacher.firstname~' '~vc.teacher.lastname }}, {{ 'virtual_class_room.students'|trans }}: <select>
+			                        {% for student in vc.students %}
+			                            <option>{{ student.firstname~' '~student.lastname }}</option>
+			                        {% endfor %}
+			                        </select>  </p>
+				        </li>
+			        {% endfor %}	
+			    {% else %}    	      	 
+			        <li>
+			            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"></path></svg>
+			            <p>{{ currentVirtualClassRoom.title }}, De {{ currentVirtualClassRoom.openingDate|date('d/m/Y H:i') }} à {{ currentVirtualClassRoom.closingDate | date('H:i') }}, {{ 'virtual_class_room.teacher'|trans }}: {{ currentVirtualClassRoom.teacher.firstname~' '~currentVirtualClassRoom.teacher.lastname }}, {{ 'virtual_class_room.students'|trans }}: <select>
+		                        {% for student in currentVirtualClassRoom.students %}
+		                            <option>{{ student.firstname~' '~student.lastname }}</option>
+		                        {% endfor %}
+		                        </select>  </p>
+			        </li>
+			     {% endif %}   
+		      </ul>
+	      {% endif %}
+	    </div> 
+	
+
+	<!-- futureVirtualClassRooms --> 
+	    <div class="col-4 text-center">
+	      <p class="grid-title">
+	          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
+	          <span>{{'userFrontManagement.virtual_class_rooms.future'|trans}}</span>
+	      </p>
+	      	{% if futureVirtualClassRooms is iterable %}
+		      <ul class="list">
+		      	{% for vc in futureVirtualClassRooms %}
+			        <li>
+			            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"></path></svg>
+			            <p>{{ vc.title }}, De {{ vc.openingDate|date('d/m/Y H:i') }} à {{ vc.closingDate | date('H:i') }}, {{ 'virtual_class_room.teacher'|trans }}: {{ vc.teacher.firstname~' '~vc.teacher.lastname }}, {{ 'virtual_class_room.students'|trans }}: <select>
+		                        {% for student in vc.students %}
+		                            <option>{{ student.firstname~' '~student.lastname }}</option>
+		                        {% endfor %}
+		                        </select>  </p>
+			        </li>
+		        {% endfor %}
+		      </ul>
+		    {% else %}
+		        <ul class="list">  
+		    		<li>
+			            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"></path></svg>
+			            <p>{{ futureVirtualClassRooms.title }}, De {{ futureVirtualClassRooms.openingDate|date('d/m/Y H:i') }} à {{ futureVirtualClassRooms.closingDate | date('H:i') }}, {{ 'virtual_class_room.teacher'|trans }}: {{ futureVirtualClassRooms.teacher.firstname~' '~futureVirtualClassRooms.teacher.lastname }}, {{ 'virtual_class_room.students'|trans }}: <select>
+		                        {% for student in futureVirtualClassRooms.students %}
+		                            <option>{{ student.firstname~' '~student.lastname }}</option>
+		                        {% endfor %}
+		                        </select>  </p>
+			        </li>
+			    </ul>    
+		    {% endif %}  
+	    </div>
+	
+	<!-- passedVirtualClassRooms --> 
+	
+	    <div class="col-4 text-center">
+	      <p class="grid-title">
+	          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
+	          <span>{{'userFrontManagement.virtual_class_rooms.passed'|trans}}</span>
+	      </p>
+	      {% if passedVirtualClassRooms is iterable %}
+	      <ul class="list">
+	      	{% for vc in passedVirtualClassRooms  %}
+		        <li>
+		            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"></path></svg>
+		            <p>{{ vc.title }}, De {{ vc.openingDate|date('d/m/Y H:i') }} à {{ vc.closingDate | date('H:i') }}, {{ 'virtual_class_room.teacher'|trans }}: {{ vc.teacher.firstname~' '~vc.teacher.lastname }}, {{ 'virtual_class_room.students'|trans }}: <select>
+	                        {% for student in vc.students %}
+	                            <option>{{ student.firstname~' '~student.lastname }}</option>
+	                        {% endfor %}
+	                        </select>  </p>
+		        </li>
+	        {% endfor %}
+	      </ul>
+	      {% else %}
+	      	    <ul class="list">
+			        <li>
+			            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"></path></svg>
+			            <p>{{ passedVirtualClassRooms.title }}, De {{ passedVirtualClassRooms.openingDate|date('d/m/Y H:i') }} à {{ passedVirtualClassRooms.closingDate | date('H:i') }}, {{ 'virtual_class_room.teacher'|trans }}: {{ passedVirtualClassRooms.teacher.firstname~' '~passedVirtualClassRooms.teacher.lastname }}, {{ 'virtual_class_room.students'|trans }}: <select>
+		                        {% for student in passedVirtualClassRooms.students %}
+		                            <option>{{ student.firstname~' '~student.lastname }}</option>
+		                        {% endfor %}
+		                        </select>  </p>
+			        </li>
+		      </ul>
+	      {% endif %}
+	    </div> 
+	
+</div>
+{# PROD, no dump... #}
+{#
+<div class="card-body d-none">
+	{{ dump(isTeacher)}}
+</div> 
+<div class="card-body d-none">
+	{% for group in app.user.groups %}
+		{{ group.id }}-{{ group.name }},
+	{% endfor %}
+</div> 
+<div class="card-body d-none">
+	{{ dump(currentVirtualClassRoom) }}
+</div>	
+<div class="card-body d-none">
+	{{ dump(futureVirtualClassRooms) }}
+</div>	
+<div class="card-body d-none">
+	{{ dump(passedVirtualClassRooms) }}
+</div> 
+#}
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+{% endblock %}

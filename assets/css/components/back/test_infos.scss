@@ -1,0 +1,46 @@
+.test-infos {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: 1.5rem;
+    margin-top: -2rem;
+    @media screen and (max-width: $laptop) {
+        justify-content: flex-start;
+        margin-top: 0px;
+    }
+    @media screen and (max-width: $tablet) {
+        display: block;
+    }
+    div {
+        height: 30px;
+        font-size: 0.8em;
+        border: 1px solid $prussian-blue;
+        border-top: 0;
+        padding: 0 14px;
+        vertical-align: top;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        color: $prussian-blue;
+        @media screen and (max-width: $laptop) {
+            border-top: 1px solid $prussian-blue;
+        }
+        @media screen and (max-width: $tablet) {
+            max-width: 250px;
+            justify-content: flex-start;
+        }
+        svg {
+            fill: $prussian-blue;
+        }
+        &:not(:first-child) {
+            border-left: 0;
+            @media screen and (max-width: $tablet) {
+                border-top: 0;
+                border-left: 1px solid $prussian-blue;
+            }
+        }
+        .text {
+            margin-left: 5px;
+        }
+    }
+}

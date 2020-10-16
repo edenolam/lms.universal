@@ -1,0 +1,140 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <div class="page-header"><h1 class="page-title">{{test.title}}</h1></div>
+    <div class="row row-cards">
+      <div class="col col-lg-3 d-md-none d-lg-block">
+        {# include "TestManagement/menu.html.twig" #}
+      </div>
+      <div class="col col-lg-9">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">{{ 'test.view'|trans }} : {{test.title}}</h3>
+            <div class="card-options">
+              <div class="col">
+                <a href="{{path('question_create', {"idTest":test.id})}}" class="lms-button lms-button-blue btn-sm">{{'question.create.title'|trans}}</a>
+              </div>
+              <div class="col">
+                <a href="{{ path('admin_testManagement_edit', {'test': test.id }) }}" class="lms-button lms-button-blue btn-sm">{{'test.edit'|trans}}</a>
+              </div>
+            </div>
+          </div>
+          <div class="card-body d-flex flex-column">
+
+              <div class="row row-deck d-flex">
+                <div class="col-md-6">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4>{{ 'test.description'|trans }}</h4>
+                      <div class="text-muted"><b>{{ 'test.ref'|trans }} : {{test.ref}}</b></div>
+                      <p><b>{{ 'global.createuser'|trans }} :</b> {{test.createUser.username}} ({{ test.createdate|date('d/m/Y') }})</p>
+                      <p><b>{{ 'global.updateuser'|trans }} :</b> {{test.updateUser.username}} ({{ test.updatedate|date('d/m/Y') }})</p>
+                      <p><b>{{ 'global.revision'|trans }} :</b> {{test.revision}}</p>
+                      <p><b>{{ 'lov.type_test'|trans }} :</b> {{test.typeTest}}</p>
+                      <p><b>{{ 'test.nbQuestion'|trans }} <small><i> {{ 'test.explicationNbQ'|trans }}</i></small>:</b> {{test.minQuestion}}</p>
+                      <p><b>{{ 'test.theorical_duration'|trans }} :</b> {{test.theoricalDuration|date('H-i-s')}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="card-footer text-right">
+            <div class="d-flex">
+              <a href="{{ path('question_list' )}}" class="btn btn-link">{{ 'global.back'|trans }}</a>
+            </div>
+          </div>  
+        </div>
+      </div>   <!-- END OF MAIN CARD Test -->       
+  
+      <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">
+          {{ 'test.list.question'|trans }} - <b>{{test.title}}</b>  
+        </h3>
+         <div class="card-options">
+          <a href="{{path('question_create', {"idTest":test.id})}}" class="lms-button lms-button-blue btn-sm">{{'question.create.title'|trans}}</a>
+        </div>
+      </div>
+      <div class="card-body d-flex flex-column">
+                  
+        <table class="table card-table ">
+          <thead>
+              <tr>
+                  <th class="w-1">{{ 'global.reference'|trans }}</th>
+                  <th>{{'global.literal.title'|trans }}</th>
+                  <th>{{'question.question'|trans }}</th>
+                  <th>{{'question.nbanswer'|trans }}</th>
+                  <th>{{'question.lessonpage'|trans }}</th>
+                  <th>{{'question.required'|trans }}</th>
+                  <th>{{'question.weight'|trans }}</th>
+                  <th>{{'question.theoricalduration'|trans }}</th>
+                  <th>{{'global.createdate'|trans}}</th>
+                  <th>{{'global.updatedate'|trans}}</th>
+                  <th>{{'global.revision'|trans}}</th>
+                  <th></th>
+                  <th></th>
+                  <th>{{'global.literal.valid'|trans}}</th>
+              </tr>
+          </thead>
+          <tbody>
+            {% if questionTest is defined and questionTest is not empty %}
+
+              {% for question in questionTest %}
+                  <tr>
+                      <td><span class="text-muted">{{question.ref}}</span></td>
+                      <td>{% if question.title is not empty %}{{question.title}}{% endif %}</td>
+                      <td>{{question.question}}</td>
+                      <td>{{ question.answers|length }}</td>
+                      <td>{% if question.lessonpage is not empty %}{{question.lessonpage.title}}{% endif %}</td>
+                      <td>{% if question.required == 1 %}<i class="material-icons lms-material-icons">check</i>{% endif %}</td>
+                      <td>{{question.weight}}</td>
+                      <td>{% if question.theoricalduration is not empty %}{{question.theoricalduration|date('H-i-s')}}{% endif %}</td>
+                      <td>{{question.createdate|date('d/m/Y') }}</td>
+                      <td>{{question.updatedate|date('d/m/Y') }}</td>
+                      <td>{{question.revision|date('d/m/Y') }}</td>
+                      <td class="text-right">
+                          <a class="icon" href="{{ path('question_view', {"slug": question.slug})}}" >
+                            <i class="material-icons lms-material-icons " >remove_red_eye</i>
+                          </a>
+                      </td>
+                      <td>
+                          <a class="icon" href="{{ path('question_edit', {"slug": question.slug})}}" >
+                            <i class="material-icons lms-material-icons " >edit</i>
+                          </a>
+                      </td>
+                      <td>
+                        {% if question.isValid == 1 %}
+                                <a href="{{ path('question_desactivate', {"slug": question.slug}) }}"  ><i class="material-icons lms-material-icons">toggle_on</i></a> 
+                        {% else %}
+                            <a href="{{ path('question_desactivate', {"slug": question.slug}) }}"><i class="material-icons lms-material-icons">close</i></a>   
+                        {% endif %} 
+                      </td>
+                  </tr>
+              {% endfor %} 
+            {% endif %}   
+          </tbody> 
+      </table>
+      </div>
+      <div class="card-footer text-right">
+        <div class="d-flex">
+          <a href="{{ path('test_list' )}}" class="btn btn-link">{{ 'global.back'|trans }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }} 
+
+<script>
+$(document).ready(function() {
+    $('#dropdown-tests .dropdown-menu').addClass('show');
+})
+</script>
+{% endblock %}

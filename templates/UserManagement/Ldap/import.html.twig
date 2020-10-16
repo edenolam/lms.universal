@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row row-cards">
+  
+    <div class="col col-12">  
+        <div class="">
+            <div class="page-title">
+              <h1 class="title">
+                {{ 'ldap_users_import' | trans }}</h1>
+              <hr>
+            </div>
+            
+            <div class="card-body">
+              {% if output | length > 0 %}
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped lms-table">
+                  <thead class="thead-dark">
+                       <tr>
+                           <th>{{ 'nom' | trans }}</th>
+                           <th>{{ 'prenom' | trans }}</th>
+                           <th>{{ 'email' | trans }}</th>
+                           <th>{{ 'username' | trans }}</th>
+                           <th>{{ 'message' | trans }}</th>
+                       </tr>
+                   </thead> 
+                   <tbody> <!-- Corps du tableau -->    
+                      {% for o in output %}  
+                      <tr>
+                           <td>{% if o[0] is defined %}{{ o[0] }}{% endif %}</td>
+                           <td>{% if o[1] is defined %}{{ o[1] }}{% endif %}</td>
+                           <td>{% if o[2] is defined %}{{ o[2] }}{% endif %}</td>
+                           <td>{% if o[3] is defined %}{{ o[3] }}{% endif %}</td>
+                           <td>{% if o[4] is defined %}{{ o[4] }}{% endif %}</td>
+                      </tr>     
+                      {% endfor %}
+                   </tbody>
+                  </table>     
+              </div>
+              {% else %}
+                <div class="alert alert-icon lms-alert-danger alert-dismissible" role="alert">
+                   <button data-dismiss="alert" class="close"></button>
+                    <i class="material-icons lms-material-icons">warning</i>  Pas de utilisateur à import !
+                 </div>
+              {% endif %}    
+            </div>
+        </div>    
+    </div>
+</div>
+        
+{% endblock %}
+

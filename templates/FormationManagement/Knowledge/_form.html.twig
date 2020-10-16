@@ -1,0 +1,9 @@
+{{ form_start(form) }}
+    {# form_widget(form) #}
+    <div class="form-group">
+        {{form_row(form.title, {label_attr: {class: 'form-label'} }) }}
+    </div>
+    <button type="submit" class="lms-button lms-button-blue"> 
+        <i class="material-icons lms-material-icons">save</i> <span>{{ 'global.submit' | trans }}</span>
+    </button>
+{{ form_end(form) }}

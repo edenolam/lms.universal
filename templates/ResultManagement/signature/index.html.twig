@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SignatureController!{% endblock %}
+
+{% block body %}
+
+<div class="example-wrapper">
+
+    <ul>
+        {% for signature in signatures %}
+            <li>
+                {{ signature.date }}
+                {{ signature.code }}
+                {{ signature.ip }}
+                {{ signature.raison }}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

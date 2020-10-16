@@ -1,0 +1,334 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}  
+<link href="{{ asset("assets/summernote/summernote-bs4.css") }}" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+<!-- navigateur -->
+<div class="lms-breadcrumb">
+    <span><a href="
+				{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+        {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+				{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+				{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+				{% else %} {{ path('home_dashboard') }}
+				{% endif %}">{{lms_name}}</a></span> > <span><a href="{{path('admin_module_list')}}">{{ 'menu.concepteur.module' | trans }}</a></span> > <span class="bold"> {{ module.title }} </span>
+</div>
+
+<!-- title of page -->
+<div class="d-flex align-items-center lms-title">
+	<h1 class="text-uppercase lms-h1">{{ 'menu.concepteur.module' | trans }} 
+    {% if module.type is not null %}
+    <small>({{ module.type.title }})</small>
+    {% endif %}</h1>
+  <hr/>
+</div>
+
+<div class="row">
+    <div class="col-lg-4 mb-5">
+        <h2 class="text-uppercase lms-h2">
+              {% if module.activeSession == false %}
+                    {{ 'actions' | trans }}
+              {% else %}
+                  {{ 'formation.module.infos' | trans }} 
+              {% endif %}
+        </h2>
+        <hr>
+        {% include "FormationManagement/Module/actions.html.twig" %} 
+    </div>
+    <div class="col-lg-8">
+      <div class="d-flex flex-column">
+          <div>
+              <h2 class="text-uppercase lms-h2"> 
+                {{ 'formation.module.action.edit' | trans }}
+                
+                {% if module.isArchived == false and module.activeSession == false %}                     
+                  {% if module.isValid == true %}
+                    {% if nbFormationLinked == 0 %}
+                      <a href="#" data-url="{{ path('admin_module_desactivate', {'slug':module.slug}) }}" id="desactiveModule" class="lms-button lms-button-blue"><i class="material-icons lms-material-icons">build</i> {{'formation.module.unPublish'|trans}} </a>
+                    {% else %}
+                      <span class="badge lms-badge-success">{{nbFormationLinked}} {{'formation.linked'|trans}}</span>
+                    {% endif %}
+                  {% else %}
+                    {% if module.canPublish == true and is_granted('ROLE_PUBLICATION_MODULE') %}
+                      {% if module.IsTestsGood == false %}
+                          <span class="badge lms-badge-warning">{{'formation.pbTest'|trans}}</span>
+                      {% elseif module.isModulesFill == false and module.type.conditional != "presentiel" and module.type.conditional != "scorm" %}
+                        <span class="badge lms-badge-success">{{'formation.noPage'|trans}}</span>
+                      {% else %}
+                        <a href="#" data-url="{{ path('admin_module_activate', {'slug':module.slug}) }}" id="activeModule" class="lms-button lms-button-blue"><i class="material-icons lms-material-icons">power_settings_new</i>  {{'formation.module.publish'|trans}}</a>
+                      {% endif %}
+                    {% else %}
+                      <span class="badge lms-badge-warning">{{'formation.module.notAvialable'|trans}}</span>
+                    {% endif %}
+                  {% endif %}
+                {% endif %}
+              </h2>
+              <hr>             
+              <div class="text-center">
+                {% if module.activeSession == false and nbFormationLinked == 0 and module.isValid == false %}
+                  {% if module.isArchived == false %}
+                    <a href="{{ path('admin_module_archived', {'slug':module.slug}) }}"  class="lms-button lms-button-blue"><i class="material-icons lms-material-icons">archive</i> <span>{{'global.archiver'|trans}}</span></a>
+                  {% else %}
+                    <a href="{{ path('admin_module_archived', {'slug':module.slug}) }}" class="lms-button lms-button-blue"><i class="material-icons lms-material-icons">unarchive</i> <span>{{'global.un_archiver'|trans}}</span></a>
+                  {% endif %}
+                {% elseif module.isArchived == true and  (module.activeSession == true or nbFormationLinked > 0 ) %}
+                  <span>{{"eror"}}</span>
+                {% endif %} 
+              </div>
+          </div>
+          <form action="{{ path('admin_module_edit', {'slug' : module.slug}) }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+              {% include "FormationManagement/Module/form_edit.html.twig" %}     
+          </form>    
+      </div>
+    </div>
+    <div class="modal modal-lg" id="popUpMiseLigne">
+      <div class="modal-content modal-lg">
+        <div class="modal-header">
+          <h5 class="modal-title">{{'versioning.goOnline.title'|trans}}</h5>
+          <a href="#" class="btn btn-secondary btn-sm" id="cancelLigne" >&times;</a>
+        </div>
+        <div class="modal-body">
+          <div class="col-12">
+            <label class="form-group col-4 font-weight-bold">{{'user.login'|trans}}</label>
+            <input class="form-group col-6" type="text" id="login">
+          </div>
+
+          <div class="col-12">
+            <label class="form-group col-4 font-weight-bold">{{'user.password.first'|trans}}</label>
+            <input class="form-group col-6" type="password" id="psw">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="col-12">
+            <a href="#" class="lms-button lms-button-blue btn-sm" id="submitLigne" ><i class="material-icons lms-material-icons">save</i> {{'global.submit'|trans}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal modale-lg" id="popUpMiseConception">
+      <div class="modal-content modal-lg">
+        <div class="modal-header">
+          <h5 class="modal-title">{{'versioning.goOffLine.title'|trans}}</h5>
+          <a href="#" class="btn btn-secondary btn-sm" id="cancelConception" >&times;</a>
+        </div>
+        <div class="modal-body">
+          <label class="form-group font-weight-bold">{{'versioning.goOffLine.description'|trans}} :</label></br>
+          <textarea class="form-group col-8" rows="8"  type="textArea" id="descriptionConception"> </textarea>
+        </div>
+        <div class="modal-footer">
+          <a href="#" class="lms-button lms-button-blue btn-sm" id="submitConception" ><i class="material-icons lms-material-icons">save</i> {{'global.submit'|trans}}</a>
+        </div>
+      </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }} 
+<script src="{{ asset("assets/summernote/summernote-bs4.js") }}"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+<script>
+$(function () {
+    var idPreVal;
+    var idPre;
+    var idlecture;
+    var idEval;
+    var idEvalPres;
+    var idPresence;
+    var idNoValidation;
+    {% for validationMode in validationModes %}
+      {% if validationMode.conditional == "pre-test-valid" %}
+        idPreVal = {{validationMode.id}};
+      {% elseif validationMode.conditional == "pre-test-non-valid" %}
+        idPre = {{validationMode.id}};
+      {% elseif validationMode.conditional == "lecture" %}
+        idlecture = {{validationMode.id}};
+      {% elseif validationMode.conditional == "eval" %}
+        idEval = {{validationMode.id}};
+      {% elseif validationMode.conditional == "eval-presentiel" %}
+        idEvalPres = {{validationMode.id}};
+      {% elseif validationMode.conditional == "presence" %}
+        idPresence = {{validationMode.id}};
+      {% elseif validationMode.conditional == "noValidation" %}
+        idNoValidation = {{validationMode.id}};
+      {% endif %}
+    {% endfor %}
+
+    $(".module").hide();
+
+    {% if module.type is not null and module.type.conditional == 'scorm' %}
+      $(".module-scorm").show();
+      $('#module_validationModes_'+idEvalPres+'').hide();
+      $('#label_validationModes_'+idEvalPres+'').hide();
+      $('#module_validationModes_'+idPresence+'').hide();
+      $('#label_validationModes_'+idPresence+'').hide();
+      $('#module_validationModes_'+idNoValidation+'').hide();
+      $('#label_validationModes_'+idNoValidation+'').hide();
+    {% elseif module.type is not null and module.type.conditional == 'presentiel' %}
+      $(".module-presentiel").show();
+      $('#module_validationModes_'+idPre+'').hide();
+      $('#label_validationModes_'+idPre+'').hide();
+      $('#module_validationModes_'+idNoValidation+'').hide();
+      $('#label_validationModes_'+idNoValidation+'').hide();
+      $('#module_validationModes_'+idlecture+'').hide();
+      $('#label_validationModes_'+idlecture+'').hide();
+      $('#module_validationModes_'+idPreVal+'').hide();
+      $('#label_validationModes_'+idPreVal+'').hide();
+    {% elseif module.type is not null and module.type.conditional == 'notFollow' %}
+      $('#module_validationModes_'+idEvalPres+'').hide();
+      $('#label_validationModes_'+idEvalPres+'').hide();
+      $('#module_validationModes_'+idPresence+'').hide();
+      $('#label_validationModes_'+idPresence+'').hide();
+      $('#module_validationModes_'+idPreVal+'').hide();
+      $('#label_validationModes_'+idPreVal+'').hide();
+      $('#module_validationModes_'+idPre+'').hide();
+      $('#label_validationModes_'+idPre+'').hide();
+      $('#module_validationModes_'+idEval+'').hide();
+      $('#label_validationModes_'+idEval+'').hide();
+      $('#module_validationModes_'+idlecture+'').hide();
+      $('#label_validationModes_'+idlecture+'').hide();
+    {% elseif module.type is not null and module.type.conditional == 'standard' %}
+      $('#module_validationModes_'+idEvalPres+'').hide();
+      $('#label_validationModes_'+idEvalPres+'').hide();
+      $('#module_validationModes_'+idPresence+'').hide();
+      $('#label_validationModes_'+idPresence+'').hide();
+      $('#module_validationModes_'+idNoValidation+'').hide();
+      $('#label_validationModes_'+idNoValidation+'').hide();
+    {% endif %}
+    
+    $('.summernote').summernote({
+      height: 150,
+      toolbar: [
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol']]
+      ]
+    });  
+
+    {% if module.activeSession == false and module.isValid == false %}
+      // page ordre
+      $(".sortable" ).sortable({
+        update: function () {
+          var ids = $(this).children().get().map(function(el) {
+                return el.id
+              }).join(",");
+          var route = $(this).data('url');
+          route = route.replace("ORDER", ids);
+          var request =$.ajax({
+              url: route,
+              type: "POST",
+              cache: false,
+              dataType: "json",
+          });
+          $(".spinner").show();
+
+          request.done(function( data ) {          
+            if (data.success) {
+              toastr.success(data.message, data.messageTitle);
+            } else {
+              toastr.error(data.message, data.messageTitle);
+            }
+            $(".spinner").hide();
+          });
+
+          request.fail(function( jqXHR, textStatus ) {
+            toastr.error("Request failed: " + textStatus, "Error");          
+            $(".spinner").hide();
+          });        
+        }
+      });
+  
+      // course ordre
+      $('body').on('click', '.courseOrder', function(){
+        event.preventDefault();
+        $(".spinner").show();
+        var request = $.ajax({
+            url: $(this).data('url'),
+            type: "POST",
+            cache: false,
+            dataType: "json"    
+        });
+
+        request.done(function( data ) {
+          if (data.success) {
+            toastr.success(data.message, "");     
+            location.reload();                
+          } else {
+            toastr.error(data.message, "");
+            $(".spinner").hide();
+          }        
+        });      
+      });
+    {% endif %}
+ 
+    document.getElementById("module_validationModes_"+idPreVal+"").addEventListener('click',function(){
+      document.getElementById("module_validationModes_"+idPre+"").checked = false;
+    });
+    document.getElementById("module_validationModes_"+idPre+"").addEventListener('click',function(){
+      document.getElementById("module_validationModes_"+idPreVal+"").checked = false;
+    });  
+
+    $('#activeModule').on('click',function(e){
+      e.preventDefault();
+      $('#popUpMiseLigne').fadeIn();
+    }); 
+
+    $('#cancelLigne').on('click',function(e){
+      e.preventDefault();
+      $('#popUpMiseLigne').fadeOut();
+    }); 
+
+    $('#submitLigne').on('click',function(e){
+      $('.spinner').fadeIn();
+      e.preventDefault();
+      checkData = {'login': $('#login').val(), 'psw': $('#psw').val()};
+      $.ajax({  
+        method: 'post', url: $('#activeModule').attr('data-url'), contentType: 'application/json; charset=utf-8', data: JSON.stringify(checkData)
+      }).done(function (response) {
+          location.reload(response['flash']);  
+      }).fail(function (jxh, textmsg, errorThrown) {
+        $('.spinner').fadeOut();
+        $('#popUpMiseLigne').fadeOut();
+      });
+    }); 
+
+
+    $('#desactiveModule').on('click',function(e){
+      e.preventDefault();
+      $('#popUpMiseConception').fadeIn();
+    }); 
+
+    $('#cancelConception').on('click',function(e){
+      e.preventDefault();
+      $('#popUpMiseConception').fadeOut();
+    }); 
+
+    $('#submitConception').on('click',function(e){
+      if($('#descriptionConception').val() != ""){
+        $('.spinner').fadeIn();
+        e.preventDefault();
+        checkData = {'comentary': $('#descriptionConception').val()};
+
+        $.ajax({  
+          method: 'post', url: $('#desactiveModule').attr('data-url'), contentType: 'application/json; charset=utf-8', data: JSON.stringify(checkData)
+        }).done(function (response) {
+          location.reload(response['flash']);
+        }).fail(function (jxh, textmsg, errorThrown) {
+          $('.spinner').fadeOut();
+          $('#popUpMiseConception').fadeOut();
+        });
+      }
+    }); 
+    
+
+});
+</script>
+{% endblock %}

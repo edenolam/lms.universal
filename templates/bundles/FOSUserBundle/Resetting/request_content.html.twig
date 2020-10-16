@@ -1,0 +1,24 @@
+{# {% trans_default_domain 'FOSUserBundle' %} #}
+
+<div class="page-single">
+    <div class="container">
+        <div class="row">
+            <div class="col col-login mx-auto"> 
+                <form action="{{ path('user_reset_pasword_mail') }}" method="POST" class="card">
+                        <div class="card-body p-6">
+                            <div class="card-title h2"> {{ 'global.welcom.resseting_titel'|trans }}</div>
+
+                            <div class="form-group">
+                                <label class="form-label">{{ 'global.welcom.resseting_label'|trans }}</label>
+                                <input type="text" id="username" name="username" required="required" class="form-control" placeholder="{{ 'global.welcom.resseting_field'|trans }}" >
+                            </div>
+                            <div class="row flex-wrap justify-content-center  justify-content-sm-around">
+                                 <button class="mb-3 mx-3 lms-button lms-button-blue"><a href="{{ path('fos_user_security_login')}}">{{"global.back"|trans}} </a></button>
+                                 <button type="submit" id="_submit" name="_submit" class="mb-3 lms-button lms-button-blue">{{ 'global.welcom.reseting_subit' | trans }}</button>
+                            </div>                    
+                        </div>
+                </form>  
+            </div>  
+        </div>
+    </div>
+</div>

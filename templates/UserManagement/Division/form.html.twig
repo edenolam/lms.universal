@@ -1,0 +1,36 @@
+<div class="form-container">
+    <div class="row">
+        {{ form_label(form.laboratory,  'division.laboratory'|trans, {'label_attr': {'class': 'col-sm-3'}}) }}
+        <div class="col-sm-9 form-group">
+            {{ form_widget(form.laboratory, { 'attr': {'class': 'form-control form-group'} }) }}
+        </div>    
+    </div>  
+    <div class="row">
+        {{ form_label(form.title,  'division.title'|trans, {'label_attr': {'class': 'col-sm-3'}}) }}
+        <div class="col-sm-9 form-group">
+            {{ form_widget(form.title, { 'attr': {'class': 'form-control form-group'} }) }}
+        </div>    
+        {{ form_errors(form.title) }}
+    </div>     	
+    <div class="row">
+        {{ form_label(form.sort,  'division.sort'|trans, {'label_attr': {'class': 'col-sm-3'}}) }}
+        <div class="col-sm-2 form-group">
+            {{ form_widget(form.sort, { 'attr': {'class': 'form-control form-group'} }) }}
+        </div>    
+    </div>
+    <div class="row">
+        {{ form_label(form.description,  'division.description'|trans , {'label_attr': {'class': 'col-sm-3'}}) }}
+        <div class="col-sm-9 form-group">
+            {{ form_widget(form.description, { 'attr': {'class': 'form-control form-group'} }) }}
+        </div>    
+    </div> 
+</div>  
+<div class="required-field">
+    * {{ 'global.obligatoire' | trans}}
+</div>   
+
+{{ form_widget(form._token) }}  
+
+<div class="form-actions row justify-content-around">      
+    <button type="submit" class="lms-button lms-button-blue"><i class="material-icons lms-material-icons">save</i> {{ 'global.submit'|trans }}</button>
+</div>

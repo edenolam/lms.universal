@@ -1,0 +1,39 @@
+.lms {
+    &-material {
+        // Les icônes proviennent de https://material.io/tools/icons
+        &-icons {
+            color: $prussian-blue;
+            font-size: 1.4em;
+            vertical-align: text-bottom;
+            width: 1.2em;
+            &-blue {
+                color: $scooter-blue;
+            }
+        }
+    }
+    &-icon {
+        &-plus {
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            transform: rotate(0deg);
+        }
+        &-cross {
+            cursor: pointer;
+            fill: $scooter-blue;
+            transition: all 0.3s ease-in-out;
+            transform: rotate(45deg);
+        }
+        &-try {
+            display: inline-block;
+            width: .375em;
+            height: .9375em;
+            border: .0625em solid $prussian-blue;
+            &:not(:first-child) {
+                margin-left: .125em;
+            }
+            &.done {
+                background-color: $prussian-blue;
+            }
+        }
+    }
+}

@@ -1,0 +1,178 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<div class="lms-breadcrumb"> 
+		<a href="
+		{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+		{% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+		{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+		{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+		{% else %} {{ path('home_dashboard') }}
+		{% endif %}">{{lms_name}}</a> > <a href="{{path('user_formation')}}">{{'menu.userFormation.title'|trans}}</a> > <a href="{{path('user_formation_module', {'slugSession' : session.slug})}}">{{session.formationPath.title}}</a> > <span>{{currentModule.title}}</span>
+	</div>
+	
+	{# if userModule.success %}
+		<div class="alert alert-success">
+			<button type="button" class="close" data-dismiss="alert"></button>
+			{{'formation.module.success'|trans}}
+		</div>
+	{% endif #}
+
+	<div class="d-flex align-items-center lms-title">
+		<h1 class="text-uppercase lms-h1">{{ session.formationPath.title }}: <span class="capitalize">{{currentModule.title}}</span></h1>
+		{# form page.html.twig #}		
+			{% set isEvalRequire = false %}
+			{% set isLectureRequire = false %}
+			{% for modeValidation in currentModule.validationModes %}
+				{% if modeValidation.conditional == 'eval' %}
+					{% set isEvalRequire = true %}
+				{% endif %}
+				{% if modeValidation.conditional == 'lecture' %}
+					{% set isLectureRequire = true %}
+				{% endif %}
+			{% endfor %}
+			{% for moduleTest in currentModule.moduleTests %}			
+				{% if isEvalRequire == true and moduleTest.test.typeTest.conditional == 'eval' and userModule is not null and userModule.success != true and sessionModuleInfo.closingDate > date() %}
+					{% if userModule.percentage == 100 or  isLectureRequire == false %}
+						{% if date(sessionModuleInfo.openingDateEvaluation) <= date() and date() <= date(sessionModuleInfo.closingDateEvaluation) and sessionModuleInfo.closingDate > date() %}
+							<a href="{{path('test_front_begin', {'testSlug' : moduleTest.test.slug, 'moduleSlug' : currentModule.slug, 'sessionSlug' : session.slug})}}" id="eval" class="lms-button lms-button-blue ml-5">
+								<img src="{{asset('images/core/evaluation.svg')}}" width="15px" data-toggle="tooltip" data-original-title="{{ 'userFrontManagement.page.eval' | trans }}">
+								<span class="ml-5 h6">{{ 'userFrontManagement.page.eval' | trans }}</span>
+							</a>
+						{% endif %}
+                    {% endif %}
+				{% endif %}
+				{% if moduleTest.test.typeTest.conditional == 'training' and sessionModuleInfo.closingDate > date()%}
+					<a href="{{path('test_front_begin', {'testSlug' : moduleTest.test.slug, 'moduleSlug' : currentModule.slug, 'sessionSlug' : session.slug})}}" id="training" class="lms-button lms-button-blue ml-5">
+						<img src="{{asset('images/core/badge-vert.svg')}}" width="15px" data-toggle="tooltip" data-original-title="{{ 'userFrontManagement.page.training' | trans }}">
+						<span class="ml-5 h6">{{ 'userFrontManagement.page.training' | trans }}</span>
+					</a>		
+				{% endif %}
+			{% endfor %}	
+			<button id="lms-fullscreen" class="lms-button lms-button-blue" data-toggle="tooltip" data-original-title="Plein écran"><i class="material-icons lms-material-icons ">fullscreen</i></button>
+		<hr>
+	</div>
+	
+	<div class="formation-page-container">
+		<div class="formation-page-content" id="lms-course-content">
+
+			<iframe width="100%" id="scorm" src="{{ scoEntryUrl }}"></iframe>
+			
+		</div>
+	</div>
+{% endblock %}
+
+{% block js %}
+	{{parent()}}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/4.2.1/screenfull.min.js"></script>	
+<script type="text/javascript" language="javascript">
+
+let tracking = new Object();let user = new Object();let sco = new Object();
+
+user.autoId = '{{ app.user.id }}';user.firstName =  '{{ app.user.firstName }}';user.lastName =  '{{ app.user.firstName }}';
+
+sco.id  = '{{ tracking.sco.id }}';sco.data = {};
+{% if tracking.sco.launchData %}sco.data.launchData = '{{ tracking.sco.launchData }}';{% else %}sco.data.launchData = '';{% endif %}
+{% if tracking.sco.scoreToPassInt %}sco.data.scoreToPassInt = '{{ tracking.sco.scoreToPassInt }}';{% else %}sco.data.scoreToPassInt = '';{% endif %}
+{% if tracking.sco.maxTimeAllowed %}sco.data.maxTimeAllowed = '{{ tracking.sco.maxTimeAllowed }}';{% else %}sco.data.maxTimeAllowed = '';{% endif %}
+{% if tracking.sco.timeLimitAction %}sco.data.timeLimitAction = '{{ tracking.sco.timeLimitAction }}';{% else %}sco.data.timeLimitAction = '';{% endif %}
+{% if tracking.sco.completionThreshold %}sco.data.completionThreshold = '{{ tracking.sco.completionThreshold }}';{% else %}sco.data.completionThreshold = '';{% endif %}
+{% if tracking.sco.scoreToPassDecimal %}sco.data.scoreToPassDecimal = '{{ tracking.sco.scoreToPassDecimal }}'; {% else %}sco.data.scoreToPassDecimal = '';{% endif %}
+
+{% if tracking.scoreRaw %}tracking['scoreRaw'] = '{{ tracking.scoreRaw}}'; {% else %} tracking['scoreRaw'] = '';{% endif %}
+{% if tracking.scoreMin %}tracking['scoreMin'] = '{{ tracking.scoreMin}}'; {% else %} tracking['scoreMin'] = '';{% endif %}
+{% if tracking.scoreMax %}tracking['scoreMax'] = '{{ tracking.scoreMax}}'; {% else %} tracking['scoreMax'] = '';{% endif %}
+{% if tracking.scoreScaled %}tracking['scoreScaled'] = '{{ tracking.scoreScaled}}'; {% else %} tracking['scoreScaled'] = '';{% endif %}
+{% if tracking.lessonStatus %}tracking['lessonStatus'] = '{{ tracking.lessonStatus}}'; {% else %} tracking['lessonStatus'] = '';{% endif %}
+{% if tracking.completionStatus %}tracking['completionStatus'] = '{{ tracking.completionStatus}}'; {% else %} tracking['completionStatus'] = '';{% endif %}
+{% if tracking.sessionTime %}tracking['sessionTime'] = '{{ tracking.sessionTime}}'; {% else %} tracking['sessionTime'] = '';{% endif %}
+{% if tracking.totalTimeInt %}tracking['totalTimeInt'] = '{{ tracking.totalTimeInt}}'; {% else %} tracking['totalTimeInt'] = '';{% endif %}
+{% if tracking.totalTimeString %}tracking['totalTimeString'] = '{{ tracking.totalTimeString}}'; {% else %} tracking['totalTimeString'] = '';{% endif %}
+{% if tracking.entry %}tracking['entry'] = '{{ tracking.entry}}'; {% else %} tracking['entry'] = '';{% endif %}
+{% if tracking.suspendData %}tracking['suspendData'] = '{{ tracking.suspendData}}'; {% else %} tracking['suspendData'] = '';{% endif %}
+{% if tracking.credit %}tracking['credit'] = '{{ tracking.credit}}'; {% else %} tracking['credit'] = '';{% endif %}
+{% if tracking.exitMode %}tracking['exitMode'] = '{{ tracking.exitMode}}'; {% else %} tracking['exitMode'] = '';{% endif %}
+{% if tracking.lessonLocation %}tracking['lessonLocation'] = '{{ tracking.lessonLocation}}'; {% else %} tracking['lessonLocation'] = '';{% endif %}
+{% if tracking.progression %}tracking['progression'] = '{{ tracking.progression}}'; {% else %} tracking['progression'] = '';{% endif %}
+{% if tracking.lessonMode %}tracking['lessonMode'] = '{{ tracking.lessonMode}}'; {% else %} tracking['lessonMode'] = '';{% endif %}
+{% if tracking.isLocked %}tracking['isLocked'] = '{{ tracking.isLocked}}'; {% else %} tracking['isLocked'] = '';{% endif %}
+
+{% if tracking.details %}tracking['details'] = {{ tracking.details | json_encode(constant('JSON_PRETTY_PRINT')) | raw() }} ; {% else %} tracking['details'] = '';{% endif %}
+
+let scorm_sco_commit_url = "{{ path('user_formation_module_organisation_scorm_commit', { 'session_slug': session.slug, 'module_id': currentModule.id, 'sco_uuid': sco.uuid, 'mode': 'PLACEHOLDER' }) }}";
+
+const setIframeHeight = (id, navWidth) => {
+    if ( document.getElementById ) {
+        let theIframe = document.getElementById(id);
+        if (theIframe) {
+            let height = getWindowHeight();
+            theIframe.style.height = Math.round( height ) - navWidth + "px";
+            theIframe.style.marginTop = Math.round( ((height - navWidth) - parseInt(theIframe.style.height) )/2 ) + "px";
+        }
+    }
+}
+
+const getWindowHeight = () => {
+    let height = 0;
+    if (window.innerHeight) {
+        height = window.innerHeight - 18;
+    }
+    else if (document.documentElement && document.documentElement.clientHeight) {
+        height = document.documentElement.clientHeight;
+    }
+    else if (document.body && document.body.clientHeight) {
+        height = document.body.clientHeight;
+    }
+    return height - 100;
+}
+
+const SetupIFrame = () => {
+    let navWidth = 40;
+    setIframeHeight("scorm", navWidth);
+    window.setTimeout('window.onresize = function() { setIframeHeight("scorm", ' + navWidth + '); }', 1000);
+}
+
+$(document).ready(function() {
+    SetupIFrame(); 
+
+    const target = $('#lms-course-content')[0]; // Get DOM element from jQuery collection
+
+	$('#lms-fullscreen').on('click', () => {
+		if (screenfull.enabled) {
+			screenfull.request(target);
+		}
+	});
+	
+	{% if session is not null and session.closingDate >= date() %}
+		var durationSec = 0;		
+		var url = "{{ path('user_formation_module_organisation_duration_scorm', {'session':session.id, 'module': currentModule.id } ) }}";
+
+		setInterval(function(){
+			// seconde request
+			durationSec += 60;
+			
+			var request = $.ajax({
+			      url: url,
+			      type: "POST",
+			      dataType: "json",
+			      data: { duration: durationSec }
+			  });
+		    
+		    request.done(function( data ) {
+		          console.log(data);
+		    });
+
+		    request.fail(function( jqXHR, textStatus ) {
+		        console.log(textStatus);         
+		    });
+
+		}, 60000);
+	{% endif %}
+});
+
+
+</script>	
+
+<script type='text/javascript' src="{{asset('js/api_wrapper.min.js')}}"></script>	
+{% endblock js %}

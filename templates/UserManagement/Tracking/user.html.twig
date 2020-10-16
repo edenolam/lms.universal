@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row row-cards">
+  <div class="col col-lg-3 d-md-none d-lg-block">
+    {% include "UserManagement/menu.html.twig" %}
+  </div>
+
+  <div class="col col-lg-9">  
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">{{ 'tracking.action.list' | trans }} ({{ user.firstname }} {{ user.lastname }})</h3>          
+      </div>  
+      <div class="card-body">
+        <div class="table-responsive" id="users_list">
+          <table class="table table-bordered table-striped lms-table">
+            <thead class="thead-dark">
+              <tr>
+                  <th>{{ "tracking.created" | trans  }}</th>
+                  <th>{{ "tracking.path_info" | trans  }}</th>
+                  {#<th>{{ "tracking.duration" | trans  }}</th>#}
+                  <th>{{ "tracking.lang" | trans  }}</th>
+                  <th>{{ "tracking.ip_request" | trans  }}</th>
+                  <th>{{ "tracking.user" | trans  }}</th>
+              </tr>
+           </thead>
+           <tbody> <!-- Corps du tableau -->
+             {% for tracking in trackings %}
+                <tr>                                              
+                  <td>{{ tracking.created|date('Y-m-d H:i:s')}}</td>
+                  <td>{{ tracking.pathInfo }}</td>
+                  {#<td>{% if tracking.duration != NULL %} {{ tracking.duration|date('i:s')}}{% else %}-{% endif %}</td>#}
+                  <td>{% if tracking.lang == "en_US" %}
+                      <i class="flag flag-en"></i>
+                  {% else %}
+                      <i class="flag flag-fr"></i>
+                  {% endif %}                
+                  </td>
+                  <td>{{ tracking.ipRequest }}</td>
+                  <td>{{ tracking.user.username }}</td>
+                </tr>
+             {% endfor %}
+           </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card-footer">
+        {% if total > 0 %}
+          <div class="d-flex">
+                <ul class="pagination ml-auto">
+                    {% if pagination.page > 1 %}
+                        <li class="page-item page-prev"><a class="page-link" aria-label="Previous" href="{{ path(pagination.route,pagination.route_params|merge({'page': 1, 'username': user.username})) }}">&laquo;</a></li>
+                    {% endif %}
+                            {% for p in range(max(pagination.page-4, 1), min(pagination.page+4, pagination.pages_count)) %}
+                              {% if p == pagination.page %} 
+                                 <li  class="page-item active"><a class="page-link" href="{{ path(pagination.route, pagination.route_params|merge({'page': p, 'username': user.username } )) }}">{{ p }}</a></li>
+                                {% else %}
+                                 <li  class="page-item "><a class="page-link" href="{{ path(pagination.route, pagination.route_params|merge({'page': p, 'username': user.username} )) }}">{{ p }}</a></li>
+                              {% endif %}
+                                
+
+                            {% endfor %}
+                    {% if pagination.page < pagination.pages_count %}
+                        
+                        <li class="page-item page-next"><a class="page-link" aria-label="Next" href="{{ path(pagination.route, pagination.route_params|merge({ 'page': pagination.pages_count, 'username': user.username})) }}">&raquo;</a></li>
+                    {% endif %}
+                </ul>  
+          </div>      
+        {% endif %}  
+      </div>  
+    </div>
+  </div> 
+</div>
+{% endblock %}

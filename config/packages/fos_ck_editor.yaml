@@ -1,0 +1,9 @@
+fos_ck_editor:
+  configs:
+    page_config:
+      uiColor: "#467fcf"
+      colorButton_colors: 'FFFFFF,000000,467fcf'
+      removeButtons: 'Save,NewPage,Preview,Print,Form,Checkbox,RadioButton,TextField,Textarea,SelectionField,Button,ImageButton,HiddenField,Subscript,Superscript,CopyFormatting,RemoveFormat,Flash,Smiley,InsertPageBreakForPrinting'
+      allowedContent: true
+      filebrowserImageBrowseRoute: "page_editor_images"
+      filebrowserImageUploadRoute: "page_editor_upload"

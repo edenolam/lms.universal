@@ -1,0 +1,163 @@
+.outerDivFull {
+    margin: 50px;
+}
+
+.switchToggle input[type=checkbox] {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+    position: absolute;
+}
+
+.switchToggle label {
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 115px;
+    max-width: 115px;
+    height: 30px;
+    background: #00354F;
+    display: block;
+    border-radius: 100px;
+    position: relative;
+    line-height: 21px;
+}
+
+.switchToggle label:after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 26px;
+    height: 26px;
+    background: #fff;
+    border-radius: 90px;
+    transition: 0.3s;
+}
+
+.switchToggle input:checked+label,
+.switchToggle input:checked+input+label {
+    background: #00354F;
+}
+
+.switchToggle input+label:before,
+.switchToggle input+input+label:before {
+    content: 'tuteur';
+    text-transform: uppercase;
+    position: absolute;
+    top: 5px;
+    left: 35px;
+    width: 26px;
+    height: 26px;
+    border-radius: 90px;
+    transition: 0.3s;
+    text-indent: 0;
+    font-size: 12px;
+    color: #fff;
+}
+
+.switchToggle input:checked+label:before,
+.switchToggle input:checked+input+label:before {
+    content: 'apprenant';
+    text-transform: uppercase;
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    width: 86px;
+    height: 26px;
+    border-radius: 90px;
+    transition: 0.3s;
+    text-indent: 0;
+    color: #fff;
+}
+
+.switchToggle input:checked+label:after,
+.switchToggle input:checked+input+label:after {
+    left: calc(100% - 2px);
+    transform: translateX(-100%);
+}
+
+.switchToggle label:active:after {
+    width: 60px;
+}
+
+.switchToggle1 input[type=checkbox] {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+    position: absolute;
+}
+
+.switchToggle1 label {
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 115px;
+    max-width: 115px;
+    height: 30px;
+    background: #00354F;
+    display: block;
+    border-radius: 100px;
+    position: relative;
+    line-height: 21px;
+}
+
+.switchToggle1 label:after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 26px;
+    height: 26px;
+    background: #fff;
+    border-radius: 90px;
+    transition: 0.3s;
+}
+
+.switchToggle1 input:checked+label,
+.switchToggle1 input:checked+input+label {
+    background: #00354F;
+}
+
+.switchToggle1 input+label:before,
+.switchToggle1 input+input+label:before {
+    content: 'Archivées';
+    text-transform: uppercase;
+    position: absolute;
+    top: 5px;
+    left: 35px;
+    width: 26px;
+    height: 26px;
+    border-radius: 90px;
+    transition: 0.3s;
+    text-indent: 0;
+    font-size: 12px;
+    color: #fff;
+}
+
+.switchToggle1 input:checked+label:before,
+.switchToggle1 input:checked+input+label:before {
+    content: 'En cours';
+    text-transform: uppercase;
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    width: 86px;
+    height: 26px;
+    border-radius: 90px;
+    transition: 0.3s;
+    text-indent: 0;
+    color: #fff;
+}
+
+.switchToggle1 input:checked+label:after,
+.switchToggle1 input:checked+input+label:after {
+    left: calc(100% - 2px);
+    transform: translateX(-100%);
+}
+
+.switchToggle1 label:active:after {
+    width: 60px;
+}
+
+.toggle-switchArea {
+    margin: 10px 0 10px 0;
+}

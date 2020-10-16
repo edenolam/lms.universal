@@ -1,0 +1,87 @@
+
+{% extends 'FormationManagement/Module/menu_module.html.twig' %}
+
+{% block contentmodule %}
+  <form action="{{ path('admin_course_create') }}" method="post" id="addUserForm" class="form-horizontal" enctype="multipart/form-data" >
+    <div class="row form-container">
+      <div class="col col-8 col-xl-8 data-perso">
+        <h2 class="admin-h2">Ajoutez un chapitre</h2>
+        <div class="form-group">
+          {{ form_label(form.title,  'Titre' ) }}
+          {{ form_widget(form.title, { 'attr': {'class': 'form-control form-group'} }) }}
+          {{ form_errors(form.title) }}
+        </div>      
+        <div class="form-group">
+          {{ form_label(form.description,  'Description') }}
+          {{ form_widget(form.description, { 'attr': {'class': 'form-control form-group'} }) }}
+          {{ form_errors(form.description) }}  
+        </div>
+        <div class="form-group">
+          {{form_row(formFichier.module, {label_attr: {class: 'form-label'} }) }}
+        </div>
+        <div class="form-group">
+          {{form_row(formFichier.file, {label_attr: {class: 'form-label'} }) }}
+        </div>
+      </div>
+      <div class="col col-4 col-xl-4 data-photo">
+        <a href="{{path('admin_module_list')}}" class="btn btn-link">{{'global.cancel'|trans}}</a>
+        <button type="submit" class="lms-button lms-button-blue ml-auto">SAUVEGARDER</button>          
+      </div>
+      {{ form_widget(form) }}
+      {{ form_end(form) }}
+{% endblock %}
+
+{% block js %}
+    {{ parent() }} 
+<script>
+{# $(document).ready(function() {
+    $('#dropdown-formations .dropdown-menu').addClass('show');
+})
+
+$(function () {
+    // ADDING DATA
+    (function () {
+        var inc = 0;
+        $('.sc-sp-data-dis').each(function () {
+            $(this).attr('data-scsp', "data" + inc)
+            inc++;
+        });
+    })();
+    (function () {
+        var inc = 0;
+        $('.sc-sp-list').each(function (ev) {
+            $(this).attr('data-scsp', "data" + inc)
+            inc++;
+        });
+    })();
+
+    $(window).on("load scroll", function () {
+        var windowScroll = $(this).scrollTop();
+        $(".sc-sp-data-dis").each(function () {
+            var thisOffsetTop = Math.round($(this).offset().top - 30);
+
+            if (windowScroll >= thisOffsetTop) {
+                var thisAttr = $(this).attr('data-scsp');
+                $('.sc-sp-list').parent().removeClass("active");
+                $('.sc-sp-list[data-scsp="' + thisAttr + '"]').parent().addClass("active");
+            }
+        });
+    });
+
+    $('.sc-sp-list').click(function (ev) {
+        ev.preventDefault();
+        var thisAttr = $(this).attr("data-scsp");
+        var scrollTo = $('.sc-sp-data-dis[data-scsp="' + thisAttr + '"]').offset().top;
+
+        $(this).parent().addClass("active").siblings().removeClass("active");
+
+        $(".sc-sp-data-dis").removeClass("active");
+        $('.sc-sp-data-dis[data-scsp="' + thisAttr + '"]').addClass("active");
+
+        $('html, body').animate({
+            scrollTop: scrollTo - 5
+        }, 150);
+    });
+}); #}
+</script>
+{% endblock %}

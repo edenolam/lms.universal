@@ -1,0 +1,35 @@
+ <form method="get" name="{{ currentModule.slug }}_{{attribute(typeOfTest, 1)}}" action="{{ path('user_formation_module_chapter_page', {'slugFormation': prevPage[0], 'slugModule': prevPage[1], 'slugChapter': prevPage[2],'slugPage': prevPage[3] }) }}">
+	<div class="card-body ">
+		{% for question in test %}
+				<h4>{{question.title}}</h4></br>
+			<b>{{question.content|raw}}</b>
+			{% if question.answerType.id == 3 %}
+				<select>
+					{% for answer in question.answers %}
+						<option value="{{answer.status}}">{{answer.content|raw}}</option>
+					{% endfor %}
+				</select>
+			{% elseif question.answerType.id == 2 or question.answerType.id == 1 %}
+				<fieldset>
+				{% set counter = 0 %}
+				{% for answer in question.answers %}
+					{% set counter = ( counter | default(0) ) + 1 %}
+					<input type="{{question.answerType.title}}" name="question_{{question.id}}" id="question_{{question.id}}_{{counter}}" value="{% if answer.status == true %} true {% else %} false {% endif %}">
+					<label for="question_{{question.id}}_{{counter}}">{{answer.content|raw}}</label></br>
+				{% endfor %}
+				</fieldset>
+			{% elseif question.answerType.id == 5 %}
+				<input type="text" name="fname">
+			{% elseif question.answerType.id == 4 %}
+					<textarea name="textarea" rows="10" cols="50"></textarea>
+			{% else  %}
+				{{"erreur"}}
+			{% endif %}	
+		{% endfor %}
+	</div>
+	<div class="card-footer text-center">
+		<input type="submit" id="SubmitTest" class="btn btn-pill btn-primary" value="{{'test.submit'|trans}}">
+	</div>
+</form>
+ 
+

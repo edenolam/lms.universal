@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row row-cards">
+    <div class="col col-12">  
+        <div class="">
+            <div class="page-title">
+              <h1 class="title">Ldap</h1>
+              <hr>
+            </div>
+        </div>  
+    </div>          
+          
+    <div class="col col-lg-8">  
+          <div class="card-body">
+  					{% include "UserManagement/Ldap/ldap.html.twig" %}  
+          </div>
+          <div class="card-footer text-right">
+            <div class="d-flex">
+              <a href="{{ path('admin_ldap_import') }}" class="btn btn-link showSpinner"><i class="material-icons lms-material-icons " >cloud_upload</i> {{ 'ldap_users_import' | trans }}</a>
+              <a href="{{ path('admin_ldap_edit') }}" class="lms-button lms-button-blue ml-auto showSpinner"><i class="material-icons lms-material-icons " >edit</i> {{ 'edit'|trans }}</a>
+            </div>  
+          </div>
+    </div>    
+
+</div>
+{% endblock %}
+

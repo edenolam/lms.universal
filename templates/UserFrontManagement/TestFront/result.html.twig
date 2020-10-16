@@ -1,0 +1,274 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <div class="lms-breadcrumb">
+        <a href="
+        {% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+        {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+        {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+        {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+        {% else %} {{ path('home_dashboard') }}
+        {% endif %}">{{lms_name}}</a> >
+        {% if is_granted('ROLE_TUTEUR') and userFrom == 'bilan'  %}
+            <a href="{{path('results_list')}}">{{'menu.results.list'|trans}}</a> &gt;
+            <span>{{moduleTest.test.TypeTest.title}} ({{userTest.user.username}})</span>
+        {% elseif userFrom == 'suivi' %}
+            <a href="{{path('user_mon_suivis')}}">{{'menu.suivi.title'|trans}}</a> &gt; 
+            <span>{{moduleTest.test.TypeTest.title}} ({{userTest.user.username}})</span>
+        {% else %}
+            <a href="{{path('user_formation')}}">{{'menu.userFormation.title'|trans}}</a> &gt;
+            <a href="{{path('user_formation_module', {'slugSession' : currentSession.slug})}}">{{formationPath.title}}</a> >
+            {% if userLastPage is null and moduleTest.test.TypeTest.conditional == "training" %}
+                <a href="{{ path('user_formation_module_organisation', {'slugSession' : currentSession.slug, 'formationPath': currentSession.formationPath.id, 'slugModule': module.slug }) }}"> {{moduleTest.module.title}}</a>
+            {% elseif moduleTest.test.TypeTest.conditional == "training" %}
+                <a href="{{ path('user_formation_module_organisation', {'slugSession' : userLastPage.session.slug, 'formationPath': currentSession.formationPath.id, 'slugModule': userLastPage.module.slug, 'slugChapter': userLastPage.course.slug, 'slugPage': userLastPage.page.slug}) }}"> {{moduleTest.module.title}}</a>
+            {% else %}
+                {{moduleTest.module.title}}
+            {% endif %} &gt; 
+        <span>{{ moduleTest.test.TypeTest.title }}</span>
+        {% endif %}
+    </div>
+  
+    <div class="d-flex flex-wrap lms-title">
+		<h1 class="text-uppercase lms-h1">{{ formationPath.title }}: <span class="capitalize">{{module.title}}</span></h1>
+        <div class="d-flex flex-wrap justify-content-end lms-subtitle">
+		    <hr>
+            <!-- Indicateurs -->
+            <div class="d-flex flex-wrap lms-indicators">
+                <div class="lms-indicators-item">
+                    <svg viewBox="0 0 241.933 241.933" height=24 width=24 xmlns="http://www.w3.org/2000/svg"><g><path d="M213.937,85.577l-18.398-19.016l3.706-26.192c0.567-4.006-2.145-7.74-6.131-8.438l-26.058-4.568L154.652,3.986 c-1.896-3.573-6.287-4.999-9.919-3.222L120.969,12.38L97.199,0.764c-3.635-1.777-8.022-0.35-9.919,3.224L74.881,27.363 L48.82,31.931c-3.985,0.698-6.698,4.432-6.131,8.438l3.705,26.192L27.996,85.577c-2.813,2.908-2.813,7.522,0.001,10.43 l18.397,19.014l-3.705,26.206c-0.566,4.005,2.146,7.739,6.131,8.437l20.857,3.656v81.113c0,2.599,1.346,5.013,3.557,6.379 c1.204,0.745,2.572,1.121,3.943,1.121c1.146,0,2.295-0.262,3.354-0.792l40.439-20.212l40.433,20.212 c2.324,1.162,5.086,1.038,7.297-0.329c2.211-1.367,3.557-3.781,3.557-6.38v-81.111l20.858-3.658 c3.985-0.699,6.697-4.432,6.131-8.438l-3.706-26.206l18.397-19.013C216.749,93.1,216.749,88.485,213.937,85.577z M124.323,205.835 c-2.11-1.055-4.595-1.056-6.707,0l-32.939,16.464v-49.605l2.604,4.909c1.896,3.575,6.288,5,9.92,3.222l23.769-11.624l23.762,11.624 c1.06,0.518,2.184,0.764,3.291,0.764c2.69,0,5.286-1.454,6.63-3.985l2.604-4.905v49.6L124.323,205.835z M182.209,107.225 c-1.609,1.663-2.36,3.975-2.036,6.266l3.203,22.651l-22.521,3.949c-2.278,0.399-4.245,1.828-5.33,3.871l-10.721,20.2 l-20.539-10.047c-1.04-0.508-2.168-0.763-3.296-0.763c-1.128,0-2.256,0.254-3.295,0.763L97.13,164.162l-10.717-20.199 c-1.084-2.044-3.051-3.473-5.33-3.872l-22.526-3.949l3.202-22.652c0.324-2.29-0.427-4.603-2.036-6.265L43.822,90.791l15.902-16.436 c1.608-1.663,2.359-3.975,2.035-6.265l-3.202-22.637l22.526-3.949c2.279-0.399,4.246-1.829,5.331-3.873l10.717-20.205l20.545,10.04 c2.078,1.016,4.509,1.016,6.587,0l20.539-10.04l10.723,20.206c1.084,2.043,3.051,3.472,5.33,3.872l22.521,3.948l-3.203,22.637 c-0.324,2.291,0.427,4.603,2.035,6.266l15.902,16.436L182.209,107.225z"/><path d="M120.969,39.507c-28.283,0-51.293,23.006-51.293,51.285c0,28.285,23.01,51.296,51.293,51.296 c28.279,0,51.286-23.011,51.286-51.296C172.255,62.513,149.248,39.507,120.969,39.507z M120.969,127.088 c-20.012,0-36.293-16.282-36.293-36.296c0-20.008,16.281-36.285,36.293-36.285c20.008,0,36.286,16.277,36.286,36.285 C157.255,110.806,140.977,127.088,120.969,127.088z"/><path d="M136.258,71.765l-22.155,22.15l-8.431-8.421c-2.93-2.928-7.679-2.925-10.607,0.006c-2.927,2.931-2.924,7.679,0.007,10.606 l13.733,13.718c1.464,1.463,3.382,2.194,5.3,2.194c1.919,0,3.839-0.732,5.303-2.196l27.455-27.449 c2.93-2.928,2.93-7.677,0.001-10.607C143.936,68.837,139.187,68.836,136.258,71.765z"/></g></svg>
+                    <span class="text uppercase">
+                        {% if 'pre-test-valid' in validationModes %}
+                            {{'validant'|trans}}
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="lms-indicators-item">
+                    <i class="material-icons lms-material-icons"> access_time </i>
+                    <span class="text">{{moduleTest.test.theoricalDuration|date("H:i:s")}}</span>
+                </div>
+                <div class="lms-indicators-item">
+                    <i class="material-icons lms-material-icons"> calendar_today </i>
+                    <span class="text">
+                    {% for mDate in currentSession.sessionFormationPathModules %}
+                        {%  if mDate.module.id == module.id  %}
+                            {% if moduleTest.test.typeTest.conditional == 'eval' %}
+                                {% if app.request.locale == "fr" %}
+                                    {{ mDate.openingDateEvaluation|date("d/m/y") }} - {{ mDate.closingDateEvaluation| date('d/m/Y') }}
+                                {% else %} 
+                                    {{mDate.openingDateEvaluation|date("y/m/d") }} - {{ mDate.closingDateEvaluation| date('y/m/d') }}
+                                {% endif %}
+                            {% else %}
+                                {% if app.request.locale == "fr" %}
+                                    {{ mDate.openingDate|date("d/m/y") }} - {{ mDate.closingDate| date('d/m/Y') }}
+                                {% else %} 
+                                    {{mDate.openingDate|date("y/m/d") }} - {{ mDate.closingDate| date('y/m/d') }}
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    </span>
+                </div>
+                <div class="lms-indicators-item">
+                    {% if moduleTest.test.TypeTest.conditional != 'training' %}
+                        {% if userTest.numberTry > moduleTest.numberTry %}
+                            {% set numberTry = userTest.numberTry %}
+                        {% else %}
+                            {% set numberTry = moduleTest.numberTry %}
+                        {% endif %}
+                        {% for i in 0..numberTry -1 %}
+                            {% if i <= nbtentetiveDown -1 %}
+                                <span class="lms-icon-try done"></span>
+                            {% else %}
+                                <span class="lms-icon-try"></span>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        {% if nbtentetiveDown > 0 %}
+                            <span class="try-icon done"></span>
+                            <span>{{ ".." }}</span>
+                        {% else %}
+                            <span class="try-icon"></span>
+                            <span>{{ ".." }}</span>
+                        {% endif %}
+                        <span class="try-icon"></span>
+                    {% endif %}
+                    <span class="text"> {{ 'userFrontManagement.test.tries'|trans }} </span>
+                </div>
+                <div class="lms-indicators-item">
+                    <i class="material-icons lms-material-icons"> school </i>
+                   
+                    <span class=""> > {{ moduleTest.score }} % </span>
+                </div>
+            </div>
+            <!-- fin indicateurs -->
+        </div>
+    </div>
+    <!-- Résultats -->
+    <div class="p-4 lms-subcontent lms-bg-gray">
+        <!-- Bloc blanc -->
+        <div class="row bg-white p-3 lms-bilan-user-banner">
+            <!-- Col gauche -->
+            <div class="col-sm-2 col-md-4 col-lg-3">
+                <p> {{ userTest.detail.typeTest.title }} </p>
+                <figure class="">
+                    {% if userTest.detail.typeTest.conditional == 'pretest' %}
+                        <img src="{{ asset('images/core/badge-jaune.svg') }}" alt="{{  userTest.detail.typeTest.title }}">
+                    {% elseif userTest.detail.typeTest.conditional == 'training' %}
+                        <img src="{{ asset('images/core/badge-vert.svg') }}" alt="{{  userTest.detail.typeTest.title }}">
+                    {% elseif userTest.detail.typeTest.conditional == 'eval' %}
+                        <img src="{{ asset('images/core/evaluation-top.svg') }}" alt="{{  userTest.detail.typeTest.title }}">
+                    {% endif %}
+                </figure>
+            </div>
+            <!-- Fin col gauche -->
+            <!-- Col droite -->
+            <div class="col-sm-10 col-md-8 col-lg-9 col-xl-6">
+                <div class="w-100">
+                    {% if userTest.detail.typeTest.conditional != 'sondage' %}
+                        {% if userFrom != 'bilan' and userFrom != 'suivi'%}
+                            {% if userTest.score >= (userTest.detail.scorePercentage) %}
+                                <h2> {{ 'userFrontManagement.result.bravo'|trans }} </h2>
+                                <h2> {{ 'userFrontManagement.result.reussi'|trans({'%test%': userTest.detail.typeTest.title }) }}</h2>
+                            {% else %}
+                                {% if userTest.numberTry > userTest.tentative   %}
+                                    {% if userTest.detail.typeTest.conditional == 'training' %}
+                                        <h2>  {{ 'userFrontManagement.result.encore_training'|trans }}</h2>
+                                    {% else %}
+                                        <h2>  {{ 'userFrontManagement.result.encore'|trans({'%essai%': userTest.detail.numberTry - userTest.tentative }) }}</h2>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                        <p>
+                            <p> <span class="font-weight-bold">{{ 'userFrontManagement.result.prenom'|trans }} :</span> {{ userTest.user.firstname }}</p>
+                            <p> <span class="font-weight-bold">{{ 'userFrontManagement.result.nom'|trans }} :</span> {{ userTest.user.lastname }}</p>
+                            <p> <span class="font-weight-bold">{{ 'userFrontManagement.result.date_passage'|trans }} :</span> {{ userTest.dateDown|date('d/m/Y') }}</p>
+                            <p> <span class="font-weight-bold">{{ 'userFrontManagement.test.try'|trans }} :</span> {{ userTest.tentative }}</p>
+                            <p> <span class="font-weight-bold">{{ 'userFrontManagement.result.score_requis'|trans }} :</span> {{ userTest.detail.scorePercentage}}  %  </p>
+                            <p> <span class="font-weight-bold">{{ 'userFrontManagement.result.score_personnel'|trans }}  :</span> {{userTest.score}}%  </p>
+                        </p>
+                    {% endif %}
+                    {% if userTest.detail.typeTest.conditional == 'sondage' %}
+                        <p>  {{ 'userFrontManagement.result.thanksSondage'|trans }}</p>
+                    {% endif %}
+
+                        <!-- Bloc boutons -->
+                        <div class="d-flex flex-wrap justify-content-center justify-content-sm-between">
+
+                            <!-- Bt resultats -->
+                            <div class="m-1">
+                                {% if userTest.user.username != app.user.username %}
+                                <a href="{{ path('download_resultat_copie', {'moduleSlug' : module.slug, 'testSlug' : moduleTest.test.slug,'userTestID' : userTest.id})}}"   class="lms-button lms-button-download"><span>{{ 'userFrontManagement.result.resultat'|trans }}</span> <i class="material-icons"> cloud_download </i> </a>
+                                {% endif %}
+                            </div>
+                            <!-- Fin Bt resultats -->
+
+                            <!-- Bt retour -->
+                            <div class="m-1">
+                                {% if userFrom == 'bilan' %}
+                                    <a class="lms-button lms-button-gray"  href="{{ path('results_list') }}"><span>{{ 'global.back'|trans }}</span></a>
+                                {% elseif userFrom == 'suivi' %}
+                                    <a class="lms-button lms-button-gray"  href="{{ path('user_mon_suivis') }}"><span>{{ 'global.back'|trans }}</span></a>
+                                {% else %}
+                                    <a class="lms-button lms-button-gray" href="{{ path('user_formation_module', {'slugSession' : currentSession.slug}) }}"><span>{{ 'global.back'|trans }}</span></a>
+                                {% endif %}
+                            </div>
+                            <!-- Fin Bt retour -->
+                        </div>
+                    <!-- Fin Bloc boutons -->
+                    </div>
+                </div>
+            <!-- Fin col droite -->                    
+            </div>
+        <!-- Fin bloc blanc -->
+
+        <!-- Bloc questions/à revoir -->
+        <div class="row p-3">
+            <!-- Questions -->
+            <div class="col-xl-7 pl-xl-0">
+                <div class="">
+                    {% for key, correction in correctionArray %}
+                        {# {% if userTest.detail.typeTest.conditional == 'training' or userTest.user.username != app.user.username %} #}
+                            <span class="bold">
+                                {%  if correction.scored %}
+                                    <i class="material-icons lms-material-icons lms-text-success">check</i>
+                                {%  else  %}
+                                <i class="material-icons lms-material-icons lms-text-danger">close</i>
+                                {% endif %}
+                                {{ 'userFrontManagement.result.num_question'|trans }}
+                                {{ key + 1 }}: {{ correction.questionTitle }}
+                            </span><br>
+                        {# {% endif %} #}
+                        <span class="ml-4"> {{ correction.question }}</span><br>
+                        {% if userTest.detail.typeTest.conditional == 'training' or userTest.user.username != app.user.username %}
+                            <i class="ml-4">({{ 'question.weight'|trans }} {{correction.weight}})</i>
+                        {% endif %}
+                        <ol>
+                            {% for answer in correction.answers %}
+                                <li>
+                                {% if answer['voted'] %}
+                                    <label class="custom-control custom-checkbox custom-control-inline">
+                                        <input checked="" class="custom-control-input " disabled type="checkbox">
+                                        {% if userTest.detail.typeTest.conditional == 'training' or userTest.user.username != app.user.username %}
+                                            <span class="custom-control-label pl-5 {% if answer['status'] %} lms-text-success {% else %} lms-text-danger {% endif %}">{{ answer['title'] | raw }}</span>
+                                        {% else %}
+                                            <span class="custom-control-label pl-5">{{ answer['title'] | raw }}</span>
+                                        {% endif %}
+                                    </label>
+                                {% else %}
+                                    <label class="custom-control custom-checkbox custom-control-inline">
+                                        <input class="custom-control-input " disabled type="checkbox">
+                                        {% if userTest.detail.typeTest.conditional == 'training' or userTest.user.username != app.user.username %}
+                                            <span class="custom-control-label pl-5 {% if answer['status'] %} lms-text-success {% endif %}"> {{ answer['title'] | raw }} </span>
+                                        {% else %}
+                                            <span class="custom-control-label pl-5">{{ answer['title'] | raw }}</span>
+                                        {% endif %}
+                                    </label>
+                                {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- Fin Questions -->
+
+            <!-- A revoir -->
+            <div class="col-xl-5 pr-xl-0">
+                {% if (userTest.detail.typeTest.conditional == 'training' or userTest.detail.typeTest.conditional == 'eval' or userTest.user.username != app.user.username) and knowledgeArray|length > 0  %}
+                    <div class="bg-white">
+                        <p> <img src="{{asset('images/core/warning.svg')}}" alt="{{userTest.detail.typeTest.title}}"> {{ 'userFrontManagement.result.a_revoir'|trans }} </p>
+                        
+                        {%  for knowledge, pages in knowledgeArray %}
+                            <p> &ndash; {{knowledge|raw}}</p>
+                                <ul>
+                                    {% for slug, page in pages %}
+                                        <li>
+                                            <a href="{{ path('user_formation_module_organisation', {'slugSession' : currentSession.slug, 'formationPath': currentSession.formationPath.id, 'slugModule': module.slug, 'slugChapter': page['course'], 'slugPage': slug}) }}">
+                                                {{page['page']|raw}}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <!-- A revoir -->
+
+        </div>
+        <!-- Fin Bloc questions/à revoir -->
+
+        <div class="">
+            <p>{{ 'userFrontManagement.result.pagination'|trans }} :
+                {% for cle, test in oldUserTest  %}
+                    <a href="{{ path('test_front_result', {'sessionSlug': currentSession.slug, 'moduleSlug': userModule.module.slug, 'testSlug': moduleTest.test.slug, 'userTestID': test.id , 'userFrom': userFrom })  }}" style="{% if test.id == userTest.id %} color: white; {% endif %}"> {{ cle + 1 }} | </a>
+                {% endfor %}
+            </p>
+        </div>
+
+    </div>
+    <!-- Fin résultats -->
+{% endblock %}

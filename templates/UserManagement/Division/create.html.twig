@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="lms-breadcrumb">
+    <span><a href="
+				{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+        {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+				{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+				{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+				{% else %} {{ path('home_dashboard') }}
+				{% endif %}">{{lms_name}}</a></span> >  <span><a  href="{{path('admin_division_list')}}">{{ 'division.action.list' | trans }}</a></span> > <span class="bold">{{ 'division.action.create' | trans }} </span>
+</div>
+<div class="d-flex align-items-center lms-title">
+	<h1 class="text-uppercase lms-h1">{{ 'division.action.create' | trans }}</h1><hr>
+</div>		
+
+<div class="row row-cards">
+  <div class="col col-12 d-md-none">
+    {% include "UserManagement/menu.html.twig" %}
+  </div>
+
+  <div class="col col-12">
+    <div class="card-body">
+        <form action="{{ path('admin_division_create')}}" method="post" class="form-horizontal" enctype="multipart/form-data">
+          {% include "UserManagement/Division/form.html.twig" %}
+          </form>
+    </div>                  
+  </div>
+</div>    
+
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+<script>
+$('#dropdown-users .dropdown-menu').addClass('show');
+</script>  
+{% endblock %}

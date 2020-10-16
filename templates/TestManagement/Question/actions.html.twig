@@ -1,0 +1,159 @@
+
+<div class="my-4 p-3 lms-bg-gray lms-actions-block-title">
+        <p class="lms-actions-title">
+            {% if module.activeSession == true %}
+                <a href="{{ path('admin_module_edit',{'slug': module.slug }) }}" class="lms-actions-title-level-1"> <i class="material-icons lms-material-icons"> edit </i> <span>{{module.title}} V.{{ module.version}} ({{ module.regulatoryRef }})</span></a>
+                <br>
+                <span class="d-block text-right lms-actions-title-infos lms-text-danger"{{'global.literal.is_session'|trans}}</span>
+            {% elseif module.isArchived == true %}
+                <a href="{{ path('admin_module_edit',{'slug': module.slug }) }}" class="lms-actions-title-level-1"> <i class="material-icons lms-material-icons"> edit </i> <span>{{module.title}} V.{{ module.version}} ({{ module.regulatoryRef }})</span></a>
+                <br>
+                <span class="d-block text-right lms-actions-title-infos lms-text-danger">{{'global.archived'|trans}}</span>
+            {% elseif module.isValid == true %}
+                <a href="{{ path('admin_module_edit',{'slug': module.slug }) }}" class="lms-actions-title-level-1"> <i class="material-icons lms-material-icons"> edit </i>  <span>{{module.title}} V.{{ module.version}} ({{ module.regulatoryRef }})</span></a>
+                <br>
+                <span class="d-block text-right lms-actions-title-infos lms-text-warning">{{'formation.module.published'|trans}}</span>
+            {% elseif module.isValid == false %}
+                <a href="{{ path('admin_module_edit',{'slug': module.slug }) }}" class="lms-actions-title-level-1"> <i class="material-icons lms-material-icons"> edit </i> <span>{{module.title}} V.{{ module.version}} ({{ module.regulatoryRef }})</span> </a>
+                <br>
+                <span class="d-block text-right lms-actions-title-infos lms-text-success">{{'formation.module.unPublished'|trans}}</span>
+            {% endif %}
+        </p>
+
+    {% include "TestManagement/Test/actions.html.twig" %}
+
+</div>
+
+<div class="my-4 lms-actions-block-infos">
+    {% if totalQuestion == 0 and test.isTestPresentiel != true %}
+        <p class="m-0 lms-text-danger">
+            {{'test.required_nb'|trans}} !
+        </p>
+        <p class="m-0 lms-text-success">
+            {{'test.validation'|trans}} : {{score}} %
+        </p>
+        <p class="m-0 lms-text-success">
+            {{'test.score_possible'|trans}} : {{scoreMaxMin.min}} - {{scoreMaxMin.max}} {{'test.expected_score'|trans}}
+        </p>
+    {% elseif totalQuestionRequired > totalQuestion  %}
+        <p class="m-0 lms-text-danger">
+            {{'test.required_nb'|trans}} : {{totalQuestionRequired - totalQuestion }}
+        </p>
+        <p class="m-0 lms-text-success">
+            {{'test.validation'|trans}} : {{score}} %
+        </p>
+        <p class="m-0 lms-text-success">
+            {{'test.score_possible'|trans}} : {{scoreMaxMin.min}} - {{scoreMaxMin.max}} {{'test.expected_score'|trans}}
+        </p>
+    {% else %}
+        <p class="m-0 lms-text-success">
+            {{'test.tirage_alea'|trans}} : {{totalQuestionRequired}} / {{ totalQuestion }}
+        </p>
+        <p class="m-0 lms-text-success">
+            {{'test.validation'|trans}} : {{score}} %
+        </p>
+        <p class="m-0 lms-text-success">
+            {{'test.score_possible'|trans}} {{(scoreMaxMin.min * (score / 100) )|round(0, 'ceil')}} / {{scoreMaxMin.min}} {{'test.and'|trans}} {{(scoreMaxMin.max * (score / 100) )|round(0, 'ceil')}} / {{scoreMaxMin.max}}
+        </p>
+    {% endif %}
+</div>
+ 
+<div class="my-4 lms-actions-block-content">
+    <p class="py-2 text-center lms-actions-block-content-title">
+        {% if 'admin_testManagement_edit' in app.request.attributes.get('_route') %}
+            <span class="lms-actions-title-level-1 lms-actions-title-level-1-actif">{{ test.title }}</span>
+        {% else %}
+            <a href="{{path('admin_testManagement_edit', {'test' : test.id})}}" class="lms-actions-title-level-1">
+                <i class="material-icons lms-material-icons"> edit </i> <span>{{ test.title }}</span>
+            </a>
+        {% endif %}
+    </p>
+
+    <!-- Créér un ensemble de questions -->
+    <p class="text-center">
+
+        {% if test.isTestPresentiel == false %}
+            {% if module.isValid == false %}
+                {% if test.isTestCommune == false and is_granted('ROLE_GESTION_TEST')%}
+                    <a href="{{ path('admin_pool_create', {'test' : test.id}) }}" class="lms-actions-button">
+                        <i class="material-icons lms-material-icons">add_circle_outline</i>  <span>{{ 'pool.create.title' | trans }}</span>
+                    </a>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+
+    </p>
+    
+    <!-- Ensemble de Questions -->
+    <div class="my-4">
+        {% if test.isTestPresentiel == false %}
+            {% for p in test_pool %}
+                <div class="mb-4 lms-actions-block-ensemble">
+                    <p class="m-0 lms-actions-block-ensemble-title">
+                        {% if pool is defined and p.pool.id == pool.id and question is not defined %}
+                            <span class="lms-actions-title-level-1 lms-actions-title-level-1-actif">{{p.pool.title}}</span>
+                        {% else %}
+                        <a href="{{ path('admin_pool_edit', {'pool' : p.pool.id}) }}" class="lms-actions-title-level-1">
+                            {% if p.pool.isValid == true %}
+                                <i class="material-icons lms-material-icons"> edit </i> <span>{{p.pool.title}}</span>
+                            {% else %}
+                                <del>{{p.pool.title}}</del>
+                            {% endif %}
+                        </a>
+                        {% endif %}
+                    </p>
+                    <div class="p-3 lms-bg-gray">
+                        <div class="d-flex justify-content-between align-items-center lms-actions-ensemble-header">
+                            {% if module.activeSession == false and module.isArchived == false and module.isValid == false and p.pool.isValid %}
+                                {% if test.isTestCommune == false and is_granted('ROLE_GESTION_TEST') %}
+                                    <a href="{{ path('admin_testManagement_question_create', {'test' : test.id, 'pool': p.pool.id}) }}" class="text-center lms-actions-button">
+                                        <i class="material-icons lms-material-icons">add_circle_outline</i><br><span>{{ 'question.create.title' | trans }}</span>
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                            <div class="d-flex flex-column align-items-center text-center mb-1 lms-actions-ensemble-header-infos">
+                                {% if p.pool.nbRequQuestions > p.nbQuestion and p.pool.isValid == true %}
+                                    <span class="lms-text-danger">{{'test.required_nb'|trans}}</span> <span class="d-inline-block mt-1 px-2 py-1 lms-badge-danger">{{p.pool.nbRequQuestions - p.nbQuestion }}</span> 
+                                {% elseif p.pool.isValid == true %}
+                                    <span class="lms-text-success">{{'test.tirage_alea'|trans}}</span> <span class="d-inline-block mt-1 px-2 py-1 lms-badge-success">{{p.pool.nbRequQuestions}} / {{ p.nbQuestion }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="">
+                            <p class="mt-3 lms-actions-questions-header"><a href="#questions-list-{{p.pool.id}}" class="d-flex justify-content-between" data-toggle="collapse">{{ 'test.list.question' | trans }}<svg class="expend" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></a></p>
+                            <ul id="questions-list-{{p.pool.id}}" class="mt-1 collapse lms-actions-questions-list">  
+                                {% for q in p.questions %}
+                                    <li>
+                                        {% if question is defined and q.question.id == question.id %}
+                                            <span class="lms-actions-questions-item lms-actions-questions-item-actif">{{ q.question.question | truncate(60, false, '...' ) }}</span>
+                                         {% else %}
+                                        <a class="lms-actions-questions-item" href="{{ path('admin_testManagement_question_edit', {'question' : q.question.id}) }}" data-toggle="tooltip" data-original-title="{{ 'edit' | trans }}">
+                                            {% if q.question.isValid %}
+                                                <i class="material-icons lms-material-icons"> edit </i> <span>{{ q.question.question | truncate(60, false, '...' ) }}</span>
+                                            {% else %}   
+                                                <del>{{ q.question.title }}</del>
+                                            {% endif %}
+                                            {% if q.question.required == 1 %}<span class="error">*</span>{% endif %}
+                                        </a>
+                                         {% endif %}
+                                        <br>
+                                        {% if q.statRight != 0 %}
+                                            {% set moyenneSuccess = q.statRight / q.statAll * 100 %}
+                                        {% else %}
+                                            {% set moyenneSuccess = 0 %}
+                                        {% endif %}
+                                        {% if q.statAll >= 10 and moyenneSuccess|round <= 50 %}
+                                            <span class="lms-text-warning"> {{'global.literal.sucesss_percentage'|trans}} : {{moyenneSuccess|round}} % =>  {{q.statRight}} / {{q.statAll}}</span>
+                                        {% else %}
+                                            <span class="lms-text-primary"> {{'global.literal.sucesss_percentage'|trans}} : {{moyenneSuccess|round}} % =>  {{q.statRight}} / {{q.statAll}}</span>
+                                        {% endif %}
+                                    </li> 
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %} 
+    </div>        
+</div>

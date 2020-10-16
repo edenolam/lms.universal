@@ -1,0 +1,32 @@
+<div class="form-group">
+    <label class="form-label">{{ 'ldap_url'|trans }}</label>
+    <input type="text" class="form-control" value="{{ ldap.url }}" readonly>
+</div>
+<div class="form-group">
+    <label class="form-label">{{ 'bind_dn'|trans }}</label>
+    <input type="text" class="form-control" value="{{ ldap.bindDn }}" readonly>    
+</div>
+<div class="form-group">
+    <label class="form-label">{{ 'password'|trans }}</label>
+    <input type="password" class="form-control" value="{{ ldap.password }}" readonly> 
+</div>
+<div class="form-group">
+    <label class="form-label">{{ 'user_base_dn'|trans }}</label>
+    <input type="text" class="form-control" value="{{ ldap.userBaseDn }}" readonly> 
+</div>
+<div class="form-group">
+    <label class="form-label">{{ 'user_objectClass_filter'|trans }}</label>
+    <input type="text" class="form-control" value="{{ ldap.userObjectClassFilter }}" readonly>     
+</div>
+<div class="form-group">
+    <label class="form-label">{{ 'user_attributes'|trans }}</label>
+    <input type="text" class="form-control" value="{{ ldap.userAttributes }}" readonly>     
+</div>
+<div class="form-group">
+    <label class="form-label">{{ 'username_attribute'|trans }}</label>
+    <input type="text" class="form-control" value="{{ ldap.usernameAttribute }}" readonly>     
+</div>
+<div class="form-group">
+    <label class="form-label">{{ 'mail_attribute'|trans }}</label>
+    <input type="text" class="form-control" value="{{ ldap.mailAttribute }}" readonly>      
+</div> 

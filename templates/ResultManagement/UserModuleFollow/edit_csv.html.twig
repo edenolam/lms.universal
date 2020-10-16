@@ -1,0 +1,69 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}Edit UserModuleFollow{% endblock %}
+
+{% block body %}
+    <div class="lms-breadcrumb">
+        <a href="{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }} {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }} {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }} {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }} {% else %}{{ path('home_dashboard') }}{% endif %}">{{ lms_name }}</a>
+        > <span>{{ 'menu.results.list'|trans }}</span>
+    </div>
+
+    <div class="d-flex align-items-center lms-title">
+        <h1 class="text-uppercase lms-h1">{{ 'results.user_module_follow.edit'|trans }}</h1>
+        <hr>
+    </div>
+
+    <div class="col-12">
+        <div class="col-12 row lms-bg-gray">
+            <div class="col col-md-4 p-3 ">
+                {{ include('ResultManagement/UserModuleFollow/_form_csv.html.twig', {'button_label': 'Update'}) }}
+            </div>
+        </div>
+        <div class="col-12">
+            {% if info is defined and info|length > 0 %}
+                <p>{{'presentiel.csv.info.info'|trans}}<p>
+                <ul>
+                    <li>{{'presentiel.csv.info.moduleFollow'|trans}} : {{info['moduleFollow']}}</li>
+                    <li>{{'presentiel.csv.info.moduleFollowAdd'|trans}}: {{info['moduleFollowAdd']}}</li>
+                    <li>{{'presentiel.csv.info.moduleFollowfailedAdd'|trans}}: {{info['moduleFollowfailedAdd']}}</li>
+                    <li>{{'presentiel.csv.info.evalrequired'|trans}} : {{info['evalrequired']}}</li>
+                    <li>{{'presentiel.csv.info.evalAdd'|trans}}: {{info['evalAdd']}}</li>
+                    <li>{{'presentiel.csv.info.evalfailedAdd'|trans}}: {{info['evalfailedAdd']}}</li>
+                </ul>
+                <p>{{'presentiel.csv.info.data.module'|trans}}</p>
+                <ul>
+                    {% for data,key in info['data']['module'] %}
+                        <li> {{data}} {{'presentiel.csv.info.data.ligne'|trans}} {{key}}</li>
+                    {% endfor %}
+                </ul>
+                <p>{{'presentiel.csv.info.data.apprenant'|trans}}</p>
+                <ul>
+                    {% for data,key in info['data']['apprenant'] %}
+                        <li> {{data}} {{'presentiel.csv.info.data.ligne'|trans}} {{key}}</li>
+                    {% endfor %}
+                </ul>
+                <p>{{'presentiel.csv.info.data.session'|trans}}</p>
+                <ul>
+                    {% for data,key in info['data']['session'] %}
+                        <li> {{data}} {{'presentiel.csv.info.data.ligne'|trans}} {{key}}</li>
+                    {% endfor %}
+                </ul>
+                <p>{{'presentiel.csv.info.data.umf'|trans}}</p>
+                <ul>
+                    {% for data,key in info['data']['umf'] %}
+                        <li> {{data}} {{'presentiel.csv.info.data.ligne'|trans}} {{key}}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+{% endblock %}    

@@ -1,0 +1,36 @@
+lov:
+    laboratory: Entreprise
+    division: Division
+    team: Equipe
+    answerType: Type de la réponse
+    civility: Civilité
+    country: Pays
+    type_test: Type de Test
+    module_type: Type de module
+    validation_mode: Mode(s) de validation
+    page_type: Type de page
+    sort: Ordre
+    description: Description
+    keywords: Mots clefs
+    answer_type: Type de réponse
+    add: "Ajouter une valeurs à la liste : "
+    title: Titre
+    create: Creation
+    update: Modification
+    revision: Révision
+    flash:
+        created: "Une lov a été créée."
+        updated: "Lov a été mise à jour."
+    type: Type
+    ldap: Ldap serveur
+ldap_url: Ldap server uri
+bind_dn: Bind dn
+password: Mot de passe
+user_base_dn: Utilisateur basic dn
+user_objectClass_filter: Utilisateur object class filtre
+user_attributes: utilisateur attributes
+username_attribute: Username attribute
+mail_attribute: Mail attribute
+ldap_users_import: Import ldap utilsateurs 
+ldap_created: Ldap a été créé
+ldap_updated: Ldap a été mise à jour

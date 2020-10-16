@@ -1,0 +1,39 @@
+
+
+    <ul class="accordeon">
+            <li class="accordeon-formation">
+                <span class="accordeon-formation-title">
+                    <span class="title-txt"><span class="uppercase">{{'global.literal.formation' | trans}}</span> : {{ session.formationPath.title }}</span>
+                    <span class="title-icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                    </span>
+                </span>
+                <ul class="accordeon-module">
+                    <li class="note-module">
+                        <span class="accordeon-module-title">
+                            <span class="title-txt"><span class="uppercase">{{'userFrontManagement.module.title_m' | trans}}</span> : {{ module.title }}</span>
+                            <span class="title-icons">
+                                <svg class="accordeon-open" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                            </span>
+                        </span>
+                        <ul class="accordeon-note-container is-close">
+                            {% for note in listeNote %}
+                            <li class="accordeon-note-item">
+                                <span class="accordeon-note-title">
+                                    <span class="uppercase">{{'formation.page.literal' | trans}}
+                                    </span> :
+                                    <a href="{{ path('user_formation_module_organisation', {'slugSession': note.session.slug, 'formationPath': note.session.formationPath.id, 'slugModule': note.module.slug,'slugChapter': note.course.slug,'slugPage': note.page.slug,}) }}">
+                                        {{ note.page.title }}
+                                    </a>
+                                </span>
+                                <div>
+                                    {{note.note|raw}}
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+    </ul>
+

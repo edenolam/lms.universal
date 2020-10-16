@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}  
+<link href="{{ asset('assets/bootstrap-datepicker/css/datepicker.css') }}" rel="stylesheet" type="text/css" /> 
+{% endblock %}
+
+{% block body %}
+<!-- navigateur -->
+<div class="lms-breadcrumb">
+   <span><a href="
+				{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+        {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+				{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+				{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+				{% else %} {{ path('home_dashboard') }}
+				{% endif %}">{{lms_name}}</a></span> > <span><a href="{{path('admin_session_list')}}">{{ 'menu.concepteur.session' | trans }}</a></span> > <span class="bold">{{ 'session.create.title' | trans }}</span>
+</div>
+
+<!-- title of page -->
+<div class="d-flex align-items-center lms-title">
+	<h1 class="text-uppercase lms-h1">{{'session.create.title'|trans}}</h1><hr/>
+</div>
+
+<!-- body of page -->
+<div class="row ml-2 mr-2">
+  <div class="col-lg-12 lms-bg-light">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+          <a class="nav-link active text-capitalize font-weight-bold" href="#">{{ 'session.date' | trans }} </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-capitalize font-weight-bold" href="#">{{ 'session.modules' | trans }}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-capitalize font-weight-bold" href="#">{{ 'session.presentiels' | trans }}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-capitalize font-weight-bold" href="#">{{ 'session.users' | trans }} </a>
+        </li>
+    </ul>
+
+
+    <div class="card-body">
+      <form action="{{ path('admin_session_create') }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+          {% include "PlanningManagement/Session/form.html.twig" %}      
+      </form>
+    </div>  
+  </div>            
+</div>
+
+{% endblock %}
+
+{% block js %}
+  {{ parent() }}
+<script src="{{ asset('assets/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>  
+
+<script>
+window.onload = (event) => {
+    $('.openingDate').datepicker({
+      format: 'yyyy-mm-dd',
+      autoclose: true,
+      startDate: '+0d',
+      todayHighlight: true
+    }).on('changeDate', function (selected) {
+        var minDate = new Date(selected.date.valueOf());
+        $('.closingDate').datepicker('setStartDate', minDate);
+    });
+
+    $('.closingDate').datepicker({
+      format: 'yyyy-mm-dd',
+      autoclose: true
+    }).on('changeDate', function (selected) {
+            var maxDate = new Date(selected.date.valueOf());
+            $('.openingDate').datepicker('setEndDate', maxDate);
+    });
+};
+</script>
+{% endblock %}

@@ -1,0 +1,175 @@
+<style type="text/css">
+    img {
+        border: none;
+    }
+
+    p {
+        margin: 0;
+        text-align: justify;
+    }
+    .body {
+        color: #444;
+        line-height: 1.5;
+        margin-top: 10mm;
+        margin-right: 10mm;
+        margin-left: 10mm;
+    }
+   
+   
+    .table-parcours {
+        background-color: #eeeeee;
+    }
+    
+    .parcours-title {
+        color: #2FAEDE;
+        font-size: 16pt;
+        line-height: 2;
+        margin: 0 ;
+    }
+    
+    .module-title {
+        color: #2FAEDE;
+        font-size: 14pt;
+        margin-bottom: .2mm;
+        vertical-align: text-top;
+    }
+    .course-title {
+        color: #2FAEDE;
+        font-size: 12pt;
+        margin-bottom: .2mm;
+    }
+    .parcours-description {
+        font-size: 10pt;
+        font-style: italic;
+    }
+   
+    .parcours-duration {
+        font-size: 8pt;
+        line-height: 2;
+    }
+    
+</style>
+
+<page backtop="0mm" backbottom="0mm" backleft="0mm" backright="0mm">
+    <div class="body">
+         <table class="table-header">
+            <tr>
+                 <td style="text-align: left; width: 225px; ">
+                    <h1>{{'userFrontManagement.syllabus'|trans}}</h1>
+                </td>
+                <td style="text-align: center; width: 230px; ">
+                    <img src="{{chemin}}/public/images/core/logo.png" height="50
+	    			">
+                </td>
+                <td style="text-align: center; width: 230px; ">
+                    {% if user.laboratory is not null and user.laboratory.logo is not null %}
+                        <img src="{{chemin}}/public/uploads/laboratory/{{user.laboratory.logo}}" height="50
+                        ">
+                    {% endif %}
+                </td>
+                
+            </tr>
+        </table>
+        
+        <table class="table-parcours">
+            <tr>
+                <td style="text-align: left; width: 230px; padding-top: 2px;">
+                    {% if formation.uri is not null %} 
+                        <img src="{{chemin}}/public/uploads/files/{{formation.uri}}" height="50"/>			
+                    {% else %}
+                        <img src="{{chemin}}/public/images/core/logo.png" height="50"/>
+                    {% endif %}
+                </td>
+                <td style="text-align: left; width: 400px; padding-left: 20px; padding-right: 10px;">
+                    <h1 class="parcours-title">{{ formation.title|striptags|raw }} </h1>
+                    {% if formation.description is not null %}
+                        <p class="parcours-description"> {{ formation.description|striptags|raw }}</p><br>
+                    {% endif %}
+                     <p class="parcours-duration">
+                        {% if session != null %}
+                            {{"session.literal"|trans}} : 
+                            {% if app.request.locale == "fr" %}
+                                {{session.openingDate|date('d/m/Y')}} - {{session.closingDate|date('d/m/Y')}}
+                            {% else %}
+                                {{session.openingDate|date('Y/m/d')}} - {{session.closingDate|date('Y/m/d')}}
+                            {% endif %}
+                        {% endif %}
+                        ({{"formation.module.duree"|trans}} : {{formation.realisationTime|date('H:i')}})
+                    </p> 
+                </td>
+               
+            </tr>
+        </table>
+    </div>
+    {% for formationPathModule in formation.formationPathModules %}
+        <div class="body">
+            <h2 class="module-title">{{"formation.module.title"|trans}} : {{formationPathModule.module.title}}
+                {% for testM in formationPathModule.module.moduleTests %}
+                    {% if testM.test.typeTest.conditional == 'pretest' %}
+                        <img class="test" src="{{chemin}}/public/images/png/pre-test.png" />
+                    {% elseif testM.test.typeTest.conditional == 'eval' %}
+                        <img class="test" src="{{chemin}}/public/images/png/evaluation.png" />
+                    {% elseif testM.test.typeTest.conditional == 'training' %}
+                        <img class="test" src="{{chemin}}/public/images/png/entrainement.png" />
+                    {% endif %}
+                {% endfor %}
+                
+                <span class="parcours-duration"> (<i>{{"formation.module.duree"|trans}} : {{formationPathModule.module.realisationTime|date('H:i')}}</i>) </span>
+            </h2>
+            <table>
+                <tr>
+                    <td style="text-align: justify; width: 350px; padding-right: 10px;">
+                        <b>{{'formation.module.mode_de_validation'|trans}} : </b>{% for validationMode in formationPathModule.module.validationModes %} {{validationMode.title}} -{% endfor %}<br>
+                        <b>{{'formation.module.regulatory_ref'|trans}}</b> {% if formationPathModule.module.regulatoryRef is not null %}{{formationPathModule.module.regulatoryRef|striptags|raw }}{% endif %}<br>
+                    </td>
+                    <td style="text-align: justify; width: 200px;">
+                        {% if formationPathModule.module.uri is defined and formationPathModule.module.uri is not empty and formationPathModule.module.uri is not null %}
+                            <img src="{{chemin}}/public/uploads/files/{{formationPathModule.module.uri}}" class="" alt="Visuel du module" width="200
+                                ">
+                        {% else %}
+                            <img src="{{chemin}}/public/images/core/logo-eye.png" class="" alt="Visuel du module" width="200
+                                ">
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+            
+            <br>
+            <p><b>{{'formation.course.description'|trans}}</b> {% if formationPathModule.module.description is not null %}{{formationPathModule.module.description|striptags|raw }}{% endif %}</p><br>
+            <p><b>{{'formation.module.list.prerequisites'|trans}}</b>{% if formationPathModule.module.prerequisites is not null %}{{formationPathModule.module.prerequisites|striptags|raw }}{% endif %}</p><br>
+
+            {% set unitNumber = 1 %}
+            {% for moduleCourse in formationPathModule.module.moduleCourses %}
+                {% if moduleCourse.course.isValid == true %}
+                    <h3 class="course-title">{{"formation.course.title"|trans}} {{unitNumber}} : {{moduleCourse.course.title}}</h3>
+                    <p>
+                        <b>{{'formation.course.description'|trans}}</b>
+                        {% if moduleCourse.course.description is not null %}
+                            {{moduleCourse.course.description|striptags|raw}}
+                        {% endif %}
+                    </p>
+                    <p><b>{{'formation.knowledge.list.title'|trans}}</b></p>
+                    {% for page in moduleCourse.course.pages %}
+                        {% if page.isValid == true %}
+                            {% for connaissance in page.knowledges %}
+                                <p>&bull; {{connaissance.title|striptags|raw }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                    <p> <b>{{'userFrontManagement.formation.sommaire'|trans}}</b> </p>
+                    {% set pageNumber = 1 %}
+                    {% for page in moduleCourse.course.pages %}
+                        {% if page.isValid == true %}
+                            {% if page.inSummary %}
+                                <p><i>{{'userFrontManagement.page.page'|trans}} {{pageNumber}}</i> : {{page.title|striptags|raw }}</p>
+                                {% set pageNumber = pageNumber + 1 %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {% set unitNumber = unitNumber + 1 %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+</page>

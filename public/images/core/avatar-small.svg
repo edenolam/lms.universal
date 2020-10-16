@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" viewBox="0 0 30 30">
+  <defs>
+    <clipPath id="clip-path">
+      <circle id="Ellipse_8" data-name="Ellipse 8" cx="15" cy="15" r="15" transform="translate(1262 10)" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="Groupe_451" data-name="Groupe 451" transform="translate(-1262 -10)">
+    <circle id="Ellipse_9" data-name="Ellipse 9" cx="15" cy="15" r="15" transform="translate(1262 10)" fill="#fff"/>
+    <g id="Groupe_de_masques_1" data-name="Groupe de masques 1" clip-path="url(#clip-path)">
+      <g id="Groupe_450" data-name="Groupe 450" transform="translate(897.841 -283.442)">
+        <g id="Groupe_440" data-name="Groupe 440" transform="translate(369.046 312.581)">
+          <path id="Tracé_207" data-name="Tracé 207" d="M376.77,319.277v2.339h-2.315a5.258,5.258,0,0,0-5.256,5.257v3.918h19.88v-3.918a5.258,5.258,0,0,0-5.257-5.257h-2.315v-2.339Z" transform="translate(-369.199 -319.277)" fill="#fff"/>
+        </g>
+        <g id="Groupe_442" data-name="Groupe 442" transform="translate(369.315 314.647)">
+          <g id="Groupe_441" data-name="Groupe 441" transform="translate(0 0)">
+            <path id="Tracé_208" data-name="Tracé 208" d="M383.717,322.254h-.564l-3.962,6.2-3.962-6.2h-.563a5.277,5.277,0,0,0-5.08,5.453v4.065h19.208v-4.065A5.276,5.276,0,0,0,383.717,322.254Z" transform="translate(-369.587 -322.254)" fill="#63c4ca"/>
+          </g>
+        </g>
+        <g id="Groupe_449" data-name="Groupe 449" transform="translate(368.699 297.407)">
+          <g id="Groupe_443" data-name="Groupe 443" transform="translate(3.405 0.347)">
+            <path id="Tracé_209" data-name="Tracé 209" d="M386.117,304.078a1.3,1.3,0,0,0-.173.012v-.731a5.45,5.45,0,1,0-10.9,0v.735a1.154,1.154,0,0,0-.186-.015,1.252,1.252,0,0,0-1.253,1.252v1.88a1.253,1.253,0,0,0,1.253,1.254,1.284,1.284,0,0,0,.228-.022,5.449,5.449,0,0,0,10.817,0,1.28,1.28,0,0,0,.214.019,1.252,1.252,0,0,0,1.252-1.254v-1.88A1.251,1.251,0,0,0,386.117,304.078Z" transform="translate(-373.606 -297.907)" fill="#fff"/>
+          </g>
+          <g id="Groupe_444" data-name="Groupe 444" transform="translate(3.058)">
+            <path id="Tracé_210" data-name="Tracé 210" d="M380.343,313.423a5.8,5.8,0,0,1-5.7-4.766,1.6,1.6,0,0,1-1.532-1.6v-1.88a1.6,1.6,0,0,1,1.439-1.591v-.381a5.8,5.8,0,1,1,11.593,0v.382a1.6,1.6,0,0,1,1.424,1.59v1.88a1.6,1.6,0,0,1-1.516,1.6A5.8,5.8,0,0,1,380.343,313.423Zm-5.109-5.542.044.366a5.1,5.1,0,0,0,10.129,0l.044-.362.36.063a.922.922,0,0,0,1.059-.893v-1.88a.911.911,0,0,0-1.029-.9l-.4.056v-1.132a5.1,5.1,0,1,0-10.206,0v1.146l-.405-.069a.762.762,0,0,0-.128-.01.907.907,0,0,0-.906.905v1.88a.907.907,0,0,0,.906.907.92.92,0,0,0,.165-.017Z" transform="translate(-373.106 -297.407)" fill="#2e2e2e"/>
+          </g>
+          <g id="Groupe_445" data-name="Groupe 445" transform="translate(0 15.174)">
+            <path id="Tracé_211" data-name="Tracé 211" d="M389.273,331.138H368.7v-4.265a5.61,5.61,0,0,1,5.6-5.6h1.968v-1.992h.694v2.686H374.3a4.916,4.916,0,0,0-4.91,4.91v3.571h19.186v-3.571a4.916,4.916,0,0,0-4.91-4.91h-2.662v-2.686h.694v1.992h1.968a5.611,5.611,0,0,1,5.6,5.6Z" transform="translate(-368.699 -319.277)" fill="#2e2e2e"/>
+          </g>
+          <g id="Groupe_446" data-name="Groupe 446" transform="translate(4.965 2.183)">
+            <path id="Tracé_212" data-name="Tracé 212" d="M376.385,305.359c-.173,0-.35,0-.53-.013l.035-.692a7.841,7.841,0,0,0,7.086-3.437l.381-.664.248.724c.011.031,1.07,3.058,2.988,3.349l-.1.685c-1.746-.266-2.833-2.186-3.291-3.2A8.445,8.445,0,0,1,376.385,305.359Z" transform="translate(-375.855 -300.553)" fill="#2e2e2e"/>
+          </g>
+          <g id="Groupe_447" data-name="Groupe 447" transform="translate(8.717 12.29)">
+            <rect id="Rectangle_264" data-name="Rectangle 264" width="2.951" height="0.694" fill="#2e2e2e"/>
+          </g>
+          <g id="Groupe_448" data-name="Groupe 448" transform="translate(9.618 13.211)">
+            <rect id="Rectangle_265" data-name="Rectangle 265" width="1.15" height="0.694" fill="#2e2e2e"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

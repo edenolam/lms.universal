@@ -1,0 +1,84 @@
+test:
+    sondage: Survey
+    validation: Validation target
+    quit: Quit
+    required_nb: Question(s) missing
+    expected_score: expedted
+    score_possible: Possible points between
+    and: and
+    title: Name of the test
+    ref: Reference of the test 
+    nbQuestion: Number of questions required
+    explicationNbQ: (non-mandatory)
+    theorical_duration: Expected duration (H:m)
+    view: Test details
+    description: Test description
+    submit: Send the test
+    edit: Edit the test
+    score_needed: Score required
+    date_done: Transition date
+    valid: validated
+    no_valid: non validated
+    module: Module
+    score: Validation percentage
+    validation_score: (the lowest score from the maximum possible score)
+    chronoQuestion: Time the questions
+    chronoTest: Time the test
+    numberTry: Number of attempts
+    is_test_commune: Common pre-test question
+    is_test_presentiel: Face-to-face test?
+    create:
+        title: Create a test
+    front:
+        title: "Here is your test "
+    list:
+        question: List of questions
+        ariane_gestion: Test management
+    pre: Pre-test
+    eval: Evaluation
+    instruction_1: You are going to begin a series of questions.
+    instruction_2: The score you need to pass is %percentage% %. If your score is inferior, you have %try% attempts(s) to achieve it.
+    instruction_2_training: This is a training. The score you need to pass is %percentage% %, there is no maximum number of attempts.
+    instruction_chrono_test: <span class="bold">Attention</span>, you have a <span class="bold">limited time (%chronoTestTime%)</span> to complete the evaluation. If you go beyond this time, your evaluation will not be valid.
+    instruction_chrono_question: <span class="bold">Attention</span>, you have a <span class="bold">limited time (%chronoTestQuestion%)</span> per question. If you go beyond this time, the question will not be valid.
+    tirage_alea: Tirage
+question:
+    pool: Set of questions
+    comment: Commentary
+    create:
+      title: Create a question
+    editor: Question editor
+    view: Question details
+    test: Test
+    ref: Question reference
+    question: Question
+    content: Content
+    nbanswer: Number of possible responses
+    lessonpage: Associated page containing the answer
+    weight: Weight
+    theoricalduration: Expected completion time
+    required: Mandatory
+    knowledges: Associated knowledge
+
+answer:
+    add:
+        title: Add an answer
+    answer: Answer
+    content: Content
+    status: Correct answer
+    edit: Edit answer
+    success: Correct answer
+    fail: Incorrect answer
+    notice_multiple: NOTICE There are several possible answers.
+    notice_unique: NOTICE There is only one possible answer.
+    notice_text: NOTICE fill the blanks.
+    notice_graduation: NOTICE Choose a number.
+
+pool:
+    create:
+        title: Create a set of questions
+    editor: Edit a set of questions
+    nbRequQuestions: Number the questions to caption in the set
+    
+
+

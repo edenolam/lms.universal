@@ -1,0 +1,14 @@
+framework:
+    default_locale: 'fr' 
+    translator:
+        paths:
+            - '%kernel.project_dir%/translations'
+            - '%kernel.project_dir%/translations/UserManagement'
+            - '%kernel.project_dir%/translations/FormationManagement'
+            - '%kernel.project_dir%/translations/LovManagement'
+            - '%kernel.project_dir%/translations/TestManagement'
+            - '%kernel.project_dir%/translations/PlanningManagement'
+            - '%kernel.project_dir%/translations/ResultManagement'
+        fallbacks:
+            - 'fr'
+            - 'en'

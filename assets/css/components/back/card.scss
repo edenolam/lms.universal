@@ -1,0 +1,228 @@
+/* Card styles for rotation */
+
+.rotate-container {
+    position: relative;
+}
+
+.rotate-container .card-front,
+.rotate-container .card-back {
+    width: 100%;
+    height: 100%;
+    -webkit-transform: perspective(600px) rotateY(0deg);
+    transform: perspective(600px) rotateY(0deg);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transition: all 0.5s linear 0s;
+}
+
+.rotate-container .card-back {
+    -webkit-transform: perspective(1600px) rotateY(180deg);
+    transform: perspective(1600px) rotateY(180deg);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.rotate-container .rotate-card-front {
+    -webkit-transform: perspective(1600px) rotateY(-180deg);
+    transform: perspective(1600px) rotateY(-180deg);
+}
+
+.rotate-container .rotate-card-back {
+    -webkit-transform: perspective(1600px) rotateY(0deg);
+    transform: perspective(1600px) rotateY(0deg);
+}
+
+
+/* Modified card styles */
+
+.card .card-header p {
+    margin: 0;
+}
+
+.card .card-background {
+    height: 8em;
+    background-position: center center;
+    background-size: cover;
+}
+
+.card-block {
+    background-color: #EEEEEE;
+    color: #00354F;
+    font-size: 19px;
+    padding-top: 25px;
+    .card-title {
+        padding: 0 15px;
+    }
+}
+
+.card-footer {
+    padding: 0;
+    background-color: #00354F;
+    color: white;
+    border-style: none;
+    margin: 0;
+    .col-lg-3 {
+        padding: 10px 5px 10px 5px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+    .heure-bleu {
+        background-color: #2FAEDE;
+    }
+    .heure-jaune {
+        background-color: $goldenrod-yellow;
+    }
+    .heure-orange {
+        background-color: $jaffa-orange;
+    }
+    .date-bleu,
+    .heure-bleu {
+        padding: 10px 5px 10px 5px;
+        font-size: 14px;
+        font-weight: bolder;
+    }
+}
+
+.card .card-back {
+    background-color: #F9CB6B;
+    padding: 30px;
+    text-align: left;
+    p:not(.bold) {
+        margin-top: 20px;
+    }
+    .cross {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+}
+
+.card {
+    position: relative;
+    .progress {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        border-radius: 20px;
+        z-index: 2;
+    }
+    .progress-value {
+        div {
+            font-size: 10px;
+            margin-left: 10px;
+            margin-top: 0px;
+        }
+    }
+    .blue-button {
+        display: block;
+        margin: 0 auto;
+        max-width: 125px;
+        font-weight: bold;
+        height: 30px;
+        margin-bottom: 15px;
+        margin-top: 10px;
+        font-size: 17px;
+        line-height: 25px;
+    }
+    .jaune-button {
+        background-color: $goldenrod-yellow;
+        border-color: $goldenrod-yellow;
+    }
+    .orange-button {
+        background-color: $jaffa-orange;
+        border-color: $jaffa-orange;
+    }
+    .card-reussie {
+        position: absolute;
+        top: 0;
+        background: rgba(0, 0, 0, 0.8);
+        color: #f1f1f1;
+        width: 100%;
+        height: calc(100% - 34px);
+        z-index: 1;
+        .centered-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        &+.card-block+.card-footer {
+            .heure-bleu {
+                background-color: $cinnabar-red;
+            }
+            .date-bleu {
+                background-color: #001C2A;
+            }
+        }
+    }
+
+    .card-reussie-plus-clair {
+        position: absolute;
+        top: 0;
+        background: rgba(0, 0, 0, 0.2);
+        color: #f1f1f1;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        .centered-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        &+.card-block+.card-footer {
+            .heure-bleu {
+                background-color: $cinnabar-red;
+            }
+            .date-bleu {
+                background-color: #001C2A;
+            }
+        }
+    }
+
+    .btn-card {
+        max-width: 175px;
+        font-weight: bold;
+        height: 30px;
+        margin-bottom: 25px;
+        margin-top: 20px;
+        font-size: 17px;
+        line-height: 25px;
+    }
+}
+
+
+/* WIP V2 */
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    .card-row {
+        flex: 1 0 auto;
+        margin-bottom: 1.5em;
+        .rotate-container {
+            height: 100%;
+            .card {
+                justify-content: flex-end;
+                background-color: $gallery-grey;
+                margin-bottom: 0;
+                .card-block {
+                    padding-top: 25px;
+                    .tests-container {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        span {
+                            margin-left: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}  
+{#<link rel="stylesheet" type="text/css" href="{{ asset('assets/bootstrap-fileupload/bootstrap-fileupload.css') }}" />#}
+<link href="{{ asset("assets/summernote/summernote-bs4.css") }}" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+<!-- navigateur -->
+<div class="lms-breadcrumb">
+    <span><a href="
+				{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+        {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+				{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+				{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+				{% else %} {{ path('home_dashboard') }}
+				{% endif %}">{{lms_name}}</a></span> > <span><a href="{{path('admin_module_list')}}">{{ 'menu.concepteur.module' | trans }}</a></span> > <span class="bold">{{ 'formation.module.action.copy' | trans }}</span>
+</div>
+
+<!-- title of page -->
+<div class="d-flex align-items-center lms-title">
+	<h1 class="text-uppercase lms-h1">{{ 'formation.module.action.copy' | trans }}</h1>
+    <hr>
+</div>
+
+<!-- body of page -->
+<div class="row ml-2 mr-2">
+  <div class="col-lg-12 lms-bg-light">
+    <div class="card-body">
+      <form action="{{ path('admin_module_dupliquer') }}" method="post" class="form-horizontal" enctype="multipart/form-data" >
+          {{ form_errors(form) }}         
+            <div class="form-group">
+              {{ form_label(form.module, 'formation.module.action.select'|trans) }}
+            </div> 
+            <div class="form-group">      
+              {{ form_widget(form.module, { 'attr': {'class': 'form-control'} }) }}
+              {{ form_errors(form.module) }}
+            </div>   
+          {{ form_widget(form._token) }}  
+            <div class="form-group">
+              <button type="submit" class="lms-button lms-button-blue">
+                 <i class="material-icons lms-material-icons">file_copy</i> {{ 'global.submit'|trans }}</button>
+              </button>
+            </div> 
+      </form>
+    </div>
+  </div>            
+</div>
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+
+<script>
+  $(document).ready(function () {
+  });
+</script>
+
+{% endblock %}

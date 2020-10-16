@@ -1,0 +1,118 @@
+.question-count {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 20px;
+    .img-container {
+        // max-width: 95px;
+        // width: 100%;
+        // text-align: center;
+        margin-left: 1.5rem;
+        margin-right: 1rem;
+        >img {
+            width: 2.5rem;
+        }
+        @media screen and (max-width: $mobile) {
+            display: none;
+        }
+    }
+    .text-container {
+        max-width: calc(100% - 95px);
+        width: 100%;
+        text-transform: uppercase;
+        color: $prussian-blue;
+        border-bottom: 1px solid $prussian-blue;
+        font-weight: 700;
+        padding-bottom: 5px;
+        padding-left: 5px;
+        @media screen and (max-width: $mobile) {
+            max-width: 100%;
+        }
+    }
+}
+
+.question-container {
+    background-color: $gallery-grey;
+    margin-left: 5rem;
+    margin-top: 1em;
+    padding: 1em;
+    position: relative;
+    padding-right: 200px;
+    @media screen and (max-width: $tablet) {
+        padding-right: 0;
+    }
+    @media screen and (max-width: $mobile) {
+        margin-left: 0;
+    }
+    .title {
+        color: $scooter-blue;
+        font-size: 1.563em;
+        font-weight: 700;
+        margin-bottom: .5em;
+    }
+    .sub-title {
+        font-size: 1.25em;
+    }
+    .question-content {
+        margin-top: 1em;
+    }
+    .notice {
+        background: url(../images/outline-help_outline-24px.svg) left center no-repeat;
+        color: $gray;
+        font-weight: 400;
+        line-height: 1.5;
+        margin-top: 1em;
+        padding-left: 2em;
+    }
+    .btn-container {
+        margin-top: 25px;
+        .blue-button {
+            float: right;
+        }
+    }
+    #data {
+        margin-top: 20px;
+        ul {
+            li {
+                margin-top: 15px;
+                input {
+                    display: none;
+                }
+                input:checked {
+                    &+label:after {
+                        opacity: 1;
+                    }
+                }
+                label {
+                    position: relative;
+                    padding-left: 25px;
+                    cursor: pointer;
+                    &:before {
+                        content: "";
+                        display: inline-block;
+                        width: 14px;
+                        height: 14px;
+                        border-radius: 7px;
+                        border: 1px solid $scorpion-grey;
+                        position: absolute;
+                        left: 0;
+                        top: 1px;
+                    }
+                    &:after {
+                        content: "";
+                        display: inline-block;
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 5px;
+                        background-color: $scorpion-grey;
+                        position: absolute;
+                        left: 2px;
+                        top: 3px;
+                        opacity: 0;
+                        transition: opacity ease-in-out 0.3s;
+                    }
+                }
+            }
+        }
+    }
+}

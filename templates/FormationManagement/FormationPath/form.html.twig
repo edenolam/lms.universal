@@ -1,0 +1,51 @@
+{{ form_errors(form) }}
+<div class="col-lg-8">
+    <div class="form-group">
+        {{ form_label(form.title, 'formation.formation_path.title'|trans) }}
+        {{ form_widget(form.title, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.title) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.description, 'formation.formation_path.description'|trans) }}
+        {{ form_widget(form.description, { 'attr': {'class': 'form-control summernote'} }) }}
+        {{ form_errors(form.description) }}
+    </div>
+    <div class="form-group date-input">
+        {{ form_label(form.realisationTime, 'formation.formation_path.realisation'|trans) }}
+        {{ form_widget(form.realisationTime, { 'attr': {'class': 'form-control col-sm-3 col-xl-2', 'placeholder': 'hh:mm', 'pattern':'^[0-5][0-9]\:[0-5][0-9]\.[0-9]{1,3}$' } }) }}
+        {{ form_errors(form.realisationTime) }}
+    </div>
+    <div class="form-group d-none">
+        <ul id="link_list" data-prototype="{{ form_widget(form.formationPathModules.vars.prototype)|e('html_attr') }}">
+            {{ form_row(form.formationPathModules) }}
+            {# {% for formPathModule in form.formationPathModules %}
+                <li>{{ form_row(formPathModule.module) }}  {{ form_row(formPathModule.sort) }}</li>
+            {% endfor %} #}
+        </ul>
+        {{ form_row(form.isModulesAleatoires, { 'attr': {'class': 'form-control'} }) }}
+
+    </div>
+    <div class="form-group">
+        <div class="mb-4 text-center">
+            {% if formationPath is defined and formationPath.uri %}
+                <img src="{{asset('/uploads/files/' ~ formationPath.uri)}}"/>
+            {% else %}
+                <img src="/images/core/logo.png"/>
+            {% endif %}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.file, 'formation.formation_path.file'|trans) }}
+        {{ form_widget(form.file, { 'attr': {'class': 'form-control check-mime', 'data-mime':'image/jpeg'} }) }}
+        {{ form_errors(form.file) }}
+    </div>
+</div>
+<div class="col-lg-4 text-center text-lg-right">
+    {% if (formationPath is defined and formationPath.activeSession == false) or formationPath is not defined  %}
+        <button type="submit" class="lms-button lms-button-blue">
+            <i class="material-icons lms-material-icons">save</i>
+            <span>{{ 'global.submit'|trans }}</span>
+        </button>
+    {% endif %}
+</div>
+{{ form_widget(form) }}

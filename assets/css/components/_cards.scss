@@ -1,0 +1,429 @@
+.lms {
+    &-card {
+        background-color: $gallery-gray;
+        border-color: transparent;
+        line-height: 1.25;
+        margin: auto;
+        &-formation {
+            margin: 1.25em;
+            width: 18.75em;
+            @media(min-width: $lg) {
+                margin: 0 2.5em 2.2em 0;
+            }
+            .lms-card {
+                &-front {
+                    background-color: $prussian-blue;
+                }
+                &-title {
+                    color: $white;
+                }
+                &-img {
+                    background-color: $white;
+                    ;
+                }
+                &-body {
+                    padding-top: 1.25rem;
+                }
+                &-day {
+                    font-size: 1.1875em;
+                    font-weight: 700;
+                }
+                &-date {
+                    background-color: $gallery-gray;
+                    color: black;
+                    font-size: .938em;
+                }
+            }
+        }
+        &-module {
+            margin: 0 2.5em 2.2em 0;
+            width: 15em;
+            .lms-card {
+                &-front {
+                    background-color: $gallery-gray;
+                }
+                &-title {
+                    color: $prussian-blue;
+                }
+                &-header {
+                    min-height: 4.5rem;
+                    padding: .5em;
+                }
+                &-day {
+                    font-size: .875em;
+                }
+                &-date {
+                    background-color: $white;
+                    color: $prussian-blue;
+                    font-size: .875em;
+                }
+            }
+            &-info {
+                background-color: $green-mid;
+                color: $white;
+                display: inline-block;
+                font-size: .875em;
+                font-weight: 500;
+                height: 1.5em;
+                left: 1em;
+                line-height: 1;
+                padding: .25em;
+                position: absolute;
+                top: 2em;
+                width: 1.5em;
+            }
+            &-type {
+                background-color: $prussian-blue;
+                color: $white;
+                display: inline-block;
+                margin: .5em -.5em 0 0;
+                padding: .25em 2em .25em .5em;
+            }
+        }
+        &-user {
+            // max-width: 15em;
+            .lms-card {
+                &-front {
+                    background-color: $gallery-gray;
+                }
+                &-title {
+                    background-color: $prussian-blue;
+                    color: $white;
+                    height: auto;
+                    font-size: 1em;
+                    font-weight: 700;
+                    padding: .5em;
+                }
+                &-img {
+                    &-round {
+                        img {
+                            transform: scale(.8);
+                        }
+                    }
+                }
+                &-infos {
+                    border-bottom: .0625em solid $scooter-blue;
+                    margin-bottom: 1em;
+                }
+            }
+            &-label {
+                margin-bottom: .5em;
+                text-align: left;
+            }
+            &-item {
+                font-weight: 500;
+                text-align: right;
+            }
+        }
+        &-tuteur {
+            margin: 1.25em;
+            max-width: 17.5em;
+            @media(min-width: $lg) {
+                margin: 0 2em 2em 0;
+            }
+            .lms-card {
+                &-body {
+                    padding: .6875em;
+                }
+                &-img {
+                    height: 6.875em;
+                }
+                &-title {
+                    color: $prussian-blue;
+                    font-weight: 500;
+                }
+                &-item {
+                    &-first {
+                        border-top: .0625em solid $prussian-blue;
+                    }
+                    &:not(.lms-card-item-first) {
+                        border-top: .0625em solid $white;
+                    }
+                }
+                &-entitled,
+                &-result {
+                    margin: .5rem 0;
+                }
+                &-entitled {
+                    color: $scorpion-gray;
+                    font-size: .9375em;
+                    padding-right: .5em;
+                    text-align: left;
+                }
+                &-result {
+                    color: $scooter-blue;
+                    font-size: 1.375em;
+                    font-weight: 500;
+                }
+            }
+        }
+        &-front,
+        &-back {
+            @include transitionNormal;
+            border: none;
+        }
+        &-front {
+            @include flip0;
+            &-rotate {
+                @include flip-180;
+            }
+        }
+        &-back {
+            @include flip180;
+            background-color: $goldenrod-yellow;
+            backface-visibility: hidden;
+            font-size: .875em;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            &-rotate {
+                @include flip0;
+            }
+        }
+        &-img {
+            align-items: center;
+            // background-color: $white;
+            background-color: transparent;
+            display: flex;
+            height: 9.6875em;
+            overflow: hidden;
+            position: relative;
+            &-round {
+                align-items: center;
+                background-color: transparent;
+                display: flex;
+                height: 8.5625em;
+                margin: auto;
+                overflow: hidden;
+                width: 8.5625em;
+                img {
+                    // transform: scale(1.5);
+                    border-radius: 100%;
+                }
+                @supports(clip-path: circle()) {
+                    clip-path: circle(40% at center center);
+                    img {
+                        border-radius: 0;
+                    }
+                }
+            }
+        }
+        &-succeed {
+            align-items: center;
+            background-color: rgba(0, 0, 0, .5);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            img {
+                left: 3rem;
+                max-width: 30%;
+                position: absolute;
+                top: 4rem;
+            }
+        }
+        &-title {
+            font-size: 1.1875em;
+            font-weight: 500;
+            height: 6em;
+            line-height: 1.2;
+            &-gestion {
+                background-color: $prussian-blue;
+                color: $white;
+                font-size: 1em;
+                font-weight: 500;
+                margin: 0;
+                padding: .25em 0;
+            }
+        }
+        &-header {
+            background-color: transparent;
+            border: none;
+        }
+        &-body {
+            padding-top: 0;
+        }
+        &-footer {
+            border: none;
+        }
+        &-day {
+            background-color: $scooter-blue;
+            color: $white;
+        }
+        &-day,
+        &-date {
+            font-weight: 500;
+            padding: .2em .5em;
+            width: 100%;
+        }
+        &-date {
+            background-color: $prussian-blue;
+            color: $white;
+        }
+        &-rotate {
+            &.lms-icon-cross {
+                font-size: 0;
+                padding: 0 0 .5em .5em;
+                position: absolute;
+                right: .5em;
+                top: .5em;
+                transform: rotate(0deg);
+            }
+        }
+        &-reward {
+            margin-right: 1em;
+            max-width: 12em;
+            .lms-card {
+                background-color: $white;
+                border-color: $gray;
+                &-header {
+                    background-color: $prussian-blue;
+                    color: $white;
+                    padding: .5em .5em .5em .25em;
+                    position: relative;
+                    text-transform: uppercase;
+                    &::before {
+                        content: "";
+                        display: inline-block;
+                        position: absolute;
+                    }
+                }
+                &-body {
+                    padding: 2.5em .5em .5em;
+                }
+                &-footer {
+                    background-color: transparent;
+                    color: $scooter-blue;
+                    padding: .5em;
+                }
+            }
+        }
+        &-attestation {
+            .lms-card {
+                &-header {
+                    &::before {
+                        background: url(images/attestation-top.svg) left center no-repeat;
+                        height: 3.625em;
+                        position: absolute;
+                        width: 3.625em;
+                    }
+                    span {
+                        margin-left: 4em;
+                    }
+                }
+            }
+        }
+        &-certificat {
+            .lms-card {
+                &-header {
+                    &::before {
+                        background: url(images/certification-top.svg) left center no-repeat;
+                        height: 3.5625em;
+                        position: absolute;
+                        width: 4.6875em;
+                    }
+                    span {
+                        margin-left: 5em;
+                    }
+                }
+            }
+        }
+        &-location {
+            &-block {
+                display: table;
+                width: 100%;
+            }
+            &-bt {
+                &-infos {
+                    background-color: transparent;
+                    border: none;
+                    display: table-cell;
+                    cursor: pointer;
+                    .lms-material-icons {
+                        @include transitionNormal;
+                        color: $scooter-blue;
+                        font-size: 3em;
+                        &:hover,
+                        &:active,
+                        &:focus {
+                            @include transitionNormal;
+                            color: $prussian-blue;
+                        }
+                    }
+                    span {
+                        height: 1px;
+                        left: -10000em;
+                        position: absolute;
+                        overflow: hidden;
+                        top: auto;
+                        width: 1px;
+                    }
+                    &-close {
+                        cursor: pointer;
+                        position: absolute;
+                        right: .5em;
+                        text-align: center;
+                        top: .5em;
+                        .lms-material-icons {
+                            @include transitionNormal;
+                            color: $white;
+                            font-weight: 700;
+                            &:hover,
+                            &:active,
+                            &:focus {
+                                @include transitionNormal;
+                                background-color: $white;
+                                border-radius: 100%;
+                                color: $prussian-blue;
+                            }
+                        }
+                        span {
+                            height: 1px;
+                            left: -10000em;
+                            position: absolute;
+                            overflow: hidden;
+                            top: auto;
+                            width: 1px;
+                        }
+                    }
+                }
+            }
+            &-content {
+                background-color: $prussian-blue;
+                color: $white;
+                height: 0;
+                font-size: .875em;
+                opacity: 0;
+                padding: 2em;
+                position: absolute;
+                text-align: left;
+                z-index: -1;
+                &.show {
+                    @include transitionNormal;
+                    bottom: 0;
+                    display: block;
+                    height: 100%;
+                    left: 0;
+                    opacity: .9;
+                    z-index: 1;
+                }
+            }
+        }
+        &-question {
+            &-link {
+                font-size: .875em;
+                span {
+                    border-bottom: .0625em solid $scooter-blue;
+                    vertical-align: bottom;
+                }
+            }
+            &-badge {
+                width: 1.5em;
+            }
+        }
+    }
+}

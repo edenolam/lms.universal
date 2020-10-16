@@ -1,0 +1,73 @@
+        <div class="row module module-presentiel">
+            <div class="form-group col-6">
+                {{ form_label(form.lieu) }}
+                {{ form_widget(form.lieu, { 'attr': {'class': 'form-control'} }) }}
+                {{ form_errors(form.lieu) }}
+            </div>
+        </div>
+        <div class="row module module-presentiel">
+            <div class="form-group col-6">
+                {{ form_label(form.codeClient) }}
+                {{ form_widget(form.codeClient, { 'attr': {'class': 'form-control'} }) }}
+                {{ form_errors(form.codeClient) }}
+            </div>
+        </div>
+
+        <a href="{{ path('admin_animateur_create', {'slug' : session.slug}) }}" class="lms-button lms-button-blue">
+            <i class="material-icons lms-material-icons">add</i>
+            <span>{{ 'session.animator.add'|trans }}</span>
+        </a>
+
+        <div class="table-responsive">
+            <table id="tablefiltre" class="table table-bordered table-striped my-3">
+                <thead class="thead-dark">
+                <tr>
+                    <th>animateur</th>
+                    <th>organisme</th>
+                    <th>fonction</th>
+                    <th>email</th>
+                    <th>tel</th>
+                    <th>commentaire</th>
+{#                    <th>{{'session.openingDate'|trans}}</th>#}
+{#                    <th>{{'session.closingDate'|trans}}</th>#}
+{#                    <th>{{'session.openingDateEvaluation'|trans}}</th>#}
+{#                    <th>{{'session.closingDateEvaluation'|trans}}</th>#}
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for animateur in animateurs %}
+                    <tr>
+                        <td>
+                            {{ animateur.firstName }} {{ animateur.lastName }}
+                        </td>
+                        <td>
+                            {{ animateur.organisation }}
+                        </td>
+                        <td>
+                            {{ animateur.fonction }}
+                        </td>
+                        <td>
+                            {{ animateur.email}}
+                        </td>
+                        <td>
+                            {{ animateur.phoneNumber}}
+                        </td>
+                        <td>
+                            {{ animateur.indicationComplementaire}}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+<div class=" text-center">
+    <a href="{{ path('admin_session_edit_user', {'slug' : session.slug}) }}" class="lms-button lms-button-blue">
+        <i class="material-icons lms-material-icons">save</i>
+        <span>{{ 'global.submit'|trans }}</span>
+    </a>
+</div>
+
+
+

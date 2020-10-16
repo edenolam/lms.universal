@@ -1,0 +1,112 @@
+userFrontManagement:
+    syllabus: SYLLABUS
+    title: 
+        question: Questions
+        result: Résultats
+        calendar: Mon calendrier
+    formation:
+        empty: Aucune formation ne vous est encore attribuée.
+        eval_empty: Aucune évaluation.
+        sommaire: "Sommaire : "
+        notification: Mes notifications
+        number_on_going: en cours
+        number_done: terminée(s)
+        onGoing: Formation(s) en cours
+        done: Formation(s) réussite(s)
+        detail: Détails de ma progression
+        work_time: Temps passé
+        attestation_litteral: Attestation de formation individuelle
+        success: Félicitation, Vous avez réussi la formation "%formation%"
+        back: Retour à la formation
+    virtual_class_rooms:
+        passed: Terminée
+        future: A venir
+        current: En cours 
+    module:
+        progress: Progression
+        total_progress: Progression totale
+        certificat_literal: Certificat de validation du module 
+        result: "Résultat(s):"
+        certificat_geration_date: "Certificat généré le :"
+        certificat_geration_by: "Certificat généré par :"
+        validation_date: "Date de validation du module :"
+        validation_way: "Mode de validation du module :"
+        title_c: Chapitre
+        title_m: Module
+        validation_score_short: score requis
+        back: Retour au module
+        informations: "Informations"     
+    page:
+        page: Page
+        connaissances: Connaissances
+        download: Télécharger
+        reference_bibli: Référence bibliographiques
+        empty: Aucun contenu n'est rattaché à ce chapitre.
+        note: Notes
+        document: Documents
+        course: Chapitre
+        training: Entrainement
+        trainings: Entrainements
+        eval: Evaluation
+        eval_not_opened: Evaluation pas ouverte
+        eval_closed: Evaluation fermée 
+        pretest: Pré-test
+        congratulation: Bravo !
+        info:
+            end_module: Vous venez de finir tout le module
+    test:
+        begin_test: Commencer le test
+        result: Résultat
+        correction: Correction
+        answer: Réponses
+        user_answer: Vos réponses
+        no_test_done: Aucun test effectué
+        wrong_answers: Erreurs
+        try: Essai
+        tries: Essais
+        goto: Passer à l'évaluation
+        restTry: Nb tentatives restantes
+        tryModifon: Modification de la ligne essai
+        modifon: Modification du nombre d'essais
+    result:
+        nom: Nom
+        prenom: Prénom
+        date_passage: Date de passage
+        bravo: BRAVO
+        reussi:  Vous avez réussi votre %test% !
+        encore_training: Vous pouvez y arriver, essayez à nouveau
+        encore: Vous pouvez y arriver, il vous reste encore %essai% essai(s)
+        score_requis: Score requis
+        score_personnel: Score personnel
+        resultat: Résultat
+        num_question: Question N°
+        a_revoir: Les connaissances à revoir
+        pagination: Voir les essais
+        thanksSondage: Merci d'avoir participé au sondage 
+    export:
+        formation: FORMATION:
+        module: MODULE:
+        chapitre: CHAPITRE:
+        page: PAGE:
+    mail:
+        layout:
+            cher: Cher
+            equipe: L'équipe
+            bonjour: Bonjour
+            bonne_navigation: Bonne navigation
+            elearning: e-learning
+        body:
+            formation_avenir: Nous vous informons que votre aurez accès à la formation %title% le %opening% prochain sur la plateforme
+            formation_avenir_dispo: Cette formation sera disponible jusqu’au %closing%
+            formation_ouvert: Nous vous informons que votre formation %title% est disponible dès aujourd’hui sur la plateforme
+            formation_ouvert_date: Cette formation sera disponible jusqu’au %closing%
+            access_module: Vous aurez ainsi accès aux modules suivants:
+            intitule:  Nous vous informons que le taux de réussite de la ou les question(s) suivante(s) est inférieur au seuil fixé 
+            bonjour: Bonjour
+        relance:
+            formation_valide: Nous vous rappelons que votre formation %title% doit être validée avant le %closing% sur la plateforme
+            formation_progression: Vous avez actuellement fait %progression% pourcent de lecture sur votre formation %title%
+            liste: Voici le(s) module(s) qu’il vous reste à valider
+            eval: Voici le(s) évaluation(s) qu’il vous reste à faire
+        echec:
+            alerte: Nous vous informons que %firstname% %lastname% a réalisé %numberTry% essai(s) de l’évaluation sur le module %title% de la formation %formationPath% sans parvenir à atteindre le seuil de %score% %

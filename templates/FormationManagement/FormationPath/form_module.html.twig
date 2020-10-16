@@ -1,0 +1,36 @@
+{{ form_errors(form) }}
+<div class="col-lg-8">
+    <div class="form-group  d-none">
+        {{ form_label(form.title, 'formation.formation_path.title'|trans) }}
+        {{ form_widget(form.title, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+    <div class="form-group  d-none">
+        {{ form_label(form.description, 'formation.formation_path.description'|trans) }}
+        {{ form_widget(form.description, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+    <div class="form-group  d-none">
+        {{ form_label(form.realisationTime, 'formation.formation_path.realisation'|trans) }}
+        {{ form_widget(form.realisationTime, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+    <div class="form-group" hidden>
+        <ul id="link_list" data-prototype="{{ form_widget(form.formationPathModules.vars.prototype)|e('html_attr') }}">
+            {% for formPathModule in form.formationPathModules %}
+                <li>{{ form_row(formPathModule.module) }}
+                    {{ form_row(formPathModule.sort) }}
+                    {{ form_row(formPathModule.formationPath) }}
+                    {{ form_row(formPathModule.title) }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="form-group  d-none">
+        {{ form_label(form.file, 'formation.formation_path.file'|trans) }}
+        {{ form_widget(form.file, { 'attr': {'class': 'form-control check-mime', 'data-mime':'image/jpeg'} }) }}
+    </div>
+</div>
+<div class="text-center mt-3">
+    <button type="submit" class="lms-button lms-button-blue" id="submitButton">
+        <i class="material-icons lms-material-icons">save</i>
+        <span>{{ 'global.submit'|trans }}</span>
+    </button>
+</div>
+{{ form_widget(form._token) }}

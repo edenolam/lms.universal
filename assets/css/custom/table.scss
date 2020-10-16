@@ -1,0 +1,41 @@
+.table-responsive input,
+.table-responsive select {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: $scorpion-gray;
+    background-color: $white;
+    background-clip: padding-box;
+    border: 1px solid $tiara-gray;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.paginate_button {
+    border: 0.125em solid;
+    border-radius: .25rem;
+    cursor: pointer;
+    display: inline-block;
+    font-size: .9375rem;
+    font-weight: 500;
+    line-height: 1;
+    margin: 0.1rem;
+    padding: .2rem 0.5rem;
+    text-align: center;
+    &.current {
+        background-color: $scooter-blue;
+        border-color: $scooter-blue;
+        color: $white;
+        text-transform: uppercase;
+    }
+}
+
+.paginate_button .current .previous .next {
+    background-color: $scooter-blue;
+    border-color: $scooter-blue;
+    color: $white;
+    text-transform: uppercase;
+    transition: all ease-in-out 0.3s;
+}

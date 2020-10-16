@@ -1,0 +1,50 @@
+.custom-select {
+    display: inline-block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: .375rem 1.75rem .375rem .75rem;
+    line-height: 1.5;
+    color: $scorpion-gray;
+    vertical-align: middle;
+    background: $white url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E") no-repeat right .75rem center;
+    background-size: auto;
+    background-size: 8px 10px;
+    border: 1px solid $tiara-gray;
+    border-radius: .25rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.bannerModule {
+    .image {
+        padding: 15px;
+    }
+    .texte {
+        padding: 15px;
+        h1,
+        h2 {
+            color: $scooter-blue;
+        }
+        p {
+            font-weight: 300;
+        }
+    }
+}
+
+.progression {
+    padding: 15px;
+    text-align: center;
+    .mb-4 {
+        font-size: 19px;
+        font-weight: 600;
+    }
+    .progress-sm {
+        display: flex;
+        height: 1rem;
+        overflow: hidden;
+        font-size: 0.703125rem;
+        background-color: $white;
+        border-radius: 3px;
+    }
+}

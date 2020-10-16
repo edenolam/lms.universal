@@ -1,0 +1,80 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <!-- bar navigateur -->
+<div class="lms-breadcrumb">
+    <span><a href="
+				{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+        {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+				{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+				{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+				{% else %} {{ path('home_dashboard') }}
+				{% endif %}">{{ lms_name }}</a></span> > <span class="bold">{{ 'formation.list.title'|trans }}</span>
+</div>
+
+<!-- title of page -->
+<div class="d-flex align-items-center lms-title">
+	<h1 class="text-uppercase lms-h1">{{ 'formation.formation_path.catalogue'|trans }}</h1>
+    <hr>
+</div>
+
+<div class="row"><div class="col-md-5"><p>  </p></div></div>
+
+<!-- add button -->
+<div class="row mb-5">
+   <div class="col-md-12 text-right mr-5">
+        <a href="{{ path('admin_formation_path_create') }}" class="lms-button lms-button-blue">
+            <i class="material-icons lms-material-icons">add</i>
+            {{ 'formation.formation_path.create.title'|trans }}
+        </a>
+    </div>
+</div>
+
+<div class="lms-subcontent">
+    <div class="d-flex flex-wrap justify-content-center justify-content-lg-start">
+        {% for formationPath in formationPaths %}
+            <!-- Rotating card -->
+            <div class="lms-card-formation">
+                <div class="card lms-card">
+                    <!-- Card front -->
+                    <div class="card text-center lms-card-front">
+                        <div class="lms-card-img"> 
+                            {% if formationPath.uri is not null %}
+                                <img src="{{asset('uploads/files/' ~ formationPath.uri)}}"/>
+                            {% else %}
+                                <img src="/images/core/logo.png"/>
+                            {% endif %}
+                        </div>
+                        <div class="card-body lms-card-body">
+                            <p class="card-title text-uppercase lms-card-title" data-toggle="tooltip" data-original-title="{{ formationPath.title | raw }}" >{{ formationPath.title | raw }}</p>
+                            {% if formationPath.activeSession == true %}
+                                <a href="{{ path('admin_formation_path_view', {'slug':formationPath.slug}) }}" class="lms-button lms-button-blue">
+                            {% else %}
+                                <a href="{{ path('admin_formation_path_edit', {'slug':formationPath.slug}) }}" class="lms-button lms-button-blue">
+                            {% endif %}
+                            {{ 'global.acceder' | trans }}
+                            </a>
+                        </div>   
+                        <div class="card-footer d-flex flex-column align-items-center p-0 lms-card-footer">
+                            <p class="m-0 lms-card-day">{{ 'global.literal.expected_duration' | trans }} {{ formationPath.realisationTime|date('H') }}
+                                    h{{ formationPath.realisationTime|date('i') }}</p>
+                            <p class="m-0 lms-card-date">
+                                {% if formationPath.activeSession == true %}
+                                    <span class="lms-text-danger">{{ 'global.literal.is_session'|trans }}</span>
+                                {% else %}    
+                                    &nbsp;
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>         
+                </div>
+            </div>
+        {% endfor %}
+    </div><!-- /col -->
+</div><!-- /row -->
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+{% endblock %}

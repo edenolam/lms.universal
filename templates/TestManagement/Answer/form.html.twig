@@ -1,0 +1,17 @@
+{{ form_errors(form) }}
+
+<div class="form-group">
+    {{ form_label(form.content, 'answer.answer'|trans, {'label_attr': {'class': 'form-label'}}) }}
+</div>
+<div class="form-group">    
+    {{ form_widget(form.content, { 'attr': {'class': 'form-control '} }) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.status, 'answer.status'|trans, {'label_attr': {'class': 'form-label'}}) }}    
+    {{ form_widget(form.status, { 'attr': {'class': 'form-control'}}) }}
+</div>
+<div class="form-group d-none">
+    {{ form_label(form.isValid, 'formation.course.actif'|trans, {'label_attr': {'class': 'form-label'}}) }}  
+    {{ form_widget(form.isValid, { 'attr': {'class': 'form-control col-4'}}) }}
+</div>
+ {{ form_rest(form) }}     

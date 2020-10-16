@@ -1,0 +1,83 @@
+<page backcolor="#FEFEFE"  backimgx="center" backimgy="bottom" backimgw="100%" style="font-size: 12pt">
+
+    <div style="widht:1000px;  border-style: solid; border-width: 5px; border-color: #eeeeee;">
+        <table style="widht:100%;">
+            <tr style="">
+                <td style="widht:50%; padding: 30px;">
+                    {{ userTest.detail.typeTest.title }} <br><br>
+                    {% if userTest.detail.typeTest.conditional == 'pretest' %}
+                        <img src="{{chemin}}/public/images/png/pre-test.png" height="50"/>
+                    {% elseif userTest.detail.typeTest.conditional == 'training' %}
+                        <img src="{{chemin}}/public/images/png/entrainement.png" height="50"/>
+                    {% elseif userTest.detail.typeTest.conditional == 'eval' %}
+                        <img src="{{chemin}}/public/images/png/evaluation.png" height="50"/>
+                    {% endif %}
+                </td>
+                <td style="widht:50%; padding: 30px;">
+                    <span style="font-weight: bold;">{{ 'userFrontManagement.result.prenom'|trans }} : </span>{{ userTest.user.firstname }}<br><br>
+                    <span style="font-weight: bold;">{{ 'userFrontManagement.result.nom'|trans }} : </span>{{ userTest.user.lastname }}<br><br>
+                    <span style="font-weight: bold;">{{ 'userFrontManagement.result.date_passage'|trans }} : </span>{{ userTest.dateDown|date('d/m/Y') }}<br><br>
+                    <span style="font-weight: bold;">{{ 'userFrontManagement.test.try'|trans }} : </span>{{ userTest.tentative }}<br><br>
+                    <span style="font-weight: bold;">{{ 'userFrontManagement.result.score_requis'|trans }} : </span>{{ userTest.detail.scorePercentage}}  %  <br><br>
+                    <span style="font-weight: bold;">{{ 'userFrontManagement.result.score_personnel'|trans }} : </span>{{userTest.score}}%  <br><br>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="widht:1000px; background-color:#eeeeee;">
+        {% for key, correction in correctionArray %}
+            <ul  style="list-style: square; list-style-position: inside;">
+                {%  if correction.scored %}
+                    <li  style=" color: #28a745; width: 2em;">
+                {%  else  %}
+                    <li  style=" color: red; width: 2em;">
+                {% endif %}
+                    <span style=" color: black;">
+                        {{ 'userFrontManagement.result.num_question'|trans }} {{ key + 1 }}:  {{ correction.questionTitle }}<br>
+                        {{ correction.question }}<br>
+                        <i class="ml-4">({{ 'question.weight'|trans }} {{correction.weight}})</i>
+                    </span>
+                </li>
+            </ul>
+            
+            <ol  {#style="list-style: square; list-style-position: inside;"#}>
+                {% for answer in correction.answers %}
+                    <li>
+                        <table >
+                            <tr>
+                                {% if answer["voted"] %}
+                                    <td style="border: 1px solid #000;">
+                                        X 
+                                    </td>   
+                                {% else %}
+                                    <td style="border: 1px solid #000;padding: 6px;"> 
+                                    </td>
+                                {% endif %}
+                                <td style="padding-left: 20px;">
+                                    <span style="{% if answer["status"] %} color:  #28a745; {% else %} color: #dc3545;{% endif %}">{{ answer["title"] | raw }}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </li>
+                {% endfor %}
+            </ol>
+        {% endfor %}
+    </div>
+
+                        
+    <div style="widht:1000px;">
+        {% if (userTest.detail.typeTest.conditional == 'training' or userTest.detail.typeTest.conditional == 'eval') and knowledgeArray|length > 0  %}
+            <h3 style="font-size:19px;color:#00354F;"><img src="{{chemin}}/public/images/png/warning.png" alt="{{userTest.detail.typeTest.title}}" class="text-center"/> {{ 'userFrontManagement.result.a_revoir'|trans }} </h3>
+
+                {%  for knowledge, pages in knowledgeArray %}
+                    <p> - {{knowledge|raw}}</p>
+                    <ul>
+                        {% for slug, page in pages %}
+                            <li><a href="">{{page['page']|raw}}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+        {% endif %}
+    </div>
+
+</page>

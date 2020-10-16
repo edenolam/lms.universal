@@ -1,0 +1,118 @@
+.accordeon {
+    line-height: normal;
+    padding: 0 1.5rem;
+    &-formation,
+    &-module {
+        &-title {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+    &-formation {
+        margin-bottom: 1em;
+        &-title {
+            background-color: $prussian-blue;
+            color: white;
+            font-size: .9375rem;
+            padding: .6875rem 1rem .6875rem 1.5rem;
+            svg {
+                fill: white;
+            }
+            &::after {
+                clear: both;
+                content: "";
+                display: table;
+            }
+        }
+        // &.overlay {
+        //     opacity: .5;
+        // }
+        @media(min-width: $laptop) {
+            width: calc(50% - 1em);
+        }
+    }
+    &-module {
+        background-color: $gallery-grey;
+        &-title {
+            color: $prussian-blue;
+            font-size: .875rem;
+            padding: .5rem 1rem .25rem 1.5rem;
+        }
+    }
+    &-note {
+        &-container {
+            background-color: $gallery-grey;
+            padding: 0 1.5rem;
+            position: absolute;
+            overflow: hidden;
+            width: 100%;
+            z-index: 1;
+        }
+        &-title {
+            font-weight: 700;
+            a {
+                text-decoration: underline;
+            }
+        }
+        &-item {
+            font-size: .8125rem;
+        }
+        &-item:not(last-child) {
+            margin-bottom: .5rem;
+        }
+    }
+    @media(min-width: $laptop) {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+}
+
+.note {
+    &-module {
+        position: relative;
+        &::after {
+            clear: both;
+            content: "";
+            display: table;
+        }
+    }
+}
+
+.title {
+    &-txt {
+        flex-grow: 1;
+    }
+    &-icons {
+        flex-shrink: 0;
+        margin-left: 1em;
+        svg {
+            cursor: pointer;
+            vertical-align: middle;
+        }
+    }
+}
+
+.is-open {
+    max-height: 100vh;
+    opacity: 1;
+    transition: opacity .3s ease-out, max-height .4s ease-out;
+}
+
+.is-close {
+    max-height: 0;
+    opacity: 0;
+    transition: opacity .3s ease-in, max-height .4s ease-in;
+}
+
+.icon-plus {
+    transition: all 0.3s ease-in-out;
+    transform: rotate(0deg);
+}
+
+.icon-cross {
+    fill: $cinnabar-red;
+    transition: all 0.3s ease-in-out;
+    transform: rotate(45deg);
+}

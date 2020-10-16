@@ -1,0 +1,124 @@
+<div class="mt-5">
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark"> <!-- add class="thead-light" for a light header -->
+        <tr>
+            <th>{{ 'presentiel.module.id'|trans }}</th>
+            <th>{{ 'presentiel.module.username'|trans }}</th>
+            <th>{{ 'presentiel.module.prenom'|trans }}</th>
+            <th>{{ 'presentiel.module.nom'|trans }}</th>
+            <th>{{ 'presentiel.module.sessionslug'|trans }}</th>
+            <th>{{ 'presentiel.module.session'|trans }}</th>
+            <th>{{ 'presentiel.module.formationslug'|trans }}</th>
+            <th>{{ 'presentiel.module.formation'|trans }}</th>
+            <th>{{ 'presentiel.module.moduleslug'|trans }}</th>
+            <th>{{ 'presentiel.module.moduleregulatoryRef'|trans }}</th>
+            <th>{{ 'presentiel.module.module'|trans }}</th>
+            <th>{{ 'presentiel.module.success'|trans }} </th>
+            <th>{{ 'presentiel.module.duration_total'|trans }} {{'presentiel.module.seconde'|trans }}  </th>
+            <th>{{ 'presentiel.module.start_date'|trans }}</th>
+            <th>{{ 'presentiel.module.end_date'|trans }}</th>
+            {# eval pres #}
+            <th bgcolor="#F67864">{{ 'presentiel.evalPres.id'|trans }} </th>
+            <th bgcolor="#F67864">{{ 'presentiel.evalPres.tentative'|trans }} </th>
+            <th bgcolor="#F67864">{{ 'presentiel.evalPres.score'|trans }}  </th>
+            <th bgcolor="#F67864">{{ 'presentiel.evalPres.date_pass'|trans }} </th> 
+            <th bgcolor="#F67864">{{ 'presentiel.evalPres.date_down'|trans }} </th> 
+        </tr>
+        </thead>
+        <tbody>
+        {% if filtre|length > 0 %}
+            {% for modulefiltre in filtre %}
+                <tr>
+                    <td>{{"PRES_"}}{{ modulefiltre.id }}</td>
+                    <td>{{ modulefiltre.user.username }}</td>
+                    <td>{{ modulefiltre.user.firstname }}</td>
+                    <td>{{ modulefiltre.user.lastname }}</td>
+                    <td>{{ modulefiltre.session.slug }}</td>
+                    <td>{{ modulefiltre.session.title }}</td>
+                    <td>{{ modulefiltre.session.formationPath.slug }}</td>
+                    <td>{{ modulefiltre.session.formationPath.title }}</td>
+                    <td>{{ modulefiltre.module.slug }}</td>
+                    <td>{{ modulefiltre.module.regulatoryRef }}</td>
+                    <td>{{ modulefiltre.module.title }}</td>
+    
+                    {% if modulefiltre.success == null %}
+                        <td bgcolor="#BDECE9"><font color="#606464">{{"0:false / 1:true"}}</font></td>
+                    {% else %} 
+                        <td>{{ modulefiltre.success }}</td>
+                    {% endif %}
+
+                    {% if modulefiltre.durationTotalSec == null or modulefiltre.durationTotalSec == 0 %}
+                        <td bgcolor="#BDECE9"><font color="#606464">{{"hh:mm:ss"}}</font></td>
+                    {% else %} 
+                        <td>{{ modulefiltre.durationTotalSec}}</td>
+                    {% endif %}
+
+                    {% if modulefiltre.startDate == null or modulefiltre.startDate|date("Y-m-d") == '00:00:00' %}
+                        <td bgcolor="#BDECE9"><font color="#606464">{{"YYYY-mm-dd"}}</font></td>
+                    {% else %} 
+                        <td>{{ modulefiltre.startDate|date("Y-m-d") }}</td>
+                    {% endif %}
+
+                     {% if modulefiltre.endDate == null or modulefiltre.endDate|date("Y-m-d") == '00:00:00' %}
+                        <td bgcolor="#BDECE9"><font color="#606464">{{"YYYY-mm-dd"}}</font></td>
+                    {% else %} 
+                        <td>{{ modulefiltre.endDate|date("Y-m-d") }}</td>
+                    {% endif %}
+
+                    
+                    {% if modulefiltre.module.moduleEvaluationId and modulefiltre.module.moduleEvaluation.isTestPresentiel %}
+                        {% set tentativeEval = null %}
+                        {% set dateEval = null %}
+                        {% set dateEvalPass = null %}
+                        {% set scoreEval = null %}
+                        {% set userTest = null %}
+                        {% if modulefiltre.session.users != null  %}
+                            {% for user in modulefiltre.session.users %}
+                                {%  if user.id == modulefiltre.user.id %}
+                                    {% for usertest in user.usertests %}
+                                        {% if usertest.test.typeTest.conditional == 'eval' and usertest.test.isTestPresentiel %}
+                                            {% if usertest.session.id == modulefiltre.session.id and usertest.refModule == modulefiltre.module.reference %}
+                                                {% if usertest.tentative > tentativeEval %}
+                                                    {% if usertest.score >= 0 %}
+                                                        {% set tentativeEval = usertest.tentative %}
+                                                        {% set dateEvalPass = usertest.datepass %}
+                                                        {% set dateEval = usertest.datedown %}
+                                                        {% set scoreEval = usertest.score %}
+                                                        {% set userTest = usertest.id %}
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        {% if userTest == null %}
+                            {# ------------------- pas d'eval -------------------------- #}
+                            <td bgcolor="#BDECE9"></td>
+                            <td bgcolor="#BDECE9"></td>
+                            <td bgcolor="#BDECE9"></td>
+                            <td bgcolor="#BDECE9"><font color="#606464">{{"YYYY-mm-dd"}}</font></td>
+                            <td bgcolor="#BDECE9"><font color="#606464">{{"YYYY-mm-dd"}}</font></td>
+                        {% else %} 
+                            <td bgcolor="#F67864">{{"TEST_"}} {{userTest}}</td>
+                            <td bgcolor="#F67864">{{tentativeEval}} </td>
+                            <td bgcolor="#F67864">{{scoreEval}} </td>
+                            <td bgcolor="#F67864">{{dateEvalPass|date("Y-m-d")}} </td>
+                            <td bgcolor="#F67864">{{dateEval|date("Y-m-d")}} </td>
+                        {% endif %}
+                    {% else %}
+                        {# ------------------- Pas Evaluation presentielle-------------------------- #}
+                        <td bgcolor="#3C4040"></td>
+                        <td bgcolor="#3C4040"></td>
+                        <td bgcolor="#3C4040"></td>
+                        <td bgcolor="#3C4040"></td>
+                        <td bgcolor="#3C4040"></td>
+                    {% endif %}
+                    
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,33 @@
+Titre;question;type de réponse;réponse;statut de la réponse
+;L’informateur promotionnel est soumis au secret professionnel. ;2;FAUX;0
+;L’informateur promotionnel est soumis au secret professionnel. ;2;VRAI;1
+;Comment devez-vous vous comporter dans la salle d’attente du médecin que vous allez visiter ? ;1;Discuter avec les patients des traitements en cours;0
+;Comment devez-vous vous comporter dans la salle d’attente du médecin que vous allez visiter ? ;1;Observer un comportement discret;1
+;Comment devez-vous vous comporter dans la salle d’attente du médecin que vous allez visiter ? ;1;Faire votre pause déjeuner;0
+;Comment devez-vous vous comporter dans la salle d’attente du médecin que vous allez visiter ? ;1;Limiter les conversations avec vos collègues;1
+;L’informateur promotionnel a des obligations vis-à-vis de l’Assurance Maladie.  ;2;VRAI;1
+;L’informateur promotionnel a des obligations vis-à-vis de l’Assurance Maladie.  ;2;FAUX;0
+;L’informateur promotionnel est tenu de ne pas gêner les patients dans la salle d’attente.;2;VRAI;1
+;L’informateur promotionnel est tenu de ne pas gêner les patients dans la salle d’attente.;2;FAUX;0
+;Sur votre communication vis-à-vis de la concurrence, vous devez : ;1;Présenter les avantages différentiels de votre produit versus le produit concurrent;0
+;Sur votre communication vis-à-vis de la concurrence, vous devez : ;1;Vous appuyer principalement sur les avis de la Commission de la Transparence;1
+;Sur votre communication vis-à-vis de la concurrence, vous devez : ;1;Inciter le prescripteur à s’opposer à la substitution;0
+;Sur votre communication vis-à-vis de la concurrence, vous devez : ;1;Vous abstenir de tout dénigrement;1
+;Lors d’une visite, vous êtes informé d’un effet indésirable de votre produit. Que faites-vous ? ;2;Vous alertez le service de pharmacovigilance de votre laboratoire sans délai;1
+;Lors d’une visite, vous êtes informé d’un effet indésirable de votre produit. Que faites-vous ? ;2;Vous ne faîtes rien car c’est au médecin de déclarer;0
+;Pour présenter son médicament, l’informateur promotionnel doit s’appuyer sur :;1;Les avantages différentiels de son produit vis à vis de la concurrence;0
+;Pour présenter son médicament, l’informateur promotionnel doit s’appuyer sur :;1;L’avis de la Commission de la Transparence;1
+;Pour présenter son médicament, l’informateur promotionnel doit s’appuyer sur :;1;L’ASMR obtenu;1
+;Une personne exerçant une activité d’information et de la promotion des médicaments doit avertir le médecin s’il vient avec son DR. ;2;VRAI;1
+;Une personne exerçant une activité d’information et de la promotion des médicaments doit avertir le médecin s’il vient avec son DR. ;2;FAUX;0
+;Lors d’une visite vous pouvez recueillir toutes les informations qui vous paraissent importantes sur le médecin sans l’en informer.  ;2;VRAI;0
+;Lors d’une visite vous pouvez recueillir toutes les informations qui vous paraissent importantes sur le médecin sans l’en informer.  ;2;FAUX;1
+;Si un médecin vous demande des échantillons médicaux d'un médicament commercialisé il y a moins de 2 ans, que faites-vous ?;2;Vous lui remettez un échantillon;0
+;Si un médecin vous demande des échantillons médicaux d'un médicament commercialisé il y a moins de 2 ans, que faites-vous ?;2;Vous lui dites que vous ne pouvez pas remettre d'échantillon directement mais qu'il peut adresser une demande au laboratoire;1
+;Lors d’une visite, que devez-vous préciser au médecin ? ;1;Le taux de remboursement du produit présenté …;1
+;Lors d’une visite, que devez-vous préciser au médecin ? ;1;Les différents conditionnements existants du produit présenté;1
+;Lors d’une visite, que devez-vous préciser au médecin ? ;1;Le Tarif Forfaitaire de Responsabilité (si applicable);1
+;Lors d’une visite, que devez-vous préciser au médecin ? ;1;Les concurrents ayant la même indication ;0
+;Dans quel(s) cas l’information que vous délivrez au professionnel de santé doit être exempte de tout dénigrement ?;1;Un médicament concurrent non générique;1
+;Dans quel(s) cas l’information que vous délivrez au professionnel de santé doit être exempte de tout dénigrement ?;1;Un médicament concurrent générique;1
+;Dans quel(s) cas l’information que vous délivrez au professionnel de santé doit être exempte de tout dénigrement ?;1;Un biosimilaire;1

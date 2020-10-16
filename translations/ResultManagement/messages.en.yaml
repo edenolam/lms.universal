@@ -1,0 +1,131 @@
+results:
+  user_finish: Number of completed training(s)
+  global_result: Average result
+  remaining_days: Day(s) remaining
+  page:
+    title: Bilans des sessions
+  export:
+    copy: Exporter la copie
+    result: Exporter le bilan
+    exportPresentiel: Export présentiel
+  formation_ref: Training reference
+  module_ref: Référence du module
+  reading_rate: Taux de lecture complète
+  time_rate: Average time taken
+  lecturePercent: Percentage of pages read 
+  validation_percentage: Pourcentage de validation
+  participant_number: Nombre de participants
+  score_rate: Score moyen
+  module_title: Titre du module
+  module:
+    success_literral: module validé 
+    faillur_literral: module non validé 
+    with: =>
+    lecture_done: Lecture complète du module
+    presence: Présentiel
+  form:
+    classepresentiel: MODULES PRESENTIELS PAR CSV 
+    classe_presentiel_info: (100 lignes max)
+    filtre_session: SESSION FILTERS
+    filtre_labo: COMPANY FILTERS 
+    filtre_test: SONDAGE
+    valid: VALIDER
+    sauvegarde: Ajouter aux favories
+    sauvegarde_title: MES FAVORIES
+    sauvegarde_name: Nommez cette sauvegarde
+    sauvegarde_annuler: Annuler
+    sauvegarde_bouton: Enregistrer
+    sauvegarde_executer: EXECUTER
+    placeholder: Choisissez la sauvegarde à exécuter
+    confirm_delete_title: Êtes-vous sûr de vouloir supprimer cette sauvegarde
+    confirm_delete: Supprimer
+  tableau:
+    title:
+      kpi: Indicators
+      moySuccess: Means modules score
+      moyInProcess: Moyenne en cours
+      moyFailed: Moyenne échecs
+      success: Nb of passed modules
+      inProcess: Nb of module in progress
+      failed: Failed
+      test: TEST
+      division: DIVISION
+      equipe: TEAM
+      prenom: FIRSTNAME
+      nom: LASTNAME
+      session: SESSION
+      formation: TRANING
+      module: MODULE
+      progression: PROGRESS
+      date: DATE
+      temps_passe:  AVERAGE TIME TAKEN
+      nb_essais: NB TRY
+      score: SCORE
+      date_validation: PASSED DATE
+      actions: ACTIONS
+  bilan:
+    team: "Select team"   
+    division: "Select division"   
+    user: "Select user"   
+    formation: "Select traning"    
+    module: "Select module"
+    datestart: "Session open between"
+    dateend: "and"
+  user_module_follow:
+    edit: Editer un module présentiel  
+    bilan: "Bilan de l'utilisateur"
+    feuille_presence: "Feuille de présence"
+  nbTry:
+    error: La modification ne peut être faite si un champ est manquant.
+    success: Modication effectuée.
+    error_nb: Merci de renseigner un chiffre plus grand que le nombre d'essais.
+
+sondage:
+  test: Select a test
+  statistique: Statistiques
+  totalUser: Total of sondage(s)
+
+presentiel:
+  csv:
+    import: Importer le fichier
+    info:
+      info: Rapport d'importation de modules présentiels
+      evalrequired: Evaluations planifiées en import
+      evalAdd: Evaluations ajoutées
+      evalfailedAdd: Evaluations non ajoutées
+      moduleFollow: Modules planifiés en import
+      moduleFollowAdd: Modules ajoutés
+      moduleFollowfailedAdd: Modules non ajoutés
+      data:
+        ligne: ligne
+        module: Erreurs dans le csv au niveau du module
+        apprenant: Erreurs dans le csv au niveau l'apprenant
+        session: Erreurs dans le csv au niveau de la session
+        umf: Erreurs dans le csv au niveau de la réalisation du module
+  module:
+    start_date: Date de début du module
+    end_date: Date de fin du module
+    duration_total: Temps de présence
+    seconde: Secondes
+    success: Le module est réussi ?
+    id: Référence EuroAcadamy
+    username: Identifiant
+    prenom: Firstname
+    nom: Lastname
+    sessionslug: Référence session
+    formationslug: Référence formation
+    moduleslug: Référence module
+    session: Session
+    formation: Traning
+    moduleregulatoryRef: Référence réglementaire du module
+    module: Module
+
+  evalPres:
+    date_pass: Date de réussite (si le test est réussi)
+    date_down: Date de réalisation du test
+    duration: Durée du test (en secondes)
+    tentative: Numéro de la tentative
+    score: Score en pourcentage
+    id: Référence EuroAcadamy (bis)
+
+  

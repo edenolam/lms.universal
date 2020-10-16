@@ -1,0 +1,134 @@
+.lms {
+    &-banner {
+        background-color: $gallery-gray;
+        margin: 1.75em 0 2.5em 0;
+        padding: .5625em 1.25em;
+        &-dashboard {
+            &-container {
+                color: $scorpion-gray;
+                font-weight: 300;
+            }
+            &-title {
+                font-size: 1.75em;
+                margin: .5em 0;
+                @media(min-width: $lg) {
+                    margin: 0;
+                }
+            }
+            &-text {
+                @media(min-width: $lg) {
+                    margin: 0;
+                }
+            }
+            &-firstName {
+                color: $prussian-blue;
+                font-weight: 400;
+                text-transform: capitalize;
+            }
+            &-lastName {
+                color: $prussian-blue;
+                font-weight: 400;
+                text-transform: uppercase;
+            }
+        }
+        &-title {
+            color: $gallery-gray;
+            font-size: 1.5em;
+            font-weight: 500;
+            line-height: .7;
+        }
+        &-suivi {
+            color: $scorpion-gray;
+            font-size: 1.125em;
+            font-weight: 300;
+            line-height: 1;
+        }
+        &-number {
+            color: $prussian-blue;
+            font-size: 1.7em;
+            font-weight: 700;
+        }
+        &-module {
+            background-color: $gallery-gray;
+            &-img {
+                max-height: 8em;
+                overflow: hidden;
+                @media(min-width: $lg) {
+                    max-height: none;
+                }
+                >img {
+                    // transform: scale(1.1);
+                    @media(min-width: $lg) {
+                        // transform: scale(2) translate(25%);
+                        height: 100%;
+                        object-fit: contain;
+                        width: 100%;
+                    }
+                }
+            }
+            &-description {
+                &-title {
+                    font-size: .9375em;
+                    font-weight: 500;
+                }
+                &-text {
+                    font-size: .8125em;
+                }
+            }
+            &-day {
+                background-color: $scooter-blue;
+                color: $white
+            }
+            &-date {
+                background-color: $prussian-blue;
+                color: $white
+            }
+        }
+        &-avatar {
+            &-img {
+                clip-path: circle(50% at center);
+                display: block;
+                height: 5.8125em;
+                // margin: auto;
+                width: 5.8125em;
+            }
+        }
+        &-bilan {
+            &-container {
+                color: $scorpion-gray;
+            }
+            &-title {
+                color: $scooter-blue;
+                font-size: 1.25em;
+                font-weight: 500;
+                margin: .5em 0;
+                @media(min-width: $lg) {
+                    margin: 0;
+                }
+            }
+            &-text {
+                font-size: .875em;
+                @media(min-width: $lg) {
+                    margin: 0;
+                }
+            }
+            &-ref {
+                font-size: .75em;
+                font-style: italic;
+                @media(min-width: $lg) {
+                    margin: 0;
+                }
+            }
+            &-firstName {
+                color: $prussian-blue;
+                font-weight: 400;
+                text-transform: capitalize;
+            }
+            &-lastName {
+                color: $prussian-blue;
+                font-weight: 400;
+                text-transform: uppercase;
+            }
+        }
+    }
+}

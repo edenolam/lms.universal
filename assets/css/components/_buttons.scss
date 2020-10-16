@@ -1,0 +1,344 @@
+.lms {
+    &-button {
+        border: $borderButton solid;
+        border-radius: $radiusButton;
+        cursor: pointer;
+        display: inline-block;
+        font-size: .9375rem;
+        font-weight: 400;
+        line-height: 1;
+        margin: 0;
+        padding: .5rem 1.5rem;
+        text-align: center;
+        span {
+            vertical-align: middle;
+        }
+        &-blue {
+            background-color: $scooter-blue;
+            border-color: $scooter-blue;
+            color: $white;
+            text-transform: uppercase;
+            transition: all ease-in-out 0.3s;
+            &:hover {
+                background-color: $white;
+                color: $scooter-blue;
+                .lms-material-icons {
+                    color: $scooter-blue;
+                }
+            }
+            .lms-material-icons {
+                color: $white;
+                transition: all ease-in-out 0.3s;
+            }
+        }
+        &-orange {
+            background-color: $goldenrod-yellow;
+            border-color: $goldenrod-yellow;
+            color: $prussian-blue;
+            text-transform: uppercase;
+            transition: all ease-in-out 0.3s;
+            &:hover {
+                background-color: $prussian-blue;
+                color: $white;
+                .lms-material-icons {
+                    color: $goldenrod-yellow;
+                }
+            }
+            .lms-material-icons {
+                color: $prussian-blue;
+                transition: all ease-in-out 0.3s;
+            }
+        }
+        &-jaffa {
+            background-color: $jaffa-orange;
+            border-color: $jaffa-orange;
+            color: white;
+            text-transform: uppercase;
+            transition: all ease-in-out 0.3s;
+            &:hover {
+                background-color: white;
+                color: $prussian-blue;
+                .lms-material-icons {
+                    color: $prussian-blue;
+                }
+            }
+            .lms-material-icons {
+                color: white;
+                transition: all ease-in-out 0.3s;
+            }
+        }
+        &-gray {
+            background-color: $gallery-gray;
+            border-color: $gallery-gray;
+            color: $black;
+            text-transform: uppercase;
+            transition: all ease-in-out 0.3s;
+            &:hover {
+                background-color: $black;
+                border-color: $black;
+                color: $white;
+                .lms-material-icons {
+                    color: $white;
+                    transition: all ease-in-out 0.3s;
+                }
+            }
+            .lms-material-icons {
+                color: $black;
+                transition: all ease-in-out 0.3s;
+            }
+        }
+        &-red {
+            background-color: $cinnabar-red;
+            border-color: $cinnabar-red;
+            color: $white;
+            text-transform: uppercase;
+            transition: all ease-in-out 0.3s;
+            &:hover {
+                background-color: $white;
+                color: $cinnabar-red;
+                .lms-material-icons {
+                    color: $cinnabar-red;
+                    transition: all ease-in-out 0.3s;
+                }
+            }
+            .lms-material-icons {
+                color: $white;
+                transition: all ease-in-out 0.3s;
+            }
+        }
+        &-view {
+            background-color: $white;
+            border-color: $scorpion-gray;
+            color: $black;
+            font-weight: 400;
+            $white-space: nowrap;
+        }
+        &-download {
+            background-color: $white;
+            border-color: $prussian-blue;
+            color: $black;
+            font-weight: 400;
+            white-space: nowrap;
+        }
+        .material-icons {
+            margin: 0 .25em;
+            vertical-align: middle;
+        }
+    }
+    &-switchToggle input[type=checkbox] {
+        height: 0;
+        width: 0;
+        visibility: hidden;
+        position: absolute;
+    }
+    &-switchToggle label {
+        cursor: pointer;
+        text-indent: -9999px;
+        width: 115px;
+        max-width: 115px;
+        height: 30px;
+        background: $prussian-blue;
+        display: block;
+        border-radius: 100px;
+        position: relative;
+        line-height: 21px;
+    }
+    &-switchToggle label:after {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 26px;
+        height: 26px;
+        background: $white;
+        border-radius: 90px;
+        transition: 0.3s;
+    }
+    &-switchToggle input:checked+label,
+    &-switchToggle input:checked+input+label {
+        background: $prussian-blue;
+    }
+    &-switchToggle input+label:before,
+    &-switchToggle input+input+label:before {
+        content: 'tuteur';
+        text-transform: uppercase;
+        position: absolute;
+        top: 5px;
+        left: 35px;
+        width: 26px;
+        height: 26px;
+        border-radius: 90px;
+        transition: 0.3s;
+        text-indent: 0;
+        font-size: 12px;
+        color: $white;
+    }
+    &-switchToggle input:checked+label:before,
+    &-switchToggle input:checked+input+label:before {
+        content: 'apprenant';
+        text-transform: uppercase;
+        position: absolute;
+        top: 5px;
+        left: 10px;
+        width: 86px;
+        height: 26px;
+        border-radius: 90px;
+        transition: 0.3s;
+        text-indent: 0;
+        color: $white;
+    }
+    &-switchToggle input:checked+label:after,
+    &-switchToggle input:checked+input+label:after {
+        left: calc(100% - 2px);
+        transform: translateX(-100%);
+    }
+    &-switchToggle label:active:after {
+        width: 60px;
+    }
+    &-switchToggle1 input[type=checkbox] {
+        height: 0;
+        width: 0;
+        visibility: hidden;
+        position: absolute;
+    }
+    &-switchToggle1 label {
+        cursor: pointer;
+        text-indent: -9999px;
+        width: 115px;
+        max-width: 115px;
+        height: 30px;
+        background: $prussian-blue;
+        display: block;
+        border-radius: 100px;
+        position: relative;
+        line-height: 21px;
+    }
+    &-switchToggle1 label:after {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 26px;
+        height: 26px;
+        background: $white;
+        border-radius: 90px;
+        transition: 0.3s;
+    }
+    &-switchToggle1 input:checked+label,
+    &-switchToggle1 input:checked+input+label {
+        background: $prussian-blue;
+    }
+    &-switchToggle1 input+label:before,
+    &-switchToggle1 input+input+label:before {
+        content: 'Archivées';
+        text-transform: uppercase;
+        position: absolute;
+        top: 5px;
+        left: 35px;
+        width: 26px;
+        height: 26px;
+        border-radius: 90px;
+        transition: 0.3s;
+        text-indent: 0;
+        font-size: 12px;
+        color: $white;
+    }
+    &-switchToggle1 input:checked+label:before,
+    &-switchToggle1 input:checked+input+label:before {
+        content: 'En cours';
+        text-transform: uppercase;
+        position: absolute;
+        top: 5px;
+        left: 10px;
+        width: 86px;
+        height: 26px;
+        border-radius: 90px;
+        transition: 0.3s;
+        text-indent: 0;
+        color: $white;
+    }
+    &-switchToggle1 input:checked+label:after,
+    &-switchToggle1 input:checked+input+label:after {
+        left: calc(100% - 2px);
+        transform: translateX(-100%);
+    }
+    &-switchToggle1 label:active:after {
+        width: 60px;
+    }
+    &-switchToggle {
+        &Archived {
+            .btn-primary,
+            .toggle-off {
+                background-color: $prussian-blue;
+                border: none;
+                border-radius: 100px;
+                &:hover,
+                &:active,
+                &:focus {
+                    background-color: $prussian-blue;
+                    border: none;
+                    color: white;
+                }
+            }
+            .toggle {
+                border: none;
+                &-handle {
+                    border: none;
+                    border-radius: 100%;
+                    height: 2em;
+                    margin-right: 2.4em;
+                    margin-top: .2em;
+                    width: 2em;
+                    &.btn {
+                        &:hover,
+                        &:active,
+                        &:focus {
+                            background-color: white;
+                        }
+                    }
+                }
+                &.btn {
+                    min-width: 10em;
+                    &.btn-light {
+                        border-color: transparent;
+                    }
+                }
+                &-on.btn {
+                    padding-right: 2.5rem;
+                }
+                &-off.btn {
+                    color: white;
+                    &:hover,
+                    &:active,
+                    &:focus {
+                        background-color: $prussian-blue;
+                        color: white;
+                    }
+                }
+            }
+            .off {
+                .toggle-handle {
+                    margin-left: 2.4em;
+                    margin-right: 0;
+                    padding-right: 0;
+                }
+            }
+            .btn-light {
+                &:hover,
+                &:active,
+                &:focus {
+                    background-color: inherit;
+                    border-radius: 100px;
+                    color: white;
+                }
+            }
+            .btn-primary:not(:disabled):not(.disabled) {
+                &:active,
+                &:focus {
+                    background-color: $prussian-blue;
+                    color: white;
+                }
+            }
+        }
+    }
+}

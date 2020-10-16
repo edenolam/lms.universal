@@ -1,0 +1,93 @@
+.lms {
+    &-login {
+        &-bloc {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            justify-content: center;
+            margin: auto;
+            width: 100%;
+            @media(min-width: $lg) {
+                flex-direction: row;
+            }
+        }
+        &-form {
+            margin: auto;
+            max-width: 80%;
+            width: 100%;
+            img {
+                display: block;
+                margin: 0 auto 2em;
+            }
+            &-group {
+                margin: 3em auto;
+                position: relative;
+                .lms-material-icons {
+                    position: absolute;
+                    top: .25em;
+                }
+            }
+            &-field {
+                border-bottom: .0625em solid $athens-gray;
+                input {
+                    border: none;
+                    padding-left: 2em;
+                }
+            }
+            &-check {
+                align-items: center;
+                display: flex;
+                flex-direction: column;
+                @media(min-width: $sm) {
+                    align-items: flex-start;
+                    flex-direction: row;
+                    justify-content: space-between;
+                }
+            }
+            &-footer {
+                text-align: center;
+            }
+            @media(min-width: $sm) {
+                margin: 15em auto 5em;
+                max-width: 75%;
+            }
+            @media(min-width: $lg) {
+                max-width: 50%;
+                padding: 2em;
+            }
+        }
+        &-img {
+            display: none;
+            @media(min-width: $sm) {
+                background-color: $tiara-gray;
+                display: block;
+                text-align: center;
+                img {
+                    transform: translateY(-3em);
+                }
+            }
+            @media(min-width: $lg) {
+                display: flex;
+                width: 50%;
+                img {
+                    transform: translate(-3em, 0);
+                }
+            }
+        }
+        &-welcome {
+            color: $scorpion-gray;
+            font-size: 1.125em;
+            text-align: center;
+        }
+    }
+    &-custom-control-label {
+        color: $scorpion-gray;
+        &::before {
+            background-color: $white;
+            border: .0625em solid $scorpion-gray;
+            border-radius: 100% !important;
+            height: .75em;
+            width: .75em;
+        }
+    }
+}

@@ -1,0 +1,41 @@
+@import 'config/fonts.scss';
+@import 'config/variables.scss';
+//@import 'clients/colors-amicus.scss';
+@import 'config/base.scss';
+@import 'miscellaneous/transitions.scss';
+@import 'config/layout.scss';
+@import 'components/login.scss';
+@import 'components/header.scss';
+@import 'components/menu.scss';
+@import 'components/breadcrumb.scss';
+@import 'components/banner.scss';
+@import 'components/content.scss';
+@import 'components/dashboard';
+@import 'components/calendar';
+@import 'components/cards.scss';
+@import 'components/table.scss';
+@import 'components/buttons.scss';
+@import 'components/progressBar.scss';
+@import 'components/progressCircle.scss';
+@import 'components/icons.scss';
+@import 'components/filters.scss';
+@import 'components/accordeon.scss';
+@import 'components/audio.scss';
+@import 'components/sidebar.scss';
+@import 'components/modal.scss';
+@import 'components/footer.scss';
+// @import 'components/toggle.scss';
+// PAGES
+@import "pages/beginTest.scss";
+// @import "pages/test_question.scss";
+@import "pages/page.scss";
+// @import "pages/reset_password.scss";
+// @import "pages/bilan.scss";
+@import "custom/label.scss"; // from custom.css
+@import "custom/sk-cube.scss"; // from custom.css
+@import "custom/sa-icon.scss"; // from custom.css
+@import "custom/multiselect.scss"; // from custom.css
+@import "custom/editor.scss"; // from custom.css
+@import "custom/table.scss"; // from custom.css
+// Classes utilitaires
+@import 'miscellaneous/utils.scss';

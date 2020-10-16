@@ -1,0 +1,407 @@
+{% extends "base.html.twig" %}
+
+
+
+{% block body %}
+
+	<div class="lms-breadcrumb">
+		<a href="
+		{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+		{% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+		{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+		{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+		{% else %} {{ path('home_dashboard') }}
+		{% endif %}">{{lms_name}}</a> > 
+		<a href="{{path('user_formation')}}">{{'menu.userFormation.title'|trans}}</a> > 
+		{% if slugSession == "preview" %}
+			...
+		{% else %}
+			<a href="{{path('user_formation_module', {'slugSession': currentSession.slug})}}">{{currentFormation.title}}</a> 
+		{% endif %}
+		> <span>{{currentModule.title}}</span>
+	</div>
+
+	<div class="d-flex align-items-center lms-title">
+		<h1 class="text-uppercase lms-h1">{% if slugSession == "preview" %}...{% else %}{{ currentFormation.title }}{% endif %}: <span class="capitalize">{{currentModule.title}}</span></h1>
+		<hr>
+	</div>
+
+	<div class="d-flex flex-wrap flex-xl-nowrap lms-subcontent">
+		<div class="col-xl-9 px-5 position-relative lms-course-content" id="lms-course-content">
+
+			{% include 'UserFrontManagement/tools/formation_progress_bar.html.twig' %}
+
+			<div class="my-4 d-flex justify-content-between align-items-center">
+				<h2 class="lms-course-h2"><span class="text-uppercase">{{ currentModule.title }}</span> : <span>{{currentPage.title}}</span></h2>
+				<button id="lms-fullscreen" class="p-0 ml-3 lms-button lms-button-blue" data-toggle="tooltip" data-original-title="Plein écran"><i class="material-icons lms-material-icons ">fullscreen</i></button>
+			</div>
+
+			{% if prevPage is defined and prevPage is not null and prevPage is not empty %}
+				{% if slugSession == "preview" %}
+					<a id="back_button" class="lms-nav-button showSpinner" href="{{ path('user_formation_module_organisation', {'slugSession': slugSession, 'formationPath': currentFormation.id, 'slugModule': prevPage[1], 'slugChapter': prevPage[2],'slugPage': prevPage[3] }) }}" data-toggle="tooltip" data-original-title="previous page" ><i class="material-icons lms-material-icons"> navigate_before </i></a>
+				{% else %}
+					<a id="back_button" class="lms-nav-button showSpinner" href="{{ path('user_formation_module_organisation', {'slugSession': currentSession.slug, 'formationPath': currentSession.formationPath.id, 'slugModule': prevPage[1], 'slugChapter': prevPage[2],'slugPage': prevPage[3] }) }}" data-toggle="tooltip" data-original-title="previous page" ><i class="material-icons lms-material-icons"> navigate_before </i></a>
+				{% endif %}
+			{% endif %}
+			{% if nextPage is defined and nextPage is not null and nextPage is not empty %}
+				{% if slugSession == "preview" %}
+					<a id="next_button" class="lms-nav-button showSpinner" href="{{ path('user_formation_module_organisation', {'slugSession': slugSession, 'formationPath': currentFormation.id, 'slugModule': nextPage[1], 'slugChapter': nextPage[2],'slugPage': nextPage[3] }) }}" data-toggle="tooltip" data-original-title="next page" ><i class="material-icons lms-material-icons"> navigate_next </i></a>
+				{% else %}
+					<a id="next_button" class="lms-nav-button showSpinner" href="{{ path('user_formation_module_organisation', {'slugSession': currentSession.slug, 'formationPath': currentSession.formationPath.id, 'slugModule': nextPage[1], 'slugChapter': nextPage[2],'slugPage': nextPage[3] }) }}" data-toggle="tooltip" data-original-title="next page" ><i class="material-icons lms-material-icons"> navigate_next </i></a>
+				{% endif %}
+					
+			{% elseif currentSession is not null  and sessionModuleInfo is not null and sessionModuleInfo.closingDate > date()%}
+				<a id="next_button" class="lms-nav-button showSpinner" href="{{ path('user_formation_module_end', {'sessionSlug': currentSession.slug, 'slugModule': currentModule.slug, 'slugChapter':currentChapter.slug,'slugPage': currentPage.slug }) }}" data-toggle="tooltip" data-original-title="next page" ><i class="material-icons lms-material-icons"> navigate_next </i></a>
+			{% elseif currentSession  is not null  %}
+				<a id="next_button" class="lms-nav-button showSpinner" href="{{path('user_formation_module', {'slugSession' : currentSession.slug})}}" data-toggle="tooltip" data-original-title="next page" ><i class="material-icons lms-material-icons"> navigate_next </i></a>
+			{% endif %}
+
+			{% if currentPage.pageType.conditional == 'expert' or currentPage.pageType.conditional == 'pedago' %}
+				{{ currentPage.contentCode | raw }}
+				{% if currentPage.pageReferences is defined and currentPage.pageReferences is not null and currentPage.pageReferences is not empty%}
+					<div class="reference">
+						{% for ref in currentPage.pageReferences %}
+							{% if ref.title is defined %}
+								<p class="reference-item">{{ ref.title }}</p>
+							{% endif %}
+						{% endfor %}
+					</div>
+				{% endif %}
+			{% elseif currentPage.pageType.conditional == 'video' %}
+				<video style="width: 100%;" controls src="{{ asset("uploads/files/"~currentPage.uri) }}"></video>
+			{% elseif currentPage.pageType.conditional == 'pdf' %}
+				<iframe src="{{ asset("uploads/files/"~currentPage.uri) }}" width="100%" height="850px"></iframe>								
+			{% endif %}
+			
+			{% if currentPage.textualContent is defined and currentPage.textualContent is not null and currentPage.textualContent is not empty %}
+				<div id="course" class=""><span class="lms-course-cross"> </span></div>
+				<div class="lms-textual-container" id="showTextualCourse">
+					{{ currentPage.textualContent | raw }}
+				</div>
+			{% endif %}
+			
+		</div>
+
+		{# PAGE SIDEBAR #}
+		<div id="lms-aside-content" class="col-xl-3 p-0 lms-course-aside">
+			<svg id="lms-aside-btn" class="lms-aside-btn" xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24"> <path opacity=".87" fill="none" d="M24 0v24H0V0h24z"></path> <path d="M 9,17 14,12 9,7 Z"></path></svg>
+			{# set isEvalRequire = false %}
+			{% set isLectureRequire = false %}
+			{% for modeValidation in currentModule.validationModes %}
+				{% if modeValidation.conditional == 'eval' %}
+					{% set isEvalRequire = true %}  = currentModule.evaluation 
+				{% endif %}
+				{% if modeValidation.conditional == 'lecture' %}
+					{% set isLectureRequire = true %}  = currentModule.lectureComplete 
+				{% endif %}
+			{% endfor #}
+			{% if currentSession is not null  %}
+				{% for moduleTest in currentModule.moduleTests %}
+					<div class="lms-aside-card">
+						{% if currentModule.evaluation == true and moduleTest.test.typeTest.conditional == 'eval' and userModule is not null and  userModule.success != true %}
+							{% if userModule.lectureDone or  currentModule.lectureComplete == false %}
+								{% if date(sessionModuleInfo.openingDateEvaluation) <= date() and date() <= date(sessionModuleInfo.closingDateEvaluation) and sessionModuleInfo.closingDate > date() %}
+									<a href="{{path('test_front_begin', {'testSlug' : moduleTest.test.slug, 'moduleSlug' : currentModule.slug, 'sessionSlug' : currentSession.slug})}}" id="eval" class="lms-button lms-button-red">
+									<img src="{{asset('images/core/evaluation.svg')}}" width="15px" data-toggle="tooltip" data-original-title="{{ 'userFrontManagement.page.eval' | trans }}">
+									{{ 'userFrontManagement.page.eval' | trans }}
+									</a>
+								{% else %}
+									<a href="#" id="eval" class="lms-button lms-button-red">
+										<img src="{{asset('images/core/evaluation.svg')}}" width="15px" data-toggle="tooltip" data-original-title="{{ 'userFrontManagement.page.eval' | trans }}">
+										{% if date(sessionModuleInfo.openingDateEvaluation) >= date() %}
+											{{ 'dashboard.i_future' | trans }} (
+											{% if app.request.locale == "fr" %}
+												{{sessionModuleInfo.openingDateEvaluation|date('d/m/Y')}}
+											{% else %}
+												{{sessionModuleInfo.openingDateEvaluation|date('Y/m/d')}}
+											{% endif %})
+										{% else %}
+											{{ 'dashboard.i_closed' | trans }}
+										{% endif %}
+									</a>
+								{% endif %}
+	            			{% endif %}
+						{% endif %}
+						{% if moduleTest.test.typeTest.conditional == 'training' and sessionModuleInfo is not null  and sessionModuleInfo.closingDate >= date() %}
+							<a href="{{path('test_front_begin', {'testSlug' : moduleTest.test.slug, 'moduleSlug' : currentModule.slug, 'sessionSlug' : currentSession.slug})}}" id="training" class="lms-button lms-button-orange"><img src="{{asset('images/core/badge-vert.svg')}}" width="15px" data-toggle="tooltip" data-original-title="{{ 'userFrontManagement.page.training' | trans }}">
+							{{ 'userFrontManagement.page.training' | trans }}
+							</a>		
+					
+						{% endif %}
+					</div>
+				{% endfor %}
+			{% endif %}
+			 	
+			{% include 'UserFrontManagement/tools/sommaire.html.twig' %}	
+			{% if currentSession is not null  %}	
+				{% include 'UserFrontManagement/tools/note.html.twig' %}		
+			{% endif %}
+			{# include 'UserFrontManagement/tools/document.html.twig' #}
+			
+			{% if currentPage.pageReferences|length > 0 %}
+				{% include 'UserFrontManagement/tools/reference.html.twig' %}
+			{% endif %}
+
+			{# if currentPage.knowledges|length > 0 %}
+				{% include 'UserFrontManagement/tools/knowledge.html.twig' %}
+			{% endif #}
+
+			{% if currentPage.downloads|length > 0 %}
+				{% include 'UserFrontManagement/tools/download.html.twig' %}
+			{% endif %}
+
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block js %}
+	{{parent()}}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/4.2.1/screenfull.min.js"></script>		
+<script>
+$(document).ready(function() {
+	//$("#note-input-block").css('display', 'none');
+	$('#note-add-button').on('click',function(){
+		if($("#note-input-block").css('display') == "none"){
+			$("#note-input-block").css('display', 'block');
+		}else{
+			$("#note-input-block").css('display', 'none');
+		}
+	});
+	
+	{# $('body').on('click', '#add-note',function(e) {
+        e.preventDefault();
+        $(this).toggleClass('active');
+        if ($(this).hasClass('active')) {
+            $(this).closest('.sidebar-card').find('.sidebar-card-footer').addClass('note-open').removeClass('note-close');
+            $(this).closest('.sidebar-card').find('.sidebar-card-body').addClass('note-close').removeClass('note-open');
+        } else {
+            $(this).closest('.sidebar-card').find('.sidebar-card-footer').addClass('note-close').removeClass('note-open');
+            $(this).closest('.sidebar-card').find('.sidebar-card-body').addClass('note-open').removeClass('note-close');
+        }
+
+    });#}
+
+    $('#note-submit').on('click', function(e){
+        e.preventDefault();
+        var text = $('#note-input').val();
+        text = text.replace(/\n\r?/g, '<br />');
+        console.log(text);
+        var pageNoteJSON = {
+                'pageSlug': $('#note-input').attr('data-page'),
+                'content': text
+        }; 
+        
+        $('.spinner').fadeIn();
+
+        $.ajax({
+            method: 'post',
+            url: $('#note-input').attr('data-path'),
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(pageNoteJSON)
+        }).done(function(response) {
+        	$('.spinner').fadeOut();
+            if (response == 'OK') {
+                $('#note-content').html($('#note-input').val());
+                toastr.success("Note enregistrée", ""); 
+                //alert('Note enregistrée');
+               $("#note-input-block").css('display', 'none');
+            }
+        }).fail(function(jxh, textmsg, errorThrown){
+            $('.spinner').fadeOut();
+            toastr.error(jxh.status + " " + jxh.statusText, "Error");
+        });
+    });
+
+	{{ currentPage.jsCode | raw }}
+	
+	{% if currentSession is not null and currentSession.closingDate >= date() %}
+		var durationSec = 0;		
+		var url = "{{ path('user_formation_module_organisation_duration', {'session':currentSession.id, 'module': currentModule.id, 'course': currentChapter.id, 'page': currentPage.id } ) }}";
+
+		setInterval(function(){
+			// seconde request
+			durationSec += 15;
+
+			var request = $.ajax({
+			      url: url,
+			      type: "POST",
+			      dataType: "json",
+			      data: { duration: durationSec }
+			  });
+		    
+		    request.done(function( data ) {
+		          console.log(data);
+		    });
+
+		    request.fail(function( jqXHR, textStatus ) {
+		        console.log(textStatus);         
+		    });
+
+		}, 15000);
+	{% endif %}
+
+	$("#course").click(function() {
+		$(this).find('.lms-course-cross').toggleClass('active');
+		$('#showTextualCourse').toggleClass('active');
+	});
+
+	const target = $('#lms-course-content')[0]; // Get DOM element from jQuery collection
+
+	$('#lms-fullscreen').on('click', () => {
+		if (screenfull.enabled) {
+			screenfull.request(target);
+		}
+	});
+
+    {% if currentPage.pageType.conditional == 'pedago' %}
+
+                $('#refresh').click(function(){
+                    location.reload();
+                });
+
+                //Partie Drag In Drop
+                var tabQuestion  = [];
+                var tabReponse  = [];
+                //  $("#create").hide();
+                $("#content").show();//creation du tableau des questions
+                $('#resultat').show();
+                $('#refresh').show();
+                $('#successMessage').hide();
+                $('#errorMessage').hide();
+                $('#afficheq').hide();
+                $('#afficher').hide();
+
+                $('#afficheq div').each(function(){
+                    tabQuestion[$(this).attr('id')] = $(this).attr('value');
+                });
+
+                //Creation du tableau des reponses
+                $('#afficher div').each(function(){
+                    tabReponse[$(this).attr('id')] = $(this).attr('value');
+                });
+
+                // Reset the game
+                $('#cardPile').html('');
+                $('#cardSlots').html('');
+                // Create the pile of shuffled cards
+
+                for(var i=0 ; i < tabReponse.length; i++ ) {
+                    $('<div class="col-lg-1 card border-info m-2 align-middle" style="width: 18rem;height: 9rem;">' + tabReponse[i] + '</div>').data( 'number', tabQuestion[i] ).appendTo( '#cardSlots' ).droppable( {
+                        accept: '#cardPile div',
+                        hoverClass: 'hovered',
+                        drop: handleCardDrop
+                    } );
+                    $('<h4 class="text-center"><span class="badge badge-success col-lg-3">' + tabQuestion[i] + ' </span><i class="material-icons lms-material-icons">sync_alt</i><span class="badge badge-warning col-lg-3"> ' + tabReponse[i] + '</h4>').appendTo('#errorMessage');
+                }
+
+                tabQuestion.sort( function() { return Math.random() - .5 } ); // melange des questions
+                for ( var i=0; i < tabQuestion.length; i++ ) {
+                    $('<div class="col-lg-1 bg-info card m-2 align-middle" style="width: 18rem;height: 9rem;">' + tabQuestion[i] + '</div>').data('number', tabQuestion[i]).attr('id', 'card'+tabQuestion[i]).appendTo('#cardPile').draggable({
+                        containment: '#content',
+                        stack: '#cardPile div',
+                        cursor: 'move',
+                        revert: true
+                    });
+                }
+                 errorCards = 0;
+                 tabDeposable = [];
+    {% endif %}
+});
+
+        function handleCardDrop( event, ui ) {
+            tabDeposable[$(this).data('number')] =  ui.draggable.data('number');
+            ui.draggable.position({of: $(this), my: 'left top', at: 'left top'});
+            ui.draggable.draggable('option', 'revert', false);
+        }
+
+        $('#resultat').click(function() {
+            for(key in tabDeposable){
+                if(key != tabDeposable[key]){
+                    $('#card'+tabDeposable[key]).addClass('faux');
+                    errorCards++;
+                }else{
+                    $('#card'+tabDeposable[key]).addClass('correct');
+				}
+            }
+
+            $('#cardPile .faux').addClass('bg-danger');
+            $('#cardPile .correct').addClass('bg-warning');
+
+            if(errorCards == 0){
+                $('#successMessage').show();
+            }else{
+                $('#errorMessage').show();
+            }
+
+            $('#resultat').hide();
+        });
+
+window.onload = (event) => {
+	const target = $('#lms-course-content')[0]; // Get DOM element from jQuery collection
+
+	if (screenfull.enabled) {
+		screenfull.request(target);
+	}		
+};
+	</script>
+{% if currentPage.uriAudio is not null %}	
+	<script type='text/javascript' src="{{asset('js/audio-player.js')}}" async></script>
+{% endif %}
+
+	<script>
+
+		/* Afficher le chapitre actif */
+		document.querySelector('.lms-aside-card-chapterlist .active').parentElement.classList.add('show');
+
+		const btAside = document.getElementById('lms-aside-btn'),
+			  course = document.getElementById('lms-course-content'),
+			  aside = document.getElementById('lms-aside-content');
+
+		let asideChoice = localStorage.getItem('asideChoice');
+
+		function sommaire() {
+
+			/* Application du choix mémorisé (sidebar ouverte ou fermée) */
+			if (localStorage['asideChoice'] === 'open') {
+				course.classList.remove('lms-course-content-expand');
+				aside.classList.remove('lms-course-aside-minify');
+
+			} else if (localStorage['asideChoice'] === 'close' && window.innerWidth >= 1200) {
+				course.classList.add('lms-course-content-expand');
+				aside.classList.add('lms-course-aside-minify');
+			}
+
+			/* Modification suivant la largeur du viewport */
+			if (window.innerWidth < 1200) {
+				course.classList.remove('lms-course-content-expand');
+				aside.classList.remove('lms-course-aside-minify');
+				localStorage.setItem('asideChoice', 'open');
+			}
+
+			/* Afficher ou masquer la sidebar */
+			btAside.onclick = function() {
+
+				if (aside.classList.contains('lms-course-aside-minify')) {
+					course.classList.remove('lms-course-content-expand');
+					aside.classList.remove('lms-course-aside-minify');
+					localStorage.setItem('asideChoice', 'open');
+
+				} else {
+					course.classList.add('lms-course-content-expand');
+					aside.classList.add('lms-course-aside-minify');
+					localStorage.setItem('asideChoice', 'close');
+				}
+			};
+
+			if (window.addEventListener) {
+				window.addEventListener('resize', sommaire, { passive: true });
+			}
+		}
+
+		sommaire();
+		
+	</script>
+
+{% endblock js %}

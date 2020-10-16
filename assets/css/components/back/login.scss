@@ -1,0 +1,144 @@
+.login-page {
+    padding: 0;
+    .baseline {
+        color: $scorpion-grey;
+        line-height: 20px;
+        margin-top: 35px;
+        text-align: center;
+        font-size: 0.9em;
+    }
+    .custom-control-label {
+        font-size: 0.8em;
+        vertical-align: bottom;
+        &::before {
+            border: 1px solid rgba(0, 40, 100, 0.52);
+        }
+    }
+    .container {
+        padding: 0;
+        display: flex;
+        height: 100vh;
+        @media screen and(max-width: $tablet) {
+            display: block;
+            height: auto;
+        }
+        .col {
+            max-width: 50%;
+            padding: 0;
+            @media screen and(max-width: $tablet) {
+                max-width: 100%;
+            }
+            &.col-login {
+                position: relative;
+                form {
+                    max-width: 400px;
+                    width: 100%;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    padding: 0 20px;
+                    @media screen and(max-width: $tablet) {
+                        position: static;
+                        transform: none;
+                        margin: 95px auto 65px;
+                    }
+                    @media screen and(max-width: $mobile) {
+                        margin: 0 auto 0;
+                    }
+                    .logo {
+                        display: block;
+                        margin: 0 auto;
+                    }
+                    .form-container {
+                        margin-top: 40px;
+                        .form-group {
+                            position: relative;
+                            margin-top: 30px;
+                            svg {
+                                position: absolute;
+                                left: 2px;
+                                top: 50%;
+                                transform: translateY(-50%);
+                                fill: $scorpion-grey;
+                            }
+                            input.form-control {
+                                box-shadow: none;
+                                outline: none;
+                                background-color: $white !important;
+                                border: none;
+                                border-bottom: 1px solid $athens-grey;
+                                border-radius: 0;
+                                padding-left: 50px;
+                                color: $scorpion-grey !important;
+                            }
+                            .custom-control.custom-checkbox {
+                                float: left;
+                                @media screen and(max-width: $mobile) {
+                                    float: none;
+                                    width: 165px;
+                                    margin: 0 auto;
+                                }
+                            }
+                            .custom-control-label {
+                                &::after,
+                                &::before {
+                                    border-radius: 50%;
+                                    outline: none;
+                                    width: 12px;
+                                    height: 12px;
+                                }
+                            }
+                            a.float-right {
+                                color: $scorpion-grey;
+                                text-decoration: underline;
+                                font-size: 0.8em;
+                                margin-top: 4px;
+                                @media screen and(max-width: $mobile) {
+                                    float: none !important;
+                                    text-align: center;
+                                    display: block;
+                                    margin-top: 20px;
+                                }
+                            }
+                        }
+                        .form-footer {
+                            margin-top: 100px;
+                        }
+                    }
+                    .blue-button {
+                        display: block;
+                        margin: 0 auto;
+                    }
+                }
+            }
+            &.col-img {
+                position: relative;
+                background-color: $tiara-grey;
+                @media screen and(max-width: $tablet) {
+                    padding: 0 20px;
+                    text-align: center;
+                }
+                @media screen and(max-width: $mobile) {
+                    display: none;
+                }
+                img {
+                    position: absolute;
+                    top: 50%;
+                    left: -40px;
+                    transform: translateY(-50%);
+                    @media screen and(max-width: 1000px) {
+                        left: -10px;
+                    }
+                    @media screen and(max-width: $tablet) {
+                        position: static;
+                        transform: none;
+                        margin-top: -40px;
+                        max-width: 500px;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

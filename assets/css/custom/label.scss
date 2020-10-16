@@ -1,0 +1,12 @@
+label {
+    &.required {
+        &:after {
+            content: ' *';
+            color: $cinnabar-red;
+        }
+    }
+    &.error {
+        font-size: .55rem;
+        color: $cinnabar-red;
+    }
+}

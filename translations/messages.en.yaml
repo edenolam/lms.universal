@@ -1,0 +1,207 @@
+global:
+    welcom:
+        sentence: Your partner for the management of the health environment
+        reseting_subit: Send e-mail
+        resseting_titel: Reset your password
+        resseting_field: E-mail ou Login 
+        resseting_label: Enter your login ou e-mail
+        reset_psw: Reset your password
+        reset_psw1: New password
+        reset_psw1_label: Enter your new password
+        reset_psw2: Repeat password
+        reset_psw2_label: Confirm password
+        reset_psw_send: Save
+        rest_psw_mail: Resetting your password
+    faq: FAQ
+    doc: Documentation
+    comment: Comment
+    nbTry: Number of attempts
+    mailLog: Log mails
+    traking: Tracking
+    duration: 
+        litle:
+            hours: :
+            day: Day(s) remaining
+    title: EuroAcademy
+    cancel: Cancel
+    lcms: EuroAcademy
+    order:
+        literal: Sort by
+        way: Order
+        asc: Increasing
+        desc: Decreasing
+    literal:
+        notifModule: module(s) to complete
+        agenda: Agenda
+        sucesss_percentage: success
+        attribut: Attribute
+        oldValue: Valeur avant révision
+        newValue: Current value
+        is_session: Session in progress
+        en_cours: In progress
+        oui: Yes
+        non: No
+        learner: Learner
+        tuteur: Tutor
+        welcome: Welcome
+        success: Success
+        fail: Failure
+        year: Year
+        finished: Finished
+        tentatives: Attempts
+        continue: Continue
+        start: Start
+        reprendre: Continue
+        formation: Training
+        date: Date
+        title: Title
+        user: User
+        team: Team
+        close: Close
+        valid: Valid
+        certificat: Certificate
+        attestation: Confirmation
+        learn_more: Discover
+        archive: Archive
+        expected_duration: Expected duration
+    id_unicite: "Key of authenticity :"
+    page: Page
+    delete: Delete
+    activate: Activate
+    acceder: Access
+    reference: Reference
+    action: Action  
+    createdate: Creation date
+    creation: Creation
+    updatedate: Shift
+    maj: Shift
+    createuser: Created by 
+    updateuser: Edited by
+    revision: Review
+    back: Back
+    obligatoire: Mandatory field
+    detail: Detail
+    edit: Edit
+    desactiver: Disable
+    inactif: Disabled
+    activer: Activate
+    actif: Activated 
+    archiver: Store
+    un_archiver: Désarchiver
+    visibled: Highlight
+    unvisibled: Hide
+    archived: On file
+    un_archived: Not on file
+    search: Search
+    result_search: Here are your search results for 
+    nb_search_result: Number of search results
+    search_formation: Training results
+    search_module: Module results
+    search_course: Chapter results
+    search_page: Page results
+    search_no_result: No results found for this search
+    author: Author
+    submit: Submit
+    overview: Overview
+    duplicate: Copy
+    table: 
+        filteredForm: Filtered from
+        entries: Entries
+        entry: Entry
+        total: Total
+        Entries: Entries
+        search: Search
+        zeroRecords: No results
+        processing: In progress
+        loadingRecords: Loading
+
+menu: 
+    sondage: 
+        title: Survey analysis
+    pool:
+        title: Managing the sets of questions
+    concepteur: 
+        session: Session management
+        formation: Training management
+        module: Module management
+        test: Test management
+    dashboard: 
+        title: Dashbord
+        literal: Dashbord
+    userFormation:
+        title: My training
+    suivi:
+        title: My progress
+    question:
+        title: Management of questions
+    answer:
+        title: Management of responses
+    lov: 
+        title: Management of lov
+    ldap: 
+        add: Add
+        list: Management of LDAP
+    user:
+        title: User management
+        list: List of users 
+    group:
+        list: List of groups
+    results:
+        list: Training assessment
+    formation:
+        session:
+            list: Training sessions
+        title: Training management
+        formation_path:
+            list: Training programme
+        reference:
+            list: References
+        page:
+            list: Pages  
+        module:
+            list: Modules
+        course:
+            list: Chapters
+        knowledge:
+            list: Knowledge
+    lexique:
+        list: Management glossary 
+    virtual_class_room:
+        list: Online lesson 
+        title: Managing online lessons         
+    test: 
+        title: Test management  
+    audit:
+        title: Audit
+    tuteur:
+        audit: Training follow-up
+        userModuleFollow: Recording face-to-face modules
+        userTest: Recording tests / Number of evaluation attempts
+
+dashboard:
+    apprenant: learner
+    tuteur: tutor
+    concepteur: designer
+    superadmin: super administrator
+    respo: head of training
+    admin: administrator
+    user: user without specific profile
+    i_review: Check
+    certificats: Certificates
+    attestations: Certificates
+    certificat: Certificate
+    attestation: Certificate 
+    i_begin: Start
+    i_continue: Continue
+    i_future: Coming
+    i_new: Module coming soon
+    i_notvalid_module: Module is temporarily unavailable
+    i_closed: Enclosed
+    eval_to_finish: Evaluation(s) to complete
+    my_notes: Notes
+    lexique: Glossary
+    you_are: You are
+    in_Lab: In the company
+    user_laboratory: You are a learner in the company
+    notes_empty: You haven't entered any notes
+    title: Dashboard

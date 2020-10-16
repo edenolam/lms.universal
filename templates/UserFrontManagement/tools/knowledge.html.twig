@@ -1,0 +1,13 @@
+<div class="lms-aside-card">
+    <div class="p-3 lms-aside-card-content">
+        <div class="d-flex justify-content-between pb-3 lms-aside-card-title">
+            <span class="text-uppercase">{{'userFrontManagement.page.connaissances'|trans}}</span>
+        </div>
+
+        <div class="lms-aside-card-body pt-2">
+            {%  for knowledge in currentPage.knowledges %}
+                <i class="material-icons lms-material-icons">school</i> {{ knowledge.title }}<br/>
+            {% endfor %}
+        </div>
+    </div>
+</div>

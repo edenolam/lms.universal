@@ -1,0 +1,11 @@
+twig:
+    paths: ['%kernel.project_dir%/templates']
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    globals: 
+      version_core: "EuroAcademy Core Version 2.0.0"
+      plateforme: Universal Academy
+      lms_name: EUROACADEMY
+      base_url: "https://euro-academy.fr"
+      base_type: "BASE DE TEST"
+

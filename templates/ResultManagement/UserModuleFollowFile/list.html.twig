@@ -1,0 +1,155 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset("assets/bootstrap-editable/css/bootstrap-editable.css")}}"/>
+{% endblock %}
+
+{% block body %}
+    <div class="lms-breadcrumb">
+        <a href="{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }} {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }} {% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }} {% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }} {% else %}{{ path('home_dashboard') }}{% endif %}">{{ lms_name }}</a>
+        >
+        <span>{{ 'menu.results.list'|trans }}</span>
+    </div>
+
+    <div class="d-flex align-items-center lms-title">
+        <h1 class="text-uppercase lms-h1">{{ 'results.user_module_follow.edit'|trans }}</h1>
+        <hr>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-xl-3 mb-3">
+            {{ include('ResultManagement/UserModuleFollow/_user.html.twig') }}
+        </div>
+        <div class="col-sm-6 col-xl-3 mb-3">
+            {{ include('ResultManagement/UserModuleFollow/_module.html.twig') }}
+        </div>
+        <div class="col-sm-12 col-xl-6">
+            <div class="text-uppercase text-center d-flex flex-column flex-sm-row align-items-center justify-content-sm-start">
+                <a class="px-4 py-1 lms-session-tab" href="{{ path('results_user_module_follow_edit', {'id': user_module_follow.id}) }}">{{ 'results.user_module_follow.feuille_presence' | trans }}</a>
+                {% for validationMode in user_module_follow.module.validationModes %}
+                    {% if validationMode.conditional == 'eval'   %}
+                        <a class="px-4 py-1 lms-session-tab" href="{{ path('results_user_test_edit', {'user': user_module_follow.user.id, 'session': user_module_follow.session.id, 'test': user_module_follow.module.moduleEvaluationId, 'userModuleFollow': user_module_follow.id }) }}">{{ validationMode.title }}</a>
+                    {% endif %}                    
+                {% endfor %}
+                <span class="px-4 py-1 lms-session-tab lms-session-tab-actif">{{ 'formation.page.download' | trans }}</span>
+            </div>
+            <div class="py-3 px-4 lms-bg-gray">
+
+                <div class="row justify-content-center align-items-center">
+                    <p class="col text-center">{{ 'global.literal.title' | trans }}</p>
+                    <p class="col text-center">{{'formation.module_file.downloadable'|trans}}</p>
+                </div>
+
+                <!-- Corps du tableau -->
+                <div class="row">
+                    <div class="col">
+                        {% for file in user_module_follow.files %}
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <input type="checkbox" name="userModuleFollowFile" value="{{ file.id }}" {% if file.isValid %} checked="checked" {% endif %} data-url="{{ path('results_user_module_follow_file_update', {'userModuleFollowFile': file.id, 'action': 'ACTION' })}}">
+                                    <a href="{{ asset("uploads/files/"~ file.uri) }}" target="_blank"> <i class="material-icons lms-material-icons">cloud_download</i> </a>
+                                    <a href="#" class="ed_name" name="name" data-type="text" data-pk="{{ file.id }}" data-url="{{path('results_user_module_follow_file_edit_flash', {'userModuleFollowFile': file.id})}}" data-title="name">{{ file.name }}</a>
+                                </div>
+                                <div class="col text-center">
+                                    <a href="#" class="ed_isDownload" name="isDownload" data-type="select" data-pk="{{ file.id }}" data-url="{{path('results_user_module_follow_file_edit_flash', {'userModuleFollowFile': file.id})}}" data-title="Is Download">
+                                        {% if file.isDownload %}
+                                            <i class="material-icons lms-material-icons">check</i>
+                                        {% else %}
+                                            <i class="material-icons lms-material-icons">not_interested</i>
+                                        {% endif %}
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="text-center mt-3 mb-5">
+                    {% if user_module_follow.files | length > 0 %}
+                        <a href="{{ path('results_user_module_follow_edit', {'id': user_module_follow.id }) }}" class="lms-button lms-button-blue">
+                            <i class="material-icons lms-material-icons">save</i><span>{{ 'global.submit'|trans }}</span>
+                        </a>
+                    {% endif %}
+                </div>
+
+                <div class="">
+                    {{ include('ResultManagement/UserModuleFollowFile/_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script src="{{ asset('assets/bootstrap-editable/js/bootstrap-editable.js') }}"></script>
+    <script>
+        $(function () { // download selected
+            $("input[name='userModuleFollowFile']").on('change', function () {
+                var action = 'unselected';
+                if (this.checked) {
+                    action = 'selected';
+                }
+                var route = $(this).data('url');
+                route = route.replace("ACTION", action);
+                var request = $.ajax({url: route, type: "POST", cache: false, dataType: "json"});
+                $(".spinner").show();
+
+                request.done(function (data) {
+                    if (data.success) {
+                        toastr.success(data.message, "Success");
+                    } else {
+                        toastr.error(data.message, "Error");
+                    }
+                    $(".spinner").hide();
+                });
+
+                request.fail(function (jqXHR, textStatus) {
+                    toastr.error("Request failed: " + textStatus, "Error");
+                    $(".spinner").hide();
+                });
+            });
+
+        });
+
+        window.onload = (event) => {
+            $.fn.editableform.buttons = '<button type="submit" class="btn btn-success editable-submit btn waves-effect waves-light"><i class="material-icons lms-material-icons">done_outline</i></button>' + '<button type="button" class="btn btn-danger editable-cancel btn waves-effect waves-light"><i class="material-icons lms-material-icons">clear</i></button>';
+
+            $('.ed_name').editable({
+                type: 'text',
+                name: 'name',
+                title: 'Name',
+                mode: 'inline',
+                inputclass: 'form-control',
+                error: function (response, newValue) {
+                    if (response.status == 'error') 
+                        return response.message;
+                    
+                }
+            });
+
+            $('.ed_isDownload').editable({
+                type: 'select',
+                name: 'isDownload',
+                title: 'isDownload',
+                source: [
+                    {
+                        value: 1,
+                        text: 'is download'
+                    }, {
+                        value: 0,
+                        text: 'is not download'
+                    }
+                ],
+                mode: 'inline',
+                inputclass: 'form-control',
+                error: function (response, newValue) {
+                    if (response.status == 'error') 
+                        return response.message;
+                    
+                }
+            });
+        };
+    </script>
+{% endblock %}

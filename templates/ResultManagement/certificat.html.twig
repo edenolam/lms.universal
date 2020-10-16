@@ -1,0 +1,138 @@
+ <style type="text/css">
+	h1 { 
+		color: #006080; 
+		text-align: center;
+		margin-top: 100px;
+		width: 500px;
+		font-family: Times;
+		font-size: 50px;
+	}
+	table.data{
+		margin-top: 50px;
+		margin-left: 50px;
+	}
+	td.b{
+		color: #006080; 
+	}
+	div.content{
+	 	margin-top: 20px;
+		margin-left: 50px;
+	}
+	div.inner-content{
+		margin-top: 10px;
+	}
+	table.footer{
+		width: 500px;
+	 	margin-left: 50px;
+	 	margin-bottom: 30px;
+	 	height: 10px
+	}
+	img.lab{
+	    max-width:200px;
+	}
+}
+
+</style>
+<page backcolor="#FEFEFE" backimg="{{chemin}}/public/images/core/certificat.png" backimgx="center" backimgy="bottom" backimgw="100%" style="font-size: 12pt"> 
+	 <page_header> 
+    	<table class="header">
+    		<tr>
+	    		<td style="text-align: center; width: 530px; padding-top: 20px;">
+					{% if userCertificat.userLabLogUrl is not null and userCertificat.user.laboratory != null and userCertificat.user.laboratory.logo != null and userCertificat.userLabLogUrl == userCertificat.user.laboratory.logo %}<img class="lab" src="{{chemin}}/public/uploads/laboratory/{{userCertificat.userLabLogUrl}}" height="70">{% endif %}
+				</td>
+	    		<td style="text-align: center; width: 530px; padding-top: 20px;">
+					<img src="{{chemin}}/public/images/core/logo.png"  height="70"/>
+				</td>
+	    	</tr>
+		</table>
+    </page_header> 
+	<div class="body">
+		<div class="title">
+		    <h1 color="#006080">
+		    	{{'userFrontManagement.module.certificat_literal'|trans}} <br>{{userCertificat.moduleTitle}}
+		    </h1>
+		</div>
+		<div>
+	    	<table class="data">
+	    		<tr>
+		            <td><b>{{'user.nom'|trans}} : </b></td>
+		            <td class="b">{{userCertificat.userLitteralLastname}}</td>
+	        	</tr>
+	        	 <tr>
+		            <td><b>{{'user.prenom'|trans}} : </b></td>
+		            <td class="b">{{userCertificat.userLitteralFisrtname}}</td>
+	        	</tr>
+	        	<tr>
+		            <td><b>{{'global.literal.date'|trans}} : </b></td>
+		            <td class="b">{% if app.request.locale == "fr" %}{{"now"|date("d/m/Y")}} {% else %} {{"now"|date("Y/m/d")}} {% endif %}</td>
+	        	</tr> 
+	    	</table>
+	    </div>
+    	<div class="content">
+    		<div style="margin-right: 50px;">
+	    		{% if app.request.locale == "fr" %}
+	    			Je soussigné(e) {{userCertificat.userLitteralFisrtname|default("")}} {{userCertificat.userLitteralLastname|default("")}}, confirme avoir réalisé sur {{base_url}}, le module "{{userCertificat.moduleTitle}} ({{userCertificat.moduleRef}})" de la formation "{{userCertificat.formationTitle}}"{% if userCertificat.userLaboratory is not null %} pour le compte du laboratoire {{userCertificat.userLaboratory}}{% endif %}
+	    		{% else %} 
+	    			{{"now"|date("Y/m/d")}} 
+	    		{% endif %}
+    		</div>
+    		<div class="inner-content">
+    			<i style="font-size: 9pt">
+    				{{'userFrontManagement.module.validation_way'|trans}}  
+    				<ul>  
+    					{% for validationMode in userCertificat.validationMode %}  					
+							<li style="list-style-position: outside;" >{{validationMode["mode"]}} 
+								{% if validationMode|length > 2 %}
+									(
+										{% if validationMode["score_needed"] is defined %}
+											{{"test.score_needed"|trans}} = {{validationMode["score_needed"]}} % ||
+										{% endif %}
+										{{"formation.module.number_try"|trans}} = {{validationMode["number_try"]}}  
+										{% if validationMode["chrono_question"] is defined and validationMode["chrono_question"] != null %}
+											|| {{"formation.module_test.chrono_question"|trans}} = {{validationMode["chrono_question"]}} 
+										{% endif %}
+										{% if validationMode["chrono_test"] is defined and validationMode["chrono_test"] != null %}
+											|| {{"formation.module_test.chrono_session"|trans}} = {{validationMode["chrono_test"]}}
+										{% endif %}
+									)
+	    						{% endif %}
+	    					</li>
+	    				{% endfor %}
+    				</ul>
+    			</i><br>
+			    {{'userFrontManagement.module.result'|trans}} 
+	    		{% if userCertificat.result.success == true %}
+	    			{{"results.module.success_literral"|trans}}
+	    		{% else %}
+	    			{{"results.module.faillur_literral"|trans}}
+	    		{% endif %}
+				{{"results.module.with"|trans}}
+	    		{% if userCertificat.result.score != null %} 
+	    			{{userModule.score}}% |
+	    		{% endif %}
+	    		{% if userCertificat.result.lecture == true %} 
+	    			{{"results.module.lecture_done"|trans}} |
+	    		{% endif %}
+				
+	    		<br><br>
+	    		{{'userFrontManagement.module.validation_date'|trans}} {% if app.request.locale == "fr" %}{{userCertificat.validationDate|date("d/m/Y")}}{% else %}{{userCertificat.validationDate|date("Y/m/d")}}{% endif %}<br>
+	    		{{'userFrontManagement.module.certificat_geration_date'|trans}} {% if app.request.locale == "fr" %}{{"now"|date("d/m/Y")}}{% else %}{{"now"|date("d/m/Y")}}{% endif %}<br>
+				{{'userFrontManagement.module.certificat_geration_by'|trans}} {{app.user.username}}
+	    	</div>
+    	</div>
+	</div>
+    <page_footer> 
+    	<table class="footer">
+    		<tr>
+	    		<td style="text-align: left; width:240px;">
+	    			<p>{{'global.id_unicite'|trans}} <b><cert src="/home/certification/".{{userModule.id}} name="Certificat d'authenticité du certificat" location={{app.request.locale}} reason="Certification d'authenticité du document" contactinfo="info@universalmedica.com">{{userCertificat.serialCode}}</cert></b></p>
+					{{'global.page'|trans}} : [[page_cu]]/[[page_nb]]
+	    		</td>
+	    		<td style="text-align: center; width: 240px;">{{version_core}}</td>
+	    		<td style="text-align: right; padding-left: 220px;">
+	    			106 Bureaux de la Colline <br> 92210 Saint-Cloud Cedex <br> tèl: 01 41 12 27 77
+	    		</td>
+	    	</tr>
+		</table>
+    </page_footer> 
+ </page> 

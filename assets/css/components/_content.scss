@@ -1,0 +1,126 @@
+.lms {
+    &-content {
+        padding: 0 2em;
+    }
+    &-title {
+        align-items: end !important;
+        margin-bottom: 2em;
+        margin-top: 2em;
+        // overflow: hidden;
+        >hr {
+            background-color: $scooter-blue;
+            border: none;
+            flex: 1 0 auto;
+            height: .0625em;
+            margin-bottom: 0;
+        }
+    }
+    &-subtitle {
+        // margin: 0 0 0 1em;
+        // width: 100%;
+        flex: 1 1 auto;
+        >hr {
+            background-color: $scooter-blue;
+            border: none;
+            height: .0625em;
+            margin-bottom: 0;
+            width: 100%;
+        }
+    }
+    &-h1 {
+        color: $prussian-blue;
+        flex: 0 1 auto;
+        font-size: 1.25em;
+        margin: 0 1em 0 0;
+        max-width: 35em;
+    }
+    &-h2 {
+        color: $prussian-blue;
+        font-size: .9375em;
+        margin: 0;
+    }
+    &-subcontent {
+        &-title {
+            background-color: $gallery-gray;
+            color: $prussian-blue;
+            font-size: .9375em;
+            font-weight: 400;
+            padding: .5em;
+            text-align: center;
+        }
+    }
+    &-bg {
+        &-gray {
+            background-color: $gallery-gray;
+        }
+    }
+    &-h {
+        &-50 {
+            height: calc(50% - .5rem);
+        }
+    }
+    &-suivi {
+        &-modules {
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+    }
+    &-indicators {
+        // width: max-content;
+        &-item {
+            align-items: center;
+            border-bottom: .0625em solid $gray;
+            border-left: .0625em solid $gray;
+            border-right: .0625em solid $gray;
+            color: $prussian-blue;
+            display: flex;
+            // height: 40%;
+            // min-height: 2em;
+            padding: .25em .5em;
+            width: 100%;
+            &:not(:first-child) {
+                border-left: .0625em solid $gray;
+            }
+            svg,
+            .lms-icon-try {
+                margin-right: .2em;
+            }
+            @media (min-width: $sm) {
+                width: 50%;
+                &:nth-child(2),
+                &:nth-child(4) {
+                    border-left: none;
+                }
+                &:last-child {
+                    width: 100%;
+                }
+            }
+            @media (min-width: $lg) {
+                width: auto;
+                &:last-child {
+                    width: auto;
+                }
+                &:nth-child(3),
+                &:nth-child(5) {
+                    border-left: none;
+                }
+            }
+        }
+    }
+    &-table {
+        .thead-dark {
+            th {
+                background-color: $prussian-blue;
+                border-color: $prussian-blue;
+            }
+        }
+    }
+    &-course {
+        &-content {
+            @include transitionNormal;
+            &-expand {
+                @include transitionNormal;
+            }
+        }
+    }
+}

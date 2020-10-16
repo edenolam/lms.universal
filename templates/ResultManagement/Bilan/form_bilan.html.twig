@@ -1,0 +1,225 @@
+<form action="{{ path('results_list') }}" class="needs-validation row" method="post" enctype="multipart/form-data">
+    <div class="col-xl-9">
+        <p>{{ 'results.form.filtre_labo'|trans }}</p>
+        <div class="row mb-5">
+            {# <div class="col-md-4">
+                {% if divisions is not null %}
+                    <select class="custom-select" id="bilan_division" name="bilan[division]" >
+                        <option value="">{{ 'results.bilan.division' | trans }}</option>
+                        {% for d in divisions %}
+                            <option value="{{ d.id }}" {% if division | length > 0 and d.id == division.id %} selected {% endif %}>{{ d.title }}</option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    {{ form_widget(bilanForm.division, { 'attr': {'class': 'custom-select'} }) }}
+                {% endif %}
+                {{ form_errors(bilanForm.division) }}
+            </div>
+            <div class="col-md-4">
+                {% if teams is not null %}
+                    <select class="custom-select" id="bilan_team" name="bilan[team]" >
+                        <option value="">{{ 'results.bilan.team' | trans }}</option>
+                        {% for t in teams %}
+                            <option value="{{ t.id }}" {% if equipe | length > 0 and t.id == equipe.id %} selected {% endif %}>{{ t.title }}</option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    {{ form_widget(bilanForm.team, { 'attr': {'class': 'custom-select'} }) }}
+                {% endif %}
+                {{ form_errors(bilanForm.team) }}
+            </div>
+            <div class="col-md-4">
+                {% if users is not null %}
+                    <select class="custom-select" id="bilan_user" name="bilan[user]" >
+                        <option value="">{{ 'results.bilan.user' | trans }}</option>
+                        {% for u in users %}
+                            <option value="{{ u.id }}" {% if user | length > 0 and u.id == user.id %} selected {% endif %}>{{ u.firstname }}
+                                {{ u.lastname }}</option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    {{ form_widget(bilanForm.user, { 'attr': {'class': 'custom-select'} }) }}
+                {% endif %}
+                {{ form_errors(bilanForm.user) }}
+            </div> #}
+            <div class="col-md-4">
+                {{ form_widget(bilanForm.division, { 'attr': {'class': 'custom-select','placeholder': '--------'} }) }}
+                {{ form_errors(bilanForm.division) }}
+            </div>
+            <div class="col-md-4">
+                {{ form_widget(bilanForm.team, { 'attr': {'class': 'custom-select'} }) }}
+                {{ form_errors(bilanForm.team) }}
+            </div>
+            <div class="col-md-4">
+                {{ form_widget(bilanForm.user, { 'attr': {'class': 'custom-select'} }) }}
+                {{ form_errors(bilanForm.user) }}
+            </div>
+        </div>
+
+        <p>{{ 'results.form.filtre_session'|trans }}</p>
+
+        <div class="row mb-5">
+            {# <div class="col-md-4">
+                {% if formations is not null %}
+                    <select class="custom-select" id="bilan_formation" name="bilan[formation]" >
+                        <option value="">{{ 'results.bilan.formation' | trans }}</option>
+                        {% for f in formations %}
+                            <option value="{{ f.id }}" {% if formation | length > 0 and f.id == formation.id %} selected {% endif %}>{{ f.title }}</option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    {{ form_widget(bilanForm.formation, { 'attr': {'class': 'custom-select'} }) }}
+                {% endif %}
+                {{ form_errors(bilanForm.formation) }}
+            </div>
+            <div class="col-md-4">
+                {% if sessions is not null %}
+                    <select class="custom-select" id="bilan_session" name="bilan[session]" >
+                        <option value="">{{ 'results.bilan.session' | trans }}</option>
+                        {% for s in sessions %}
+                            <option value="{{ s.id }}" {% if session | length > 0 and s.id == session.id %} selected {% endif %}>{{ s.title }}</option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    {{ form_widget(bilanForm.session, { 'attr': {'class': 'custom-select'} }) }}
+                {% endif %}
+                {{ form_errors(bilanForm.session) }}
+            </div>
+            <div class="col-md-4">
+                {% if modules is not null %}
+                    <select class="custom-select" id="bilan_module" name="bilan[module]" >
+                        <option value="">{{ 'results.bilan.module' | trans }}</option>
+                        {% for m in modules %}
+                            <option value="{{ m.id }}" {% if module | length > 0 and m.id == module.id %} selected {% endif %}>
+                                {{ m.title }} <i class="text-dark">({{ m.regulatoryRef }})</i>
+                            </option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    {{ form_widget(bilanForm.module, { 'attr': {'class': 'custom-select'} }) }}
+                {% endif %}
+                {{ form_errors(bilanForm.module) }}
+            </div> #}
+            <div class="col-md-4">
+                {{ form_widget(bilanForm.formation, { 'attr': {'class': 'custom-select'} }) }}
+                {{ form_errors(bilanForm.formation) }}
+            </div>
+            <div class="col-md-4">
+                {{ form_widget(bilanForm.session, { 'attr': {'class': 'custom-select'} }) }}
+                {{ form_errors(bilanForm.session) }}
+            </div>
+            <div class="col-md-4">
+                {{ form_widget(bilanForm.module, { 'attr': {'class': 'custom-select'} }) }}
+                {{ form_errors(bilanForm.module) }}
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="row col-6">
+                <div class="col-4 ">
+                    {{ form_label(bilanForm.datestart) }}
+                </div>
+                <div class="col-3 ">
+                    {{ form_widget(bilanForm.datestart, { 'attr': {'class': 'form-control openingDate'} }) }}
+                    {{ form_errors(bilanForm.datestart) }}
+                </div>
+                <div class="col-1 ">
+                    {{ form_label(bilanForm.dateend) }}
+                </div>
+                <div class="col-3 ">
+                    {{ form_widget(bilanForm.dateend, { 'attr': {'class': 'form-control closingDate'} }) }}
+                    {{ form_errors(bilanForm.dateend) }}
+                </div>
+            </div>
+            <div class="col-6 row">
+                <button class="lms-button lms-button-blue mt-4" type="submit">
+                    {{ 'results.form.valid'|trans }}
+                </button>
+                <span class="lms-button lms-button-gray mt-4" data-target="#modal" data-toggle="modal">
+                    <i class="material-icons lms-material-icons">add</i> <span>{{ 'results.form.sauvegarde'|trans }}</span> 
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 mb-5">
+        <div class="p-3 lms-bg-gray">
+            <p>{{ 'results.form.sauvegarde_title'|trans }}</p>
+            {{ form_widget(bilanForm.name, { 'attr': {'class': 'custom-select'} }) }}
+            {{ form_errors(bilanForm.name) }}
+            <div class="d-flex flex-wrap justify-content-between align-items-center mt-3">
+                <div class="my-2 mx-auto">
+                    <span class="lms-button lms-button-blue" id="formSave" data-path="{{path('results_list')}}" hidden>
+                        {{ 'results.form.sauvegarde_executer'|trans }}
+                    </span>
+                </div>
+                <div class="my-2 mx-auto">
+                    <span class="lms-button lms-button-red" data-target="#modalsup" data-toggle="modal" hidden id="buttondel">
+                        <i class="material-icons lms-material-icons">
+                            delete
+                        </i> {{ 'global.delete'|trans }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% if modulefiltres|length > 0 %}
+            <div class="mt-2 p-3">
+                <span class="lms-button lms-button-gray" id="exportpdf" data-path="{{path('results_export')}}">
+                    <i class="material-icons lms-material-icons">cloud_download</i>{{ 'audit.export'|trans }}
+                </span>
+            </div>
+            <div class="mt-2 p-3">
+                <span class="lms-button lms-button-gray" id="exportcsvP" data-path="{{path('results_export_presentiel')}}"><i class="material-icons lms-material-icons">cloud_download</i>
+                    {{ 'results.export.exportPresentiel'|trans }}
+                </span>
+            </div>
+        {% endif %}
+        <div class="mt-2 p-3">
+            <a class="lms-button lms-button-gray" href="{{path('results_user_module_follow_csv')}}" target="blank">
+                 <i class="material-icons lms-material-icons">cloud_upload</i><span>{{ 'results.form.classepresentiel'|trans }}</span>
+            </a> 
+        </div>
+    </div>
+    {{ form_widget(bilanForm._token) }}
+    <!-- Modal de sauvegarde des favoris -->
+    <div aria-hidden="true" aria-labelledby="exampleModalCenterTitle" class="modal fade" id="modal" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">{{ 'results.form.sauvegarde_name'|trans }}</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input class="form-control" id="nom" type="text">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button">{{ 'results.form.sauvegarde_annuler'|trans }}</button>
+                    <button type="button" class="lms-button lms-button-blue" id="save" data-path="{{path('save_form')}}"><i class="material-icons lms-material-icons">save</i> {{ 'global.submit'|trans }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de suppression des favoris -->
+    <div aria-hidden="true" aria-labelledby="exampleModalCenterTitle" class="modal fade" id="modalsup" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">{{ 'results.form.confirm_delete_title'|trans }}</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button">{{ 'results.form.sauvegarde_annuler'|trans }}</button>
+                    <button type="button" class="lms-button lms-button-red" id="formDel" data-path="{{path('delete_favori')}}">{{ 'results.form.confirm_delete'|trans }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

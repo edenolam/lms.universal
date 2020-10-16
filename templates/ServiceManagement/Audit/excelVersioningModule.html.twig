@@ -1,0 +1,32 @@
+<html>
+<table>
+    <tr>
+        <th>{{'audit.ref'|trans}}</th>
+        <th>{{'audit.user'|trans }}</th>
+        <th>{{'audit.action'|trans }}</th>
+        <th>{{ 'audit.ref_entity'|trans }}</th>
+        <th>{{ 'audit.versioning_module.version'|trans }}</th>
+        <th>{{ 'audit.versioning_module.jusitification'|trans }}</th>
+        <th>{{ 'audit.versioning_module.hasRequiredRole'|trans }}</th>
+        <th>{{'audit.datetime'|trans}}</th>
+    </tr>
+
+    {% for audit in audits %}
+        <tr>
+            <td>{{ audit.id }}</td>
+            <td>{{ audit.actor.username }}</td>
+            <td>{{ audit.action }}</td>
+            <td>{{ audit.id }} </td>
+            <td>{{ audit.moduleVersion }}</td>
+            <td>{{ audit.justification }}</td>
+            <td>
+                {% if audit.hasRequiredRole %}
+                    {{'global.literal.oui'|trans}}
+                {% else %}
+                    {{'global.literal.non'|trans}}
+                {% endif %}
+            </td>
+            <th>{{audit.date|date('d/m/Y H:i:s')}}</th>
+        </tr>
+    {% endfor %}
+</table>

@@ -1,0 +1,147 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}  
+
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/bootstrap-fileupload/bootstrap-fileupload.css') }}" />
+{% endblock %}
+
+{% block body %}
+<!-- navigator -->
+<div class="lms-breadcrumb">
+    <span><a href="
+				{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+                {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+				{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+				{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+				{% else %} {{ path('home_dashboard') }}
+				{% endif %}">{{lms_name}}</a></span> > <span><a href="{{path('admin_user_index')}}">{{ 'menu.user.title' | trans }}</a></span> > <span class="bold">{{ 'user.action.edit' | trans }} ({{user.username}})</span>
+</div>
+
+<!-- title of page -->
+<div class="d-flex align-items-center lms-title">
+	<h1 class="text-uppercase lms-h1">{{ 'user.action.edit' | trans }} "{{ user.username }}"</h1><hr>
+</div>
+
+<div class="card border-0">
+    <div class="card-body">
+        <form action="{{ path('admin_user_edit',{ 'username': user.username }) }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+            {% include "UserManagement/User/form_edit.html.twig" %}
+       </form>
+    </div>           
+</div>  
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }} 
+    
+<script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js" integrity="sha256-SOuLUArmo4YXtXONKz+uxIGSKneCJG4x0nVcA0pFzV0=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-migrate-3.0.1.min.js"  integrity="sha256-F0O1TmEa4I8N24nY0bya59eP6svWcshqX1uzwaWC4F4=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{{ asset('assets/bootstrap-fileupload/bootstrap-fileupload.js') }}"></script>    
+
+
+<script>    
+$().ready(function() {
+
+    niveau = $("#user_registration_hierarchyLevel").val();
+    $("#user_registration_supervisors > option").each( function() {
+        hiddenable = true;
+        {% for sup in user.supervisors %}
+            idSup = "{{sup.id}}";
+            if( idSup == $(this).val()){
+                hiddenable = false;
+            }
+        {% endfor %}
+        if($(this)[0].getAttribute("hLevel") <= niveau && hiddenable == true){
+            $(this).hide();
+            $(this).attr('checked', false);
+        }else{
+            $(this).show();
+        }
+    });
+
+    
+    var laboratories = {
+        {% for key, laboratory in laboratories %}
+            '{{laboratory.id}}':[{% for key, division in laboratory.divisions %}
+                {'{{ division.id}}':'{{ division.title | e }}'}
+                    {% if key < laboratory.divisions | length - 1 %},
+                    {% endif %}
+                {% endfor %}]
+            {% if key < laboratories | length - 1 %},
+            {% endif %}
+        {% endfor %} };
+    //console.log(laboratories);
+
+    var divisions = { {% for key, division in divisions %}'{{division.id}}':[{% for key, team in division.teams %}{'{{ team.id}}':'{{ team.title | e }}'}{% if key < division.teams | length - 1 %},{% endif %}{% endfor %}]{% if key < divisions | length - 1 %},{% endif %}{% endfor %} };
+    //console.log(divisions);
+
+    // laboratory change event
+    $("select#user_registration_laboratory").change(function(e){
+        var laboratory_id = $(e.target).val();      
+
+        var selectDivisions = $("select#user_registration_division").html('<option value="">Sélectionner un division</option>');
+        
+        if ( laboratory_id >= 1 ) {
+          for (var key in laboratories[laboratory_id]) {
+                  if (laboratories[laboratory_id].hasOwnProperty(key)) {
+                         for (var k in laboratories[laboratory_id][key]) {
+                                 $('<option/>', {
+                                                    value : k,
+                                                    text : laboratories[laboratory_id][key][k]
+                          }).appendTo(selectDivisions);
+                        }
+                  }
+            }
+        }
+    })
+
+    // division change event
+    $("select#user_registration_division").change(function(e){
+        var division_id = $(e.target).val();      
+
+        var selectTeams = $("select#user_registration_team").html('<option value="">Sélectionner une équipe</option>');
+        
+        if ( division_id >= 1 ) {
+          for (var key in divisions[division_id]) {
+                  if (divisions[division_id].hasOwnProperty(key)) {
+                         for (var k in divisions[division_id][key]) {
+                                 $('<option/>', {
+                                                    value : k,
+                                                    text : divisions[division_id][key][k]
+                          }).appendTo(selectTeams);
+                        }
+                  }
+          }                             
+        }
+    })
+
+    $("#user_registration_hierarchyLevel").change(function(e){
+        niveau = $("#user_registration_hierarchyLevel").val();
+        $("#user_registration_supervisors > option").each( function() {
+            hiddenable = true;
+            {% for sup in user.supervisors %}
+                idSup = "{{sup.id}}";
+                if( idSup == $(this).val()){
+                    hiddenable = false;
+                }
+            {% endfor %}
+            if($(this)[0].getAttribute("hLevel") <= niveau && hiddenable == true){
+                $(this).hide();
+                $(this).attr('checked', false);
+            }else{
+                $(this).show();
+            }
+        });
+    });
+
+});
+
+$('#dropdown-users .dropdown-menu').addClass('show');
+</script>
+
+{% endblock %}
+
+
+

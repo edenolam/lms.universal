@@ -1,0 +1,174 @@
+userManagement:
+    info: "The file <strong>ne must not go over 5 Mo</strong> and have the length and height of <strong>150 pixels</strong> maximum. The subsequent downloads will overwrite the existing logo."
+
+group:
+    menu: Group management
+    name: Group name
+    description: Description
+    roles: Roles
+    action:
+        create: Add a group
+        edit: Edit the group
+        list: Group list
+user:
+    tutor: Tracking learners
+    identity: Identity
+    hierarchyLevel: Hierarchical level
+    profile: Profile
+    sign_out: Disconnection
+    menu: User management
+    avatar: Avatar
+    donnees_personnelles: Personal data
+    donnees_professionnelles: Professional data
+    civility: Civility
+    nom: Surname
+    prenom: Name
+    address: Address
+    addressBis: Address bis
+    city: Town
+    zipCode: Post code
+    country: Country
+    phone: Phone number 
+    function: Function 
+    info1: Information 1    
+    info2: Information 2
+    info3: Information 3
+    groups: Group(s)
+    roles: Roles
+    email: Email
+    ldap_user: Ldap user
+    username: Username
+    login: Username
+    password: 
+        title: Reset password
+        info_reset: An email has been sent. It contains a link you must click on to reset your password. This link is active 24/7. If you don't received an email, check in your junk mail or try again.
+        first: Password
+        second: Confirm password
+        forgot: Forgotten password?
+    supervisor: Superviser
+    create_date: Creation date
+    statut: Status
+    action:
+        add: Add a user 
+        edit: Edit the user 
+        list: List of users
+        view: View a user         
+    message:
+        error:
+            user_exist: User already exists
+    flash:
+        updated_error: "The user has not been updated."
+        updated: "The user has been updated."          
+        delete_image_error: "The previous image has not been deleted!"
+        create_error: "Login already used"
+        
+laboratory:
+    menu: Management of companies
+    logo: Logo
+    title: Companies
+    all: All the companies
+    selectImage: Select an image
+    removeImage: Delete
+    changeImage: Edit
+    address: Address
+    addressBis: Address bis
+    city: Town
+    zipCode: Post code
+    country: Country
+    phone: Telephone number
+    email: Email
+    url: Website
+    sort: Sort
+    description: Description
+    divisions: Divisions
+    division: Division 
+    action:
+        create: Add a company
+        edit: Edit the company
+        list: List of companies
+        view: View a company  
+    flash:
+        created: The company has been created
+        created_error: "The company has not been created."
+        updated: The company has been updated.
+        updated_error: "The company has not been updated."
+        delete_image_error: "The previous image has not been deleted!"
+
+division:
+    all: All the divisions
+    menu: Management of the divisions
+    laboratory: Company
+    title: Division
+    sort: Sort
+    description: Description    
+    teams: Team 
+    create_date: Creation date      
+    action:
+        create: Add a division
+        edit: Edit the divison  
+        list: List of divisions
+        view: View a division       
+    flash:
+        created: 'The division has been created.'
+        updated: 'The division has been updated.'
+
+team:
+    all: All the teams
+    literal: Team
+    menu: "Management of teams"
+    laboratory: Company 
+    division: Division 
+    title: "The team"
+    sort: Sort
+    description: Description         
+    action:
+        create: Add a team
+        edit: Edit the team 
+        list: List of teams
+        view: View the team      
+    flash:
+        created: "The division has been created."
+        updated: "The division has been updated."   
+
+tracking:
+    menu: "Tracking"        
+    created: Date
+    path_info: Url
+    lang: Lang
+    ip_request: IP client 
+    duration: Duration
+    user: User      
+    action:
+        list: List of trackings 
+        download: Downloads
+
+mailLog:
+    action:
+        list: List of automatically sent emails
+    date: Date of mailing
+    from: From
+    to: To
+    cc: cc
+    subject: Subject
+
+mail:
+    bonjour: Hello %surname%
+    bienvenu: Welcome to the Euro-Academy platform!
+    rdv: Rendez-vous sur votre espace en suivant le lien suivant :
+    acces: You will receive a second email containing your access information.
+    connexion: Here is some informations about connecting to the Euro-Academy platform
+    identifiant: Identifiant :
+    password: Mot de passe:
+
+
+resetting:
+    email:
+        cordialement: kind regards
+        subject: 'Resetting your password'
+        bonjour: Hello %username%,
+        youre_ldap: 'You are an LDAP user. Please contact your IT service to reset your password.'
+        message: 'To reset your password, please go to %confirmationUrl%'
+
+        equipe: |
+            Enjoy browsing!
+            E-learning team

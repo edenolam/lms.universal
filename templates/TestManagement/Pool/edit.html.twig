@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+<link href="{{ asset("assets/summernote/summernote-bs4.css") }}" rel="stylesheet" />
+<link rel="stylesheet" href="{{ asset("assets/bootstrap-editable/css/bootstrap-editable.css")}}" />
+{% endblock %}
+
+{% block body %}
+<!-- navigator -->
+<div class="lms-breadcrumb">
+   <span><a href="
+				{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+                {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+				{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+				{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+				{% else %} {{ path('home_dashboard') }}
+				{% endif %}">{{lms_name}}</a></span> > <span><a href="{{path('admin_testManagement_list')}}">{{'test.list.ariane_gestion'|trans}}</a></span> > <span><a href="{{path('admin_testManagement_edit', {'test' : test.id })}}" >{{test.title}}</a></span> > <span class="bold">{{ 'pool.editor' | trans}} ({{pool.title}})</span> 
+</div>
+
+ <!-- title of page -->
+ <div class="d-flex align-items-center lms-title">
+	<h1 class="text-uppercase lms-h1">{{'menu.concepteur.test'|trans}} </h1><hr>
+</div>
+
+<!-- body of page -->
+<div class="row">
+    <div class="col-lg-4 mb-5">
+        <h2 class="text-uppercase lms-h2">{{ 'actions' | trans }} </h2>
+        <hr>
+    {% include "TestManagement/Question/actions.html.twig" %}    
+    </div>
+    <div class="col-lg-8"> 
+        <div class="d-flex flex-column">
+            <div>
+                <h2 class="text-uppercase lms-h2">{{ 'pool.editor' | trans }}</h2>
+                <hr>
+            </div>
+            {% if is_granted('ROLE_GESTION_TEST') %}
+                <div class="text-center">
+                    <a href="{{ path('pool_desactivate', {'id':pool.id}) }}">
+                        <button type="submit" class="lms-button lms-button-orange" {% if module.isArchived == true or module.activeSession == true or module.isValid == true %}hidden{% endif %}>
+                            {% if pool.isValid == false %}<i class="material-icons lms-material-icons">toggle_on</i> {{ 'global.activer'|trans }}{% else %}<i class="material-icons lms-material-icons">toggle_off</i> {{ 'global.desactiver'|trans }}{% endif %}
+                        </button>
+                    </a> 
+                </div> 
+            {% endif %}
+        </div>
+        <form class="mt-5" action="{{ path('admin_pool_edit', {'pool' : pool.id})}}" method="post" enctype="multipart/form-data">
+            {% include "TestManagement/Pool/form.html.twig" %}		
+            <div class="my-3 text-center">
+                {% if module.isArchived == false and module.isValid == false and is_granted('ROLE_GESTION_TEST') %}
+                    <button type="submit" class="lms-button lms-button-blue" {% if module.activeSession == true %} hidden {% endif %}>
+                        <i class="material-icons lms-material-icons">save</i> <span>{{ 'global.submit'|trans }}</span>
+                    </button>  
+                {% endif %}
+                
+            </div>
+        </form>
+        </div>                        
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }} 
+
+<script src="{{ asset("assets/summernote/summernote-bs4.js") }}"></script>
+<script src="{{ asset('assets/bootstrap-editable/js/bootstrap-editable.js') }}"></script>
+<script>
+$(document).ready(function() {
+  $('.summernote').summernote({
+      height: 150,
+      toolbar: [
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol']]
+      ]
+    });
+});
+
+window.onload = (event) => {
+    $.fn.editableform.buttons =
+          '<button type="submit" class="btn btn-success editable-submit btn waves-effect waves-light"><i class="material-icons lms-material-icons">done_outline</i></button>' +
+          '<button type="button" class="btn btn-danger editable-cancel btn waves-effect waves-light"><i class="material-icons lms-material-icons">clear</i></button>';
+
+    $('.ed_content').editable({
+            type: 'textarea',
+            name: 'content',
+            title: 'Answer',        
+            mode: 'inline',
+            inputclass: 'form-control',
+            error: function(response, newValue) {
+                if (response.status == 'error') return response.message; 
+            }
+    });            
+
+    $('.ed_status').editable({
+            type: 'select',
+            name: 'Good Answer',
+            title: 'Answer',
+            source: [
+              {value: 1, text: 'Good Answer'},
+              {value: 0, text: 'Bad Answer'}
+            ],        
+            mode: 'inline',
+            inputclass: 'form-control',
+            error: function(response, newValue) {
+                if (response.status == 'error') return response.message; 
+            }
+    });     
+};
+</script>
+{% endblock %}

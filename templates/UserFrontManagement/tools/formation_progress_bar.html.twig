@@ -1,0 +1,57 @@
+<div class="d-flex mb-4 position-relative lms-course-progressBar">
+    {% set pagePercentage = (indexOfPage * 100) / numberPages %}
+    {% if slugSession != "preview" %}
+        <!-- LOOP ALL MODULE OF FORMATION -->
+        {% for module in currentFormation.formationPathModules %}
+            {% if module.module.type.conditional != "notFollow" %}
+                <!-- LOOP ALL USERMODULES FOR VALIDATION CHECK -->
+                {% set userMod = null %}
+                {% for usModule in userModules %}
+                    {% if usModule.module.id == module.module.id %}
+                        {% set userMod = usModule %}
+                    {% endif %}
+                {% endfor %}
+
+                {% if module.module.PreTestNonValid or  module.module.PreTestValid  %}
+                    <div class="lms-course-progress-pretest "> 
+                        <img src="{{asset('images/core/badge-jaune.svg')}}" data-toggle="tooltip" data-original-title="pretest"/>
+                    </div> 
+                {% endif %}
+                <div class="lms-course-progress {% if module.module.id == currentModule.id %} border border-primary{% endif %}">
+                    {% if userMod is not null and userMod.percentage is not null %}
+                        <div class="progress-bar bg-blue" style="width: {{ userMod.percentage|round }}%;height:1rem;background-color: #2FAEDE !important;" data-toggle="tooltip" data-original-title="{{ module.module.title }} ({{userMod.percentage|round}}%)">
+                        </div>
+                    {% endif %}
+                    {% if module.module.id == currentModule.id %} 
+                        <span class="lms-course-progress-current" style="left:{{pagePercentage|round}}%;"  data-toggle="tooltip" data-original-title="{{ module.module.title }} ({{indexOfPage}}/{{numberPages}})"></span>                         
+                    {% endif %}
+                </div> 
+                
+                {% if module.module.evaluation %}
+                    <div class="lms-course-progress-eval ">
+                        <img src="{{asset('images/core/evaluation.svg')}}" data-toggle="tooltip" data-original-title="evaluation"/>
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+
+{% if currentPage.uriAudio is not null %}
+    <div id="audio-container" class="lms-audio">
+        {# <svg class="play-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5z"/></svg>
+        <svg class="pause-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M9 16h2V8H9v8zm3-14C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-4h2V8h-2v8z"/></svg> #}
+        <audio id="audio-file" src="{{asset('uploads/files/'~currentPage.uriAudio)}}"></audio>
+        <div id="audio-controls" class="lms-audio-controls" data-state="hidden">
+            <button id="playpause" type="button" data-state="play">Play/Pause</button>
+            <div class="lms-audio-progress">
+                <progress id="progress" value="0" min="0">
+                    <span id="progress-bar"></span>
+                </progress>
+            </div>
+            <button id="mute" type="button" data-state="mute">Mute/Unmute</button>
+            {# <button id="volinc" type="button" data-state="volup">Vol+</button>
+            <button id="voldec" type="button" data-state="voldown">Vol-</button> #}
+        </div>
+    </div>
+{% endif %}

@@ -1,0 +1,83 @@
+<div class="row">
+    <div class="col-xl-6">
+        <div class="form-group">
+            {{ form_label(form.title, 'session.title'|trans) }}
+            {{ form_widget(form.title, { 'attr': {'class': 'form-control', 'readonly': 'readonly'} }) }}
+        </div>
+    </div>
+    <div class="col-xl-6">
+        <div class="form-group">
+            {{ form_label(form.formationPath, 'session.formationPath'|trans) }}
+            <select id="session_formationPath" name="session[formationPath]" class="form-control" readonly="readonly">
+                <option value="{{ session.formationPath.id }}">{{ session.formationPath.title }}</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            {{ form_label(form.openingDate, 'session.openingDate'|trans) }}
+            {{ form_widget(form.openingDate, { 'attr': {'class': 'form-control', 'readonly': 'readonly'} }) }}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            {{ form_label(form.closingDate, 'session.closingDate'|trans) }}
+            {{ form_widget(form.closingDate, { 'attr': {'class': 'form-control', 'readonly': 'readonly'} }) }}
+        </div>
+    </div>
+</div>
+<div class="table-responsive">
+    <table id="tablefiltre" class="table table-bordered table-striped my-3">
+        <thead class="thead-dark">
+            <tr>
+                <th>{{'session.modules'|trans}}</th>
+                <th>{{'session.openingDate'|trans}}</th>
+                <th>{{'session.closingDate'|trans}}</th>
+                <th>{{'session.openingDateEvaluation'|trans}}</th>
+                <th>{{'session.closingDateEvaluation'|trans}}</th>
+            </tr>
+        </thead>
+        <thead id="filtreForm">
+            <tr>
+                <th>{{'session.modules'|trans}}</th>
+                <th>{{'session.openingDate'|trans}}</th>
+                <th>{{'session.closingDate'|trans}}</th>
+                <th>{{'session.openingDateEvaluation'|trans}}</th>
+                <th>{{'session.closingDateEvaluation'|trans}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sessionFormationPathModule in sessionFormationPathModules %}
+                <tr>
+                    <td>
+                        {{ sessionFormationPathModule.module.title}}
+                        <i class="lms-text-secondary">V.{{ sessionFormationPathModule.module.version}}</i>
+                        <i>({{ sessionFormationPathModule.module.regulatoryRef}})</i>
+                    </td>
+                    <td>
+                        <a href="#" class="ed_openingDate" name="openingDate" data-type="date" data-pk="{{ sessionFormationPathModule.id }}" data-url="{{path('admin_session_edit_module_flash', {'id': sessionFormationPathModule.id})}}" data-title="Opening Date">{{ sessionFormationPathModule.openingDate | date('Y-m-d')}}</a>
+                    </td>
+    
+                    <td>
+                        <a href="#" class="ed_closingDate" name="closingDate" data-type="date" data-pk="{{ sessionFormationPathModule.id }}" data-url="{{path('admin_session_edit_module_flash', {'id': sessionFormationPathModule.id})}}" data-title="Closing Date">{{ sessionFormationPathModule.closingDate | date('Y-m-d')}}</a>
+                    </td>
+    
+                    <td>
+                        <a href="#" class="ed_openingDateEvaluation" name="openingDateEvaluation" data-type="date" data-pk="{{ sessionFormationPathModule.id }}" data-url="{{path('admin_session_edit_module_flash', {'id': sessionFormationPathModule.id})}}" data-title="Opening Date Evaluation">{{ sessionFormationPathModule.openingDateEvaluation | date('Y-m-d')}}</td>
+                    </td>
+                    <td>
+                        <a href="#" class="ed_closingDateEvaluation" name="closingDateEvaluation" data-type="date" data-pk="{{ sessionFormationPathModule.id }}" data-url="{{path('admin_session_edit_module_flash', {'id': sessionFormationPathModule.id})}}" data-title="Closing Date Evaluation">{{ sessionFormationPathModule.closingDateEvaluation | date('Y-m-d')}}</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</div>
+    <div class=" text-center">
+        <a href="{{ path('admin_session_edit_presentiel', {'slug' : session.slug}) }}" class="lms-button lms-button-blue">
+            <i class="material-icons lms-material-icons">save</i>
+            <span>{{ 'global.submit'|trans }}</span>
+        </a>
+    </div>

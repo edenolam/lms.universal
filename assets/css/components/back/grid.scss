@@ -1,0 +1,228 @@
+.grid{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    .grid-item{
+        flex: 1 0 18%;
+        background-color: $gallery-grey;
+        margin: 12.5px;
+        padding: 20px;
+
+        .grid-link{
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        @media screen and(max-width: $mobile) {
+            flex: 1 0 100%;
+        }
+
+        &.calandar{
+            background-color: $white;
+            padding: 0;
+        }
+
+        &.text-center{
+            text-align: center;
+        }
+
+        &.eval{
+
+            a{
+                display: block;
+            }
+        }
+
+        &.two-col{
+            flex: 1 0 36%;
+
+            @media screen and(max-width: $tablet) {
+                flex: 1 0 100%;
+            }
+        }
+
+        &.notifications{
+            @media screen and(max-width: $laptop) {
+                order: 12;
+                flex: 1 0 100%;
+            }
+        }
+
+        &.notes{
+            @media screen and(max-width: $laptop) {
+                order: 13;
+                flex: 1 0 100%;
+            }
+        }
+
+        &.divided{
+            background-color: transparent;
+            padding: 0;
+
+            .sub-grid{
+                background-color: $gallery-grey;
+                height: calc(50% - 7.5px);
+                padding: 20px;
+
+                img{
+                    max-width: 115px;
+                    width: 100%;
+
+                    &.smaller{
+                        max-width: 100px;
+                    }
+                }
+
+                p{
+                    font-size: 1em;
+                }
+
+                a{
+                    display: block;
+                    width: 100%;
+                    text-align: center;
+                    height: 100%;
+                    padding-top: 28px;
+                }
+
+                div{
+                    max-width: initial;
+                    text-align: center;
+                }
+
+                &:nth-child(2){
+                    margin-top: 15px;
+                }
+            }
+        }
+        
+        .double-content{
+            display: flex;
+            align-items: center;
+            height: 100%;
+
+            div{
+                margin: 0 10px;
+            }
+
+            .img-container{
+                width: 50%;
+            }
+
+            img{
+                max-width: 165px;
+                width: 100%;
+                margin: 0 auto;
+                display: block;
+            }
+
+            .title{
+                font-size: 1.25em;
+                text-transform: uppercase;
+                color: $prussian-blue;
+                text-align: center;
+            }
+        }
+
+        .blue-button{
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 55px;
+        }
+
+        img{
+            margin-bottom: 20px;
+
+            &.mt{
+                margin-top: 15px;
+            }
+        }
+
+        .number{
+            color: $scooter-blue;
+            font-size: 1.75em;
+            font-weight: 500;
+
+            a{
+                color: $scooter-blue;
+            }
+        }
+
+        .text{
+            color: $scorpion-grey;
+            margin-top: 3px;
+            font-size: 0.8em;
+
+            &.black{
+                color: $black;
+            }
+
+            &.long{
+                text-align: left;
+                line-height: 19px;
+            }
+
+            &.left{
+                text-align: left;
+            }
+
+            .progress{
+                display: inline-block;
+                vertical-align: middle;
+
+                .progress-value{
+                    font-size: 12px;
+                    
+                    div{
+                        margin-top: 0;
+                        margin-left: 5px;
+                    }
+                }
+            }
+        }
+
+        .grid-title{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            span{
+                font-size: 1.25em;
+                margin-left: 9px;
+            }
+
+            svg{
+                fill: $scooter-blue;
+                vertical-align: sub;
+            }
+        }
+
+        .list{
+            margin-top: 30px;
+            text-align: left;
+
+            li{
+                position: relative;
+                min-height: 30px;
+                margin-top: 10px;
+
+                svg{
+                    position: absolute;
+                    left: 0;
+                    top: -1px;
+                }
+
+                p{
+                    color: $black;
+                    font-weight: 300;
+                    padding-left: 30px;
+                    line-height: 19px;
+                    font-size: 0.8em;
+                }
+            }
+        }
+    }
+}

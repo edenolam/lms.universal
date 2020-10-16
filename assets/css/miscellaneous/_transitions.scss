@@ -1,0 +1,38 @@
+@mixin open {
+    max-height: 100vh;
+    opacity: 1;
+    transition: opacity .3s ease-out, max-height .4s ease-out;
+}
+
+@mixin close {
+    max-height: 0;
+    opacity: 0;
+    transition: opacity .3s ease-in, max-height .4s ease-in;
+}
+
+@mixin flip-180 {
+    transform: perspective(1600px) rotateY(-180deg);
+}
+
+@mixin flip180 {
+    transform: perspective(1600px) rotateY(180deg);
+}
+
+@mixin flip0 {
+    transform: perspective(600px) rotateY(0deg);
+}
+
+@mixin transitionNormal {
+    transition: all .3s ease 0s;
+}
+
+.lms {
+    &-is {
+        &-open {
+            @include open;
+        }
+        &-close {
+            @include close;
+        }
+    }
+}

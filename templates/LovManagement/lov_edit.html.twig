@@ -1,0 +1,155 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="lms-breadcrumb">
+        <span><a href="
+				{% if is_granted('ROLE_APPRENANT') %} {{ path('home_dashboard') }}
+                {% elseif is_granted('ROLE_TUTEUR') %} {{ path('dashboard_tuteur') }}
+				{% elseif is_granted('ROLE_CONCEPTEUR') %} {{ path('sondage_view') }}
+				{% elseif is_granted('ROLE_ADMIN') %} {{ path('admin_user_index') }}
+				{% else %} {{ path('home_dashboard') }}
+				{% endif %}">{{lms_name}}</a></span> > <span class="bold">{{ 'menu.lov.title'|trans}}</span>
+</div>
+<div class="d-flex align-items-center lms-title">
+	<h1 class="text-uppercase lms-h1">{{ entity }}</h1><hr>
+</div> 
+
+{% if entity == 'AnswerType' or entity == 'ValidationMode' or entity == 'PageType' or entity == 'TypeTest' or entity == 'ModuleType' %}
+    {% set allowCreate = false %}
+{% else %}
+    {% set allowCreate = true %}
+{% endif %}
+<div class="row row-cards">
+    <div class="col col-12">
+        <div class="row justify-content-end text-right col-9">
+            {% if allowCreate %}
+                <a class="lms-button lms-button-blue" href="{{ path('admin_lovManagement_add', {'entity': entity}) }}">
+                    <i class="material-icons lms-material-icons">add</i> <span class="hide-768">{{ 'lov.add' | trans }} {{ entity }}</span>
+                </a> 
+            {% endif %}
+        </div>         
+    </div>
+    <div class="col col-lg-9 ">  
+            <form action="{{ path('admin_lovManagement_edit', {'entity': entity, 'id':value.id })}}" class="form-horizontal" method="post">
+  				  {% include "LovManagement/lov_form.html.twig" %}
+  			  </form>            
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped lms-table" id="tablefiltre">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>{{'lov.title'|trans }}</th>
+                                <th>{{'lov.sort'|trans }}</th>
+                                <th>{{'lov.description'|trans }}</th>
+                                <th>{{'lov.keywords'|trans }}</th>
+                                <th>{{'lov.create'|trans }}</th>
+                                <th>{{'lov.update'|trans }}</th>
+                                <th>{{'lov.revision'|trans }}</th>
+                                <th>{{'actions'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <thead id="filtreForm">
+                            <tr>
+                                <th>{{'lov.title'|trans }}</th>
+                                <th>{{'lov.sort'|trans }}</th>
+                                <th>{{'lov.description'|trans }}</th>
+                                <th>{{'lov.keywords'|trans }}</th>
+                                <th>{{'lov.create'|trans }}</th>
+                                <th>{{'lov.update'|trans }}</th>
+                                <th>{{'lov.revision'|trans }}</th>
+                                <th>{{'actions'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for l in lov %}
+                                <tr>
+                                    <td class="text-left">{{l.title}}</td>
+                                    <td class="text-center">{{l.sort}}</td>
+                                    <td class="text-center">{{l.description}}</td>
+                                    <td class="text-center">{{l.keywords}}</td>
+                                    
+                                    <td class="text-center">{{l.createDate|date('Y-m-d')}}</td>
+                                    <td class="text-center">{{l.updateDate|date('Y-m-d')}}</td>
+                                    <td class="text-center">{{l.revision}}</td>
+                                    <td class="text-center">
+                                        <a class="icon" href="{{ path('admin_lovManagement_edit', {'entity': entity, 'id': l.id }) }}" data-toggle="tooltip" data-placement="top" title="{{ 'global.edit'|trans }}">
+                                          <i class="material-icons lms-material-icons " >edit</i>
+                                        </a>
+                                         <div class="btn-group">                            
+                                            {{ render(controller("App\\controller\\LovManagement\\LovController:onOff", {'id': l.id, 'entity': entity } )) }}        
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}    
+                        </tbody>
+                    </table>
+                </div>
+            </div>   
+   
+    </div>    
+    <div class="col col-lg-3 mt-5"> 
+       <div class="card-body mt-5">
+        {% include "LovManagement/lov_menu.html.twig" %} 
+      </div>
+    </div>
+</div>
+                                    
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+  <script>
+      $(function() {
+          // ======================================================================================
+        //=======================================table===========================================
+        // ======================================================================================
+        $('#filtreForm th').each( function () {
+            var title = $(this).text();
+            $(this).html( '<input type="text" class="form-control" placeholder="{{"global.table.search"|trans}} '+title+'" />' );
+        } );
+
+        var table = $('#tablefiltre').DataTable({
+            colReorder: true,
+            responsive: false,
+            ordering:  true, 
+            searching: true,
+            paging: true,
+            language: {
+                decimal:        "",
+                emptyTable:     "-",
+                info: "[_START_/_END_]  <b>{{"global.table.total"|trans}} : </b>_TOTAL_",
+                infoEmpty:      "0/0   [0]",
+                infoFiltered:   "({{"global.table.filteredForm"|trans}} _MAX_ {{"global.table.entries"|trans}})",
+                infoPostFix:    "",
+                thousands:      " ",
+                lengthMenu:     "<b>{{"global.table.Entries"|trans}}</b> _MENU_",
+                loadingRecords: "{{"global.table.loadingRecords"|trans}}...",
+                processing:     "{{"global.table.processing"|trans}}...",
+                search:         "<b>{{"global.table.search"|trans}}</b>:",
+                zeroRecords:    "{{"global.table.zeroRecords"|trans}}",
+                paginate: {next:       ">>", previous:   "<<"},
+                
+            },
+        });
+            
+        table.columns().eq( 0 ).each( function ( colIdx ) {
+            $( 'input', $('#filtreForm th')[colIdx] ).on( 'keyup change', function () {
+                table
+                    .column( colIdx )
+                    .search( this.value )
+                    .draw();
+            } );
+        } );
+
+            // ======================================================================================
+        //=======================================table end=========================================
+        // ======================================================================================
+         
+      });
+  </script>
+{% endblock %}
+
+
+
+  			   
+       

@@ -1,0 +1,29 @@
+{# {% trans_default_domain 'FOSUserBundle' %} #}
+
+<div class="page-single">
+    <div class="container">
+        <div class="row">
+            <div class="col col-login mx-auto">
+            	<form action="{{ path('fos_user_resetting_reset', {'token': token} ) }}" method="POST" class="card">
+	            	<div class="card-body p-6">
+	                    <div class="card-title"> 
+	                    	{{ 'global.welcom.reset_psw'|trans }}
+	                    </div>
+					     <div class="form-group">
+					     	<label class="form-label">{{ 'global.welcom.reset_psw1_label'|trans }}</label>
+	                        {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder': 'global.welcom.reset_psw1'|trans }}) }}
+	                    </div>
+
+	                    <div class="form-group">  
+	                       <label class="form-label">{{ 'global.welcom.reset_psw2_label'|trans }}</label>         
+	                      {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder': 'global.welcom.reset_psw2'|trans }}) }}
+	                    </div>
+					    <div>
+					        <input type="submit" class="lms-button lms-button-blue " value="{{ 'global.welcom.reset_psw_send'|trans }}" />
+					    </div>
+					</div>  
+				{{ form_end(form) }}  
+            </div>  
+        </div>
+    </div>
+</div>

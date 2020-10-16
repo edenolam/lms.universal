@@ -1,0 +1,91 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<div class="page-header">
+  <div class="page-title">
+    {{'results.page.title'|trans}}
+  </div>
+</div>
+<div class="container">
+  <div class="row row-cards">
+
+      <div class="col col-lg-3 d-md-none d-lg-block">
+        {% include "ResultManagement/menu.html.twig" %}
+      </div>
+
+      <div class="col col-lg-9">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">{{userTest.test.title}}</h3>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              {% set i = 0 %}
+              {% for answeredQuestion in answeredQuestions %}
+              
+                <div class="card card-collapsed">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                      {% if answeredQuestion.scored %}
+                        <i style="margin-top: 6px;" class="material-icons lms-material-icons ">check_circle_outline</i>
+                      {% else %}
+                        <i style="margin-top: 6px;" class="material-icons lms-material-icons ">highlight_off</i>
+                      {% endif %}
+                      {{answeredQuestion.question.title}}
+                    </h3>
+                    <div class="card-options">
+                      <a href="#" class="card-options-collapse" data-toggle="card-collapse">{{"X"}}</a>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <table class="table card-table table-vcenter text-nowrap">
+                      <thead>
+                        <tr>
+                          <th>{{'userFrontManagement.test.answer'|trans}}</th>
+                          <th class="text-center">{{'userFrontManagement.test.user_answer'|trans}}</th>
+                          <th class="text-center">{{'userFrontManagement.test.correction'|trans}}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for answer in correctionArray[i].answers %}
+                          <tr>
+                            <td>{{answer['title']|raw}}</td>
+                            <td class="text-center">
+                              {% if answer['voted'] %}
+                                <i class="material-icons lms-material-icons">check_circle_outline</i>
+                              {% else %}
+                                <i class="material-icons lms-material-icons">highlight_off</i>
+                              {% endif %}
+                            </td>
+                            <td class="text-center">
+                              {% if answer['status'] %}
+                                <i class="material-icons lms-material-icons">check_circle_outline</i>
+                              {% else %}
+                                <i class="material-icons lms-material-icons">highlight_off</i>
+                              {% endif %}
+                            </td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="card-footer">
+                    <h4>{{'question.comment'|trans}}</h4>
+                    <p class="text-muted">{{answeredQuestion.question.comment}}</p>
+                  </div>
+                </div>
+                {% set i = i + 1 %}
+              {% endfor %}
+            </div>
+          </div>
+          <div class="card-footer">
+              {{ form_start(form, {'method': 'post', 'action': path('results_test_correction', {'id' : userTest.id})}) }}
+              {{ form_errors(form) }}
+              {{form_row(form.hidden) }}
+            <button type="submit" class="ml-auto lms-button lms-button-blue">{{'results.export.copy'|trans}}</button>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+{% endblock %}

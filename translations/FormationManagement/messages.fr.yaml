@@ -1,0 +1,160 @@
+versioning:
+    goOnline:
+        title: Pour passer en ligne vous devez avoir les droits nécessaires et signer la mise en ligne.
+        success: Mise en ligne validée
+        error: La mise en ligne à échouée
+    goOffLine:
+        title: Pour passer en conception vous devez expliquer l'objectif des modifications.
+        description: Modification prévue/justifications/actions
+        success: Mise en conception validée
+        error: La mise en conception à échouée
+formation:
+    linked: formation(s) Liée(s)
+    noPage: La conception n'est pas finie
+    pbTest: Au moins 1 test est mal conçu
+    modulemodule_presentiel: Module présentiel validé
+    reference:
+        support_indication: Indications de support
+        edition: Édition
+        location: Lieu
+        editor: Éditeur
+        date: Date
+        publication_title: Titre de publication
+        numerotation: Numérotation
+        normalise_number: Numéro normalisé
+        disponibility: Disponibilité
+        informations: Informations
+        url: Url
+ 
+    knowledge:
+        create:
+            title: Créer une connaissance
+        list:
+            title: "Liste des connaissances : "
+    download:
+        create:
+            title: Créer une fichier joint
+        list:
+            title: "Liste des fichiers joints : "            
+    page:
+        file_audio: Fichier audio
+        edit_file_audio: Modifier la fichier audio
+        literal: Page
+        sous_titre: Sous-titre
+        content_code: Code HTML
+        textual_content: Contenu textuel
+        js_code: Code javascript
+        in_summary: Dans le sommaire
+        edit: Modifier la page
+        edit_video: Modifier la vidéo
+        edit_pdf: Modifier le PDF
+        video: Vidéo
+        pdf: PDF        
+        previsualsation: Prévisualisation
+        list:
+            create: Créer une nouvelle page
+            list: Liste des pages
+        reference: Références bibliographiques
+        ref_notice: Ajoutez une référence à la liste
+        connaissances: Connaissances
+        download: Fichiers joints
+        type: Type de page
+    module_test:
+        chrono_question: Questions chronométrées
+        chrono_session: Test chronométré
+    formation_path:
+        selectall: --Toutes les formations--
+        aleatoire: Parcours aléatoire
+        non_aleatoire: Parcours guidé
+        select_module: Sélectionner les modules de la formation en les glissant dans la colonne de droite
+        catalogue: Liste de Formations
+        opening: Ouverture
+        closing: Fermeture
+        literal: Parcours de formation
+        realisation: Temps de réalisation
+        description: Description
+        title: Titre
+        module: Modules
+        file: Le visuel
+        list:
+            add_module: Ajouter des modules
+            view: Visualisation
+            create: Créer un nouveau parcours de formation
+        create:
+            title: Créer une formation
+    module:
+        selectall: --Tous les modules--
+        eval_ligne: Eval. en ligne
+        training_ligne: Entrai. en ligne
+        presentiel: Présentiel
+        online: En ligne
+        pageNB: Nombre de pages
+        title: "Module : "
+        unPublish: Passer en conception
+        publish: Passer en ligne
+        unPublished: En conception
+        published: En ligne
+        notAvialable: Test(s) manquant
+        infos: Information du module
+        regulatory_ref: "Référence réglementaire : "
+        success: Module validé
+        literal: Modules
+        file: Fichier
+        type: Type
+        lieu_formation: Lieu de formation
+        nom_animateur: Nom d'animateur
+        code_client: Code client
+        conseils: Conseils
+        mode_de_validation: Mode de validation
+        duree: Durée théorique (H:m)
+        number_try: Nombre de tentatives
+        score: Score
+        scorm: Scorm 
+        scorm_zip: Le fichier scorm en .zip #Elément à importer dans ce module
+        action: 
+            validationModeFalse: Mode de validation non viable
+            copy: Dupliquer un module
+            select: Sélectionner un module
+            create: Créer un module
+            created: Un module est crée
+            edit: Modifier le module
+            updated: Le module est mise à jour
+            description: Créer la description du module
+        list:
+            ariane_gestion: Gestion des modules
+            title: Liste des modules
+            prerequisites: "Prérequis : "
+    module_file:
+        downloadable: Téléchargeable dans la formation
+    course:
+        title: Chapitre
+        actif: Actif
+        pdf: Chapitre en Pdf
+        create:
+            literal: Créer un nouveau chapitre
+        description: "Description : "
+        edit: Modifier le chapitre
+    list: 
+        title: GESTION FORMATION
+        reference: Référence
+        actions: Actions
+        ariane_gestion: Liste des formations
+        action:
+             edit: Modifier
+reference: 
+    author: Auteur de la publication
+    title: Titre de la publication
+    date: Datre de publication
+
+form:
+    valider: Valider
+    reponse_fausse:  Oups!  la réponse correcte est :
+    reponse_correcte: Vous avez réussi le test
+    type_exercice: Choisissez le type d'exercice à concevoir
+    glisser_deposer: Glisser & Déposer
+    autres: Autres
+    add_question: Ajouter une question
+    add_reponse: Ajouter sa réponse
+    recommencer: Recommencer
+    title_tuto:  Comment créer le drag and drop
+    content_tuto: - ici la petite description

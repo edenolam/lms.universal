@@ -1,0 +1,19 @@
+Titre;question;type de réponse;réponse;statut de la réponse
+;Quelles sont les règles spécifiques de la visite en établissement de santé établies par la charte ?;1;Port d’un badge professionnel;1
+;Quelles sont les règles spécifiques de la visite en établissement de santé établies par la charte ?;1;La visite peut avoir lieu sans prise de rendez-vous préalable;0
+;Quelles sont les règles spécifiques de la visite en établissement de santé établies par la charte ?;1;L’informateur peut se rendre dans tous les services librement;0
+;Quelles sont les règles spécifiques de la visite en établissement de santé établies par la charte ?;1;La visite peut être collective si l’informateur en a fait la demande préalable;1
+;Vous devez porter un badge lors de vos visites en établissement hospitalier. ;2;VRAI;1
+;Vous devez porter un badge lors de vos visites en établissement hospitalier. ;2;FAUX;0
+;Lors de vos visites, votre tenue vestimentaire est libre selon vos goûts mais doit rester adéquate à la visite médicale. ;2;VRAI;1
+;Lors de vos visites, votre tenue vestimentaire est libre selon vos goûts mais doit rester adéquate à la visite médicale. ;2;FAUX;0
+;Lors de vos visites en établissement hospitalier, le port d’un badge est désormais obligatoire. ;2;VRAI;1
+;Lors de vos visites en établissement hospitalier, le port d’un badge est désormais obligatoire. ;2;FAUX;0
+;Lors de vos visites en établissement hospitalier, vous êtes tenu de suivre le règlement intérieur.;2;VRAI;1
+;Lors de vos visites en établissement hospitalier, vous êtes tenu de suivre le règlement intérieur.;2;FAUX;0
+;Après votre visite dans un service de cardiologie, vous pouvez recruter des spécialistes pour une étude que votre laboratoire va mener sur un nouveau traitement anti-hypertenseur.;2;VRAI;0
+;Après votre visite dans un service de cardiologie, vous pouvez recruter des spécialistes pour une étude que votre laboratoire va mener sur un nouveau traitement anti-hypertenseur.;2;FAUX;1
+;Devez-vous informer un médecin hospitalier du prix de votre médicament et des modalités de sa prise en charge ? ;2;VRAI;1
+;Devez-vous informer un médecin hospitalier du prix de votre médicament et des modalités de sa prise en charge ? ;2;FAUX;0
+;Si votre médicament est rétrocédable, devez-vous en informer les médecins hospitaliers ? ;2;VRAI;1
+;Si votre médicament est rétrocédable, devez-vous en informer les médecins hospitaliers ? ;2;FAUX;0
